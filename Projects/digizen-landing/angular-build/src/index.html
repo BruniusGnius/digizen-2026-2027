@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <title>DIGIZEN · Generación Fundadora</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="DIGIZEN acompaña a las familias a construir criterio digital con ADA, sin vigilancia ni candados."
+    />
+    <meta name="theme-color" content="#f6f8fb" />
+    <meta property="og:title" content="DIGIZEN · Generación Fundadora" />
+    <meta property="og:description" content="El control caduca. El criterio no." />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="preconnect" href="https://picsum.photos" />
+    <script>
+      (() => {
+        const saved = localStorage.getItem('digizen-theme');
+        const theme =
+          saved === 'light' || saved === 'dark'
+            ? saved
+            : matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

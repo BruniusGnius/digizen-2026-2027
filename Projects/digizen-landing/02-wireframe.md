@@ -1,7 +1,8 @@
 ---
 project: DIGIZEN
 fase: 2 - wireframe / arquitectura de información
-estado: propuesto
+estado: aprobado
+aprobado_por: usuario, instrucción explícita del 2026-09-10
 input_copy: 00-context/digizen-copy-ola.md
 input_system: 01-design-system.md
 ---
@@ -11,6 +12,16 @@ input_system: 01-design-system.md
 El orden conserva todos los beats del copy fuente. El diagrama asociado (`02-wireframe.html`) mantiene el recorrido narrativo. `02-wireframe-components.html` es la referencia de componentes, retícula y responsive. `02-wireframe-full.html` es la referencia de ocupación real: coloca el copy de producción completo dentro de los componentes para revisar densidad, scroll y proporciones antes del build.
 
 La versión de ocupación real deja los cuatro acordiones de prueba abiertos de manera deliberada. La versión final conserva la interacción definida para C06, pero aquí no se oculta información que afecte la evaluación espacial.
+
+## Estado de entrega y handoff a Fase 3
+
+- **Artefacto vigente de wireframe:** `Digizen Landing Refinado.dc.html`. Sustituye como referencia de refinamiento a las variantes anteriores `02-wireframe-full*.html`.
+- **Alcance cerrado:** arquitectura, copy situado, orden narrativo, CTA locales y bandas de decisión, navegación flotante, card de precio de Beat 3, oferta y comparativo de modalidades de pago.
+- **Responsive cerrado para el wireframe:** desktop conserva composiciones editoriales; tablet y móvil reordenan Beats 1, 2 y 4 a visual horizontal de ancho completo antes de una sola columna de contenido. No se trata de un recorte automático: cada variante móvil/tablet se producirá como archivo horizontal independiente.
+- **Beat 2:** desktop usa dos assets independientes (detalle `1:1` y distancia `4:5`). En tablet y móvil solo aparece un asset horizontal independiente; no se muestran dos miniaturas ni se recorta el díptico.
+- **Navegación:** permanece flotante, centrada y de ancho intrínseco; no se estira a todo el viewport.
+- **Pricing:** la modalidad de 12 MSI permanece como card central oscura y elevada; `$499/mes efectivo a 12 MSI` es texto comparativo, no un botón. Cada modalidad conserva ventaja, consideración factual y su CTA.
+- **Límite para build:** aplicar el sistema visual aprobado, imágenes de producción y motion sin alterar estas decisiones. Cualquier cambio de estructura, copy u orden reabre Fase 2 y requiere autorización explícita.
 
 ## Retícula y reglas de diagramación
 

@@ -1,0 +1,1042 @@
+<div class="dg-shell">
+  <nav class="dg-nav" aria-label="Navegación principal de Digizen">
+    <a class="dg-logo" href="#hero-title" aria-label="DIGIZEN, volver al inicio">
+      <img
+        class="dg-logo-light"
+        src="assets/digizen/logo-digizen-horizontal-light.svg"
+        alt="DIGIZEN"
+        width="520"
+        height="200"
+      />
+      <img
+        class="dg-logo-dark"
+        src="assets/digizen/logo-digizen-horizontal-dark.svg"
+        alt=""
+        width="520"
+        height="200"
+      />
+    </a>
+    <div class="dg-nav-links" aria-label="Secciones de la landing">
+      <a href="#problema" [class.active]="activeSection() === 'problema'">Problema</a>
+      <a href="#ada" [class.active]="activeSection() === 'ada'">ADA</a>
+      <a href="#seguridad" [class.active]="activeSection() === 'seguridad'">Seguridad IA</a>
+      <a href="#oferta" [class.active]="activeSection() === 'oferta'">Oferta</a>
+    </div>
+    <button
+      class="dg-theme"
+      type="button"
+      (click)="toggleTheme()"
+      [attr.aria-pressed]="theme.theme() === 'dark'"
+      [attr.aria-label]="theme.theme() === 'dark' ? 'Activar tema claro' : 'Activar tema oscuro'"
+    >
+      @if (theme.theme() === 'dark') {
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path
+            d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+          ></path>
+        </svg>
+      } @else {
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20.2 15.2A8.4 8.4 0 0 1 8.8 3.8 8.4 8.4 0 1 0 20.2 15.2Z"></path>
+        </svg>
+      }
+    </button>
+    <a class="dg-btn" href="#oferta">Inscribir</a>
+    <div class="dg-nav-progress" aria-hidden="true">
+      <span [style.--progress]="progress()"></span>
+    </div>
+  </nav>
+
+  <main class="dg-main">
+    <section class="dg-section dg-section--cyan" aria-labelledby="hero-title">
+      <div class="dg-grid-2">
+        <div>
+          <p class="dg-kicker">Generación Fundadora</p>
+          <h1 id="hero-title" class="dg-display">
+            Le quitaste el celular… con el tuyo en la mano.
+          </h1>
+          <p class="dg-lead">
+            Y los dos sabemos cómo terminó: en dos días encontró cómo saltárselo — y tú seguiste sin
+            saber qué más hacer.
+          </p>
+          <div class="dg-note">
+            <div>
+              <strong>No eres mal papá.</strong>Baja la guardia un segundo y escúchame, porque esto
+              no es otro regaño con disfraz de solución.
+            </div>
+          </div>
+        </div>
+        <figure
+          class="dg-media dg-media--portrait"
+          data-label="Distancia sin culpa · imagen temporal"
+        >
+          <picture>
+            <source
+              media="(max-width: 1023px)"
+              srcset="https://picsum.photos/seed/digizen-hero-mobile/1200/675"
+            />
+            <img
+              src="https://picsum.photos/seed/digizen-hero/896/1120"
+              alt="Imagen temporal para una escena familiar cotidiana"
+              width="896"
+              height="1120"
+              fetchpriority="high"
+            />
+          </picture>
+        </figure>
+      </div>
+    </section>
+
+    <section
+      id="problema"
+      data-nav-section="problema"
+      class="dg-section"
+      aria-labelledby="beat-1-title"
+    >
+      <div class="dg-grid-2">
+        <div>
+          <p class="dg-kicker">01 · Alivio</p>
+          <h2 id="beat-1-title" class="dg-h2">
+            <span class="dg-h2-muted">Nadie te enseñó esto.</span>A ti tampoco te lo enseñaron.
+          </h2>
+          <div class="dg-copy">
+            <p>Respira un segundo.</p>
+            <p>
+              Si llegaste aquí, probablemente fue después de otra noche rara — de esas en que le
+              dices "ya, deja el cel" por quinta vez y algo dentro de ti se aprieta. No porque él te
+              ignoró. Porque tú no supiste qué más hacer.
+            </p>
+            <p>
+              Y quizá una vocecita te susurró lo de siempre: <em>"soy un mal papá."</em> No lo eres.
+            </p>
+            <p>
+              A ti te tocó un mundo de calles y bicicletas. A tu hijo le tocó uno que se inventa
+              cada mañana, que nadie te enseñó a leer, y que cambió las reglas mientras tú
+              trabajabas para darle de comer. Nadie te dio el manual. Tampoco a tu mamá. Tampoco al
+              papá de junto.
+            </p>
+            <p>
+              Y sí — tú también andas pegado al tuyo. Eso no te hace hipócrita. Te hace humano,
+              atrapado en la misma corriente que se lleva a tu hijo. Que se te haya ido de las manos
+              no te hace mal padre. Lo raro sería que quitarle el aparato
+              <em>hubiera</em> funcionado.
+            </p>
+          </div>
+          <blockquote class="dg-quote">
+            Suéltate la culpa. La vas a necesitar libre para lo que sigue.
+          </blockquote>
+        </div>
+        <figure
+          class="dg-media dg-media--portrait"
+          data-label="Alivio · gesto humano · imagen temporal"
+        >
+          <picture
+            ><source
+              media="(max-width: 1023px)"
+              srcset="https://picsum.photos/seed/digizen-relief-mobile/1200/675" />
+            <img
+              src="https://picsum.photos/seed/digizen-relief/800/1000"
+              alt="Imagen temporal para un gesto humano de acompañamiento"
+              width="800"
+              height="1000"
+              loading="lazy"
+          /></picture>
+        </figure>
+      </div>
+    </section>
+
+    <section class="dg-section" aria-labelledby="beat-2-title">
+      <div class="dg-grid-2 dg-grid-2--media-first">
+        <div class="dg-media-pair">
+          <figure
+            class="dg-media dg-media--square"
+            data-label="Detalle cotidiano · imagen temporal"
+          >
+            <picture
+              ><source
+                media="(max-width: 1023px)"
+                srcset="https://picsum.photos/seed/digizen-distance-mobile/1200/675" />
+              <img
+                src="https://picsum.photos/seed/digizen-distance-detail/760/760"
+                alt="Imagen temporal de un detalle cotidiano"
+                width="760"
+                height="760"
+                loading="lazy"
+            /></picture>
+          </figure>
+          <figure
+            class="dg-media dg-media--portrait"
+            data-label="Distancia y vacío · imagen temporal"
+          >
+            <img
+              src="https://picsum.photos/seed/digizen-distance-space/760/950"
+              alt="Imagen temporal de distancia emocional"
+              width="760"
+              height="950"
+              loading="lazy"
+            />
+          </figure>
+        </div>
+        <div>
+          <p class="dg-kicker">02 · La grieta</p>
+          <h2 id="beat-2-title" class="dg-h2">
+            <span class="dg-h2-muted">No es cuánto tiempo pasa en el celular.</span>Es que cada día
+            te mira menos.
+          </h2>
+          <div class="dg-copy">
+            <p>
+              Eso ya lo intentaste medir. Pusiste límites, negociaste "una hora y ya". Y el número
+              nunca fue el problema de verdad, ¿cierto?
+            </p>
+            <p>
+              Lo que de verdad te aprieta el pecho a las 11 de la noche no es el reporte de uso
+              semanal. Es esa cena donde levantas la vista y él está ahí… pero no está. Es cuando le
+              cuentas algo y contesta "ajá" sin despegar los ojos de la pantalla. Es esa distancia
+              chiquita que crece de a poco — hasta el día que te das cuenta de que ya casi no te
+              busca.
+            </p>
+            <p>Una mamá nos lo dijo así, y no se nos ha borrado:</p>
+          </div>
+          <div class="dg-pullquotes">
+            <blockquote class="dg-pullquote">
+              <p>"Ni siquiera me mira a los ojos."</p>
+              <cite>Una mamá</cite>
+            </blockquote>
+            <blockquote class="dg-pullquote">
+              <p class="mb-3! text-[13px]! font-medium! text-[var(--dg-muted)]!">
+                Y un niño, en otra parte, dijo esto — léelo despacio:
+              </p>
+              <p>"Mi mamá se ríe más cuando ve el celular que cuando está conmigo."</p>
+              <cite>Un niño</cite>
+            </blockquote>
+          </div>
+          <div class="dg-copy">
+            <p>
+              <strong
+                >Son los dos lados de la misma grieta. No estás perdiendo tiempo de pantalla. Lo
+                estás perdiendo a él.</strong
+              >
+              Y al mismo tiempo, sin que nadie lo note, se está volviendo alguien que deja que el
+              feed le diga quién es, qué quiere, qué vale — en un mundo que tú ya no controlas.
+            </p>
+          </div>
+          <div class="dg-cta-panel">
+            <p>¿Listo? Tu hijo empieza hoy mismo.</p>
+            <div class="dg-actions">
+              <button class="dg-btn" type="button" (click)="checkout()">
+                Inscribir a mi hijo — empieza hoy
+              </button>
+              <button class="dg-btn dg-btn--secondary" type="button" (click)="openAda()">
+                💬 Tengo dudas — conversar con ADA
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="decision-early" class="dg-decision" aria-label="Decisión después del beat 2">
+      <div class="dg-decision-copy">
+        <p class="dg-eyebrow">¿Ya viste suficiente?</p>
+        <p class="dg-decision-title">Tu hijo puede empezar hoy mismo.</p>
+        <p class="dg-support">Sin grupos, sin temporadas. Garantía 7 días — cancelas en un clic.</p>
+      </div>
+      <div class="dg-decision-actions">
+        <button class="dg-btn" type="button" (click)="checkout()">
+          Inscribir a mi hijo — empieza hoy</button
+        ><button class="dg-btn dg-btn--secondary" type="button" (click)="openAda()">
+          💬 Tengo dudas — conversar con ADA
+        </button>
+      </div>
+    </section>
+
+    <section class="dg-section dg-section--grid" aria-labelledby="beat-3-title">
+      <p class="dg-kicker">03 · Evidencia</p>
+      <h2 id="beat-3-title" class="dg-h2">
+        <span class="dg-h2-muted">Bloquear no te lo devuelve.</span>Solo pospone el día en que tenga
+        que decidir solo — sin ti.
+      </h2>
+      <div class="dg-copy">
+        <p>
+          Aquí va la verdad incómoda que <strong>ninguna app de control te va a admitir</strong>,
+          porque viven de que no la sepas: <strong>el candado caduca. Siempre.</strong> Y no es
+          opinión. Mira la evidencia — y dime si no la viviste tú:
+        </p>
+      </div>
+      <div class="dg-evidence">
+        <div>
+          <div class="dg-accordion">
+            <details open>
+              <summary>
+                <span class="dg-accordion-title"
+                  ><span class="dg-index">01</span>El candado que ya abrió.</span
+                ><svg class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
+                  <path
+                    d="m5 7.5 5 5 5-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                  ></path>
+                </svg>
+              </summary>
+              <p class="dg-accordion-body">
+                Se lo quitaste, le pusiste contraseña, y
+                <em>"en dos días encontró cómo saltárselo."</em> No fue mala suerte. Tu hijo tiene
+                todo el día para resolver un acertijo que tú revisas dos minutos en la noche.
+              </p>
+            </details>
+            <details>
+              <summary>
+                <span class="dg-accordion-title"
+                  ><span class="dg-index">02</span>"Tengo Family Link y aun así se le va de las
+                  manos."</span
+                ><svg class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
+                  <path
+                    d="m5 7.5 5 5 5-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                  ></path>
+                </svg>
+              </summary>
+              <p class="dg-accordion-body">
+                Lo escuchamos una y otra vez. El candado aguanta unas semanas, y luego un tutorial
+                de YouTube, un perfil nuevo, el celular de un amigo — y se acabó. La app sigue
+                cobrándote. El control ya no existe.
+              </p>
+            </details>
+            <details>
+              <summary>
+                <span class="dg-accordion-title"
+                  ><span class="dg-index">03</span>Las apps de control viven del candado — y ninguna
+                  admite que se abre.</span
+                ><svg class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
+                  <path
+                    d="m5 7.5 5 5 5-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                  ></path>
+                </svg>
+              </summary>
+              <p class="dg-accordion-body">
+                Su negocio es venderte la ilusión de muralla, no resolverte el problema. Tú no
+                fracasaste con la herramienta: la herramienta está diseñada para fracasar contigo
+                adentro.
+              </p>
+            </details>
+            <details>
+              <summary>
+                <span class="dg-accordion-title"
+                  ><span class="dg-index">04</span>La ventana se está cerrando.</span
+                ><svg class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
+                  <path
+                    d="m5 7.5 5 5 5-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                  ></path>
+                </svg>
+              </summary>
+              <p class="dg-accordion-body">
+                Tu hijo tiene entre 8 y 17 — la ventana en la que todavía te escucha más que al
+                feed. Cada mes peleando con el candado es un mes que no pasas enseñándole a pensar.
+                El control no detiene el reloj; lo acelera, porque te tiene de policía en vez de
+                papá.
+              </p>
+            </details>
+          </div>
+          <div class="dg-copy">
+            <p>
+              Bloquearle el mundo digital es como no dejarlo cruzar nunca la calle. Lo cuidas de los
+              coches… hasta el día en que tiene que cruzar solo, parado en la esquina, sin saber
+              mirar a los dos lados — porque nadie le enseñó. Solo le dijeron "no cruces".
+            </p>
+          </div>
+          <blockquote class="dg-quote">
+            Ese día va a llegar. La pregunta es una sola: ¿va a cruzar sabiendo mirar… o a ciegas?
+          </blockquote>
+        </div>
+        <aside class="dg-sticky" aria-label="Resumen de precio">
+          <div class="dg-price-mini">
+            <p class="dg-eyebrow">Generación Fundadora</p>
+            <p class="dg-price">$5,990</p>
+            <p class="dg-support">ciclo completo · hasta 12 MSI</p>
+            <ul class="dg-checks">
+              <li><span>✓</span>ADA mentor personal — todo el ciclo</li>
+              <li><span>✓</span>Tu boleta de progreso</li>
+              <li><span>✓</span>SAFE gratis todo el ciclo</li>
+              <li><span>✓</span>Precio fundador congelado</li>
+            </ul>
+            <button class="dg-btn w-full mt-5" type="button" (click)="checkout()">
+              Inscribir a mi hijo — empieza hoy
+            </button>
+          </div>
+          <div class="dg-cta-panel mt-0">
+            <p class="dg-eyebrow">O mes a mes</p>
+            <p class="dg-price text-3xl">
+              $599 <span class="text-sm font-medium tracking-normal">/mes</span>
+            </p>
+            <p class="dg-support">+ $900 inscripción única</p>
+            <button class="dg-btn dg-btn--secondary w-full mt-4" type="button" (click)="openAda()">
+              💬 Conversa con ADA primero
+            </button>
+          </div>
+          <p class="dg-support text-center">
+            Garantía 7 días · cancelas en un clic · sin letras chicas
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="dg-section dg-section--violet" aria-labelledby="beat-4-title">
+      <div class="dg-grid-2 dg-grid-2--media-first">
+        <div
+          class="dg-criteria-visual"
+          data-criteria-visual
+          aria-label="Diagrama conceptual del feed al criterio"
+        >
+          <div class="dg-orbit"></div>
+          <div class="dg-orbit dg-orbit--two"></div>
+          <div class="dg-feed-labels">
+            <span>Feed · impulso</span><span>Pausa · pregunta</span><span>Criterio · decisión</span>
+          </div>
+          <div class="dg-criteria-node">Esto me sirve<br />¿o me usa?</div>
+        </div>
+        <div>
+          <p class="dg-kicker">04 · La alternativa</p>
+          <h2 id="beat-4-title" class="dg-h2">
+            <span class="dg-h2-muted">No se trata de ganarle a la pantalla.</span>Se trata de un
+            criterio que la pantalla no pueda comprar.
+          </h2>
+          <div class="dg-copy">
+            <p>
+              No vas a ganar esa pelea. Nadie la gana — y tratar de ganarla es lo que te tiene
+              agotado.
+            </p>
+            <p>
+              Se trata de algo mucho más fuerte:
+              <strong>un criterio que la pantalla no le pueda comprar.</strong> Que cuando el feed
+              le grite <em>"esto eres tú, esto deberías querer, esto deberías ser"</em>, él tenga
+              algo adentro que conteste:
+              <em>"a ver… ¿es cierto? ¿esto me sirve a mí, o me está usando?"</em>. Eso es criterio.
+              Eso no caduca. Lo acompaña a los 13, a los 17, a los 25 — y a un mundo que ni tú ni yo
+              podemos imaginar todavía.
+            </p>
+          </div>
+          <blockquote class="dg-quote">El control caduca. El criterio no.</blockquote>
+          <div class="dg-copy">
+            <p>
+              Y hoy eso pesa más que nunca. En un mundo donde la inteligencia artificial ya hace
+              casi todo,
+              <strong
+                >el criterio —saber decidir qué es verdad, qué vale, qué le sirve— es de las pocas
+                cosas que ninguna máquina va a hacer por él.</strong
+              >
+              Es justo lo que el mundo que viene va a premiar… y justo lo que la escuela no le está
+              enseñando.
+            </p>
+            <p>
+              Y no se enseña con un sermón en la mesa que él ya dejó de oír. Se enseña
+              <strong>conversando, en su idioma</strong> — no a la fuerza, no con una "plática
+              seria" de domingo.
+            </p>
+            <p>
+              Y aquí está lo que no te esperas: cuando le enseñas a mirar a los dos lados antes de
+              cruzar, <strong>algo más pasa. Vuelve a mirarte a ti.</strong> Porque deja de ser
+              tú-contra-la-pantalla. Se vuelven ustedes dos, del mismo lado. El criterio que lo
+              protege es el mismo puente que te lo regresa.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="ada"
+      data-nav-section="ada"
+      class="dg-section dg-section--grid"
+      aria-labelledby="beat-5-title"
+    >
+      <div class="grid gap-10 xl:grid-cols-[1.35fr_.9fr] items-start">
+        <div>
+          <p class="dg-kicker">05 · ADA</p>
+          <h2 id="beat-5-title" class="dg-h2">
+            <span class="dg-h2-muted">Esto se llama ADA.</span>No es una app de control — es lo
+            contrario.
+          </h2>
+          <div class="dg-copy">
+            <p>
+              Tu hijo entra a <strong>Gnius Space</strong> y ahí trabaja con <strong>ADA</strong>:
+              un copiloto que conversa con él en su idioma, no un salón de clases ni un curso-bot
+              que le suelta tareas. No es un Kumon digital. Y no es un vigilante metido en su
+              celular espiando sus chats — eso rompería su confianza, y la tuya.
+            </p>
+            <p>
+              Es un lugar al que va a <strong>entrenar su criterio</strong>. ADA lo lleva,
+              conversando, a ver cómo funciona por dentro lo digital: cómo un video está hecho para
+              convencerlo, por qué el feed lo jala, qué siente antes y después de scrollear. En vez
+              de prohibirle, le enseña a preguntarse
+              <em>"¿quién hizo esto y qué quiere de mí?"</em> y
+              <em>"¿esto me sirve, o me está usando?"</em>. Lo que construye ahí adentro
+              <strong>se lo lleva puesto</strong> a sus juegos, sus chats, su vida — y empieza a
+              cruzar de <em>"yo soy el feed"</em> a <em>"yo no soy el feed; lo uso a mi favor."</em>
+            </p>
+            <p>
+              Y te lo digo derecho, porque te respeto:
+              <strong>ADA está viva y está creciendo.</strong> Tu hijo empieza con ella el día que
+              lo inscribas — y ustedes, la Generación Fundadora, la moldean: lo que tu familia
+              necesite se construye primero. No te pido que confíes en una promesa bonita —
+              <strong>habla con ella hoy</strong> y júzgala tú mismo. Lo que ADA hace, te lo
+              mostramos antes de que pagues un peso.
+            </p>
+          </div>
+        </div>
+        <div>
+          <figure class="dg-product" aria-label="Vista esquemática del producto ADA">
+            <div class="dg-product-window">
+              <div class="dg-product-top">
+                <div class="dg-ada-avatar">ADA</div>
+                <div class="dg-product-line w-3/5"></div>
+              </div>
+              <div class="dg-bubbles">
+                <div class="dg-bubble dg-bubble--user"></div>
+                <div class="dg-bubble"></div>
+                <div class="dg-bubble dg-bubble--user"></div>
+                <div class="dg-bubble"></div>
+              </div>
+              <div class="dg-input"></div>
+            </div>
+            <figcaption class="dg-support text-center">Vista de producto · chat ADA</figcaption>
+          </figure>
+          <form
+            class="dg-form"
+            (submit)="$event.preventDefault()"
+            aria-label="Formulario Conversa con ADA"
+          >
+            <h3 class="dg-h3 text-lg">Conversa con ADA</h3>
+            <p class="dg-support">Formulario de datos del adulto.</p>
+            <label class="dg-label"
+              >Nombre del papá o mamá<input
+                class="dg-input"
+                name="name"
+                autocomplete="name"
+                placeholder="Tu nombre"
+            /></label>
+            <fieldset class="mt-4 border-0 p-0">
+              <legend class="dg-label mt-0">Canal de entrega</legend>
+              <div class="dg-channel">
+                <button
+                  type="button"
+                  (click)="setChannel('correo')"
+                  [attr.aria-pressed]="channel() === 'correo'"
+                >
+                  Correo</button
+                ><button
+                  type="button"
+                  (click)="setChannel('whatsapp')"
+                  [attr.aria-pressed]="channel() === 'whatsapp'"
+                >
+                  WhatsApp
+                </button>
+              </div>
+            </fieldset>
+            <label class="dg-label"
+              >{{ channel() === 'correo' ? 'Correo electrónico' : 'Número de WhatsApp'
+              }}<input
+                class="dg-input"
+                [type]="channel() === 'correo' ? 'email' : 'tel'"
+                [autocomplete]="channel() === 'correo' ? 'email' : 'tel'"
+                [placeholder]="
+                  channel() === 'correo' ? 'tu@correo.com' : '+52 55 0000 0000'
+                " /></label
+            ><button class="dg-btn w-full mt-4" type="button">💬 Conversa con ADA</button>
+            <p class="dg-support">Se manda la liga de acceso; no abre WhatsApp directo.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="seguridad"
+      data-nav-section="seguridad"
+      class="dg-section"
+      aria-labelledby="beat-55-title"
+    >
+      <div>
+        <div class="dg-safety-intro">
+          <div class="max-w-[78ch]">
+            <p class="dg-kicker">05.5 · Seguridad por diseño</p>
+            <h2 id="beat-55-title" class="dg-h2">
+              <span class="dg-h2-muted">"¿Una IA hablando con mi hijo?"</span>— Sí. Hablemos de eso
+              de frente.
+            </h2>
+            <div class="dg-copy">
+              <p>
+                Si leíste las noticias del año pasado — el caso del chico de 14, los chatbots sin
+                frenos — y algo en ti se cerró al leer "IA",
+                <strong>tienes razón en desconfiar.</strong> Nosotros también las leímos. Por eso
+                ADA existe.
+              </p>
+              <p>
+                Esas tragedias pasaron en apps de <em>compañeros románticos de rol</em>, diseñadas
+                para engancharlo sin límite — la categoría que los expertos declararon inaceptable
+                para menores, y que hasta sus propios fabricantes ya cerraron a menores de 18.
+              </p>
+              <p>
+                Pero aquí está el dato que cambia la pregunta:
+                <strong
+                  >7 de cada 10 adolescentes YA conversan con inteligencias artificiales</strong
+                >
+                — solos, sin reglas, en plataformas hechas para adultos. México es tercer lugar
+                mundial en adopción juvenil de IA. La pregunta dejó de ser
+                <em>"¿IA sí o no?"</em>. La pregunta real es:
+                <strong>¿IA salvaje, o IA con reglas y contigo en el circuito?</strong>
+              </p>
+              <p><strong>ADA es lo segundo, por diseño:</strong></p>
+            </div>
+          </div>
+          <figure
+            class="dg-media dg-safety-image"
+            data-label="Seguridad y acompañamiento · imagen temporal"
+          >
+            <img
+              src="https://picsum.photos/seed/digizen-ai-safety/900/1200"
+              alt="Imagen temporal para el bloque de seguridad de ADA"
+              width="900"
+              height="1200"
+              loading="lazy"
+            />
+          </figure>
+        </div>
+        <div class="dg-guard-grid" aria-label="Cuatro principios de seguridad de ADA">
+          <article class="dg-card" style="--accent: var(--dg-coral)">
+            <div class="dg-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="5" y="10" width="14" height="11" rx="2"></rect>
+                <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+              </svg>
+            </div>
+            <span class="dg-index">01</span>
+            <h3>Cero rol romántico. Cero secretos peligrosos.</h3>
+            <p>
+              Sus reglas están escritas y las puedes leer — se llaman
+              <strong>Las Reglas de ADA</strong>, y son públicas.
+            </p>
+          </article>
+          <article class="dg-card" style="--accent: var(--dg-cyan)">
+            <div class="dg-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="7" r="3"></circle>
+                <path d="M5 21a7 7 0 0 1 14 0M3 12h4M17 12h4"></path>
+              </svg>
+            </div>
+            <span class="dg-index">02</span>
+            <h3>Tú estás en el circuito:</h3>
+            <p>
+              recibes su avance (qué está construyendo, qué está aprendiendo a decidir) — sin espiar
+              sus conversaciones, porque un hijo espiado deja de hablar.
+            </p>
+          </article>
+          <article class="dg-card" style="--accent: var(--dg-gold)">
+            <div class="dg-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 7v5l3 2"></path>
+              </svg>
+            </div>
+            <span class="dg-index">03</span>
+            <h3>Con límites de sesión por diseño.</h3>
+            <p>ADA no quiere sus horas; quiere su criterio.</p>
+          </article>
+          <article class="dg-card" style="--accent: var(--dg-green)">
+            <div class="dg-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12 5 5L20 6"></path></svg>
+            </div>
+            <span class="dg-index">04</span>
+            <h3>
+              Es, palabra por palabra, lo que la propia Policía Cibernética recomienda a los papás:
+            </h3>
+            <p>
+              usar versiones diseñadas para menores, con filtros y supervisión — en vez de la IA
+              abierta que tu hijo ya usa hoy.
+            </p>
+          </article>
+        </div>
+      </div>
+      <div
+        class="grid gap-8 mt-12 pt-10 border-t border-[var(--dg-line)] lg:grid-cols-[1.4fr_.8fr] items-start"
+      >
+        <div>
+          <h3 class="dg-h3">Y la prueba no te la pedimos por fe: habla TÚ con ADA primero.</h3>
+          <div class="dg-copy mt-4">
+            <p>
+              Déjanos tus datos y te mandamos tu acceso en un minuto — al correo o a tu WhatsApp,
+              como prefieras. Interrógala. Trata de sacarla de sus reglas. Pregúntale lo que un niño
+              le preguntaría. Pregúntale el precio, si quieres — te lo va a decir derecho. Nadie más
+              en este mercado te deja auditar a la IA de tu hijo antes de pagar — nosotros la
+              ponemos por delante.
+            </p>
+          </div>
+        </div>
+        <figure class="dg-media aspect-[4/3]" data-label="ADA + cuatro guardas · imagen temporal">
+          <img
+            src="https://picsum.photos/seed/digizen-ada-guards/900/675"
+            alt="Imagen temporal para el diagrama de límites de ADA"
+            width="900"
+            height="675"
+            loading="lazy"
+          />
+        </figure>
+      </div>
+    </section>
+
+    <section class="dg-decision" aria-label="Decisión después del bloque de seguridad de ADA">
+      <div class="dg-decision-copy">
+        <p class="dg-eyebrow">Antes de decidir</p>
+        <p class="dg-decision-title">
+          Y la prueba no te la pedimos por fe: habla TÚ con ADA primero.
+        </p>
+        <p class="dg-support">
+          Déjanos tus datos y te mandamos tu acceso en un minuto — al correo o a tu WhatsApp, como
+          prefieras.
+        </p>
+      </div>
+      <div class="dg-decision-actions">
+        <button class="dg-btn" type="button" (click)="openAda()">💬 Conversa con ADA</button
+        ><button class="dg-btn dg-btn--secondary" type="button" (click)="checkout()">
+          Inscribir a mi hijo — empieza hoy
+        </button>
+      </div>
+    </section>
+
+    <section class="dg-section" aria-labelledby="beat-6-title">
+      <div class="dg-grid-2">
+        <div>
+          <p class="dg-kicker">06 · Presencia</p>
+          <h2 id="beat-6-title" class="dg-h2">
+            <span class="dg-h2-muted">Tu hijo no necesita que le quites el celular.</span>Necesita
+            verte presente.
+          </h2>
+          <div class="dg-copy">
+            <p>
+              Esto es lo más importante: no es una app que instalas en su cuarto y te olvidas.
+              <strong>Los incluye a los dos.</strong>
+            </p>
+            <p>
+              Tú no quedas afuera vigilando. Quedas adentro, del lado de tu hijo, enseñándole a
+              cruzar mientras todavía puedes caminar a su lado. No vienes a controlarlo. Vienes a
+              volver a mirarlo a los ojos — y a que él vuelva a mirarte a ti. Presencia, no
+              vigilancia. Criterio, no candado. Los dos, no él solo contra el feed.
+            </p>
+          </div>
+        </div>
+        <figure
+          class="dg-media dg-media--portrait"
+          data-label="Acuerdo y presencia · imagen temporal"
+        >
+          <picture
+            ><source
+              media="(max-width:1023px)"
+              srcset="https://picsum.photos/seed/digizen-presence-mobile/1200/675" />
+            <img
+              src="https://picsum.photos/seed/digizen-presence/800/1000"
+              alt="Imagen temporal para el acuerdo familiar"
+              width="800"
+              height="1000"
+              loading="lazy"
+          /></picture>
+        </figure>
+      </div>
+    </section>
+
+    <section class="dg-section dg-section--grid" aria-labelledby="founder-title">
+      <p class="dg-kicker">Generación Fundadora</p>
+      <h2 id="founder-title" class="dg-h2">Inscríbelo hoy — Generación Fundadora</h2>
+      <div class="dg-copy">
+        <p>
+          Y aquí va algo que ninguna otra actividad de tu hijo puede ofrecerte:
+          <strong>no hay grupo que esperar, ni temporada, ni lista.</strong> Pagas hoy, y ADA se
+          presenta con tu hijo hoy mismo. Su ciclo de 12 meses empieza el día que ustedes deciden —
+          no el día que a un calendario le conviene.
+        </p>
+        <p>
+          Los de la Generación Fundadora (los que entran antes del <strong>31 de octubre</strong>)
+          reciben:
+        </p>
+      </div>
+      <div class="dg-feature-grid">
+        <article class="dg-card" style="--accent: var(--dg-cyan)">
+          <h3>Precio fundador, congelado en tu reinscripción</h3>
+          <p>
+            — el de hoy, mientras sigas. Después del 31 de octubre, el precio sube para los que
+            lleguen tarde.
+          </p>
+        </article>
+        <article class="dg-card" style="--accent: var(--dg-violet)">
+          <h3>Voz directa en el producto:</h3>
+          <p>nos dices qué necesita tu hijo, y eso se construye primero.</p>
+        </article>
+        <article class="dg-card" style="--accent: var(--dg-green)">
+          <h3>La puerta abierta antes de pagar:</h3>
+          <p>conversa con ADA las veces que quieras — la decisión la tomas ya conociéndola.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="oferta" data-nav-section="oferta" class="dg-section" aria-labelledby="offer-title">
+      <p class="dg-kicker">Oferta · Ciclo Digizen</p>
+      <h2 id="offer-title" class="dg-h2">
+        Inscripción · Ciclo Digizen — tus 12 meses empiezan HOY
+      </h2>
+      <div class="dg-copy">
+        <p>
+          Doce meses, no diez: <strong>el verano va incluido</strong>, porque el feed no sale de
+          vacaciones — y es justo cuando tu hijo más lo necesita. Y empiezan hoy: sin esperar
+          arranques, grupos ni temporadas.
+        </p>
+      </div>
+      <h3 class="dg-h3 mt-10">Tu inscripción fundadora incluye:</h3>
+      <div class="dg-inclusion-grid">
+        <article class="dg-card" style="--accent: var(--dg-violet)">
+          <div class="dg-icon">✦</div>
+          <h3>ADA, su mentor personal</h3>
+          <p>
+            uno a uno, en su idioma, todo el ciclo. Un mentor así es imposible con humanos a
+            cualquier precio; hoy es posible gracias a la IA.
+          </p>
+        </article>
+        <article class="dg-card" style="--accent: var(--dg-blue)">
+          <div class="dg-icon">↗</div>
+          <h3>Tu boleta de progreso</h3>
+          <p>ves su avance sin vigilarlo.</p>
+        </article>
+        <article class="dg-card" style="--accent: var(--dg-cyan)">
+          <div class="dg-icon">◇</div>
+          <h3>SAFE gratis todo el ciclo</h3>
+          <p>los microcursos de Gnius Club para papás (seguridad y vida digital en familia).</p>
+        </article>
+        <article class="dg-card" style="--accent: var(--dg-gold)">
+          <div class="dg-icon">★</div>
+          <h3>Código de descuento en Alquimistas de I.A.</h3>
+          <p>
+            el curso de competencias de IA para profesionistas, para TI. Tu hijo entrena criterio;
+            tú entrenas tu ventaja.
+          </p>
+        </article>
+        <article class="dg-card" style="--accent: var(--dg-green)">
+          <div class="dg-icon">✓</div>
+          <h3>Precio fundador congelado en tu reinscripción.</h3>
+          <p>Nunca te sube mientras sigas.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="dg-section" aria-labelledby="payment-title">
+      <p class="dg-kicker">Una oferta · tres modalidades</p>
+      <h2 id="payment-title" class="dg-h2">
+        Contado o a meses sin intereses — mismo precio, tú eliges cómo.
+      </h2>
+      <div class="dg-pricing-grid">
+        <article class="dg-pricing-card">
+          <p class="dg-eyebrow">Plan mensual</p>
+          <h3 class="dg-price-title">¿Prefieres ir mes a mes?</h3>
+          <p class="dg-price">$599 <span class="text-sm font-medium tracking-normal">/mes</span></p>
+          <p class="dg-price-copy">
+            + inscripción única de $900 (se abona completa si después subes al ciclo).
+          </p>
+          <div class="dg-comparison">
+            <p class="dg-caption">Ventaja</p>
+            <p class="dg-detail">¿Prefieres ir mes a mes?</p>
+            <p class="dg-caption">Consideración</p>
+            <p class="dg-detail">12×$599 + inscripción = $8,088</p>
+          </div>
+          <button class="dg-btn" type="button" (click)="checkout('mensual')">
+            Inscribir a mi hijo — empieza hoy
+          </button>
+        </article>
+        <article class="dg-pricing-card dg-pricing-card--featured">
+          <p class="dg-eyebrow">Generación Fundadora</p>
+          <h3 class="dg-price-title">Inscripción · Ciclo Digizen</h3>
+          <p class="dg-price">$5,990</p>
+          <p class="dg-price-copy">
+            por el ciclo completo — hasta 12 meses sin intereses con tarjeta.
+          </p>
+          <p class="dg-price-highlight">$499/mes efectivo a 12 MSI</p>
+          <div class="dg-comparison">
+            <p class="dg-caption">Ventaja</p>
+            <p class="dg-detail">
+              El ciclo te ahorra $2,098 vs ir mes a mes: dos meses gratis y la inscripción va
+              incluida.
+            </p>
+            <p class="dg-caption">Consideración</p>
+            <p class="dg-detail">hasta 12 meses sin intereses con tarjeta.</p>
+          </div>
+          <button class="dg-btn" type="button" (click)="checkout('ciclo-msi')">
+            Inscribir a mi hijo — empieza hoy
+          </button>
+        </article>
+        <article class="dg-pricing-card">
+          <p class="dg-eyebrow">Ciclo Digizen</p>
+          <h3 class="dg-price-title">Contado</h3>
+          <p class="dg-price">$5,990</p>
+          <p class="dg-price-copy">por el ciclo completo.</p>
+          <div class="dg-comparison">
+            <p class="dg-caption">Ventaja</p>
+            <p class="dg-detail">Contado o a meses sin intereses — mismo precio, tú eliges cómo.</p>
+            <p class="dg-caption">Consideración</p>
+            <p class="dg-detail">$5,990 por el ciclo completo.</p>
+          </div>
+          <button class="dg-btn" type="button" (click)="checkout('contado')">
+            Inscribir a mi hijo — empieza hoy
+          </button>
+        </article>
+      </div>
+      <div class="dg-guarantee">
+        Y una garantía que nadie más da: si tu hijo no la usa 7 días seguidos, no pagas. Sin letras
+        chicas: sin llamadas de venta, cancelas en un clic.
+      </div>
+    </section>
+
+    <section class="dg-section" aria-labelledby="closure-title">
+      <p class="dg-kicker">La decisión</p>
+      <h2 id="closure-title" class="dg-h2">El riesgo lo cargamos nosotros, no tú.</h2>
+      <div class="dg-copy">
+        <p>
+          Y el riesgo lo cargamos nosotros, no tú:
+          <strong>si tu hijo no la usa 7 días seguidos, no pagas.</strong> Sin llamadas de venta.
+          Cancelas en un clic. Sin letras chicas.
+        </p>
+        <p>
+          Piénsalo con la cabeza fría: de un lado, una inscripción con garantía que te protege —
+          riesgo real, casi cero. Del otro, otro año peleando con un candado que ya sabes que se
+          abre, mientras la única ventana en que tu hijo te escucha se cierra un día más.
+        </p>
+      </div>
+      <blockquote class="dg-quote">
+        No inscribirlo también es una decisión. Es la que no tiene garantía.
+      </blockquote>
+      <div class="dg-copy">
+        <p>
+          <em
+            >El día en que tenga que cruzar solo va a llegar. Esto es para que sepa mirar a los dos
+            lados — y para que cuando levante la vista, tú sigas ahí.</em
+          >
+        </p>
+      </div>
+    </section>
+
+    <section class="dg-decision" aria-label="Decisión final">
+      <div class="dg-decision-copy">
+        <p class="dg-eyebrow">La decisión final</p>
+        <p class="dg-decision-title">
+          No inscribirlo también es una decisión. Es la que no tiene garantía.
+        </p>
+        <p class="dg-support">
+          El día en que tenga que cruzar solo va a llegar. Esto es para que sepa mirar a los dos
+          lados — y para que cuando levante la vista, tú sigas ahí.
+        </p>
+      </div>
+      <div class="dg-decision-actions">
+        <button class="dg-btn" type="button" (click)="checkout()">
+          Inscribir a mi hijo — empieza hoy</button
+        ><button class="dg-btn dg-btn--secondary" type="button" (click)="openAda()">
+          💬 Tengo dudas — conversar con ADA
+        </button>
+      </div>
+    </section>
+
+    <section class="dg-section" aria-labelledby="pending-title">
+      <p class="dg-kicker">Información pública</p>
+      <h2 id="pending-title" class="dg-h2">Preguntas frecuentes y legales</h2>
+      <div class="dg-pending">
+        <details>
+          <summary>FAQ / objeción de precio <span>+</span></summary>
+          <p>Contenido pendiente de fuente aprobada.</p>
+        </details>
+        <details>
+          <summary>Las Reglas de ADA <span>+</span></summary>
+          <p>Contenido pendiente de fuente aprobada.</p>
+        </details>
+        <details>
+          <summary>Privacidad, términos y soporte <span>+</span></summary>
+          <p>Contenido pendiente de fuente aprobada.</p>
+        </details>
+      </div>
+      <footer class="dg-footer">DIGIZEN · Presencia, no vigilancia. Criterio, no candado.</footer>
+    </section>
+  </main>
+
+  <div
+    class="dg-mobile-cta"
+    [class.is-visible]="mobileCtaVisible()"
+    role="region"
+    aria-label="Acción rápida"
+  >
+    @if (mobileCtaMode() === 'ada') {
+      <button class="dg-btn" type="button" (click)="openAda()">💬 Conversa con ADA</button>
+    } @else {
+      <button class="dg-btn" type="button" (click)="checkout()">Inscribir a mi hijo</button>
+    }
+    <button
+      class="dg-mobile-cta-close"
+      type="button"
+      (click)="closeMobileCta()"
+      aria-label="Cerrar acción rápida"
+    >
+      ×
+    </button>
+  </div>
+
+  <dialog #adaDialog class="dg-dialog" (click)="$event.target === adaDialog && closeAda()">
+    <div class="dg-dialog-inner">
+      <div class="dg-dialog-head">
+        <div>
+          <p class="dg-kicker">Antes de pagar</p>
+          <h2 class="dg-h3">Conversa con ADA</h2>
+          <p class="dg-support">Formulario de datos del adulto.</p>
+        </div>
+        <button class="dg-dialog-close" type="button" (click)="closeAda()" aria-label="Cerrar">
+          ×
+        </button>
+      </div>
+      <form (submit)="$event.preventDefault()">
+        <label class="dg-label"
+          >Nombre del papá o mamá<input
+            class="dg-input"
+            name="dialog-name"
+            autocomplete="name"
+            placeholder="Tu nombre"
+        /></label>
+        <fieldset class="mt-4 border-0 p-0">
+          <legend class="dg-label mt-0">Canal de entrega</legend>
+          <div class="dg-channel">
+            <button
+              type="button"
+              (click)="setChannel('correo')"
+              [attr.aria-pressed]="channel() === 'correo'"
+            >
+              Correo</button
+            ><button
+              type="button"
+              (click)="setChannel('whatsapp')"
+              [attr.aria-pressed]="channel() === 'whatsapp'"
+            >
+              WhatsApp
+            </button>
+          </div>
+        </fieldset>
+        <label class="dg-label"
+          >{{ channel() === 'correo' ? 'Correo electrónico' : 'Número de WhatsApp'
+          }}<input
+            class="dg-input"
+            [type]="channel() === 'correo' ? 'email' : 'tel'"
+            [autocomplete]="channel() === 'correo' ? 'email' : 'tel'"
+            [placeholder]="channel() === 'correo' ? 'tu@correo.com' : '+52 55 0000 0000'" /></label
+        ><button class="dg-btn w-full mt-5" type="button">💬 Conversa con ADA</button>
+        <p class="dg-support">Se manda la liga de acceso; no abre WhatsApp directo.</p>
+      </form>
+    </div>
+  </dialog>
+</div>
