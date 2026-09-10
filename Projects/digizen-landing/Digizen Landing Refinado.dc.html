@@ -66,6 +66,16 @@
     .pricing-card__caption + .pricing-card__caption { margin-top:16px; }
     .pricing-card__button { display:block; width:100%; margin-top:auto; padding:13px; border:1.5px solid #152033; border-radius:10px; background:#152033; color:#fff; font:700 12px/1 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing:.055em; text-transform:uppercase; cursor:pointer; will-change:transform; touch-action:manipulation; user-select:none; }
     .pricing-card--featured .pricing-card__button { border-color:#fff; background:#fff; color:#152033; }
+    /* Narrative sections: at tablet and below, media becomes a full-width horizontal pause before the argument. */
+    @media (max-width:1023px) {
+      .responsive-narrative-split { flex-direction:column !important; align-items:stretch !important; gap:28px !important; }
+      .responsive-narrative-split > * { flex:none !important; width:100% !important; }
+      .responsive-beat-1 > figure { order:-1 !important; aspect-ratio:16/9 !important; }
+      .responsive-beat-2 > :first-child { order:-1 !important; display:grid !important; grid-template-columns:1fr; width:100% !important; gap:12px !important; }
+      .responsive-beat-2 > :first-child figure { width:100%; aspect-ratio:16/9 !important; }
+      .responsive-beat-2 .beat-2-secondary-media { display:none !important; }
+      .responsive-beat-4 > figure { aspect-ratio:16/9 !important; }
+    }
     @media (max-width:767px) {
       main { padding:76px 10px 40px !important; gap:12px !important; }
       main > section { padding:28px 18px !important; border-radius:12px !important; }
@@ -126,7 +136,7 @@
 
   <!-- 02 · BEAT 1 -->
   <section data-section aria-labelledby="beat-1-title" style="background:#fff; padding:56px; border-radius:16px; border:1px solid #E8EDF3; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
-    <div style="display:flex; flex-wrap:wrap; gap:48px; align-items:flex-start;">
+    <div class="responsive-narrative-split responsive-beat-1" style="display:flex; flex-wrap:wrap; gap:48px; align-items:flex-start;">
       <div style="flex:1.5; min-width:320px;">
         <h2 id="beat-1-title" style="margin:0; max-width:22ch; font-size:clamp(1.9rem,3.3vw,3.4rem); font-weight:800; line-height:1.08; letter-spacing:-0.045em; color:#152033;">
           <span style="display:block; font-weight:600; color:#8B98AA; letter-spacing:-0.03em;">Nadie te enseñó esto.</span>
@@ -151,13 +161,13 @@
 
   <!-- 03 · BEAT 2 -->
   <section data-section aria-labelledby="beat-2-title" style="background:#fff; padding:56px; border-radius:16px; border:1px solid #E8EDF3; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
-    <div style="display:flex; flex-wrap:wrap; gap:48px; align-items:flex-start;">
+    <div class="responsive-narrative-split responsive-beat-2" style="display:flex; flex-wrap:wrap; gap:48px; align-items:flex-start;">
       <div style="flex:1; min-width:220px; order:1; display:flex; flex-direction:column; gap:12px;">
         <figure style="margin:0; aspect-ratio:1; background:#EEF2F6; border-radius:12px; border:1px solid #E8EDF3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
           <span style="font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#8B98AA;">Imagen 01 · 1:1</span>
           <span style="font-size:10px; font-weight:500; color:#A0AEBB;">Detalle cotidiano</span>
         </figure>
-        <figure style="margin:0; aspect-ratio:4/5; background:#EEF2F6; border-radius:12px; border:1px solid #E8EDF3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
+        <figure class="beat-2-secondary-media" style="margin:0; aspect-ratio:4/5; background:#EEF2F6; border-radius:12px; border:1px solid #E8EDF3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
           <span style="font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#8B98AA;">Imagen 02 · 4:5</span>
           <span style="font-size:10px; font-weight:500; color:#A0AEBB;">Distancia / vacío</span>
         </figure>
@@ -293,7 +303,7 @@
 
   <!-- 05 · BEAT 4 -->
   <section data-section aria-labelledby="beat-4-title" style="background:#fff; padding:56px; border-radius:16px; border:1px solid #E8EDF3; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
-    <div style="display:flex; flex-wrap:wrap; gap:48px; align-items:flex-start;">
+    <div class="responsive-narrative-split responsive-beat-4" style="display:flex; flex-wrap:wrap; gap:48px; align-items:flex-start;">
       <figure style="flex:1; min-width:220px; margin:0; aspect-ratio:4/5; background:#EEF2F6; border-radius:12px; border:1px solid #E8EDF3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;">
         <div style="width:28px; height:2px; background:#C8D4DF; border-radius:2px;"></div>
         <span style="font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#8B98AA;">Visual conceptual</span>
