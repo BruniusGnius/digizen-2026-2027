@@ -9,13 +9,14 @@ import {
 } from '@angular/core';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { LucideHand } from '@lucide/angular';
 import { ThemeService } from './core/theme.service';
 
 type DeliveryChannel = 'correo' | 'whatsapp';
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [LucideHand],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
