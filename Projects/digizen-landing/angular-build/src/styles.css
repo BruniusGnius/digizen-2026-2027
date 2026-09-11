@@ -1,8 +1,11 @@
 @import 'tailwindcss';
+/* Inter variable alojada en el proyecto (licencia OFL); antes solo se veía si estaba instalada. */
+@import '@fontsource-variable/inter';
 
 @theme {
   --font-sans:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    'Inter Variable', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
   --breakpoint-md: 48rem;
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 70rem;
@@ -28,6 +31,7 @@
   --dg-gold: #ffc557;
   --dg-green: #35bd85;
   --dg-teal: #1f6b69;
+  --dg-kicker-ink: #1b5bd0;
   --dg-btn-bg: #6448ea;
   --dg-btn-ink: #ffffff;
   --dg-selected: rgba(49, 108, 255, 0.08);
@@ -67,6 +71,7 @@
   --dg-gold: #ffd477;
   --dg-green: #63d59f;
   --dg-teal: #5ccfc6;
+  --dg-kicker-ink: #75aaff;
   --dg-btn-bg: #a595ff;
   --dg-btn-ink: #140b33;
   --dg-selected: rgba(117, 170, 255, 0.12);
@@ -332,8 +337,8 @@ details > summary::-webkit-details-marker {
   margin: 0 0 18px;
   padding: 5px 11px 5px 9px;
   border-radius: 999px;
-  color: var(--dg-teal);
-  background: color-mix(in srgb, var(--dg-teal) 10%, var(--dg-raised));
+  color: var(--dg-kicker-ink);
+  background: color-mix(in srgb, var(--dg-blue) 10%, var(--dg-raised));
   font-size: 11px;
   font-weight: 850;
   letter-spacing: 0.11em;
@@ -344,7 +349,7 @@ details > summary::-webkit-details-marker {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--dg-teal);
+  background: var(--dg-blue);
   content: '';
 }
 .dg-display {
@@ -386,6 +391,12 @@ details > summary::-webkit-details-marker {
   font-size: clamp(1rem, 1.4vw, 1.12rem);
   font-weight: var(--dg-weight-lead);
   line-height: 1.58;
+}
+/* Lead del hero más grande que un párrafo, entre H3 y H2; conserva peso y color. */
+.dg-lead--h2 {
+  font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+  letter-spacing: -0.025em;
+  line-height: 1.25;
 }
 .dg-copy {
   max-width: 68ch;
@@ -1468,6 +1479,9 @@ details[open] .dg-chevron {
   }
   .dg-h2 {
     font-size: clamp(1.9rem, 10vw, 2.85rem);
+  }
+  .dg-lead--h2 {
+    font-size: clamp(1.3rem, 6vw, 1.6rem);
   }
   .dg-pullquotes,
   .dg-guard-grid,
