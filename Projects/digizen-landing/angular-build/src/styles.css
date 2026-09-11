@@ -680,6 +680,35 @@ blockquote.dg-note .dg-note-avatar svg {
   display: grid;
   gap: 10px;
 }
+.dg-decision--with-portrait {
+  overflow: visible;
+}
+@media (min-width: 1024px) {
+  .dg-decision--with-portrait {
+    padding-left: clamp(198px, 16vw, 242px);
+  }
+  .dg-decision-portrait {
+    position: absolute;
+    bottom: 0;
+    left: clamp(26px, 3vw, 48px);
+    width: clamp(195px, 16.9vw, 247px);
+    aspect-ratio: 1;
+    margin: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .dg-decision-portrait img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 150%;
+    max-width: none;
+    height: auto;
+  }
+  .dg-decision--with-portrait .dg-decision-copy {
+    padding-left: clamp(18px, 2vw, 30px);
+  }
+}
 .dg-eyebrow {
   margin: 0;
   color: var(--dg-blue);
@@ -761,7 +790,7 @@ blockquote.dg-note .dg-note-avatar svg {
 .dg-media-pair .dg-note--coral {
   margin-top: clamp(44px, 4vw, 64px);
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .dg-grid-2--media-first > .dg-media-pair {
     align-self: stretch;
     display: flex;
@@ -1548,6 +1577,23 @@ details[open] .dg-chevron {
   }
 }
 
+@media (max-width: 1023px) {
+  .dg-decision--with-portrait .dg-decision-portrait {
+    display: none;
+  }
+  .dg-grid-2--media-first > .dg-media-pair {
+    display: contents;
+  }
+  .dg-grid-2--media-first > .dg-media-pair > .dg-media {
+    order: 1;
+  }
+  .dg-grid-2--media-first > .dg-media-pair + div {
+    order: 2;
+  }
+  .dg-grid-2--media-first > .dg-media-pair > .dg-note--coral {
+    order: 3;
+  }
+}
 @media (max-width: 767px) {
   .dg-main {
     padding: 8px 10px 86px;
