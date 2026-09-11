@@ -510,52 +510,57 @@
             </div>
             <figcaption class="dg-support text-center">Vista de producto · chat ADA</figcaption>
           </figure>
-          <form
-            class="dg-form"
-            (submit)="$event.preventDefault()"
-            aria-label="Formulario Conversa con ADA"
-          >
-            <h3 class="dg-h3 text-lg">Conversa con ADA</h3>
-            <p class="dg-support">Formulario de datos del adulto.</p>
-            <label class="dg-label"
-              >Nombre del papá o mamá<input
-                class="dg-input"
-                name="name"
-                autocomplete="name"
-                placeholder="Tu nombre"
-            /></label>
-            <fieldset class="mt-4 border-0 p-0">
-              <legend class="dg-label mt-0">Canal de entrega</legend>
-              <div class="dg-channel">
-                <button
-                  type="button"
-                  (click)="setChannel('correo')"
-                  [attr.aria-pressed]="channel() === 'correo'"
-                >
-                  Correo</button
-                ><button
-                  type="button"
-                  (click)="setChannel('whatsapp')"
-                  [attr.aria-pressed]="channel() === 'whatsapp'"
-                >
-                  WhatsApp
-                </button>
-              </div>
-            </fieldset>
-            <label class="dg-label"
-              >{{ channel() === 'correo' ? 'Correo electrónico' : 'Número de WhatsApp'
-              }}<input
-                class="dg-input"
-                [type]="channel() === 'correo' ? 'email' : 'tel'"
-                [autocomplete]="channel() === 'correo' ? 'email' : 'tel'"
-                [placeholder]="
-                  channel() === 'correo' ? 'tu@correo.com' : '+52 55 0000 0000'
-                " /></label
-            ><button class="dg-btn w-full mt-4" type="button">💬 Conversa con ADA</button>
-            <p class="dg-support">Se manda la liga de acceso; no abre WhatsApp directo.</p>
-          </form>
         </div>
       </div>
+      <form
+        class="dg-form dg-ada-form-horizontal"
+        (submit)="$event.preventDefault()"
+        aria-label="Formulario Conversa con ADA"
+      >
+        <div class="dg-ada-form-intro">
+          <h3 class="dg-h3 text-lg">Conversa con ADA</h3>
+          <p class="dg-support">Formulario de datos del adulto.</p>
+        </div>
+        <fieldset class="border-0 p-0">
+          <legend class="dg-label mt-0">Canal de entrega</legend>
+          <div class="dg-channel">
+            <button
+              type="button"
+              (click)="setChannel('correo')"
+              [attr.aria-pressed]="channel() === 'correo'"
+            >
+              Correo</button
+            ><button
+              type="button"
+              (click)="setChannel('whatsapp')"
+              [attr.aria-pressed]="channel() === 'whatsapp'"
+            >
+              WhatsApp
+            </button>
+          </div>
+        </fieldset>
+        <label class="dg-label"
+          >Nombre del papá o mamá<input
+            class="dg-input"
+            name="name"
+            autocomplete="name"
+            placeholder="Tu nombre"
+        /></label>
+        <label class="dg-label"
+          >{{ channel() === 'correo' ? 'Correo electrónico' : 'Número de WhatsApp'
+          }}<input
+            class="dg-input"
+            [type]="channel() === 'correo' ? 'email' : 'tel'"
+            [autocomplete]="channel() === 'correo' ? 'email' : 'tel'"
+            [placeholder]="channel() === 'correo' ? 'tu@correo.com' : '+52 55 0000 0000'"
+        /></label>
+        <div class="dg-ada-form-action">
+          <button class="dg-btn w-full" type="button">💬 Conversa con ADA</button>
+        </div>
+        <p class="dg-support dg-ada-form-disclaimer">
+          Se manda la liga de acceso; no abre WhatsApp directo.
+        </p>
+      </form>
     </section>
 
     <section
