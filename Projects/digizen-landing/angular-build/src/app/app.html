@@ -1,45 +1,18 @@
 <div class="dg-shell">
   <header class="dg-header">
     <a class="dg-logo" href="#hero-title" aria-label="DIGIZEN, volver al inicio">
-      <img
-        class="dg-logo-light"
-        src="assets/digizen/logo-digizen-horizontal-light.svg"
-        alt="DIGIZEN"
-        width="520"
-        height="200"
-      />
-      <img
-        class="dg-logo-dark"
-        src="assets/digizen/logo-digizen-horizontal-dark.svg"
-        alt=""
-        width="520"
-        height="200"
-      />
+      <img class="dg-logo-light" src="assets/digizen/logo-digizen-horizontal-light.svg" alt="DIGIZEN" width="520"
+        height="200" />
+      <img class="dg-logo-dark" src="assets/digizen/logo-digizen-horizontal-dark.svg" alt="" width="520" height="200" />
     </a>
   </header>
 
-  <nav
-    class="dg-nav"
-    [class.is-scrolled]="navScrolled()"
-    [style.--nav-w]="navWidth()"
-    [style.--nav-reveal]="navReveal()"
-    aria-label="Navegación principal de Digizen"
-  >
+  <nav class="dg-nav" [class.is-scrolled]="navScrolled()" [style.--nav-w]="navWidth()"
+    [style.--nav-reveal]="navReveal()" aria-label="Navegación principal de Digizen">
     <a class="dg-logo dg-nav-logo" href="#hero-title" aria-label="DIGIZEN, volver al inicio">
-      <img
-        class="dg-logo-light"
-        src="assets/digizen/logo-digizen-horizontal-light.svg"
-        alt="DIGIZEN"
-        width="520"
-        height="200"
-      />
-      <img
-        class="dg-logo-dark"
-        src="assets/digizen/logo-digizen-horizontal-dark.svg"
-        alt=""
-        width="520"
-        height="200"
-      />
+      <img class="dg-logo-light" src="assets/digizen/logo-digizen-horizontal-light.svg" alt="DIGIZEN" width="520"
+        height="200" />
+      <img class="dg-logo-dark" src="assets/digizen/logo-digizen-horizontal-dark.svg" alt="" width="520" height="200" />
     </a>
     <div class="dg-nav-links" aria-label="Secciones de la landing">
       <a href="#problema" [class.active]="activeSection() === 'problema'">Problema</a>
@@ -47,27 +20,23 @@
       <a href="#seguridad" [class.active]="activeSection() === 'seguridad'">Seguridad IA</a>
       <a href="#oferta" [class.active]="activeSection() === 'oferta'">Oferta</a>
     </div>
-    <button
-      class="dg-theme"
-      type="button"
-      (click)="toggleTheme()"
-      [attr.aria-pressed]="theme.theme() === 'dark'"
-      [attr.aria-label]="theme.theme() === 'dark' ? 'Activar tema claro' : 'Activar tema oscuro'"
-    >
+    <button class="dg-theme" type="button" (click)="toggleTheme()" [attr.aria-pressed]="theme.theme() === 'dark'"
+      [attr.aria-label]="theme.theme() === 'dark' ? 'Activar tema claro' : 'Activar tema oscuro'">
       @if (theme.theme() === 'dark') {
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="12" r="4"></circle>
-          <path
-            d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
-          ></path>
-        </svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4">
+        </path>
+      </svg>
       } @else {
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20.2 15.2A8.4 8.4 0 0 1 8.8 3.8 8.4 8.4 0 1 0 20.2 15.2Z"></path>
-        </svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.2 15.2A8.4 8.4 0 0 1 8.8 3.8 8.4 8.4 0 1 0 20.2 15.2Z"></path>
+      </svg>
       }
     </button>
-    <a class="dg-btn" href="#oferta">Inscribir<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+    <a class="dg-btn" href="#oferta">Inscribir<svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6"></path>
+      </svg></a>
     <div class="dg-nav-progress" aria-hidden="true">
       <span [style.--progress]="progress()"></span>
     </div>
@@ -78,10 +47,12 @@
       <div class="dg-grid-2">
         <div>
           <h1 id="hero-title" class="dg-display">
-            Le quitaste el celular… con el tuyo en la mano.
+            Le quitaste el celular… <br>con el tuyo en la&nbsp;mano.
           </h1>
           <p class="dg-lead dg-lead--h2">
-            Y los dos sabemos cómo terminó: en dos días encontró cómo saltárselo —&nbsp;y tú seguiste sin
+            Y los dos sabemos cómo terminó:<br> <strong>en dos días encontró cómo saltárselo</strong><br> —&nbsp;y tú
+            seguiste
+            sin
             saber qué más hacer.
           </p>
           <div class="dg-note">
@@ -91,33 +62,17 @@
             </div>
           </div>
         </div>
-        <figure
-          class="dg-media dg-media--portrait"
-          data-label="Distancia sin culpa · imagen temporal"
-        >
+        <figure class="dg-media dg-media--portrait" data-label="Distancia sin culpa · imagen temporal">
           <picture>
-            <source
-              media="(max-width: 1023px)"
-              srcset="https://picsum.photos/seed/digizen-hero-mobile/1200/675"
-            />
-            <img
-              src="https://picsum.photos/seed/digizen-hero/896/1120"
-              alt="Imagen temporal para una escena familiar cotidiana"
-              width="896"
-              height="1120"
-              fetchpriority="high"
-            />
+            <source media="(max-width: 1023px)" srcset="https://picsum.photos/seed/digizen-hero-mobile/1200/675" />
+            <img src="https://picsum.photos/seed/digizen-hero/896/1120"
+              alt="Imagen temporal para una escena familiar cotidiana" width="896" height="1120" fetchpriority="high" />
           </picture>
         </figure>
       </div>
     </section>
 
-    <section
-      id="problema"
-      data-nav-section="problema"
-      class="dg-section"
-      aria-labelledby="beat-1-title"
-    >
+    <section id="problema" data-nav-section="problema" class="dg-section" aria-labelledby="beat-1-title">
       <div class="dg-grid-2">
         <div>
           <p class="dg-kicker">No estás solo</p>
@@ -151,21 +106,12 @@
             Suéltate la culpa. La vas a necesitar libre para lo que sigue.
           </blockquote>
         </div>
-        <figure
-          class="dg-media dg-media--portrait"
-          data-label="Alivio · gesto humano · imagen temporal"
-        >
-          <picture
-            ><source
-              media="(max-width: 1023px)"
-              srcset="https://picsum.photos/seed/digizen-relief-mobile/1200/675" />
-            <img
-              src="https://picsum.photos/seed/digizen-relief/800/1000"
-              alt="Imagen temporal para un gesto humano de acompañamiento"
-              width="800"
-              height="1000"
-              loading="lazy"
-          /></picture>
+        <figure class="dg-media dg-media--portrait" data-label="Alivio · gesto humano · imagen temporal">
+          <picture>
+            <source media="(max-width: 1023px)" srcset="https://picsum.photos/seed/digizen-relief-mobile/1200/675" />
+            <img src="https://picsum.photos/seed/digizen-relief/800/1000"
+              alt="Imagen temporal para un gesto humano de acompañamiento" width="800" height="1000" loading="lazy" />
+          </picture>
         </figure>
       </div>
     </section>
@@ -173,33 +119,17 @@
     <section class="dg-section" aria-labelledby="beat-2-title">
       <div class="dg-grid-2 dg-grid-2--media-first">
         <div class="dg-media-pair">
-          <figure
-            class="dg-media dg-media--square"
-            data-label="Detalle cotidiano · imagen temporal"
-          >
-            <picture
-              ><source
-                media="(max-width: 1023px)"
+          <figure class="dg-media dg-media--square" data-label="Detalle cotidiano · imagen temporal">
+            <picture>
+              <source media="(max-width: 1023px)"
                 srcset="https://picsum.photos/seed/digizen-distance-mobile/1200/675" />
-              <img
-                src="https://picsum.photos/seed/digizen-distance-detail/760/760"
-                alt="Imagen temporal de un detalle cotidiano"
-                width="760"
-                height="760"
-                loading="lazy"
-            /></picture>
+              <img src="https://picsum.photos/seed/digizen-distance-detail/760/760"
+                alt="Imagen temporal de un detalle cotidiano" width="760" height="760" loading="lazy" />
+            </picture>
           </figure>
-          <figure
-            class="dg-media dg-media--portrait"
-            data-label="Distancia y vacío · imagen temporal"
-          >
-            <img
-              src="https://picsum.photos/seed/digizen-distance-space/760/950"
-              alt="Imagen temporal de distancia emocional"
-              width="760"
-              height="950"
-              loading="lazy"
-            />
+          <figure class="dg-media dg-media--portrait" data-label="Distancia y vacío · imagen temporal">
+            <img src="https://picsum.photos/seed/digizen-distance-space/760/950"
+              alt="Imagen temporal de distancia emocional" width="760" height="950" loading="lazy" />
           </figure>
         </div>
         <div>
@@ -237,10 +167,8 @@
           </div>
           <div class="dg-copy">
             <p>
-              <strong
-                >Son los dos lados de la misma grieta. No estás perdiendo tiempo de pantalla. Lo
-                estás perdiendo a él.</strong
-              >
+              <strong>Son los dos lados de la misma grieta. No estás perdiendo tiempo de pantalla. Lo
+                estás perdiendo a él.</strong>
               Y al mismo tiempo, sin que nadie lo note, se está volviendo alguien que deja que el
               feed le diga quién es, qué quiere, qué vale — en un mundo que tú ya no controlas.
             </p>
@@ -249,10 +177,14 @@
             <p>¿Listo? Tu hijo empieza hoy mismo.</p>
             <div class="dg-actions">
               <button class="dg-btn" type="button" (click)="checkout()">
-                Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6"></path>
+                </svg>
               </button>
               <button class="dg-btn dg-btn--secondary" type="button" (click)="openAda()">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Tengo dudas — conversar con ADA
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path>
+                </svg>Tengo dudas — conversar con ADA
               </button>
             </div>
           </div>
@@ -268,9 +200,12 @@
       </div>
       <div class="dg-decision-actions">
         <button class="dg-btn" type="button" (click)="checkout()">
-          Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button
-        ><button class="dg-btn dg-btn--secondary" type="button" (click)="openAda()">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Tengo dudas — conversar con ADA
+          Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6"></path>
+          </svg></button><button class="dg-btn dg-btn--secondary" type="button" (click)="openAda()">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path>
+          </svg>Tengo dudas — conversar con ADA
         </button>
       </div>
     </section>
@@ -293,15 +228,9 @@
           <div class="dg-accordion">
             <details open>
               <summary>
-                <span class="dg-accordion-title"
-                  ><span class="dg-index">01</span>El candado que ya abrió.</span
-                ><svg class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
-                  <path
-                    d="m5 7.5 5 5 5-5"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                  ></path>
+                <span class="dg-accordion-title"><span class="dg-index">01</span>El candado que ya abrió.</span><svg
+                  class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"></path>
                 </svg>
               </summary>
               <p class="dg-accordion-body">
@@ -312,16 +241,10 @@
             </details>
             <details>
               <summary>
-                <span class="dg-accordion-title"
-                  ><span class="dg-index">02</span>"Tengo Family Link y aun así se le va de las
-                  manos."</span
-                ><svg class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
-                  <path
-                    d="m5 7.5 5 5 5-5"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                  ></path>
+                <span class="dg-accordion-title"><span class="dg-index">02</span>"Tengo Family Link y aun así se le va
+                  de las
+                  manos."</span><svg class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"></path>
                 </svg>
               </summary>
               <p class="dg-accordion-body">
@@ -332,16 +255,10 @@
             </details>
             <details>
               <summary>
-                <span class="dg-accordion-title"
-                  ><span class="dg-index">03</span>Las apps de control viven del candado —&nbsp;y ninguna
-                  admite que se abre.</span
-                ><svg class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
-                  <path
-                    d="m5 7.5 5 5 5-5"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                  ></path>
+                <span class="dg-accordion-title"><span class="dg-index">03</span>Las apps de control viven del candado
+                  —&nbsp;y ninguna
+                  admite que se abre.</span><svg class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"></path>
                 </svg>
               </summary>
               <p class="dg-accordion-body">
@@ -352,15 +269,9 @@
             </details>
             <details>
               <summary>
-                <span class="dg-accordion-title"
-                  ><span class="dg-index">04</span>La ventana se está cerrando.</span
-                ><svg class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
-                  <path
-                    d="m5 7.5 5 5 5-5"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                  ></path>
+                <span class="dg-accordion-title"><span class="dg-index">04</span>La ventana se está cerrando.</span><svg
+                  class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"></path>
                 </svg>
               </summary>
               <p class="dg-accordion-body">
@@ -394,7 +305,9 @@
               <li><span>✓</span>Precio fundador congelado</li>
             </ul>
             <button class="dg-btn w-full mt-5" type="button" (click)="checkout()">
-              Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+              Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
+              </svg>
             </button>
             <div class="dg-comparison mb-0!">
               <p class="dg-eyebrow">O mes a mes</p>
@@ -405,7 +318,9 @@
             </div>
           </div>
           <button class="dg-btn dg-btn--secondary w-full" type="button" (click)="openAda()">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA primero
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path>
+            </svg>Conversa con ADA primero
           </button>
           <p class="dg-support text-center">
             Garantía 7 días · cancelas en un clic · sin letras chicas
@@ -416,11 +331,7 @@
 
     <section class="dg-section dg-section--violet" aria-labelledby="beat-4-title">
       <div class="dg-grid-2 dg-grid-2--media-first">
-        <div
-          class="dg-criteria-visual"
-          data-criteria-visual
-          aria-label="Diagrama conceptual del feed al criterio"
-        >
+        <div class="dg-criteria-visual" data-criteria-visual aria-label="Diagrama conceptual del feed al criterio">
           <div class="dg-orbit"></div>
           <div class="dg-orbit dg-orbit--two"></div>
           <div class="dg-feed-labels">
@@ -454,10 +365,8 @@
             <p>
               Y hoy eso pesa más que nunca. En un mundo donde la inteligencia artificial ya hace
               casi todo,
-              <strong
-                >el criterio —saber decidir qué es verdad, qué vale, qué le sirve— es de las pocas
-                cosas que ninguna máquina va a hacer por él.</strong
-              >
+              <strong>el criterio —saber decidir qué es verdad, qué vale, qué le sirve— es de las pocas
+                cosas que ninguna máquina va a hacer por él.</strong>
               Es justo lo que el mundo que viene va a premiar… y justo lo que la escuela no le está
               enseñando.
             </p>
@@ -477,12 +386,7 @@
       </div>
     </section>
 
-    <section
-      id="ada"
-      data-nav-section="ada"
-      class="dg-section dg-section--grid"
-      aria-labelledby="beat-5-title"
-    >
+    <section id="ada" data-nav-section="ada" class="dg-section dg-section--grid" aria-labelledby="beat-5-title">
       <div class="grid gap-10 xl:grid-cols-[1.35fr_.9fr] items-start">
         <div>
           <p class="dg-kicker">Conoce a ADA</p>
@@ -536,11 +440,8 @@
           </figure>
         </div>
       </div>
-      <form
-        class="dg-form dg-ada-form-horizontal"
-        (submit)="$event.preventDefault()"
-        aria-label="Formulario Conversa con ADA"
-      >
+      <form class="dg-form dg-ada-form-horizontal" (submit)="$event.preventDefault()"
+        aria-label="Formulario Conversa con ADA">
         <div class="dg-ada-form-intro">
           <h3 class="dg-h3 text-lg">Conversa con ADA</h3>
           <p class="dg-support">Formulario de datos del adulto.</p>
@@ -548,38 +449,23 @@
         <fieldset class="border-0 p-0">
           <legend class="dg-label mt-0">Canal de entrega</legend>
           <div class="dg-channel">
-            <button
-              type="button"
-              (click)="setChannel('correo')"
-              [attr.aria-pressed]="channel() === 'correo'"
-            >
-              Correo</button
-            ><button
-              type="button"
-              (click)="setChannel('whatsapp')"
-              [attr.aria-pressed]="channel() === 'whatsapp'"
-            >
+            <button type="button" (click)="setChannel('correo')" [attr.aria-pressed]="channel() === 'correo'">
+              Correo</button><button type="button" (click)="setChannel('whatsapp')"
+              [attr.aria-pressed]="channel() === 'whatsapp'">
               WhatsApp
             </button>
           </div>
         </fieldset>
-        <label class="dg-label"
-          >Nombre del papá o mamá<input
-            class="dg-input"
-            name="name"
-            autocomplete="name"
-            placeholder="Tu nombre"
-        /></label>
-        <label class="dg-label"
-          >{{ channel() === 'correo' ? 'Correo electrónico' : 'Número de WhatsApp'
-          }}<input
-            class="dg-input"
-            [type]="channel() === 'correo' ? 'email' : 'tel'"
+        <label class="dg-label">Nombre del papá o mamá<input class="dg-input" name="name" autocomplete="name"
+            placeholder="Tu nombre" /></label>
+        <label class="dg-label">{{ channel() === 'correo' ? 'Correo electrónico' : 'Número de WhatsApp'
+          }}<input class="dg-input" [type]="channel() === 'correo' ? 'email' : 'tel'"
             [autocomplete]="channel() === 'correo' ? 'email' : 'tel'"
-            [placeholder]="channel() === 'correo' ? 'tu@correo.com' : '+52 55 0000 0000'"
-        /></label>
+            [placeholder]="channel() === 'correo' ? 'tu@correo.com' : '+52 55 0000 0000'" /></label>
         <div class="dg-ada-form-action">
-          <button class="dg-btn w-full" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA</button>
+          <button class="dg-btn w-full" type="button"><svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path>
+            </svg>Conversa con ADA</button>
         </div>
         <p class="dg-support dg-ada-form-disclaimer">
           Se manda la liga de acceso; no abre WhatsApp directo.
@@ -587,12 +473,7 @@
       </form>
     </section>
 
-    <section
-      id="seguridad"
-      data-nav-section="seguridad"
-      class="dg-section"
-      aria-labelledby="beat-55-title"
-    >
+    <section id="seguridad" data-nav-section="seguridad" class="dg-section" aria-labelledby="beat-55-title">
       <div>
         <div class="dg-safety-intro">
           <div class="max-w-[78ch]">
@@ -615,9 +496,7 @@
               </p>
               <p>
                 Pero aquí está el dato que cambia la pregunta:
-                <strong
-                  >7 de cada 10 adolescentes YA conversan con inteligencias artificiales</strong
-                >
+                <strong>7 de cada 10 adolescentes YA conversan con inteligencias artificiales</strong>
                 — solos, sin reglas, en plataformas hechas para adultos. México es tercer lugar
                 mundial en adopción juvenil de IA. La pregunta dejó de ser
                 <em>"¿IA sí o no?"</em>. La pregunta real es:
@@ -626,17 +505,9 @@
               <p><strong>ADA es lo segundo, por diseño:</strong></p>
             </div>
           </div>
-          <figure
-            class="dg-media dg-safety-image"
-            data-label="Seguridad y acompañamiento · imagen temporal"
-          >
-            <img
-              src="https://picsum.photos/seed/digizen-ai-safety/900/1200"
-              alt="Imagen temporal para el bloque de seguridad de ADA"
-              width="900"
-              height="1200"
-              loading="lazy"
-            />
+          <figure class="dg-media dg-safety-image" data-label="Seguridad y acompañamiento · imagen temporal">
+            <img src="https://picsum.photos/seed/digizen-ai-safety/900/1200"
+              alt="Imagen temporal para el bloque de seguridad de ADA" width="900" height="1200" loading="lazy" />
           </figure>
         </div>
         <div class="dg-guard-grid" aria-label="Cuatro principios de seguridad de ADA">
@@ -681,7 +552,9 @@
           </article>
           <article class="dg-card" style="--accent: var(--dg-green)">
             <div class="dg-icon">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12 5 5L20 6"></path></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m4 12 5 5L20 6"></path>
+              </svg>
             </div>
             <span class="dg-index">04</span>
             <h3>
@@ -713,17 +586,14 @@
             </p>
           </div>
           <div class="dg-actions mt-6 pt-6 border-t border-[var(--dg-line)]">
-            <button class="dg-btn" type="button" (click)="openAda()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA</button>
+            <button class="dg-btn" type="button" (click)="openAda()"><svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path>
+              </svg>Conversa con ADA</button>
           </div>
         </div>
         <figure class="dg-media aspect-[4/3]" data-label="ADA + cuatro guardas · imagen temporal">
-          <img
-            src="https://picsum.photos/seed/digizen-ada-guards/900/675"
-            alt="Imagen temporal para el diagrama de límites de ADA"
-            width="900"
-            height="675"
-            loading="lazy"
-          />
+          <img src="https://picsum.photos/seed/digizen-ada-guards/900/675"
+            alt="Imagen temporal para el diagrama de límites de ADA" width="900" height="675" loading="lazy" />
         </figure>
       </div>
     </section>
@@ -749,21 +619,12 @@
             </p>
           </div>
         </div>
-        <figure
-          class="dg-media dg-media--portrait"
-          data-label="Acuerdo y presencia · imagen temporal"
-        >
-          <picture
-            ><source
-              media="(max-width:1023px)"
-              srcset="https://picsum.photos/seed/digizen-presence-mobile/1200/675" />
-            <img
-              src="https://picsum.photos/seed/digizen-presence/800/1000"
-              alt="Imagen temporal para el acuerdo familiar"
-              width="800"
-              height="1000"
-              loading="lazy"
-          /></picture>
+        <figure class="dg-media dg-media--portrait" data-label="Acuerdo y presencia · imagen temporal">
+          <picture>
+            <source media="(max-width:1023px)" srcset="https://picsum.photos/seed/digizen-presence-mobile/1200/675" />
+            <img src="https://picsum.photos/seed/digizen-presence/800/1000"
+              alt="Imagen temporal para el acuerdo familiar" width="800" height="1000" loading="lazy" />
+          </picture>
         </figure>
       </div>
     </section>
@@ -878,9 +739,7 @@
     <section class="dg-section" aria-labelledby="payment-title">
       <p class="dg-kicker">Elige cómo pagar</p>
       <h2 id="payment-title" class="dg-h2">
-        Contado o a meses sin intereses<span class="dg-h2-muted"
-          >—&nbsp;mismo precio, tú eliges cómo.</span
-        >
+        Contado o a meses sin intereses<span class="dg-h2-muted">—&nbsp;mismo precio, tú eliges cómo.</span>
       </h2>
       <div class="dg-pricing-grid">
         <article class="dg-pricing-card">
@@ -897,7 +756,9 @@
             <p class="dg-detail">12×$599 + inscripción = $8,088</p>
           </div>
           <button class="dg-btn" type="button" (click)="checkout('mensual')">
-            Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
           </button>
         </article>
         <article class="dg-pricing-card dg-pricing-card--featured">
@@ -918,7 +779,9 @@
             <p class="dg-detail">hasta 12 meses sin intereses con tarjeta.</p>
           </div>
           <button class="dg-btn" type="button" (click)="checkout('ciclo-msi')">
-            Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
           </button>
         </article>
         <article class="dg-pricing-card">
@@ -933,7 +796,9 @@
             <p class="dg-detail">$5,990 por el ciclo completo.</p>
           </div>
           <button class="dg-btn" type="button" (click)="checkout('contado')">
-            Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
           </button>
         </article>
       </div>
@@ -963,10 +828,8 @@
       </blockquote>
       <div class="dg-copy">
         <p>
-          <em
-            >El día en que tenga que cruzar solo va a llegar. Esto es para que sepa mirar a los dos
-            lados — y para que cuando levante la vista, tú sigas ahí.</em
-          >
+          <em>El día en que tenga que cruzar solo va a llegar. Esto es para que sepa mirar a los dos
+            lados — y para que cuando levante la vista, tú sigas ahí.</em>
         </p>
       </div>
     </section>
@@ -984,9 +847,12 @@
       </div>
       <div class="dg-decision-actions">
         <button class="dg-btn" type="button" (click)="checkout()">
-          Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button
-        ><button class="dg-btn dg-btn--secondary" type="button" (click)="openAda()">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Tengo dudas — conversar con ADA
+          Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6"></path>
+          </svg></button><button class="dg-btn dg-btn--secondary" type="button" (click)="openAda()">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path>
+          </svg>Tengo dudas — conversar con ADA
         </button>
       </div>
     </section>
@@ -1015,44 +881,20 @@
     <div class="dg-footer-inner">
       <div class="dg-footer-brand">
         <a class="dg-logo" href="#hero-title" aria-label="DIGIZEN, volver al inicio">
-          <img
-            class="dg-logo-light"
-            src="assets/digizen/logo-digizen-horizontal-light.svg"
-            alt="DIGIZEN"
-            width="520"
-            height="200"
-            loading="lazy"
-          />
-          <img
-            class="dg-logo-dark"
-            src="assets/digizen/logo-digizen-horizontal-dark.svg"
-            alt=""
-            width="520"
-            height="200"
-            loading="lazy"
-          />
+          <img class="dg-logo-light" src="assets/digizen/logo-digizen-horizontal-light.svg" alt="DIGIZEN" width="520"
+            height="200" loading="lazy" />
+          <img class="dg-logo-dark" src="assets/digizen/logo-digizen-horizontal-dark.svg" alt="" width="520"
+            height="200" loading="lazy" />
         </a>
         <p>Presencia, no vigilancia. Criterio, no candado.</p>
       </div>
       <div class="dg-footer-dev">
         <p class="dg-caption">Digizen es desarrollado por</p>
         <div class="dg-footer-gnius">
-          <img
-            class="dg-logo-light"
-            src="assets/gnius/logo-gnius-club-light.svg"
-            alt="Gnius Club"
-            width="520"
-            height="200"
-            loading="lazy"
-          />
-          <img
-            class="dg-logo-dark"
-            src="assets/gnius/logo-gnius-club-dark.svg"
-            alt=""
-            width="520"
-            height="200"
-            loading="lazy"
-          />
+          <img class="dg-logo-light" src="assets/gnius/logo-gnius-club-light.svg" alt="Gnius Club" width="520"
+            height="200" loading="lazy" />
+          <img class="dg-logo-dark" src="assets/gnius/logo-gnius-club-dark.svg" alt="" width="520" height="200"
+            loading="lazy" />
         </div>
       </div>
       <nav class="dg-footer-links" aria-label="Sitios de Gnius Club">
@@ -1063,31 +905,24 @@
       <address class="dg-footer-contact">
         <a href="tel:+522218481116">(+52) 221 848 1116</a>
         <a href="mailto:info@gnius.club">info&#64;gnius.club</a>
-        <a href="https://gnius.club/aviso-de-privacidad.html" target="_blank" rel="noopener"
-          >Aviso de Privacidad</a
-        >
+        <a href="https://gnius.club/aviso-de-privacidad.html" target="_blank" rel="noopener">Aviso de Privacidad</a>
       </address>
     </div>
     <p class="dg-footer-legal">© 2026 Gnius Club. Todos los derechos reservados.</p>
   </footer>
 
-  <div
-    class="dg-mobile-cta"
-    [class.is-visible]="mobileCtaVisible()"
-    role="region"
-    aria-label="Acción rápida"
-  >
+  <div class="dg-mobile-cta" [class.is-visible]="mobileCtaVisible()" role="region" aria-label="Acción rápida">
     @if (mobileCtaMode() === 'ada') {
-      <button class="dg-btn" type="button" (click)="openAda()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA</button>
+    <button class="dg-btn" type="button" (click)="openAda()"><svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path>
+      </svg>Conversa con ADA</button>
     } @else {
-      <button class="dg-btn" type="button" (click)="checkout()">Inscribir a mi hijo<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+    <button class="dg-btn" type="button" (click)="checkout()">Inscribir a mi hijo<svg viewBox="0 0 24 24"
+        aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6"></path>
+      </svg></button>
     }
-    <button
-      class="dg-mobile-cta-close"
-      type="button"
-      (click)="closeMobileCta()"
-      aria-label="Cerrar acción rápida"
-    >
+    <button class="dg-mobile-cta-close" type="button" (click)="closeMobileCta()" aria-label="Cerrar acción rápida">
       ×
     </button>
   </div>
@@ -1105,39 +940,25 @@
         </button>
       </div>
       <form (submit)="$event.preventDefault()">
-        <label class="dg-label"
-          >Nombre del papá o mamá<input
-            class="dg-input"
-            name="dialog-name"
-            autocomplete="name"
-            placeholder="Tu nombre"
-        /></label>
+        <label class="dg-label">Nombre del papá o mamá<input class="dg-input" name="dialog-name" autocomplete="name"
+            placeholder="Tu nombre" /></label>
         <fieldset class="mt-4 border-0 p-0">
           <legend class="dg-label mt-0">Canal de entrega</legend>
           <div class="dg-channel">
-            <button
-              type="button"
-              (click)="setChannel('correo')"
-              [attr.aria-pressed]="channel() === 'correo'"
-            >
-              Correo</button
-            ><button
-              type="button"
-              (click)="setChannel('whatsapp')"
-              [attr.aria-pressed]="channel() === 'whatsapp'"
-            >
+            <button type="button" (click)="setChannel('correo')" [attr.aria-pressed]="channel() === 'correo'">
+              Correo</button><button type="button" (click)="setChannel('whatsapp')"
+              [attr.aria-pressed]="channel() === 'whatsapp'">
               WhatsApp
             </button>
           </div>
         </fieldset>
-        <label class="dg-label"
-          >{{ channel() === 'correo' ? 'Correo electrónico' : 'Número de WhatsApp'
-          }}<input
-            class="dg-input"
-            [type]="channel() === 'correo' ? 'email' : 'tel'"
+        <label class="dg-label">{{ channel() === 'correo' ? 'Correo electrónico' : 'Número de WhatsApp'
+          }}<input class="dg-input" [type]="channel() === 'correo' ? 'email' : 'tel'"
             [autocomplete]="channel() === 'correo' ? 'email' : 'tel'"
-            [placeholder]="channel() === 'correo' ? 'tu@correo.com' : '+52 55 0000 0000'" /></label
-        ><button class="dg-btn w-full mt-5" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA</button>
+            [placeholder]="channel() === 'correo' ? 'tu@correo.com' : '+52 55 0000 0000'" /></label><button
+          class="dg-btn w-full mt-5" type="button"><svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path>
+          </svg>Conversa con ADA</button>
         <p class="dg-support">Se manda la liga de acceso; no abre WhatsApp directo.</p>
       </form>
     </div>

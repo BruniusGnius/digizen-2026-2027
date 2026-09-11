@@ -1,11 +1,8 @@
 @import 'tailwindcss';
-/* Inter variable alojada en el proyecto (licencia OFL); antes solo se veía si estaba instalada. */
-@import '@fontsource-variable/inter';
 
 @theme {
   --font-sans:
-    'Inter Variable', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', sans-serif;
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --breakpoint-md: 48rem;
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 70rem;
@@ -82,8 +79,8 @@
   --dg-featured: #142d3d;
   --dg-shadow-card: 0 14px 32px rgba(0, 0, 0, 0.2);
   --dg-shadow-float: 0 22px 60px rgba(0, 0, 0, 0.36);
-  --dg-weight-body: 500;
-  --dg-weight-copy: 550;
+  --dg-weight-body: 550;
+  --dg-weight-copy: 900;
   --dg-weight-lead: 660;
 }
 
@@ -219,13 +216,9 @@ details > summary::-webkit-details-marker {
 @media (min-width: 1024px) {
   /* 62% del ancho de contenido, alineado al borde derecho de las imágenes; crece si el contenido no cabe. */
   .dg-nav {
-    width: var(
-      --nav-w,
-      calc(0.62 * (min(1440px, 100%) - 80px - 2 * clamp(30px, 3.6vw, 52px)))
-    );
+    width: var(--nav-w, calc(0.62 * (min(1440px, 100%) - 80px - 2 * clamp(30px, 3.6vw, 52px))));
     min-width: max-content;
-    margin: -87px calc((100% - min(1440px, 100%)) / 2 + 40px + clamp(30px, 3.6vw, 52px)) 17px
-      auto;
+    margin: -87px calc((100% - min(1440px, 100%)) / 2 + 40px + clamp(30px, 3.6vw, 52px)) 17px auto;
   }
   /* En desktop enlaces, tema y botón se reparten parejo como hijos directos del menú. */
   .dg-nav-links {
@@ -404,7 +397,7 @@ details > summary::-webkit-details-marker {
   display: grid;
   gap: 16px;
   color: var(--dg-muted);
-  font-size: 0.96rem;
+  font-size: 1rem;
   font-weight: var(--dg-weight-copy);
   line-height: 1.72;
 }
