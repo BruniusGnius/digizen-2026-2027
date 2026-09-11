@@ -1,6 +1,31 @@
 <div class="dg-shell">
-  <nav class="dg-nav" aria-label="Navegación principal de Digizen">
+  <header class="dg-header">
     <a class="dg-logo" href="#hero-title" aria-label="DIGIZEN, volver al inicio">
+      <img
+        class="dg-logo-light"
+        src="assets/digizen/logo-digizen-horizontal-light.svg"
+        alt="DIGIZEN"
+        width="520"
+        height="200"
+      />
+      <img
+        class="dg-logo-dark"
+        src="assets/digizen/logo-digizen-horizontal-dark.svg"
+        alt=""
+        width="520"
+        height="200"
+      />
+    </a>
+  </header>
+
+  <nav
+    class="dg-nav"
+    [class.is-scrolled]="navScrolled()"
+    [style.--nav-w]="navWidth()"
+    [style.--nav-reveal]="navReveal()"
+    aria-label="Navegación principal de Digizen"
+  >
+    <a class="dg-logo dg-nav-logo" href="#hero-title" aria-label="DIGIZEN, volver al inicio">
       <img
         class="dg-logo-light"
         src="assets/digizen/logo-digizen-horizontal-light.svg"
@@ -42,7 +67,7 @@
         </svg>
       }
     </button>
-    <a class="dg-btn" href="#oferta">Inscribir</a>
+    <a class="dg-btn" href="#oferta">Inscribir<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
     <div class="dg-nav-progress" aria-hidden="true">
       <span [style.--progress]="progress()"></span>
     </div>
@@ -96,7 +121,7 @@
     >
       <div class="dg-grid-2">
         <div>
-          <p class="dg-kicker">01 · Alivio</p>
+          <p class="dg-kicker">No estás solo</p>
           <h2 id="beat-1-title" class="dg-h2">
             <span class="dg-h2-muted">Nadie te enseñó esto.</span>A ti tampoco te lo enseñaron.
           </h2>
@@ -179,7 +204,7 @@
           </figure>
         </div>
         <div>
-          <p class="dg-kicker">02 · La grieta</p>
+          <p class="dg-kicker">Lo que de verdad duele</p>
           <h2 id="beat-2-title" class="dg-h2">
             <span class="dg-h2-muted">No es cuánto tiempo pasa en el celular.</span>Es que cada día
             te mira menos.
@@ -225,10 +250,10 @@
             <p>¿Listo? Tu hijo empieza hoy mismo.</p>
             <div class="dg-actions">
               <button class="dg-btn" type="button" (click)="checkout()">
-                Inscribir a mi hijo — empieza hoy
+                Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
               </button>
               <button class="dg-btn dg-btn--secondary" type="button" (click)="openAda()">
-                💬 Tengo dudas — conversar con ADA
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Tengo dudas — conversar con ADA
               </button>
             </div>
           </div>
@@ -244,18 +269,18 @@
       </div>
       <div class="dg-decision-actions">
         <button class="dg-btn" type="button" (click)="checkout()">
-          Inscribir a mi hijo — empieza hoy</button
+          Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button
         ><button class="dg-btn dg-btn--secondary" type="button" (click)="openAda()">
-          💬 Tengo dudas — conversar con ADA
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Tengo dudas — conversar con ADA
         </button>
       </div>
     </section>
 
     <section class="dg-section dg-section--grid" aria-labelledby="beat-3-title">
-      <p class="dg-kicker">03 · Evidencia</p>
+      <p class="dg-kicker">Por qué el candado no funciona</p>
       <h2 id="beat-3-title" class="dg-h2">
         <span class="dg-h2-muted">Bloquear no te lo devuelve.</span>Solo pospone el día en que tenga
-        que decidir solo — sin ti.
+        que decidir solo —&nbsp;sin ti.
       </h2>
       <div class="dg-copy">
         <p>
@@ -309,7 +334,7 @@
             <details>
               <summary>
                 <span class="dg-accordion-title"
-                  ><span class="dg-index">03</span>Las apps de control viven del candado — y ninguna
+                  ><span class="dg-index">03</span>Las apps de control viven del candado —&nbsp;y ninguna
                   admite que se abre.</span
                 ><svg class="dg-chevron" viewBox="0 0 20 20" aria-hidden="true">
                   <path
@@ -370,19 +395,19 @@
               <li><span>✓</span>Precio fundador congelado</li>
             </ul>
             <button class="dg-btn w-full mt-5" type="button" (click)="checkout()">
-              Inscribir a mi hijo — empieza hoy
+              Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
             </button>
+            <div class="dg-comparison mb-0!">
+              <p class="dg-eyebrow">O mes a mes</p>
+              <p class="dg-price text-3xl">
+                $599 <span class="text-sm font-medium tracking-normal">/mes</span>
+              </p>
+              <p class="dg-support">+ $900 inscripción única</p>
+            </div>
           </div>
-          <div class="dg-cta-panel mt-0">
-            <p class="dg-eyebrow">O mes a mes</p>
-            <p class="dg-price text-3xl">
-              $599 <span class="text-sm font-medium tracking-normal">/mes</span>
-            </p>
-            <p class="dg-support">+ $900 inscripción única</p>
-            <button class="dg-btn dg-btn--secondary w-full mt-4" type="button" (click)="openAda()">
-              💬 Conversa con ADA primero
-            </button>
-          </div>
+          <button class="dg-btn dg-btn--secondary w-full" type="button" (click)="openAda()">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA primero
+          </button>
           <p class="dg-support text-center">
             Garantía 7 días · cancelas en un clic · sin letras chicas
           </p>
@@ -405,7 +430,7 @@
           <div class="dg-criteria-node">Esto me sirve<br />¿o me usa?</div>
         </div>
         <div>
-          <p class="dg-kicker">04 · La alternativa</p>
+          <p class="dg-kicker">Otro camino</p>
           <h2 id="beat-4-title" class="dg-h2">
             <span class="dg-h2-muted">No se trata de ganarle a la pantalla.</span>Se trata de un
             criterio que la pantalla no pueda comprar.
@@ -461,9 +486,9 @@
     >
       <div class="grid gap-10 xl:grid-cols-[1.35fr_.9fr] items-start">
         <div>
-          <p class="dg-kicker">05 · ADA</p>
+          <p class="dg-kicker">Conoce a ADA</p>
           <h2 id="beat-5-title" class="dg-h2">
-            <span class="dg-h2-muted">Esto se llama ADA.</span>No es una app de control — es lo
+            <span class="dg-h2-muted">Esto se llama ADA.</span>No es una app de control —&nbsp;es lo
             contrario.
           </h2>
           <div class="dg-copy">
@@ -555,7 +580,7 @@
             [placeholder]="channel() === 'correo' ? 'tu@correo.com' : '+52 55 0000 0000'"
         /></label>
         <div class="dg-ada-form-action">
-          <button class="dg-btn w-full" type="button">💬 Conversa con ADA</button>
+          <button class="dg-btn w-full" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA</button>
         </div>
         <p class="dg-support dg-ada-form-disclaimer">
           Se manda la liga de acceso; no abre WhatsApp directo.
@@ -572,9 +597,9 @@
       <div>
         <div class="dg-safety-intro">
           <div class="max-w-[78ch]">
-            <p class="dg-kicker">05.5 · Seguridad por diseño</p>
+            <p class="dg-kicker">Seguridad por diseño</p>
             <h2 id="beat-55-title" class="dg-h2">
-              <span class="dg-h2-muted">"¿Una IA hablando con mi hijo?"</span>— Sí. Hablemos de eso
+              <span class="dg-h2-muted">"¿Una IA hablando con mi hijo?"</span>—&nbsp;Sí. Hablemos de eso
               de frente.
             </h2>
             <div class="dg-copy">
@@ -670,12 +695,16 @@
           </article>
         </div>
       </div>
-      <div
-        class="grid gap-8 mt-12 pt-10 border-t border-[var(--dg-line)] lg:grid-cols-[1.4fr_.8fr] items-start"
-      >
+    </section>
+
+    <section class="dg-section" aria-labelledby="ada-invite-title">
+      <div class="dg-grid-2">
         <div>
-          <h3 class="dg-h3">Y la prueba no te la pedimos por fe: habla TÚ con ADA primero.</h3>
-          <div class="dg-copy mt-4">
+          <p class="dg-kicker">Antes de decidir</p>
+          <h2 id="ada-invite-title" class="dg-h3">
+            Y la prueba no te la pedimos por fe: habla TÚ con ADA primero.
+          </h2>
+          <div class="dg-copy">
             <p>
               Déjanos tus datos y te mandamos tu acceso en un minuto — al correo o a tu WhatsApp,
               como prefieras. Interrógala. Trata de sacarla de sus reglas. Pregúntale lo que un niño
@@ -683,6 +712,9 @@
               en este mercado te deja auditar a la IA de tu hijo antes de pagar — nosotros la
               ponemos por delante.
             </p>
+          </div>
+          <div class="dg-actions mt-6 pt-6 border-t border-[var(--dg-line)]">
+            <button class="dg-btn" type="button" (click)="openAda()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA</button>
           </div>
         </div>
         <figure class="dg-media aspect-[4/3]" data-label="ADA + cuatro guardas · imagen temporal">
@@ -697,29 +729,10 @@
       </div>
     </section>
 
-    <section class="dg-decision" aria-label="Decisión después del bloque de seguridad de ADA">
-      <div class="dg-decision-copy">
-        <p class="dg-eyebrow">Antes de decidir</p>
-        <p class="dg-decision-title">
-          Y la prueba no te la pedimos por fe: habla TÚ con ADA primero.
-        </p>
-        <p class="dg-support">
-          Déjanos tus datos y te mandamos tu acceso en un minuto — al correo o a tu WhatsApp, como
-          prefieras.
-        </p>
-      </div>
-      <div class="dg-decision-actions">
-        <button class="dg-btn" type="button" (click)="openAda()">💬 Conversa con ADA</button
-        ><button class="dg-btn dg-btn--secondary" type="button" (click)="checkout()">
-          Inscribir a mi hijo — empieza hoy
-        </button>
-      </div>
-    </section>
-
     <section class="dg-section" aria-labelledby="beat-6-title">
       <div class="dg-grid-2">
         <div>
-          <p class="dg-kicker">06 · Presencia</p>
+          <p class="dg-kicker">Presencia, no vigilancia</p>
           <h2 id="beat-6-title" class="dg-h2">
             <span class="dg-h2-muted">Tu hijo no necesita que le quites el celular.</span>Necesita
             verte presente.
@@ -758,7 +771,9 @@
 
     <section class="dg-section dg-section--grid" aria-labelledby="founder-title">
       <p class="dg-kicker">Generación Fundadora</p>
-      <h2 id="founder-title" class="dg-h2">Inscríbelo hoy — Generación Fundadora</h2>
+      <h2 id="founder-title" class="dg-h2">
+        Inscríbelo hoy<span class="dg-h2-muted">—&nbsp;Generación Fundadora</span>
+      </h2>
       <div class="dg-copy">
         <p>
           Y aquí va algo que ninguna otra actividad de tu hijo puede ofrecerte:
@@ -772,28 +787,51 @@
         </p>
       </div>
       <div class="dg-feature-grid">
-        <article class="dg-card" style="--accent: var(--dg-cyan)">
-          <h3>Precio fundador, congelado en tu reinscripción</h3>
-          <p>
-            — el de hoy, mientras sigas. Después del 31 de octubre, el precio sube para los que
-            lleguen tarde.
-          </p>
+        <article class="dg-card dg-card--side" style="--accent: var(--dg-cyan)">
+          <div class="dg-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"></path>
+              <circle cx="7.5" cy="7.5" r="1.5"></circle>
+            </svg>
+          </div>
+          <div>
+            <h3>Precio fundador, congelado en tu reinscripción</h3>
+            <p>
+              — el de hoy, mientras sigas. Después del 31 de octubre, el precio sube para los que
+              lleguen tarde.
+            </p>
+          </div>
         </article>
-        <article class="dg-card" style="--accent: var(--dg-violet)">
-          <h3>Voz directa en el producto:</h3>
-          <p>nos dices qué necesita tu hijo, y eso se construye primero.</p>
+        <article class="dg-card dg-card--side" style="--accent: var(--dg-violet)">
+          <div class="dg-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="9" y="3" width="6" height="11" rx="3"></rect>
+              <path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path>
+            </svg>
+          </div>
+          <div>
+            <h3>Voz directa en el producto:</h3>
+            <p>nos dices qué necesita tu hijo, y eso se construye primero.</p>
+          </div>
         </article>
-        <article class="dg-card" style="--accent: var(--dg-green)">
-          <h3>La puerta abierta antes de pagar:</h3>
-          <p>conversa con ADA las veces que quieras — la decisión la tomas ya conociéndola.</p>
+        <article class="dg-card dg-card--side" style="--accent: var(--dg-green)">
+          <div class="dg-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M13 4v16l-7-2V6l7-2ZM13 4h5v16M3 20h18M10 12h.01"></path>
+            </svg>
+          </div>
+          <div>
+            <h3>La puerta abierta antes de pagar:</h3>
+            <p>conversa con ADA las veces que quieras — la decisión la tomas ya conociéndola.</p>
+          </div>
         </article>
       </div>
     </section>
 
     <section id="oferta" data-nav-section="oferta" class="dg-section" aria-labelledby="offer-title">
-      <p class="dg-kicker">Oferta · Ciclo Digizen</p>
+      <p class="dg-kicker">Tu inscripción</p>
       <h2 id="offer-title" class="dg-h2">
-        Inscripción · Ciclo Digizen — tus 12 meses empiezan HOY
+        Inscripción · Ciclo Digizen<span class="dg-h2-muted">—&nbsp;tus 12 meses empiezan HOY</span>
       </h2>
       <div class="dg-copy">
         <p>
@@ -839,9 +877,11 @@
     </section>
 
     <section class="dg-section" aria-labelledby="payment-title">
-      <p class="dg-kicker">Una oferta · tres modalidades</p>
+      <p class="dg-kicker">Elige cómo pagar</p>
       <h2 id="payment-title" class="dg-h2">
-        Contado o a meses sin intereses — mismo precio, tú eliges cómo.
+        Contado o a meses sin intereses<span class="dg-h2-muted"
+          >—&nbsp;mismo precio, tú eliges cómo.</span
+        >
       </h2>
       <div class="dg-pricing-grid">
         <article class="dg-pricing-card">
@@ -858,7 +898,7 @@
             <p class="dg-detail">12×$599 + inscripción = $8,088</p>
           </div>
           <button class="dg-btn" type="button" (click)="checkout('mensual')">
-            Inscribir a mi hijo — empieza hoy
+            Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
           </button>
         </article>
         <article class="dg-pricing-card dg-pricing-card--featured">
@@ -872,14 +912,14 @@
           <div class="dg-comparison">
             <p class="dg-caption">Ventaja</p>
             <p class="dg-detail">
-              El ciclo te ahorra $2,098 vs ir mes a mes: dos meses gratis y la inscripción va
-              incluida.
+              <strong class="dg-savings">El ciclo te ahorra $2,098</strong> vs ir mes a mes: dos
+              meses gratis y la inscripción va incluida.
             </p>
             <p class="dg-caption">Consideración</p>
             <p class="dg-detail">hasta 12 meses sin intereses con tarjeta.</p>
           </div>
           <button class="dg-btn" type="button" (click)="checkout('ciclo-msi')">
-            Inscribir a mi hijo — empieza hoy
+            Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
           </button>
         </article>
         <article class="dg-pricing-card">
@@ -894,7 +934,7 @@
             <p class="dg-detail">$5,990 por el ciclo completo.</p>
           </div>
           <button class="dg-btn" type="button" (click)="checkout('contado')">
-            Inscribir a mi hijo — empieza hoy
+            Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
           </button>
         </article>
       </div>
@@ -905,7 +945,7 @@
     </section>
 
     <section class="dg-section" aria-labelledby="closure-title">
-      <p class="dg-kicker">La decisión</p>
+      <p class="dg-kicker">Tu decisión</p>
       <h2 id="closure-title" class="dg-h2">El riesgo lo cargamos nosotros, no tú.</h2>
       <div class="dg-copy">
         <p>
@@ -934,26 +974,26 @@
 
     <section class="dg-decision" aria-label="Decisión final">
       <div class="dg-decision-copy">
-        <p class="dg-eyebrow">La decisión final</p>
+        <p class="dg-eyebrow">Tu siguiente paso</p>
         <p class="dg-decision-title">
-          No inscribirlo también es una decisión. Es la que no tiene garantía.
+          Que hoy sea el primer día en que lo acompañas a cruzar.
         </p>
         <p class="dg-support">
-          El día en que tenga que cruzar solo va a llegar. Esto es para que sepa mirar a los dos
-          lados — y para que cuando levante la vista, tú sigas ahí.
+          Inscríbelo y ADA se presenta con tu hijo hoy mismo. ¿Aún tienes dudas? Conversa tú con ella
+          antes de pagar.
         </p>
       </div>
       <div class="dg-decision-actions">
         <button class="dg-btn" type="button" (click)="checkout()">
-          Inscribir a mi hijo — empieza hoy</button
+          Inscribir a mi hijo — empieza hoy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button
         ><button class="dg-btn dg-btn--secondary" type="button" (click)="openAda()">
-          💬 Tengo dudas — conversar con ADA
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Tengo dudas — conversar con ADA
         </button>
       </div>
     </section>
 
     <section class="dg-section" aria-labelledby="pending-title">
-      <p class="dg-kicker">Información pública</p>
+      <p class="dg-kicker">Preguntas frecuentes</p>
       <h2 id="pending-title" class="dg-h2">Preguntas frecuentes y legales</h2>
       <div class="dg-pending">
         <details>
@@ -969,9 +1009,68 @@
           <p>Contenido pendiente de fuente aprobada.</p>
         </details>
       </div>
-      <footer class="dg-footer">DIGIZEN · Presencia, no vigilancia. Criterio, no candado.</footer>
     </section>
   </main>
+
+  <footer class="dg-footer">
+    <div class="dg-footer-inner">
+      <div class="dg-footer-brand">
+        <a class="dg-logo" href="#hero-title" aria-label="DIGIZEN, volver al inicio">
+          <img
+            class="dg-logo-light"
+            src="assets/digizen/logo-digizen-horizontal-light.svg"
+            alt="DIGIZEN"
+            width="520"
+            height="200"
+            loading="lazy"
+          />
+          <img
+            class="dg-logo-dark"
+            src="assets/digizen/logo-digizen-horizontal-dark.svg"
+            alt=""
+            width="520"
+            height="200"
+            loading="lazy"
+          />
+        </a>
+        <p>Presencia, no vigilancia. Criterio, no candado.</p>
+      </div>
+      <div class="dg-footer-dev">
+        <p class="dg-caption">Digizen es desarrollado por</p>
+        <div class="dg-footer-gnius">
+          <img
+            class="dg-logo-light"
+            src="assets/gnius/logo-gnius-club-light.svg"
+            alt="Gnius Club"
+            width="520"
+            height="200"
+            loading="lazy"
+          />
+          <img
+            class="dg-logo-dark"
+            src="assets/gnius/logo-gnius-club-dark.svg"
+            alt=""
+            width="520"
+            height="200"
+            loading="lazy"
+          />
+        </div>
+      </div>
+      <nav class="dg-footer-links" aria-label="Sitios de Gnius Club">
+        <p class="dg-caption">Enlaces</p>
+        <a href="https://gnius.club" target="_blank" rel="noopener">Gnius Club</a>
+        <a href="https://alquimistas.gnius.club/" target="_blank" rel="noopener">Alquimistas de I.A.</a>
+      </nav>
+      <address class="dg-footer-contact">
+        <a href="tel:+522218481116">(+52) 221 848 1116</a>
+        <a href="mailto:info@gnius.club">info&#64;gnius.club</a>
+        <a href="https://gnius.club/aviso-de-privacidad.html" target="_blank" rel="noopener"
+          >Aviso de Privacidad</a
+        >
+      </address>
+    </div>
+    <p class="dg-footer-legal">© 2026 Gnius Club. Todos los derechos reservados.</p>
+  </footer>
 
   <div
     class="dg-mobile-cta"
@@ -980,9 +1079,9 @@
     aria-label="Acción rápida"
   >
     @if (mobileCtaMode() === 'ada') {
-      <button class="dg-btn" type="button" (click)="openAda()">💬 Conversa con ADA</button>
+      <button class="dg-btn" type="button" (click)="openAda()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA</button>
     } @else {
-      <button class="dg-btn" type="button" (click)="checkout()">Inscribir a mi hijo</button>
+      <button class="dg-btn" type="button" (click)="checkout()">Inscribir a mi hijo<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
     }
     <button
       class="dg-mobile-cta-close"
@@ -1039,7 +1138,7 @@
             [type]="channel() === 'correo' ? 'email' : 'tel'"
             [autocomplete]="channel() === 'correo' ? 'email' : 'tel'"
             [placeholder]="channel() === 'correo' ? 'tu@correo.com' : '+52 55 0000 0000'" /></label
-        ><button class="dg-btn w-full mt-5" type="button">💬 Conversa con ADA</button>
+        ><button class="dg-btn w-full mt-5" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA</button>
         <p class="dg-support">Se manda la liga de acceso; no abre WhatsApp directo.</p>
       </form>
     </div>

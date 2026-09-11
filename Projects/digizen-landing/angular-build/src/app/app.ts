@@ -24,6 +24,15 @@ export class App implements AfterViewInit, OnDestroy {
   protected readonly theme = inject(ThemeService);
   protected readonly channel = signal<DeliveryChannel>('correo');
   protected readonly progress = signal(0);
+  protected readonly navScrolled = signal(false);
+  protected readonly navWidth = signal<string | null>(null);
+  protected readonly navReveal = signal('0');
+  private navOpenPx = 0;
+  private navClosedPx = 0;
+  private navTarget = 0;
+  private navCurrent = 0;
+  private navFrame = 0;
+  private navReady = false;
   protected readonly activeSection = signal('problema');
   protected readonly mobileCtaVisible = signal(false);
   protected readonly mobileCtaClosed = signal(false);
@@ -36,10 +45,14 @@ export class App implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.setupNarrativeMotion();
     this.setupSectionObserver();
+    this.measureNav();
+    window.addEventListener('resize', this.measureNav, { passive: true });
     this.handleScroll();
   }
 
   ngOnDestroy(): void {
+    window.removeEventListener('resize', this.measureNav);
+    cancelAnimationFrame(this.navFrame);
     window.removeEventListener('scroll', this.queueScroll);
     cancelAnimationFrame(this.frame);
     this.observer?.disconnect();
@@ -71,6 +84,48 @@ export class App implements AfterViewInit, OnDestroy {
     window.dispatchEvent(new CustomEvent('digizen:checkout', { detail: { plan } }));
   }
 
+  // The scroll position sets where the desktop menu should be (62% → 100% width over 280px);
+  // a rAF follow loop eases toward it so wheel steps and fast trackpad flicks never snap.
+  // Runs in JS on purpose: CSS transitions are cut to 1ms under prefers-reduced-motion.
+  private readonly measureNav = (): void => {
+    const header = document.querySelector<HTMLElement>('.dg-header');
+    if (!header || header.clientWidth === 0) return;
+    const style = getComputedStyle(header);
+    this.navOpenPx =
+      header.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+    this.navClosedPx = this.navOpenPx * 0.62;
+    this.applyNav(this.navCurrent);
+  };
+
+  private updateNav(scrollTop: number): void {
+    const t = Math.min(1, Math.max(0, scrollTop / 280));
+    this.navTarget = t * t * (3 - 2 * t);
+    if (!this.navReady) {
+      this.navReady = true;
+      this.navCurrent = this.navTarget;
+      this.applyNav(this.navCurrent);
+      return;
+    }
+    if (!this.navFrame) this.navFrame = requestAnimationFrame(this.stepNav);
+  }
+
+  private readonly stepNav = (): void => {
+    const delta = this.navTarget - this.navCurrent;
+    this.navCurrent = Math.abs(delta) < 0.001 ? this.navTarget : this.navCurrent + delta * 0.14;
+    this.applyNav(this.navCurrent);
+    this.navFrame =
+      this.navCurrent === this.navTarget ? 0 : requestAnimationFrame(this.stepNav);
+  };
+
+  private applyNav(reveal: number): void {
+    this.navReveal.set(reveal.toFixed(3));
+    this.navScrolled.set(reveal > 0.5);
+    if (this.navOpenPx > 0) {
+      const width = this.navClosedPx + (this.navOpenPx - this.navClosedPx) * reveal;
+      this.navWidth.set(`${width.toFixed(1)}px`);
+    }
+  }
+
   private readonly queueScroll = (): void => {
     cancelAnimationFrame(this.frame);
     this.frame = requestAnimationFrame(() => this.handleScroll());
@@ -80,6 +135,7 @@ export class App implements AfterViewInit, OnDestroy {
     const root = document.documentElement;
     const range = root.scrollHeight - root.clientHeight;
     this.progress.set(range > 0 ? Math.min(1, Math.max(0, root.scrollTop / range)) : 0);
+    this.updateNav(root.scrollTop);
     const early = document.querySelector<HTMLElement>('#decision-early');
     const offer = document.querySelector<HTMLElement>('#oferta');
     if (early && offer && !this.mobileCtaClosed()) {
