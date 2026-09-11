@@ -444,6 +444,16 @@ details > summary::-webkit-details-marker {
   color: var(--dg-ink);
   font-weight: 700;
 }
+.dg-inline-attribution {
+  display: block;
+  margin-top: 7px;
+  color: var(--dg-soft);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
 .dg-quote {
   max-width: 34ch;
   margin: 28px 0 0;
@@ -696,29 +706,41 @@ blockquote.dg-note .dg-note-avatar svg {
   line-height: 1.6;
 }
 
-.dg-pullquotes {
-  margin-top: 24px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.dg-testimonials {
+  max-width: 64ch;
+  margin: 40px 0;
+  border-top: 1px solid var(--dg-line);
 }
-.dg-pullquote {
+.dg-testimonial {
+  --testimonial-accent: var(--dg-blue);
   margin: 0;
-  padding: 20px;
-  border: 1px solid var(--dg-line);
-  border-left: 3px solid var(--dg-btn-bg);
-  border-radius: 8px;
-  background: var(--dg-raised);
-  box-shadow: var(--dg-shadow-card);
+  padding: 26px 0 26px 22px;
+  border-bottom: 1px solid var(--dg-line);
+  border-left: 3px solid var(--testimonial-accent);
 }
-.dg-pullquote p {
+.dg-testimonial--coral {
+  --testimonial-accent: var(--dg-coral);
+}
+.dg-testimonial--cyan {
+  --testimonial-accent: var(--dg-cyan);
+}
+.dg-testimonial p {
   margin: 0;
   color: var(--dg-ink);
-  font-size: 17px;
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
   font-weight: 700;
-  line-height: 1.45;
+  letter-spacing: -0.018em;
+  line-height: 1.25;
 }
-.dg-pullquote cite {
+.dg-testimonial-transition {
+  margin: 0;
+  padding: 18px 0 6px;
+  color: var(--dg-muted);
+  font-size: 0.9rem;
+  font-weight: var(--dg-weight-copy);
+  line-height: 1.55;
+}
+.dg-testimonial cite {
   display: block;
   margin-top: 10px;
   color: var(--dg-soft);
@@ -727,6 +749,29 @@ blockquote.dg-note .dg-note-avatar svg {
   font-weight: 850;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+.dg-note--coral::before {
+  background: var(--dg-coral);
+}
+.dg-note--coral .dg-note-avatar {
+  border-color: color-mix(in srgb, var(--dg-coral) 42%, var(--dg-line));
+  background: linear-gradient(145deg, var(--dg-coral), var(--dg-orange));
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--dg-coral) 20%, transparent);
+}
+.dg-media-pair .dg-note--coral {
+  margin-top: clamp(44px, 4vw, 64px);
+}
+@media (min-width: 768px) {
+  .dg-grid-2--media-first > .dg-media-pair {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .dg-grid-2--media-first > .dg-media-pair .dg-note--coral {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
 }
 
 .dg-evidence {
