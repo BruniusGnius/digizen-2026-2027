@@ -226,6 +226,9 @@ details > summary::-webkit-details-marker {
   backdrop-filter: blur(20px) saturate(150%);
 }
 @media (min-width: 1024px) {
+  .dg-main {
+    gap: clamp(32px, 3vw, 48px);
+  }
   /* 62% del ancho de contenido, alineado al borde derecho de las imágenes; crece si el contenido no cabe. */
   .dg-nav {
     width: var(--nav-w, calc(0.62 * (min(1440px, 100%) - 80px - 2 * clamp(30px, 3.6vw, 52px))));
@@ -804,11 +807,29 @@ blockquote.dg-note .dg-note-avatar svg {
 }
 
 .dg-evidence {
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(270px, 0.8fr);
-  gap: 40px;
-  align-items: start;
   margin-top: 32px;
+}
+.dg-evidence-visual {
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: 3 / 4;
+  align-self: start;
+}
+.dg-placeholder-label {
+  position: absolute;
+  z-index: 1;
+  right: 14px;
+  bottom: 14px;
+  max-width: calc(100% - 28px);
+  padding: 9px 11px;
+  border-radius: 6px;
+  color: #ffffff;
+  background: rgba(17, 26, 52, 0.9);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-transform: uppercase;
 }
 .dg-accordion {
   border-top: 1px solid var(--dg-line);
@@ -847,11 +868,20 @@ blockquote.dg-note .dg-note-avatar svg {
   letter-spacing: 0.08em;
 }
 .dg-chevron {
-  width: 18px;
-  height: 18px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--dg-blue);
+  box-shadow: 0 5px 12px color-mix(in srgb, var(--dg-blue) 24%, transparent);
+  color: #ffffff;
   flex: none;
-  transition: transform 180ms var(--dg-ease);
+  transition: transform 180ms var(--dg-ease), background-color 180ms var(--dg-ease);
 }
+.dg-accordion summary:hover .dg-chevron {
+  background: var(--dg-accent);
+ }
 details[open] .dg-chevron {
   transform: rotate(180deg);
 }
@@ -1578,6 +1608,18 @@ details[open] .dg-chevron {
 }
 
 @media (max-width: 1023px) {
+  .dg-evidence {
+    display: block;
+  }
+  .dg-evidence-visual {
+    display: none;
+  }
+  .dg-evidence-media-pair {
+    display: contents;
+  }
+  .dg-evidence-media-pair .dg-note {
+    order: 2;
+  }
   .dg-decision--with-portrait .dg-decision-portrait {
     display: none;
   }
