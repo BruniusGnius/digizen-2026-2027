@@ -155,28 +155,47 @@
               <strong>nunca fue el problema de verdad, ¿cierto?</strong>
             </p>
             <p>
-              Lo que de verdad te aprieta el pecho a las 11 de la noche no es el reporte de uso
-              semanal. Es esa cena donde levantas la vista y <strong>él está ahí… pero no está.</strong> Es cuando le
-              cuentas algo y contesta "ajá" sin despegar los ojos de la pantalla. Es esa distancia
-              chiquita que crece de a poco — hasta el día que te das cuenta de que <strong>ya casi no te
-                busca.</strong>
-            </p>
-            <p>Una mamá nos lo dijo así, y no se nos ha borrado:</p>
-            <p><strong>"Ni siquiera me mira a los ojos."</strong><cite class="dg-inline-attribution">Una mamá</cite></p>
-            <p>
-              Y un niño, en otra parte, dijo esto — léelo despacio:
-            </p>
-            <p><strong>"Mi mamá se ríe más cuando ve el celular que cuando está conmigo."</strong><cite
-                class="dg-inline-attribution">Un niño</cite></p>
-          </div>
-          <div class="dg-copy">
-            <p>
-              <strong>No estás perdiendo tiempo de pantalla. Lo
-                estás perdiendo a él.</strong>
-              Y al mismo tiempo, sin que nadie lo note, se está volviendo alguien que deja que el
-              feed le diga quién es, qué quiere, qué vale — en un mundo que tú ya no controlas.
+              Lo que de verdad te aprieta el pecho
+              @if (isReadMoreExpanded('beat2-ache')) {
+                <span> a las 11 de la noche no es el reporte de uso semanal. Es esa cena donde
+                  levantas la vista y <strong>él está ahí… pero no está.</strong> Es cuando le
+                  cuentas algo y contesta "ajá" sin despegar los ojos de la pantalla. Es esa
+                  distancia chiquita que crece de a poco — hasta el día que te das cuenta de que
+                  <strong>ya casi no te busca.</strong></span>
+              } @else {
+                …<button type="button" class="dg-readmore-trigger"
+                  (click)="toggleReadMore('beat2-ache', beat2AchePanel)" aria-expanded="false">
+                  Ver más<svg lucideChevronDown aria-hidden="true"></svg>
+                </button>
+              }
             </p>
           </div>
+          <div class="dg-readmore-panel" #beat2AchePanel>
+            <div class="dg-readmore-panel-inner">
+              <div class="dg-copy">
+                <p>Una mamá nos lo dijo así, y no se nos ha borrado:</p>
+                <p><strong>"Ni siquiera me mira a los ojos."</strong><cite class="dg-inline-attribution">Una
+                    mamá</cite></p>
+                <p>
+                  Y un niño, en otra parte, dijo esto — léelo despacio:
+                </p>
+                <p><strong>"Mi mamá se ríe más cuando ve el celular que cuando está conmigo."</strong><cite
+                    class="dg-inline-attribution">Un niño</cite></p>
+                <p>
+                  <strong>No estás perdiendo tiempo de pantalla. Lo
+                    estás perdiendo a él.</strong>
+                  Y al mismo tiempo, sin que nadie lo note, se está volviendo alguien que deja que el
+                  feed le diga quién es, qué quiere, qué vale — en un mundo que tú ya no controlas.
+                </p>
+              </div>
+            </div>
+          </div>
+          @if (isReadMoreExpanded('beat2-ache')) {
+            <button type="button" class="dg-readmore-trigger dg-readmore-trigger--collapse"
+              (click)="toggleReadMore('beat2-ache', beat2AchePanel)" aria-expanded="true">
+              Ver menos<svg lucideChevronDown aria-hidden="true"></svg>
+            </button>
+          }
         </div>
       </div>
     </section>
@@ -423,26 +442,45 @@
               un copiloto que conversa con él en su idioma, no un salón de clases ni un curso-bot
               que le suelta tareas. No es un Kumon digital. Y no es un vigilante metido en su
               celular espiando sus chats — <strong>eso rompería su confianza, y la tuya.</strong>
-            </p>
-            <p>
-              Es un lugar al que va a <strong>entrenar su criterio</strong>. ADA lo lleva,
-              conversando, a ver cómo funciona por dentro lo digital: cómo un video está hecho para
-              convencerlo, por qué el feed lo jala, qué siente antes y después de scrollear. En vez
-              de prohibirle, le enseña a preguntarse
-              <em>"¿quién hizo esto y qué quiere de mí?"</em> y
-              <em>"¿esto me sirve, o me está usando?"</em>. Lo que construye ahí adentro
-              <strong>se lo lleva puesto</strong> a sus juegos, sus chats, su vida — y empieza a
-              cruzar de <em>"yo soy el feed"</em> a <em>"yo no soy el feed; lo uso a mi favor."</em>
-            </p>
-            <p>
-              Y te lo digo derecho, porque te respeto:
-              <strong>ADA está viva y está creciendo.</strong> Tu hijo empieza con ella el día que
-              lo inscribas — y ustedes, la Generación Fundadora, la moldean: lo que tu familia
-              necesite se construye primero. No te pido que confíes en una promesa bonita —
-              <strong>habla con ella hoy</strong> y júzgala tú mismo. Lo que ADA hace, te lo
-              mostramos antes de que pagues un peso.
+              @if (!isReadMoreExpanded('beat5-ada')) {
+                <span class="dg-readmore-ellipsis">…</span><button type="button" class="dg-readmore-trigger"
+                  (click)="toggleReadMore('beat5-ada', beat5AdaPanel)" aria-expanded="false">
+                  Ver más<svg lucideChevronDown aria-hidden="true"></svg>
+                </button>
+              }
             </p>
           </div>
+          <div class="dg-readmore-panel" #beat5AdaPanel>
+            <div class="dg-readmore-panel-inner">
+              <div class="dg-copy">
+                <p>
+                  Es un lugar al que va a <strong>entrenar su criterio</strong>. ADA lo lleva,
+                  conversando, a ver cómo funciona por dentro lo digital: cómo un video está hecho
+                  para convencerlo, por qué el feed lo jala, qué siente antes y después de
+                  scrollear. En vez de prohibirle, le enseña a preguntarse
+                  <em>"¿quién hizo esto y qué quiere de mí?"</em> y
+                  <em>"¿esto me sirve, o me está usando?"</em>. Lo que construye ahí adentro
+                  <strong>se lo lleva puesto</strong> a sus juegos, sus chats, su vida — y empieza a
+                  cruzar de <em>"yo soy el feed"</em> a <em>"yo no soy el feed; lo uso a mi
+                    favor."</em>
+                </p>
+                <p>
+                  Y te lo digo derecho, porque te respeto:
+                  <strong>ADA está viva y está creciendo.</strong> Tu hijo empieza con ella el día
+                  que lo inscribas — y ustedes, la Generación Fundadora, la moldean: lo que tu
+                  familia necesite se construye primero. No te pido que confíes en una promesa
+                  bonita — <strong>habla con ella hoy</strong> y júzgala tú mismo. Lo que ADA hace,
+                  te lo mostramos antes de que pagues un peso.
+                </p>
+              </div>
+            </div>
+          </div>
+          @if (isReadMoreExpanded('beat5-ada')) {
+            <button type="button" class="dg-readmore-trigger dg-readmore-trigger--collapse"
+              (click)="toggleReadMore('beat5-ada', beat5AdaPanel)" aria-expanded="true">
+              Ver menos<svg lucideChevronDown aria-hidden="true"></svg>
+            </button>
+          }
         </div>
         <div>
           <figure class="dg-product dg-ada-composite" aria-label="Vista de ADA conversando con un niño">
@@ -982,7 +1020,10 @@
       </div>
     </section>
 
-    <section class="dg-decision" aria-label="Decisión final">
+    <section class="dg-decision dg-decision--with-portrait" aria-label="Decisión final">
+      <figure class="dg-decision-portrait" aria-hidden="true">
+        <img src="assets/digizen/cta-parent-cutout-v01.png" alt="" width="1536" height="1024" />
+      </figure>
       <div class="dg-decision-copy">
         <p class="dg-eyebrow">Tu siguiente paso</p>
         <p class="dg-decision-title">

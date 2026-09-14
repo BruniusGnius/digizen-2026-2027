@@ -11,6 +11,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   LucideCheck,
+  LucideChevronDown,
   LucideCompass,
   LucideGoal,
   LucideHand,
@@ -29,6 +30,7 @@ type FounderPayment = 'msi' | 'contado';
   selector: 'app-root',
   imports: [
     LucideCheck,
+    LucideChevronDown,
     LucideCompass,
     LucideGoal,
     LucideHand,
@@ -46,6 +48,7 @@ export class App implements AfterViewInit, OnDestroy {
   protected readonly theme = inject(ThemeService);
   protected readonly channel = signal<DeliveryChannel>('correo');
   protected readonly founderPayment = signal<FounderPayment>('msi');
+  protected readonly expandedReadMore = signal<ReadonlySet<string>>(new Set());
   protected readonly progress = signal(0);
   protected readonly navScrolled = signal(false);
   protected readonly navWidth = signal<string | null>(null);
@@ -91,6 +94,53 @@ export class App implements AfterViewInit, OnDestroy {
 
   protected setFounderPayment(method: FounderPayment): void {
     this.founderPayment.set(method);
+  }
+
+  protected isReadMoreExpanded(id: string): boolean {
+    return this.expandedReadMore().has(id);
+  }
+
+  private readonly readMoreFrames = new WeakMap<HTMLElement, number>();
+
+  // A lerp/chase loop (like the nav width) never lands cleanly — it crawls
+  // slower and slower near the target, then has to snap the last sliver.
+  // A one-shot reveal needs the opposite: a fixed duration eased animation
+  // that arrives exactly on schedule, so nothing is left to "pop" at the end.
+  protected toggleReadMore(id: string, panel: HTMLElement): void {
+    const opening = !this.isReadMoreExpanded(id);
+    const inner = panel.querySelector<HTMLElement>('.dg-readmore-panel-inner');
+
+    this.expandedReadMore.update((current) => {
+      const next = new Set(current);
+      opening ? next.add(id) : next.delete(id);
+      return next;
+    });
+    if (!inner) return;
+
+    const startHeight = panel.getBoundingClientRect().height;
+    const endHeight = opening ? inner.scrollHeight : 0;
+    const duration = 620;
+    const easeOutCubic = (t: number): number => 1 - (1 - t) ** 3;
+    const startTime = performance.now();
+
+    const existing = this.readMoreFrames.get(panel);
+    if (existing) cancelAnimationFrame(existing);
+
+    const step = (now: number): void => {
+      const t = Math.min(1, (now - startTime) / duration);
+      const eased = easeOutCubic(t);
+      panel.style.height = `${startHeight + (endHeight - startHeight) * eased}px`;
+      if (t < 1) {
+        this.readMoreFrames.set(panel, requestAnimationFrame(step));
+      } else {
+        this.readMoreFrames.delete(panel);
+        // Stay in px instead of switching to 'auto': that layout-mode change
+        // can resolve to a fractionally different height than scrollHeight
+        // and cause a last-instant micro-jump.
+        panel.style.height = opening ? `${inner.scrollHeight}px` : '0px';
+      }
+    };
+    this.readMoreFrames.set(panel, requestAnimationFrame(step));
   }
 
   protected openAda(): void {

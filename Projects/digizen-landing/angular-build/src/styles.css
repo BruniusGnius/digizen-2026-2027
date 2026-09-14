@@ -447,6 +447,41 @@ details > summary::-webkit-details-marker {
   color: var(--dg-ink);
   font-weight: 700;
 }
+.dg-readmore-ellipsis {
+  color: var(--dg-ink);
+}
+.dg-readmore-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--dg-violet);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--dg-violet) 45%, transparent);
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.dg-readmore-trigger svg {
+  width: 14px;
+  height: 14px;
+}
+.dg-readmore-trigger--collapse {
+  display: flex;
+  margin: clamp(20px, 2.4vw, 28px) 0 0;
+}
+.dg-readmore-trigger--collapse svg {
+  transform: rotate(180deg);
+}
+.dg-readmore-panel {
+  height: 0;
+  overflow: hidden;
+}
 .dg-inline-attribution {
   display: block;
   margin-top: 7px;
@@ -882,8 +917,8 @@ blockquote.dg-note .dg-note-avatar svg {
     gap: 0;
   }
   .dg-grid-2--media-first > .dg-media-pair .dg-note--coral {
-    margin-top: auto;
-    margin-bottom: auto;
+    margin-top: clamp(44px, 4vw, 64px);
+    margin-bottom: 0;
   }
 }
 
