@@ -1571,7 +1571,30 @@ details[open] .dg-chevron {
   font-weight: var(--dg-weight-copy);
   line-height: 1.6;
 }
-
+.dg-guard-card {
+  padding: 19px 19px 22px;
+}
+.dg-guard-card-head {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+.dg-guard-card .dg-icon {
+  border-radius: 13px;
+}
+.dg-guard-card h3 {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.22;
+}
+.dg-guard-card p {
+  margin-top: 15px;
+}
+.dg-guard-card p strong {
+  color: var(--dg-ink);
+  font-weight: 760;
+}
 .dg-feature-grid,
 .dg-inclusion-grid {
   margin-top: 24px;
