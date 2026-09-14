@@ -303,12 +303,18 @@
     <section class="dg-section dg-section--violet" aria-labelledby="beat-4-title">
       <div class="dg-grid-2 dg-grid-2--media-first">
         <div class="dg-criteria-visual" data-criteria-visual aria-label="Diagrama conceptual del feed al criterio">
+          <div class="dg-criteria-path" aria-hidden="true"></div>
           <div class="dg-orbit"></div>
           <div class="dg-orbit dg-orbit--two"></div>
           <div class="dg-feed-labels">
-            <span>Feed · impulso</span><span>Pausa · pregunta</span><span>Criterio · decisión</span>
+            <span><strong>Feed</strong> impulso</span>
+            <span><strong>Pausa</strong> pregunta</span>
+            <span><strong>Criterio</strong> decisión</span>
           </div>
           <div class="dg-criteria-node">Esto me sirve<br />¿o me usa?</div>
+          <div class="dg-criteria-signal dg-criteria-signal--one" aria-hidden="true"></div>
+          <div class="dg-criteria-signal dg-criteria-signal--two" aria-hidden="true"></div>
+          <div class="dg-criteria-signal dg-criteria-signal--three" aria-hidden="true"></div>
         </div>
         <div>
           <p class="dg-kicker">Otro camino</p>
@@ -331,7 +337,11 @@
               podemos imaginar todavía.
             </p>
           </div>
-          <blockquote class="dg-quote">El control caduca. El criterio no.</blockquote>
+        </div>
+      </div>
+      <div class="dg-criteria-bridge">
+        <div>
+          <h3 class="dg-h3 dg-bridge-title">El control caduca. El criterio no.</h3>
           <div class="dg-copy">
             <p>
               Y hoy eso pesa más que nunca. En un mundo donde la inteligencia artificial ya hace
@@ -353,6 +363,43 @@
               protege es el mismo puente que te lo regresa.
             </p>
           </div>
+        </div>
+        <div class="dg-criteria-card-grid" aria-label="Cuatro señales de criterio">
+          <article class="dg-card" style="--accent: var(--dg-blue)">
+            <div class="dg-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m4 12 5 5L20 6"></path>
+              </svg>
+            </div>
+            <h4>Verdad</h4>
+            <p>Distinguir qué es cierto.</p>
+          </article>
+          <article class="dg-card" style="--accent: var(--dg-violet)">
+            <div class="dg-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3 4 8l8 5 8-5-8-5Z"></path>
+                <path d="m4 13 8 5 8-5"></path>
+              </svg>
+            </div>
+            <h4>Valor</h4>
+            <p>Decidir qué vale.</p>
+          </article>
+          <article class="dg-card" style="--accent: var(--dg-cyan)">
+            <div class="dg-icon">
+              <svg lucideGoal aria-hidden="true"></svg>
+            </div>
+            <h4>Utilidad</h4>
+            <p>Saber si sirve o usa.</p>
+          </article>
+          <article class="dg-card" style="--accent: var(--dg-green)">
+            <div class="dg-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21.2l8.8-8.8a5.5 5.5 0 0 0 0-7.8Z"></path>
+              </svg>
+            </div>
+            <h4>Vínculo</h4>
+            <p>Volver al mismo lado.</p>
+          </article>
         </div>
       </div>
     </section>

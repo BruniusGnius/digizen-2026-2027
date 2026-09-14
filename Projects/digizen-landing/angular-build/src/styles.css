@@ -468,6 +468,38 @@ details > summary::-webkit-details-marker {
   letter-spacing: -0.03em;
   line-height: 1.28;
 }
+.dg-bridge-title {
+  max-width: 24ch;
+  margin-top: 0;
+  color: var(--dg-ink);
+  font-size: clamp(1.55rem, 2.6vw, 2.25rem);
+  letter-spacing: -0.03em;
+}
+.dg-criteria-bridge {
+  margin-top: clamp(44px, 5vw, 72px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.9fr);
+  gap: clamp(32px, 4vw, 56px);
+  align-items: start;
+}
+.dg-criteria-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 11px;
+}
+.dg-criteria-card-grid .dg-card {
+  min-height: 166px;
+}
+.dg-criteria-card-grid h4 {
+  margin: 14px 0 0;
+  color: var(--dg-ink);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+.dg-criteria-card-grid p {
+  margin: 8px 0 0;
+}
 .dg-grid-2 {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(250px, 1fr);
@@ -948,46 +980,52 @@ details[open] .dg-chevron {
   border: 1px solid var(--dg-line);
   border-radius: var(--dg-radius-stage);
   background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--dg-blue) 84%, var(--dg-raised)),
-    color-mix(in srgb, var(--dg-cyan) 74%, var(--dg-raised)) 54%,
-    color-mix(in srgb, var(--dg-coral) 66%, var(--dg-raised))
+    145deg,
+    color-mix(in srgb, var(--dg-blue) 92%, #111a34) 0%,
+    color-mix(in srgb, var(--dg-violet) 74%, var(--dg-blue)) 42%,
+    color-mix(in srgb, var(--dg-cyan) 66%, var(--dg-raised)) 100%
   );
   box-shadow: var(--dg-shadow-card);
+  isolation: isolate;
 }
-.dg-criteria-visual::before,
-.dg-placeholder-scene::before {
+.dg-criteria-visual::before {
   position: absolute;
-  top: 16%;
-  left: 12%;
-  width: 58%;
-  height: 31%;
-  border-radius: 58px;
-  background: rgba(255, 255, 255, 0.24);
-  box-shadow: 76px 164px 0 rgba(255, 255, 255, 0.13);
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 38px 38px;
   content: '';
-  transform: rotate(-10deg);
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 78%, transparent);
+  opacity: 0.6;
+  transform: rotate(-8deg) scale(1.15);
 }
-.dg-criteria-visual::after,
-.dg-placeholder-scene::after {
+.dg-criteria-visual::after {
   position: absolute;
-  right: 13%;
-  bottom: 14%;
-  width: 25%;
-  aspect-ratio: 1;
+  inset: 10%;
+  border: 1px solid rgba(255, 255, 255, 0.23);
   border-radius: 34px;
-  background: rgba(17, 26, 52, 0.3);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
   content: '';
-  transform: rotate(14deg);
+  transform: rotate(-3deg);
+  z-index: -1;
 }
 .dg-orbit {
   position: absolute;
   width: 72%;
   aspect-ratio: 1;
-  display: none;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 16px rgba(255, 255, 255, 0.035),
+    inset 0 0 44px rgba(255, 255, 255, 0.1);
+  transform: rotate(-14deg) scaleX(0.72);
 }
 .dg-orbit--two {
-  display: none;
+  width: 52%;
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: rotate(18deg) scaleX(0.82);
 }
 .dg-placeholder-scene {
   position: relative;
@@ -1002,35 +1040,114 @@ details[open] .dg-chevron {
       rgba(255, 107, 95, 0.76)
     );
 }
+.dg-placeholder-scene::before {
+  position: absolute;
+  top: 16%;
+  left: 12%;
+  width: 58%;
+  height: 31%;
+  border-radius: 58px;
+  background: rgba(255, 255, 255, 0.24);
+  box-shadow: 76px 164px 0 rgba(255, 255, 255, 0.13);
+  content: '';
+  transform: rotate(-10deg);
+}
+.dg-placeholder-scene::after {
+  position: absolute;
+  right: 13%;
+  bottom: 14%;
+  width: 25%;
+  aspect-ratio: 1;
+  border-radius: 34px;
+  background: rgba(17, 26, 52, 0.3);
+  content: '';
+  transform: rotate(14deg);
+}
+.dg-criteria-path {
+  position: absolute;
+  inset: 18% 16%;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, transparent 0 8%, rgba(255, 255, 255, 0.82) 8% 92%, transparent 92%),
+    linear-gradient(90deg, rgba(255, 107, 95, 0.55), rgba(67, 222, 234, 0.8));
+  clip-path: polygon(0 41%, 76% 41%, 76% 28%, 100% 50%, 76% 72%, 76% 59%, 0 59%);
+  opacity: 0.6;
+}
 .dg-criteria-node {
   z-index: 1;
-  width: 132px;
-  height: 132px;
+  width: clamp(132px, 13vw, 164px);
+  height: clamp(132px, 13vw, 164px);
   display: grid;
   place-items: center;
-  border: 1px solid var(--dg-line);
+  border: 1px solid rgba(255, 255, 255, 0.38);
   border-radius: 50%;
   color: #ffffff;
-  background: rgba(17, 26, 52, 0.76);
-  box-shadow: var(--dg-shadow-card);
+  background:
+    radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.24), transparent 31%),
+    rgba(17, 26, 52, 0.78);
+  box-shadow:
+    0 22px 58px rgba(6, 18, 45, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
   font-weight: 850;
+  line-height: 1.22;
   text-align: center;
 }
 .dg-feed-labels {
   position: absolute;
-  inset: 14% 8%;
+  inset: 13% 8%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: rgba(255, 255, 255, 0.76);
-  font-size: 11px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(10px, 1.05vw, 12px);
   font-weight: 850;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+.dg-feed-labels span {
+  width: min(174px, 48%);
+  display: grid;
+  gap: 3px;
+  padding: 11px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.23);
+  border-radius: 12px;
+  background: rgba(17, 26, 52, 0.24);
+  backdrop-filter: blur(10px);
+  line-height: 1.18;
+}
+.dg-feed-labels strong {
+  color: #ffffff;
+  font-size: 1.18em;
+  letter-spacing: 0;
+}
+.dg-feed-labels span:nth-child(2) {
+  align-self: center;
 }
 .dg-feed-labels span:last-child {
   align-self: flex-end;
   color: #ffffff;
+}
+.dg-criteria-signal {
+  position: absolute;
+  width: 10px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 7px rgba(255, 255, 255, 0.16),
+    0 0 28px rgba(255, 255, 255, 0.72);
+}
+.dg-criteria-signal--one {
+  top: 27%;
+  left: 22%;
+}
+.dg-criteria-signal--two {
+  top: 49%;
+  left: 48%;
+}
+.dg-criteria-signal--three {
+  right: 22%;
+  bottom: 27%;
 }
 
 .dg-product {
@@ -1562,6 +1679,12 @@ details[open] .dg-chevron {
   .dg-media-pair .dg-media:last-child {
     display: none;
   }
+  .dg-criteria-bridge {
+    grid-template-columns: 1fr;
+  }
+  .dg-criteria-card-grid {
+    display: none;
+  }
   .dg-evidence {
     grid-template-columns: 1fr;
   }
@@ -1694,6 +1817,7 @@ details[open] .dg-chevron {
   .dg-pullquotes,
   .dg-guard-grid,
   .dg-feature-grid,
+  .dg-criteria-card-grid,
   .dg-pricing-grid,
   .dg-ada-form-horizontal {
     grid-template-columns: 1fr;
