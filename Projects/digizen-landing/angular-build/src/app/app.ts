@@ -9,14 +9,29 @@ import {
 } from '@angular/core';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { LucideCompass, LucideGoal, LucideHand, LucideHeartCrack } from '@lucide/angular';
+import {
+  LucideCompass,
+  LucideGoal,
+  LucideHand,
+  LucideHeartCrack,
+  LucideShield,
+  LucideSparkles,
+} from '@lucide/angular';
 import { ThemeService } from './core/theme.service';
 
 type DeliveryChannel = 'correo' | 'whatsapp';
+type FounderPayment = 'msi' | 'contado';
 
 @Component({
   selector: 'app-root',
-  imports: [LucideCompass, LucideGoal, LucideHand, LucideHeartCrack],
+  imports: [
+    LucideCompass,
+    LucideGoal,
+    LucideHand,
+    LucideHeartCrack,
+    LucideShield,
+    LucideSparkles,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -24,6 +39,7 @@ export class App implements AfterViewInit, OnDestroy {
   @ViewChild('adaDialog') private adaDialog?: ElementRef<HTMLDialogElement>;
   protected readonly theme = inject(ThemeService);
   protected readonly channel = signal<DeliveryChannel>('correo');
+  protected readonly founderPayment = signal<FounderPayment>('msi');
   protected readonly progress = signal(0);
   protected readonly navScrolled = signal(false);
   protected readonly navWidth = signal<string | null>(null);
@@ -65,6 +81,10 @@ export class App implements AfterViewInit, OnDestroy {
   }
   protected setChannel(channel: DeliveryChannel): void {
     this.channel.set(channel);
+  }
+
+  protected setFounderPayment(method: FounderPayment): void {
+    this.founderPayment.set(method);
   }
 
   protected openAda(): void {
