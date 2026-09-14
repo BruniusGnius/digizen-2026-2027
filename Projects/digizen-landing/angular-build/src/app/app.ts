@@ -10,12 +10,15 @@ import {
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
+  LucideCheck,
   LucideCompass,
   LucideGoal,
   LucideHand,
   LucideHeartCrack,
   LucideShield,
+  LucideShieldOff,
   LucideSparkles,
+  LucideStar,
 } from '@lucide/angular';
 import { ThemeService } from './core/theme.service';
 
@@ -25,12 +28,15 @@ type FounderPayment = 'msi' | 'contado';
 @Component({
   selector: 'app-root',
   imports: [
+    LucideCheck,
     LucideCompass,
     LucideGoal,
     LucideHand,
     LucideHeartCrack,
     LucideShield,
+    LucideShieldOff,
     LucideSparkles,
+    LucideStar,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
