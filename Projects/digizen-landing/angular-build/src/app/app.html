@@ -14,11 +14,11 @@
         height="200" />
       <img class="dg-logo-dark" src="assets/digizen/logo-digizen-horizontal-dark.svg" alt="" width="520" height="200" />
     </a>
-    <div class="dg-nav-links" aria-label="Secciones de la landing">
-      <a href="#problema" [class.active]="activeSection() === 'problema'">Problema</a>
+    <div class="dg-nav-links" aria-label="Temas principales de la landing">
       <a href="#ada" [class.active]="activeSection() === 'ada'">ADA</a>
-      <a href="#seguridad" [class.active]="activeSection() === 'seguridad'">Seguridad IA</a>
       <a href="#oferta" [class.active]="activeSection() === 'oferta'">Oferta</a>
+      <a href="#garantia" [class.active]="activeSection() === 'garantia'">Garantía</a>
+      <a href="#faqs" [class.active]="activeSection() === 'faqs'">FAQs</a>
     </div>
     <button class="dg-theme" type="button" (click)="toggleTheme()" [attr.aria-pressed]="theme.theme() === 'dark'"
       [attr.aria-label]="theme.theme() === 'dark' ? 'Activar tema claro' : 'Activar tema oscuro'">
@@ -34,7 +34,7 @@
       </svg>
       }
     </button>
-    <a class="dg-btn" href="#oferta">Inscribir<svg viewBox="0 0 24 24" aria-hidden="true">
+    <a class="dg-btn" href="#precio">Inscribir<svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M5 12h14M13 6l6 6-6 6"></path>
       </svg></a>
     <div class="dg-nav-progress" aria-hidden="true">
@@ -438,7 +438,7 @@
           </h2>
           <div class="dg-copy">
             <p>
-              Tu hijo entra a <strong>Gnius Space</strong> y ahí trabaja con <strong>ADA</strong>:
+              Tu hijo entra a <strong>la plataforma de Digizen</strong> y ahí trabaja con <strong>ADA</strong>:
               un copiloto que conversa con él en su idioma, no un salón de clases ni un curso-bot
               que le suelta tareas. No es un Kumon digital. Y no es un vigilante metido en su
               celular espiando sus chats — <strong>eso rompería su confianza, y la tuya.</strong>
@@ -875,77 +875,54 @@
       </div>
     </section>
 
-    <section class="dg-section" aria-labelledby="payment-title">
+    <section id="precio" class="dg-section" aria-labelledby="payment-title">
       <p class="dg-kicker">Elige cómo pagar</p>
       <h2 id="payment-title" class="dg-h2">
         Elige cómo pagar<span class="dg-h2-muted">el Curso Digizen para su edad</span>
       </h2>
       <p class="dg-payment-subtitle">
-        Tú eliges si pagas de contado o en 10 pagos programados.
+        El curso es por edad. Tú eliges si lo pagas de contado o en 10 pagos diferidos mensuales.
       </p>
       <div class="dg-payment-layout">
       <div class="dg-pricing-grid">
         <article class="dg-pricing-card">
-          <p class="dg-eyebrow">Plan mensual</p>
-          <h3 class="dg-price-title">Mes a mes</h3>
-          <p class="dg-price">$599 <span class="text-sm font-medium tracking-normal">/mes</span></p>
+          <p class="dg-eyebrow">Curso Digizen</p>
+          <h3 class="dg-price-title">Pago de contado</h3>
+          <p class="dg-price">$4,990</p>
           <p class="dg-price-copy">
-            + inscripción única de $900 (se abona completa si después subes al ciclo).
+            Un solo pago por el curso completo correspondiente a su edad. Sin cargos posteriores.
           </p>
           <div class="dg-comparison">
             <p class="dg-caption">Ventaja</p>
-            <p class="dg-detail">Sin pagar todo el ciclo de una vez — empiezas con un solo mes.</p>
+            <p class="dg-detail">Es el mejor precio total. Tu hijo empieza hoy y no hay pagos posteriores del curso.</p>
             <p class="dg-caption">Consideración</p>
-            <p class="dg-detail">A 12 meses termina costando más: $8,088 vs $5,990 del ciclo.</p>
+            <p class="dg-detail">Pagas todo al inscribirlo.</p>
           </div>
-          <button class="dg-btn" type="button" (click)="checkout('mensual')">
-            Elegir mensual<svg viewBox="0 0 24 24" aria-hidden="true">
+          <button class="dg-btn" type="button" (click)="checkout('contado')">
+            Pagar de contado<svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6"></path>
             </svg>
           </button>
         </article>
         <article class="dg-pricing-card dg-pricing-card--featured">
           <span class="dg-recommended-badge">Recomendada</span>
-          <p class="dg-eyebrow">Generación Fundadora</p>
-          <h3 class="dg-price-title">Ciclo Digizen</h3>
-          <p class="dg-price">$5,990</p>
-          <fieldset class="border-0 p-0">
-            <legend class="dg-label mt-0">Forma de pago</legend>
-            <div class="dg-channel">
-              <button type="button" (click)="setFounderPayment('msi')"
-                [attr.aria-pressed]="founderPayment() === 'msi'">12 MSI</button>
-              <button type="button" (click)="setFounderPayment('contado')"
-                [attr.aria-pressed]="founderPayment() === 'contado'">Contado</button>
-            </div>
-          </fieldset>
-          @if (founderPayment() === 'msi') {
-            <p class="dg-price-copy">por el ciclo completo — hasta 12 meses sin intereses con tarjeta.</p>
-          } @else {
-            <p class="dg-price-copy">por el ciclo completo — pago único, sin dividir.</p>
-          }
-          <p class="dg-price-highlight">
-            @if (founderPayment() === 'msi') {
-              $499/mes efectivo a 12 MSI
-            } @else {
-              Un solo pago, sin trámites de por medio
-            }
+          <p class="dg-eyebrow">Curso Digizen</p>
+          <h3 class="dg-price-title">Pagos diferidos mensuales</h3>
+          <p class="dg-price">$599 <span class="text-sm font-medium tracking-normal">x 10 meses</span></p>
+          <p class="dg-price-copy">
+            Total del curso: $5,990. Es una compra completa dividida en cargos programados.
           </p>
+          <p class="dg-price-highlight">No es suscripción: después de la garantía, no se cancela mes a mes.</p>
           <div class="dg-comparison">
             <p class="dg-caption">Ventaja</p>
             <p class="dg-detail">
-              <strong class="dg-savings">El ciclo te ahorra $2,098</strong> vs ir mes a mes: dos
-              meses gratis y la inscripción va incluida.
+              <strong class="dg-savings">Tu hijo entra hoy al curso completo.</strong> Tú conservas flujo pagando en 10 meses.
             </p>
             <p class="dg-caption">Consideración</p>
-            @if (founderPayment() === 'msi') {
-              <p class="dg-detail">El total no cambia: solo lo divides hasta en 12 pagos con tarjeta.</p>
-            } @else {
-              <p class="dg-detail">Pagas los $5,990 de una sola vez, sin dividir.</p>
-            }
+            <p class="dg-detail">Adquieres el curso completo desde hoy; los cargos quedan programados hasta completar el total.</p>
           </div>
-          <button class="dg-btn" type="button"
-            (click)="checkout(founderPayment() === 'msi' ? 'ciclo-msi' : 'contado')">
-            {{ founderPayment() === 'msi' ? 'Elegir 12 MSI' : 'Elegir contado' }}
+          <button class="dg-btn" type="button" (click)="checkout('diferido')">
+            Elegir pagos diferidos
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6"></path>
             </svg>
@@ -964,7 +941,7 @@
       </div>
     </section>
 
-    <section class="dg-section" aria-labelledby="closure-title">
+    <section id="garantia" data-nav-section="garantia" class="dg-section" aria-labelledby="closure-title">
       <div class="dg-closure-layout">
         <div class="dg-closure-copy">
           <p class="dg-kicker">Tu decisión</p>
@@ -1049,7 +1026,7 @@
       </div>
     </section>
 
-    <section class="dg-section" aria-labelledby="pending-title">
+    <section id="faqs" data-nav-section="faqs" class="dg-section" aria-labelledby="pending-title">
       <p class="dg-kicker">Preguntas frecuentes</p>
       <h2 id="pending-title" class="dg-h2">Preguntas frecuentes y legales</h2>
       <div class="dg-pending">
@@ -1083,9 +1060,7 @@
       <div class="dg-footer-dev">
         <p class="dg-caption">Digizen es desarrollado por</p>
         <div class="dg-footer-gnius">
-          <img class="dg-logo-light" src="assets/gnius/logo-gnius-club-light.svg" alt="Gnius Club" width="520"
-            height="200" loading="lazy" />
-          <img class="dg-logo-dark" src="assets/gnius/logo-gnius-club-dark.svg" alt="" width="520" height="200"
+          <img src="assets/gnius/logo-gnius-club-color.svg" alt="Gnius Club" width="520" height="200"
             loading="lazy" />
         </div>
       </div>
@@ -1095,7 +1070,18 @@
         <a href="https://alquimistas.gnius.club/" target="_blank" rel="noopener">Alquimistas de I.A.</a>
       </nav>
       <address class="dg-footer-contact">
-        <a href="tel:+522218481116">(+52) 221 848 1116</a>
+        <a class="dg-footer-whatsapp"
+          href="https://wa.me/522218481116?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Digizen%20y%20ADA."
+          target="_blank" rel="noopener" aria-label="Enviar WhatsApp a Gnius Club">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M21 11.7a8.5 8.5 0 0 1-12.6 7.4L4 20l.9-4.3A8.5 8.5 0 1 1 21 11.7Z">
+            </path>
+            <path d="M8.4 8.2c.2-.5.4-.5.7-.5h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2.1.4 0 .6l-.4.5c-.1.1-.2.3-.1.5.3.7.8 1.3 1.4 1.8.6.5 1.2.9 1.9 1.1.2.1.4 0 .5-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .5-.3 1.2-.7 1.5-.4.3-1.3.5-2.4.2-1.2-.3-2.5-1-3.8-2.1-1.2-1-2.2-2.4-2.7-3.6-.4-.9-.3-1.7.1-2.3Z">
+            </path>
+          </svg>
+          (+52) 221 848 1116
+        </a>
         <a href="mailto:info@gnius.club">info&#64;gnius.club</a>
         <a href="https://gnius.club/aviso-de-privacidad.html" target="_blank" rel="noopener">Aviso de Privacidad</a>
       </address>

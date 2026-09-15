@@ -2165,8 +2165,19 @@ details[open] .dg-chevron {
   font-weight: 600;
   text-decoration: none;
 }
+.dg-footer-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.dg-footer-whatsapp svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: currentColor;
+}
 .dg-footer a:not(.dg-logo):hover {
-  color: var(--dg-teal);
+  color: var(--dg-btn-bg);
   text-decoration: underline;
 }
 .dg-footer-legal {

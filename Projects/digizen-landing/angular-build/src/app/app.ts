@@ -24,7 +24,6 @@ import {
 import { ThemeService } from './core/theme.service';
 
 type DeliveryChannel = 'correo' | 'whatsapp';
-type FounderPayment = 'msi' | 'contado';
 
 @Component({
   selector: 'app-root',
@@ -47,7 +46,6 @@ export class App implements AfterViewInit, OnDestroy {
   @ViewChild('adaDialog') private adaDialog?: ElementRef<HTMLDialogElement>;
   protected readonly theme = inject(ThemeService);
   protected readonly channel = signal<DeliveryChannel>('correo');
-  protected readonly founderPayment = signal<FounderPayment>('msi');
   protected readonly expandedReadMore = signal<ReadonlySet<string>>(new Set());
   protected readonly progress = signal(0);
   protected readonly navScrolled = signal(false);
@@ -90,10 +88,6 @@ export class App implements AfterViewInit, OnDestroy {
   }
   protected setChannel(channel: DeliveryChannel): void {
     this.channel.set(channel);
-  }
-
-  protected setFounderPayment(method: FounderPayment): void {
-    this.founderPayment.set(method);
   }
 
   protected isReadMoreExpanded(id: string): boolean {
@@ -157,7 +151,11 @@ export class App implements AfterViewInit, OnDestroy {
     this.mobileCtaVisible.set(false);
   }
 
-  protected checkout(plan: 'mensual' | 'ciclo-msi' | 'contado' = 'ciclo-msi'): void {
+  protected checkout(plan?: 'diferido' | 'contado'): void {
+    if (!plan) {
+      document.querySelector('#precio')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
     window.dispatchEvent(new CustomEvent('digizen:checkout', { detail: { plan } }));
   }
 
