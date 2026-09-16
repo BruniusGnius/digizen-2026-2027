@@ -1,18 +1,18 @@
 <div class="dg-shell">
   <header class="dg-header">
     <a class="dg-logo" href="#hero-title" aria-label="DIGIZEN, volver al inicio">
-      <img class="dg-logo-light" src="assets/digizen/logo-digizen-horizontal-light.svg" alt="DIGIZEN" width="520"
+      <img class="dg-logo-light" src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="DIGIZEN" width="520"
         height="200" />
-      <img class="dg-logo-dark" src="assets/digizen/logo-digizen-horizontal-dark.svg" alt="" width="520" height="200" />
+      <img class="dg-logo-dark" src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520" height="200" />
     </a>
   </header>
 
   <nav class="dg-nav" [class.is-scrolled]="navScrolled()" [style.--nav-w]="navWidth()"
     [style.--nav-reveal]="navReveal()" aria-label="Navegación principal de Digizen">
     <a class="dg-logo dg-nav-logo" href="#hero-title" aria-label="DIGIZEN, volver al inicio">
-      <img class="dg-logo-light" src="assets/digizen/logo-digizen-horizontal-light.svg" alt="DIGIZEN" width="520"
+      <img class="dg-logo-light" src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="DIGIZEN" width="520"
         height="200" />
-      <img class="dg-logo-dark" src="assets/digizen/logo-digizen-horizontal-dark.svg" alt="" width="520" height="200" />
+      <img class="dg-logo-dark" src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520" height="200" />
     </a>
     <div class="dg-nav-links" aria-label="Temas principales de la landing">
       <a href="#ada" [class.active]="activeSection() === 'ada'">ADA</a>
@@ -70,11 +70,13 @@
             </div>
           </div>
         </div>
-        <figure class="dg-media dg-media--portrait" data-label="Distancia sin culpa · imagen temporal">
+        <figure class="dg-media dg-media--portrait">
           <picture>
-            <source media="(max-width: 1023px)" srcset="https://picsum.photos/seed/digizen-hero-mobile/1200/675" />
-            <img src="https://picsum.photos/seed/digizen-hero/896/1120"
-              alt="Imagen temporal para una escena familiar cotidiana" width="896" height="1120" fetchpriority="high" />
+            <source media="(max-width: 1023px)"
+              srcset="assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy-mobile.png" />
+            <img src="assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy.png"
+              alt="Padre absorto en su propio celular mientras sostiene el celular recién confiscado de su hijo, que lo mira con fastidio"
+              width="768" height="1024" fetchpriority="high" />
           </picture>
         </figure>
       </div>
@@ -119,11 +121,13 @@
             </div>
           </blockquote>
         </div>
-        <figure class="dg-media dg-media--portrait" data-label="Alivio · gesto humano · imagen temporal">
+        <figure class="dg-media dg-media--portrait">
           <picture>
-            <source media="(max-width: 1023px)" srcset="https://picsum.photos/seed/digizen-relief-mobile/1200/675" />
-            <img src="https://picsum.photos/seed/digizen-relief/800/1000"
-              alt="Imagen temporal para un gesto humano de acompañamiento" width="800" height="1000" loading="lazy" />
+            <source media="(max-width: 1023px)"
+              srcset="assets/digizen/generated/scenes/dg-scene-a02-parent-phone-attachment-mobile.png" />
+            <img src="assets/digizen/generated/scenes/dg-scene-a02-parent-phone-attachment.png"
+              alt="Mamá con ambas manos en su celular, totalmente absorta, un instante antes de reconocer su propio apego al dispositivo"
+              width="768" height="1024" loading="lazy" />
           </picture>
         </figure>
       </div>
@@ -132,9 +136,14 @@
     <section class="dg-section" aria-labelledby="beat-2-title">
       <div class="dg-grid-2 dg-grid-2--media-first">
         <div class="dg-media-pair">
-          <figure class="dg-media dg-media--portrait" data-label="Distancia y vacío · imagen temporal">
-            <img src="https://picsum.photos/seed/digizen-distance-space/760/950"
-              alt="Imagen temporal de distancia emocional" width="760" height="950" loading="lazy" />
+          <figure class="dg-media dg-media--portrait">
+            <picture>
+              <source media="(max-width: 1023px)"
+                srcset="assets/digizen/generated/scenes/dg-scene-a03-mother-son-dinner-mobile.png" />
+              <img src="assets/digizen/generated/scenes/dg-scene-a03-mother-son-dinner.png"
+                alt="Mamá e hijo sentados cerca en la cena, pero el celular abre una distancia emocional entre ellos"
+                width="768" height="1024" loading="lazy" />
+            </picture>
           </figure>
           <blockquote class="dg-note dg-note--coral">
             <div class="dg-note-avatar" aria-hidden="true"><svg lucideHeartCrack></svg></div>
@@ -203,7 +212,8 @@
     <section id="decision-early" class="dg-decision dg-decision--with-portrait"
       aria-label="Decisión después del beat 2">
       <figure class="dg-decision-portrait" aria-hidden="true">
-        <img src="assets/digizen/cta-parent-cutout-v01.png" alt="" width="1536" height="1024" />
+        <img src="assets/digizen/generated/scenes/dg-scene-cta-father-son-team-1-1.png" alt="" width="956"
+          height="956" />
       </figure>
       <div class="dg-decision-copy">
         <p class="dg-eyebrow">¿Ya viste suficiente?</p>
@@ -604,9 +614,10 @@
               <p><strong>ADA es lo segundo, por diseño:</strong></p>
             </div>
           </div>
-          <figure class="dg-media dg-safety-image" data-label="Seguridad y acompañamiento · imagen temporal">
-            <img src="https://picsum.photos/seed/digizen-ai-safety/900/1200"
-              alt="Imagen temporal para el bloque de seguridad de ADA" width="900" height="1200" loading="lazy" />
+          <figure class="dg-media dg-safety-image dg-media--flip">
+            <img src="assets/digizen/generated/scenes/dg-scene-a06-ai-rules-family.png"
+              alt="Adolescente con espacio de reflexión privado y padre viendo el avance a distancia respetuosa"
+              width="768" height="1024" loading="lazy" />
           </figure>
         </div>
         <div class="dg-guard-grid" aria-label="Cuatro principios de seguridad de ADA">
@@ -696,9 +707,10 @@
               </svg>Conversa con ADA</button>
           </div>
         </div>
-        <figure class="dg-media aspect-[4/3]" data-label="ADA + cuatro guardas · imagen temporal">
-          <img src="https://picsum.photos/seed/digizen-ada-guards/900/675"
-            alt="Imagen temporal para el diagrama de límites de ADA" width="900" height="675" loading="lazy" />
+        <figure class="dg-media aspect-[4/3]">
+          <img src="assets/digizen/generated/scenes/dg-scene-a05-criterion-mission.png"
+            alt="Adolescente viendo su feed reorganizarse en un mapa de decisiones" width="1184" height="672"
+            loading="lazy" />
         </figure>
       </div>
     </section>
@@ -724,18 +736,21 @@
             </p>
           </div>
         </div>
-        <figure class="dg-media dg-media--portrait" data-label="Acuerdo y presencia · imagen temporal">
-          <picture>
-            <source media="(max-width:1023px)" srcset="https://picsum.photos/seed/digizen-presence-mobile/1200/675" />
-            <img src="https://picsum.photos/seed/digizen-presence/800/1000"
-              alt="Imagen temporal para el acuerdo familiar" width="800" height="1000" loading="lazy" />
-          </picture>
+        <figure class="dg-media dg-media--portrait">
+          <img src="assets/digizen/generated/scenes/dg-scene-a07-pinky-promise.png"
+            alt="Meñiques de padre e hijo unidos por un listón, celular a un lado" width="768" height="1024"
+            loading="lazy" />
         </figure>
       </div>
     </section>
 
     <section class="dg-section dg-section--grid" aria-labelledby="founder-title">
       <div class="dg-founder-layout">
+        <figure class="dg-media dg-founder-media">
+          <img src="assets/digizen/generated/scenes/dg-scene-a08-founder-start.png"
+            alt="Padre e hijo viendo juntos una laptop con un camino de misión, listos para empezar" width="1184"
+            height="672" loading="lazy" />
+        </figure>
         <p class="dg-kicker dg-founder-kicker">Generación Fundadora</p>
         <h2 id="founder-title" class="dg-h2 dg-founder-title">
           Inscríbelo hoy<span class="dg-h2-muted">Generación Fundadora</span>
@@ -805,7 +820,8 @@
 
     <section class="dg-decision dg-decision--with-portrait" aria-label="Decisión antes de la inscripción">
       <figure class="dg-decision-portrait" aria-hidden="true">
-        <img src="assets/digizen/cta-parent-cutout-v01.png" alt="" width="1536" height="1024" />
+        <img src="assets/digizen/generated/scenes/dg-scene-cta-father-son-team-1-1.png" alt="" width="956"
+          height="956" />
       </figure>
       <div class="dg-decision-copy">
         <p class="dg-eyebrow">¿Ya viste suficiente?</p>
@@ -886,6 +902,12 @@
       <div class="dg-payment-layout">
       <div class="dg-pricing-grid">
         <article class="dg-pricing-card">
+          <div class="dg-pricing-brand" aria-hidden="true">
+            <img class="dg-logo-light" src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="" width="520"
+              height="200" loading="lazy" />
+            <img class="dg-logo-dark" src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520"
+              height="200" loading="lazy" />
+          </div>
           <p class="dg-eyebrow">Curso Digizen</p>
           <h3 class="dg-price-title">Pago de contado</h3>
           <p class="dg-price">$4,990</p>
@@ -906,6 +928,12 @@
         </article>
         <article class="dg-pricing-card dg-pricing-card--featured">
           <span class="dg-recommended-badge">Recomendada</span>
+          <div class="dg-pricing-brand" aria-hidden="true">
+            <img class="dg-logo-light" src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="" width="520"
+              height="200" loading="lazy" />
+            <img class="dg-logo-dark" src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520"
+              height="200" loading="lazy" />
+          </div>
           <p class="dg-eyebrow">Curso Digizen</p>
           <h3 class="dg-price-title">Pagos diferidos mensuales</h3>
           <p class="dg-price">$599 <span class="text-sm font-medium tracking-normal">x 10 meses</span></p>
@@ -1002,7 +1030,8 @@
 
     <section class="dg-decision dg-decision--with-portrait" aria-label="Decisión final">
       <figure class="dg-decision-portrait" aria-hidden="true">
-        <img src="assets/digizen/cta-parent-cutout-v01.png" alt="" width="1536" height="1024" />
+        <img src="assets/digizen/generated/scenes/dg-scene-cta-mother-daughter-laptop-1-1.png" alt="" width="1024"
+          height="1024" />
       </figure>
       <div class="dg-decision-copy">
         <p class="dg-eyebrow">Tu siguiente paso</p>
@@ -1050,9 +1079,9 @@
     <div class="dg-footer-inner">
       <div class="dg-footer-brand">
         <a class="dg-logo" href="#hero-title" aria-label="DIGIZEN, volver al inicio">
-          <img class="dg-logo-light" src="assets/digizen/logo-digizen-horizontal-light.svg" alt="DIGIZEN" width="520"
+          <img class="dg-logo-light" src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="DIGIZEN" width="520"
             height="200" loading="lazy" />
-          <img class="dg-logo-dark" src="assets/digizen/logo-digizen-horizontal-dark.svg" alt="" width="520"
+          <img class="dg-logo-dark" src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520"
             height="200" loading="lazy" />
         </a>
         <p>Presencia, no vigilancia. Criterio, no candado.</p>

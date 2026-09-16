@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lámina de referencia del sistema de diseño refinado de DIGIZEN.">
+  <title>DIGIZEN · Sistema de diseño refinado</title>
+  <link rel="stylesheet" href="tokens.css">
+</head>
+<body class="dg-system">
+  <main class="dg-page dg-stack" aria-labelledby="page-title">
+    <section class="dg-stack">
+      <span class="dg-kicker"><span class="dg-kicker__dot" aria-hidden="true"></span>Sistema de diseño · v1</span>
+      <h1 class="dg-display" id="page-title">Una interfaz que acompaña, no vigila.</h1>
+      <p class="dg-lead">Referencia independiente para aplicar el refinamiento en las experiencias de familia, alumno, ADA y dashboard sin modificar el prototipo original.</p>
+      <div class="dg-actions">
+        <button class="dg-button" type="button">Acción principal</button>
+        <button class="dg-button dg-button--secondary" type="button">Acción secundaria</button>
+        <button class="dg-button" type="button" disabled>Estado deshabilitado</button>
+        <button class="dg-button dg-button--secondary" id="themeToggle" type="button" aria-pressed="false">Ver tema oscuro</button>
+      </div>
+    </section>
+
+    <section class="dg-grid" aria-label="Opciones de ejemplo">
+      <button class="dg-choice" type="button" aria-pressed="false"><strong>Primaria alta</strong><span>Lenguaje concreto y práctica acompañada.</span></button>
+      <button class="dg-choice" type="button" aria-pressed="true"><strong>Secundaria</strong><span>Reflexión sobre redes, presión e identidad.</span></button>
+      <button class="dg-choice" type="button" aria-pressed="false"><strong>Preparatoria</strong><span>Auditoría de sistemas y autonomía progresiva.</span></button>
+    </section>
+
+    <section class="dg-principle-grid" aria-label="Tarjetas de principio">
+      <article class="dg-principle-card">
+        <span class="dg-principle-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M5 25h10l4-11 7 21 6-17 3 7h8" /></svg></span>
+        <h2>Señales, no reportes</h2>
+        <p>La familia recibe lectura accionable, no acceso total.</p>
+      </article>
+      <article class="dg-principle-card dg-principle-card--privacy">
+        <span class="dg-principle-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="11" y="21" width="26" height="20" rx="3" /><path d="M16 21v-6a8 8 0 0 1 16 0v6" /></svg></span>
+        <h2>Privacidad visible</h2>
+        <p>Cada flujo explica qué ve la familia y qué queda privado.</p>
+      </article>
+      <article class="dg-principle-card dg-principle-card--conversation">
+        <span class="dg-principle-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 10h22a7 7 0 0 1 7 7v13a7 7 0 0 1-7 7H20l-10 6z" /></svg></span>
+        <h2>Conversación antes que control</h2>
+        <p>ABRIR aparece como guía relacional por misión.</p>
+      </article>
+    </section>
+
+    <section class="dg-grid" aria-label="Paneles editoriales">
+      <article class="dg-card dg-stack--tight"><i class="dg-icon dg-icon--ada" aria-hidden="true">✦</i><span class="dg-kicker">Privacidad</span><h2 class="dg-card__title">Lo que construyó</h2><p class="dg-body">La familia recibe un artefacto validado, no toda la conversación privada del alumno.</p><div class="dg-chip-row"><span class="dg-chip dg-chip--ada">ADA</span><span class="dg-chip">Artefacto</span></div></article>
+      <aside class="dg-note"><div><strong>Una nota que acompaña.</strong><p class="dg-body">El acento cian identifica contexto útil para conversar.</p></div></aside>
+      <aside class="dg-note dg-note--reflect"><div><strong>Una reflexión del alumno.</strong><p class="dg-body">El violeta separa su voz y su proceso propio.</p></div></aside>
+    </section>
+
+    <section class="dg-box-rule dg-box-rule--ada" aria-label="Reglas e iconos del sistema"><div class="dg-box-rule__inner dg-chip-row"><i class="dg-icon" aria-hidden="true">🧭</i><i class="dg-icon dg-icon--ada" aria-hidden="true">✦</i><i class="dg-icon dg-icon--reflect" aria-hidden="true">↗</i><i class="dg-icon dg-icon--care" aria-hidden="true">!</i><i class="dg-icon dg-icon--progress" aria-hidden="true">★</i><p class="dg-body">Las placas de icono y el borde inferior de las cajas forman parte de la gramática visual de DIGIZEN.</p></div></section>
+
+    <section class="dg-grid" aria-label="Escena y profundidad">
+      <article class="dg-stage"><span class="dg-stage__label">ADA está lista para conversar</span></article>
+      <div class="dg-stack">
+        <h2 class="dg-heading">La profundidad siempre es opcional.</h2>
+        <details class="dg-accordion"><summary>Ver guía para iniciar la conversación</summary><div><p class="dg-body">Los acordeones muestran detalle cuando ayuda a acompañar, sin convertir el dashboard en una evaluación.</p></div></details>
+        <aside class="dg-note dg-note--care"><div><strong>Señal de cuidado.</strong><p class="dg-body">Coral comunica atención adulta y se acompaña siempre de texto explícito.</p></div></aside>
+      </div>
+    </section>
+  </main>
+  <script>
+    document.querySelectorAll('.dg-choice').forEach((choice) => {
+      choice.addEventListener('click', () => {
+        document.querySelectorAll('.dg-choice').forEach((item) => item.setAttribute('aria-pressed', String(item === choice)));
+      });
+    });
+    const themeToggle = document.querySelector('#themeToggle');
+    themeToggle.addEventListener('click', () => {
+      const dark = document.documentElement.dataset.theme === 'dark';
+      document.documentElement.dataset.theme = dark ? 'light' : 'dark';
+      themeToggle.setAttribute('aria-pressed', String(!dark));
+      themeToggle.textContent = dark ? 'Ver tema oscuro' : 'Ver tema claro';
+    });
+  </script>
+</body>
+</html>

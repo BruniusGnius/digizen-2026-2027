@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DIGIZEN · Onboarding familiar V0</title>
+  <link rel="stylesheet" href="onboarding.css">
+</head>
+<body>
+  <main class="app-shell" aria-labelledby="screen-title">
+    <header class="app-header">
+      <a class="brand" href="#" aria-label="DIGIZEN inicio">
+        <span class="brand-logo-frame"><img class="brand-logo" src="../assets/digizen-logo.svg" alt="DIGIZEN"></span>
+      </a>
+
+      <div class="header-tools">
+        <button class="review-toggle" id="reviewMenuToggle" type="button" aria-expanded="false" aria-controls="reviewMenu">
+          Revisar pantallas
+        </button>
+        <div class="progress-wrap" aria-label="Progreso del onboarding">
+          <span class="progress-text" id="progressText">1 de 11</span>
+          <div class="progress-dots" id="progressDots" aria-hidden="true"></div>
+        </div>
+      </div>
+    </header>
+
+    <aside class="review-menu" id="reviewMenu" aria-label="Navegación de revisión" hidden>
+      <div class="review-menu-head"><strong>Modo revisión</strong><span>Solo para presentar el prototipo</span></div>
+      <div class="review-menu-group" id="reviewMenuParent"></div>
+      <div class="review-menu-group" id="reviewMenuStudent"></div>
+      <div class="review-menu-group" id="reviewMenuReport"></div>
+    </aside>
+
+    <section class="screen is-entering" id="screen" aria-live="polite"></section>
+    <span class="transition-veil" id="transitionVeil" aria-hidden="true"></span>
+
+    <p class="sr-only" id="liveRegion" aria-live="assertive"></p>
+  </main>
+
+  <!--
+    Assets reutilizados sin duplicar:
+    ADA cuerpo completo: assets/shared/ADA-full-body.png
+    ADA perfil: assets/shared/ada-profile-low.png
+    Acuerdo: generated-assets/digizen-acuerdo-pinky-promise-gpt-image-2-v01.png
+    Avatares: generated-assets/digizen-preset-avatar-set-mx-v02-01..06.png
+    Escena base v05: generated-assets/digizen-v05-mision-clara-asset-gpt-image-2-v01.png
+  -->
+  <script src="onboarding.js"></script>
+</body>
+</html>

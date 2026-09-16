@@ -56,6 +56,8 @@ export class App implements AfterViewInit, OnDestroy {
   private navTarget = 0;
   private navCurrent = 0;
   private navFrame = 0;
+  private navMeasureFrames: number[] = [];
+  private navMeasureTimers: number[] = [];
   private navReady = false;
   protected readonly activeSection = signal('problema');
   protected readonly mobileCtaVisible = signal(false);
@@ -70,13 +72,18 @@ export class App implements AfterViewInit, OnDestroy {
     this.setupNarrativeMotion();
     this.setupSectionObserver();
     this.measureNav();
+    this.scheduleNavRemeasure();
     window.addEventListener('resize', this.measureNav, { passive: true });
+    window.addEventListener('load', this.measureNav, { once: true });
     this.handleScroll();
   }
 
   ngOnDestroy(): void {
     window.removeEventListener('resize', this.measureNav);
+    window.removeEventListener('load', this.measureNav);
     cancelAnimationFrame(this.navFrame);
+    this.navMeasureFrames.forEach((frame) => cancelAnimationFrame(frame));
+    this.navMeasureTimers.forEach((timer) => window.clearTimeout(timer));
     window.removeEventListener('scroll', this.queueScroll);
     cancelAnimationFrame(this.frame);
     this.observer?.disconnect();
@@ -171,6 +178,33 @@ export class App implements AfterViewInit, OnDestroy {
     this.navClosedPx = this.navOpenPx * 0.62;
     this.applyNav(this.navCurrent);
   };
+
+  private scheduleNavRemeasure(): void {
+    const queueMeasure = (): void => {
+      this.navMeasureFrames.push(requestAnimationFrame(this.measureNav));
+    };
+
+    this.navMeasureFrames.push(
+      requestAnimationFrame(() => {
+        this.measureNav();
+        queueMeasure();
+      }),
+    );
+
+    [80, 250, 750].forEach((delay) => {
+      this.navMeasureTimers.push(window.setTimeout(this.measureNav, delay));
+    });
+
+    document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]').forEach((link) => {
+      if (link.sheet) {
+        this.measureNav();
+      } else {
+        link.addEventListener('load', this.measureNav, { once: true });
+      }
+    });
+
+    document.fonts?.ready.then(this.measureNav).catch(() => undefined);
+  }
 
   private updateNav(scrollTop: number): void {
     const t = Math.min(1, Math.max(0, scrollTop / 280));

@@ -1,0 +1,23 @@
+@extends('layouts.landing')
+@section('content')
+@include('components.digizen.navigation')
+<main class="dg-main wf-131" tabindex="-1" id="main-content">
+@include('landing.sections.hero')
+@include('landing.sections.beat-1')
+@include('landing.sections.beat-2')
+@include('landing.sections.decision-early')
+@include('landing.sections.beat-3')
+@include('landing.sections.beat-4')
+@include('landing.sections.beat-5')
+@include('landing.sections.safety')
+@include('landing.sections.decision-trust')
+@include('landing.sections.beat-6')
+@include('landing.sections.founders')
+@include('landing.sections.offer')
+@include('landing.sections.payment-options')
+@include('landing.sections.closure')
+@include('landing.sections.decision-final')
+@include('landing.sections.faq-legal')
+</main>
+@include('components.digizen.dialogs')
+@endsection

@@ -1,0 +1,98 @@
+[
+  {
+    "block": "hero",
+    "seed": "digizen-hero-1",
+    "ratio": "4/5",
+    "desktop": [
+      800,
+      1000
+    ],
+    "horizontal": null,
+    "originalLabel": "Imagen hero\n        Adulto + hijo · 4:5",
+    "temporary": true
+  },
+  {
+    "block": "beat-1",
+    "seed": "digizen-beat-1-2",
+    "ratio": "4/5",
+    "desktop": [
+      800,
+      1000
+    ],
+    "horizontal": [
+      1280,
+      720
+    ],
+    "originalLabel": "Imagen beat 1\n        Alivio · gesto humano · 4:5",
+    "temporary": true
+  },
+  {
+    "block": "beat-2",
+    "seed": "digizen-beat-2-3",
+    "ratio": "1",
+    "desktop": [
+      900,
+      900
+    ],
+    "horizontal": [
+      1280,
+      720
+    ],
+    "originalLabel": "Imagen 01 · 1:1\n          Detalle cotidiano",
+    "temporary": true
+  },
+  {
+    "block": "beat-2",
+    "seed": "digizen-beat-2-4",
+    "ratio": "4/5",
+    "desktop": [
+      800,
+      1000
+    ],
+    "horizontal": [
+      1280,
+      720
+    ],
+    "originalLabel": "Imagen 02 · 4:5\n          Distancia / vacío",
+    "temporary": true
+  },
+  {
+    "block": "beat-4",
+    "seed": "digizen-beat-4-5",
+    "ratio": "4/5",
+    "desktop": [
+      800,
+      1000
+    ],
+    "horizontal": [
+      1280,
+      720
+    ],
+    "originalLabel": "Visual conceptual\n        Feed → criterio · 4:5",
+    "temporary": true
+  },
+  {
+    "block": "safety",
+    "seed": "digizen-safety-6",
+    "ratio": "4/3",
+    "desktop": [
+      1200,
+      900
+    ],
+    "horizontal": null,
+    "originalLabel": "ADA + 4 guardas · 4:3",
+    "temporary": true
+  },
+  {
+    "block": "beat-6",
+    "seed": "digizen-beat-6-7",
+    "ratio": "4/5",
+    "desktop": [
+      800,
+      1000
+    ],
+    "horizontal": null,
+    "originalLabel": "Acuerdo / presencia · 4:5",
+    "temporary": true
+  }
+]

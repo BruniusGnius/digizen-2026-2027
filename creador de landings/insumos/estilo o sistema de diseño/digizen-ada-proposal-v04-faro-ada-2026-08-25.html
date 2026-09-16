@@ -1,0 +1,1471 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DIGIZEN + ADA · V04 Faro ADA</title>
+  <style>
+    :root {
+      --ink: #10202d;
+      --muted: #61717f;
+      --bg: #f5f8fa;
+      --surface: #ffffff;
+      --surface-2: #edf4f6;
+      --line: #d7e3e8;
+      --deep: #081824;
+      --deep-2: #102b3c;
+      --cyan: #12c8d6;
+      --cyan-2: #e2fbfd;
+      --blue: #2478ff;
+      --coral: #ff665c;
+      --amber: #ffc557;
+      --green: #35bd85;
+      --violet: #8068ff;
+      --shadow: 0 18px 44px rgba(8, 24, 36, .14);
+      --max: 1240px;
+    }
+
+    :root[data-theme="dark"] {
+      --ink: #edf8ff;
+      --muted: #a7b8c6;
+      --bg: #071018;
+      --surface: #0f1d28;
+      --surface-2: #132938;
+      --line: rgba(172, 204, 222, .22);
+      --deep: #03080d;
+      --deep-2: #0b1d2a;
+      --cyan: #43deea;
+      --cyan-2: rgba(67, 222, 234, .14);
+      --blue: #75aaff;
+      --coral: #ff8077;
+      --amber: #ffd477;
+      --green: #63d59f;
+      --violet: #aa98ff;
+      --shadow: 0 22px 60px rgba(0,0,0,.38);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(16,32,45,.035) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(16,32,45,.035) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(18,200,214,.08), transparent 340px),
+        var(--bg);
+      background-size: 42px 42px, 42px 42px, auto, auto;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, h4, p { margin-top: 0; }
+    svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 24px 22px 72px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 12px 28px rgba(8,24,36,.08);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--deep);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 26px rgba(8,24,36,.18);
+    }
+
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      width: 11px;
+      height: 56px;
+      top: -8px;
+      left: 10px;
+      border-radius: 999px;
+      background: var(--blue);
+      transform: rotate(25deg);
+      box-shadow: 11px 0 0 var(--cyan);
+    }
+
+    .brand-mark::after {
+      content: "DZ";
+      position: relative;
+      z-index: 1;
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .nav-links a,
+    .theme-toggle {
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 8px 10px;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover,
+    .theme-toggle {
+      background: var(--surface-2);
+      border-color: var(--line);
+      color: var(--ink);
+    }
+
+    .hero,
+    .section {
+      margin-top: 74px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, .82fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    .kicker,
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: var(--cyan-2);
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 0 5px color-mix(in srgb, currentColor 18%, transparent);
+    }
+
+    h1 {
+      margin: 16px 0 16px;
+      font-size: clamp(48px, 6vw, 88px);
+      line-height: .95;
+      letter-spacing: 0;
+      max-width: 820px;
+    }
+
+    h2 {
+      margin: 8px 0 0;
+      font-size: clamp(34px, 4vw, 58px);
+      line-height: .98;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 710px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 24px 0 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      border: 1px solid transparent;
+      background: var(--deep);
+      color: white;
+      font-weight: 900;
+    }
+
+    .btn.secondary {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    .principles,
+    .convergence,
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .principles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card,
+    .principle,
+    .signal-card,
+    .token-card,
+    .white-card,
+    .privacy-card,
+    .dialogue-card,
+    .asset-card,
+    .initial-step,
+    .promise-card,
+    .mission-card,
+    .row-card,
+    .script-block {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 12px 26px rgba(8,24,36,.06);
+    }
+
+    .principle,
+    .signal-card,
+    .asset-card {
+      min-height: 156px;
+      padding: 16px;
+    }
+
+    .principle::after,
+    .signal-card::after,
+    .token-card::after,
+    .white-card::after,
+    .privacy-card::after,
+    .dialogue-card::after,
+    .asset-card::after,
+    .initial-step::after,
+    .promise-card::after,
+    .mission-card::after,
+    .row-card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 5px;
+      background: var(--c, var(--cyan));
+    }
+
+    .icon-tile,
+    .swatch,
+    .step-num,
+    .topic-mark,
+    .artifact-icon,
+    .mission-dot {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: var(--c, var(--cyan));
+      background: color-mix(in srgb, var(--c, var(--cyan)) 14%, var(--surface));
+      flex: none;
+    }
+
+    :root[data-theme="dark"] .icon-tile,
+    :root[data-theme="dark"] .swatch,
+    :root[data-theme="dark"] .step-num,
+    :root[data-theme="dark"] .topic-mark,
+    :root[data-theme="dark"] .artifact-icon,
+    :root[data-theme="dark"] .mission-dot {
+      background: color-mix(in srgb, var(--c, var(--cyan)) 16%, var(--surface));
+    }
+
+    .principle strong,
+    .signal-card strong,
+    .asset-copy strong {
+      display: block;
+      margin: 12px 0 6px;
+      font-size: 17px;
+    }
+
+    .principle span,
+    .signal-card span,
+    .asset-copy p,
+    .section-note,
+    .mood-copy p {
+      color: var(--muted);
+    }
+
+    .hero-stage {
+      min-height: 520px;
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(18,200,214,.16), transparent 42%),
+        var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-stage::before {
+      content: "";
+      position: absolute;
+      left: -86px;
+      top: 116px;
+      width: 520px;
+      height: 136px;
+      background: linear-gradient(90deg, rgba(18,200,214,.30), rgba(18,200,214,.08), transparent);
+      transform: rotate(-18deg);
+    }
+
+    .hero-stage .signal {
+      position: absolute;
+      z-index: 2;
+      left: 18px;
+      right: 18px;
+      top: 18px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .signal-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+      border: 1px solid var(--line);
+      font-weight: 850;
+      font-size: 13px;
+    }
+
+    .signal-row span { color: var(--muted); font-size: 12px; }
+
+    .hero-stage .ada-full {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: min(260px, 62%);
+      transform: translateX(-50%);
+      filter: drop-shadow(0 22px 20px rgba(8,24,36,.20));
+    }
+
+    .floating-note {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      padding: 14px;
+      border-radius: 16px;
+      color: white;
+      background: color-mix(in srgb, var(--deep) 90%, transparent);
+      z-index: 2;
+    }
+
+    .floating-note span {
+      display: block;
+      margin-top: 4px;
+      color: rgba(255,255,255,.72);
+      font-size: 13px;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 390px);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .mood-panel {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: 0 12px 26px rgba(8,24,36,.06);
+    }
+
+    .mood-visual {
+      min-height: 360px;
+      background:
+        linear-gradient(180deg, rgba(18,200,214,.08), transparent 46%),
+        url('../generated-assets/digizen-v04-faro-ada-asset-gpt-image-2-v01.png') center / cover no-repeat;
+    }
+
+    .mood-copy {
+      padding: 24px;
+      align-self: center;
+    }
+
+    .mood-rules {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .mood-rule {
+      padding: 12px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+    }
+
+    .mood-rule span,
+    .script-block span {
+      display: inline-flex;
+      margin-bottom: 6px;
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .mood-rule p,
+    .script-block p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .tokens {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, .88fr);
+      gap: 16px;
+    }
+
+    .token-card {
+      padding: 18px;
+    }
+
+    .palette {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .color {
+      min-height: 86px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: white;
+      background: var(--c);
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .rules {
+      display: grid;
+      gap: 10px;
+    }
+
+    .rule {
+      padding: 12px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .rule strong { color: var(--ink); }
+
+    .initial-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+      gap: 16px;
+    }
+
+    .onboarding-panel {
+      padding: 22px;
+      border-radius: 24px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 26px rgba(8,24,36,.06);
+    }
+
+    .onboarding-panel h3 {
+      font-size: clamp(34px, 4.4vw, 58px);
+      line-height: .95;
+      margin-bottom: 12px;
+    }
+
+    .promise-card {
+      display: grid;
+      grid-template-columns: 130px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      padding: 14px;
+      margin-top: 20px;
+      --c: var(--amber);
+    }
+
+    .promise-visual {
+      height: 110px;
+      border-radius: 16px;
+      background: var(--surface-2);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .promise-visual img,
+    .agreement img,
+    .asset-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .promise-card strong,
+    .promise-card span {
+      display: block;
+    }
+
+    .promise-card span {
+      margin-top: 5px;
+      color: var(--muted);
+    }
+
+    .initial-steps {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .initial-step {
+      padding: 16px;
+    }
+
+    .step-num {
+      margin-bottom: 14px;
+      font-weight: 950;
+    }
+
+    .initial-step strong { display: block; margin-bottom: 7px; }
+    .initial-step span { color: var(--muted); font-size: 14px; }
+
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: 330px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .phone {
+      min-height: 650px;
+      border-radius: 32px;
+      background: var(--deep);
+      padding: 13px;
+      box-shadow: var(--shadow);
+    }
+
+    .phone-screen {
+      min-height: 624px;
+      border-radius: 22px;
+      background: var(--bg);
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .status,
+    .tabbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 14px;
+      font-size: 12px;
+      font-weight: 850;
+      color: var(--muted);
+    }
+
+    .app-scroll {
+      padding: 12px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .app-top,
+    .identity,
+    .child-row,
+    .student-context,
+    .artifact-head,
+    .desk-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .app-top,
+    .student-context,
+    .desk-top {
+      justify-content: space-between;
+    }
+
+    .avatar,
+    .mini-avatar,
+    .pic {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      overflow: hidden;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      flex: none;
+    }
+
+    .avatar img,
+    .avatar-img,
+    .mini-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-tile,
+    .topic,
+    .white-card,
+    .privacy-card,
+    .dialogue-card,
+    .agreement {
+      border-radius: 20px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 26px rgba(8,24,36,.06);
+    }
+
+    .hero-tile {
+      position: relative;
+      min-height: 190px;
+      padding: 16px 128px 16px 16px;
+      overflow: hidden;
+    }
+
+    .hero-tile img {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 108px;
+    }
+
+    .topic-list { display: grid; gap: 10px; }
+    .topic {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .identity,
+    .topic > div:nth-child(2),
+    .student-context .left > div:last-child {
+      min-width: 0;
+    }
+
+    .identity strong,
+    .identity span,
+    .topic strong,
+    .topic span,
+    .student-context strong,
+    .student-context span,
+    .artifact-head strong,
+    .artifact-head span {
+      display: block;
+    }
+
+    .identity span,
+    .topic span,
+    .student-context span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .percent {
+      color: var(--c);
+      font-weight: 950;
+      font-size: 12px;
+    }
+
+    .tabbar {
+      border-top: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .tab { display: grid; justify-items: center; gap: 3px; font-size: 11px; }
+    .tab i { width: 18px; height: 4px; border-radius: 99px; background: var(--line); }
+    .tab.active { color: var(--cyan); }
+    .tab.active i { background: var(--cyan); }
+
+    .desktop {
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr);
+      min-height: 720px;
+      border-radius: 26px;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .side {
+      background: var(--deep);
+      color: white;
+      padding: 18px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 22px;
+    }
+
+    .side .brand { color: white; }
+    .side-menu { display: grid; gap: 7px; align-content: start; color: rgba(255,255,255,.68); font-weight: 850; }
+    .side-menu div { padding: 10px; border-radius: 10px; }
+    .side-menu .active { color: white; background: rgba(255,255,255,.12); }
+
+    .agreement {
+      padding: 12px;
+      color: rgba(255,255,255,.72);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.18);
+      font-size: 12px;
+    }
+
+    .agreement img {
+      height: 72px;
+      margin-bottom: 8px;
+      border-radius: 12px;
+      background: transparent;
+    }
+
+    .desk-main {
+      padding: 18px;
+      background:
+        linear-gradient(90deg, rgba(16,32,45,.035) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(16,32,45,.035) 1px, transparent 1px),
+        var(--bg);
+      background-size: 34px 34px, 34px 34px, auto;
+    }
+
+    .desk-top h3 { margin-bottom: 5px; font-size: 28px; }
+    .desk-top p { color: var(--muted); }
+
+    .desk-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, .75fr);
+      gap: 14px;
+    }
+
+    .white-card,
+    .privacy-card,
+    .dialogue-card {
+      padding: 16px;
+    }
+
+    .child-row {
+      justify-content: space-between;
+      padding: 10px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .child-row:first-of-type { border-top: 0; }
+    .child-row > div:nth-child(2) { min-width: 0; flex: 1; }
+    .child-row span { display: block; color: var(--muted); font-size: 12px; }
+
+    .badge {
+      border-radius: 999px;
+      padding: 6px 9px;
+      color: var(--c);
+      background: color-mix(in srgb, var(--c) 12%, var(--surface));
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .privacy-scale { display: grid; gap: 9px; }
+    .scale-row {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .bar {
+      height: 9px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--ink) 10%, transparent);
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      width: var(--w);
+      height: 100%;
+      background: var(--c);
+    }
+
+    .dialogue-card {
+      grid-column: 1 / -1;
+    }
+
+    .student-context {
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+    }
+
+    .student-context .left { display: flex; align-items: center; gap: 10px; }
+    .switch-student {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-weight: 900;
+    }
+
+    .coach-intro {
+      padding: 12px;
+      border-radius: 16px;
+      background: var(--cyan-2);
+      color: var(--muted);
+      border: 1px solid color-mix(in srgb, var(--cyan) 24%, var(--line));
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .coach-intro strong { color: var(--ink); }
+
+    .mission-abrir-list { display: grid; gap: 12px; }
+    .mission-abrir-card {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 18px;
+      background: var(--surface-2);
+      border: 1px solid color-mix(in srgb, var(--c) 24%, var(--line));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mission-abrir-card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 5px;
+      background: var(--c);
+    }
+
+    .mission-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .mission-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--c);
+    }
+
+    .artifact-summary,
+    .abrir-summary {
+      padding: 12px;
+      border-radius: 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+
+    .artifact-icon::before { content: "✓"; font-weight: 950; }
+    .artifact-head { align-items: flex-start; }
+    .artifact-head span { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; font-weight: 950; }
+    .artifact-summary p,
+    .abrir-summary p { color: var(--muted); font-size: 13px; }
+
+    .coach-script {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .script-block {
+      padding: 11px;
+      background: var(--surface-2);
+      box-shadow: none;
+    }
+
+    .tone-note {
+      border-radius: 999px;
+      padding: 8px 10px;
+      background: color-mix(in srgb, var(--c) 10%, var(--surface));
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .asset-card { padding: 14px; }
+    .asset-visual {
+      height: 180px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+    }
+
+    .asset-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .asset-visual.scene {
+      background: url('../generated-assets/digizen-v04-faro-ada-asset-gpt-image-2-v01.png') center / cover no-repeat;
+    }
+
+    .usage-note {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    /* Faro refinements: circular icon language and straighter containers to separate V04 from V05. */
+    .principle,
+    .signal-card,
+    .token-card,
+    .white-card,
+    .privacy-card,
+    .dialogue-card,
+    .asset-card,
+    .initial-step,
+    .promise-card,
+    .mission-card,
+    .row-card,
+    .script-block,
+    .hero-tile,
+    .topic,
+    .student-context,
+    .coach-intro,
+    .mission-abrir-card,
+    .artifact-summary,
+    .abrir-summary,
+    .mood-panel,
+    .mood-rule,
+    .rule,
+    .asset-visual {
+      border-radius: 6px;
+    }
+
+    .icon-tile,
+    .swatch,
+    .step-num,
+    .topic-mark,
+    .artifact-icon,
+    .mission-dot {
+      border-radius: 50%;
+    }
+
+    .dialogue-card {
+      background:
+        linear-gradient(90deg, rgba(16,32,45,.04) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(16,32,45,.04) 1px, transparent 1px),
+        var(--surface);
+      background-size: 28px 28px;
+    }
+
+    .dialogue-card > h4 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .student-context {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      background: color-mix(in srgb, var(--cyan) 7%, var(--surface));
+      border-left: 5px solid var(--cyan);
+    }
+
+    .mission-abrir-list {
+      gap: 10px;
+    }
+
+    .mission-abrir-card {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding: 0;
+      background: var(--surface);
+      border-color: color-mix(in srgb, var(--c) 34%, var(--line));
+    }
+
+    .mission-abrir-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      background: var(--c);
+    }
+
+    .mission-abrir-card::after {
+      height: 0;
+    }
+
+    .artifact-summary,
+    .abrir-summary {
+      border: 0;
+      box-shadow: none;
+      background: transparent;
+      padding: 14px 16px 16px 18px;
+    }
+
+    .abrir-summary {
+      border-left: 0;
+      border-top: 1px solid var(--line);
+      background: color-mix(in srgb, var(--c) 5%, var(--surface));
+    }
+
+    .mission-meta {
+      margin-bottom: 10px;
+    }
+
+    .mission-dot {
+      width: 24px;
+      height: 24px;
+      color: var(--c);
+      background: color-mix(in srgb, var(--c) 14%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--c) 30%, var(--line));
+    }
+
+    .artifact-icon {
+      width: 38px;
+      height: 38px;
+      color: var(--c);
+      background: color-mix(in srgb, var(--c) 12%, var(--surface));
+    }
+
+    .coach-script {
+      grid-template-columns: 1fr;
+      gap: 7px;
+    }
+
+    .script-block {
+      display: block;
+      padding: 9px 10px;
+      border: 1px solid color-mix(in srgb, var(--c) 18%, var(--line));
+      background: var(--surface);
+    }
+
+    .script-block span {
+      display: block;
+      margin: 0 0 5px;
+      color: color-mix(in srgb, var(--c) 78%, var(--ink));
+    }
+
+    .tone-note {
+      border-radius: 0;
+      border-left: 5px solid var(--c);
+      background: var(--surface);
+    }
+
+    @media (max-width: 1060px) {
+      .hero,
+      .section-head,
+      .mood-panel,
+      .tokens,
+      .initial-grid,
+      .mockup-grid,
+      .desktop,
+      .desk-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .convergence,
+      .asset-grid,
+      .principles,
+      .initial-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .mission-abrir-card {
+        grid-template-columns: 1fr;
+      }
+
+      .abrir-summary {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page { padding-inline: 12px; }
+      .nav-links a { display: none; }
+      .convergence,
+      .asset-grid,
+      .principles,
+      .initial-steps,
+      .palette,
+      .mood-rules,
+      .coach-script {
+        grid-template-columns: 1fr;
+      }
+      .script-block {
+        grid-template-columns: 1fr;
+      }
+      h1 { font-size: 44px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="nav">
+      <div class="brand"><div class="brand-mark"></div><span>DIGIZEN + ADA · FARO</span></div>
+      <div class="nav-links">
+        <a href="#lectura">Lectura visual</a>
+        <a href="#sistema">Sistema</a>
+        <a href="#inicial">Lo inicial</a>
+        <a href="#mockups">Mockups</a>
+        <a href="#assets">Assets</a>
+        <button class="theme-toggle" type="button" aria-label="Cambiar modo claro u oscuro">Oscuro</button>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div>
+        <div class="kicker"><span class="pulse-dot"></span> Propuesta visual V04</div>
+        <h1>Un faro para acompanar sin invadir.</h1>
+        <p class="lead">Sistema familiar de senales, calma y conversacion. ADA acompana al alumno de cerca; la familia recibe luz suficiente para conversar mejor, sin abrir conversaciones privadas.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#mockups">Ver pulso familiar</a>
+          <a class="btn secondary" href="#assets">Ver assets Faro</a>
+        </div>
+        <div class="principles">
+          <div class="principle" style="--c: var(--cyan)">
+            <div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M3 12h5l3-8 4 16 3-8h3"/></svg></div>
+            <strong>Senales, no reportes</strong>
+            <span>La familia recibe lectura accionable, no acceso total.</span>
+          </div>
+          <div class="principle" style="--c: var(--amber)">
+            <div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M8 11V7a4 4 0 0 1 8 0v4"/><rect x="5" y="11" width="14" height="10" rx="2"/></svg></div>
+            <strong>Privacidad visible</strong>
+            <span>Cada flujo explica que ve la familia y que queda privado.</span>
+          </div>
+          <div class="principle" style="--c: var(--green)">
+            <div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg></div>
+            <strong>Conversacion antes que control</strong>
+            <span>ABRIR aparece como guia relacional por mision.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-stage">
+        <div class="signal">
+          <div class="signal-row">Senal verde <span>avance esperado</span></div>
+          <div class="signal-row">Senal coral <span>tema delicado</span></div>
+          <div class="signal-row">Senal cyan <span>ADA acompana</span></div>
+        </div>
+        <img class="ada-full" src="../assets/shared/ADA-full-body.png" alt="ADA, copiloto visual de DIGIZEN">
+        <div class="floating-note">
+          <strong>Luz suficiente, no vigilancia.</strong>
+          <span>La familia recibe pulso, artefactos y guias ABRIR; no recibe conversaciones privadas.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="lectura">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Lectura del mood Faro</div>
+          <h2>Luz suficiente, distancia respetuosa.</h2>
+        </div>
+        <p class="section-note">Esta ruta se siente mas familiar y editorial: menos consola, menos expediente, mas acompanamiento sereno. Ideal para explicar privacidad a madres y padres.</p>
+      </div>
+      <div class="convergence">
+        <div class="signal-card" style="--c: var(--cyan)"><div class="swatch"><svg viewBox="0 0 24 24"><path d="M3 12h5l3-8 4 16 3-8h3"/></svg></div><strong>Senales, no reportes</strong><span>Lectura accionable sin acceso total ni sensacion policiaca.</span></div>
+        <div class="signal-card" style="--c: var(--coral)"><div class="swatch"><svg viewBox="0 0 24 24"><path d="M8 11V7a4 4 0 0 1 8 0v4"/><rect x="5" y="11" width="14" height="10" rx="2"/></svg></div><strong>Privacidad como regla</strong><span>Los limites aparecen como parte del producto, no como letra chica.</span></div>
+        <div class="signal-card" style="--c: var(--amber)"><div class="swatch"><svg viewBox="0 0 24 24"><path d="M12 2l2.8 6 6.2.7-4.6 4.2 1.2 6.1L12 16l-5.6 3 1.2-6.1L3 8.7 9.2 8 12 2z"/></svg></div><strong>Artefactos compartibles</strong><span>Conclusiones elegidas por mision, no conversaciones completas.</span></div>
+        <div class="signal-card" style="--c: var(--violet)"><div class="swatch"><svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="4"/><path d="M9 11h.01M15 11h.01"/></svg></div><strong>ADA cerca del alumno</strong><span>Presencia grande en orientacion, no icono diminuto en temas abstractos.</span></div>
+      </div>
+      <div class="mood-panel">
+        <div class="mood-visual" aria-label="Mood visual de Faro ADA"></div>
+        <div class="mood-copy">
+          <strong>V04 · Faro ADA: senales familiares, privacidad visible.</strong>
+          <p>Esta propuesta usa una direccion contenida: barra lateral oscura en mockups, tarjetas blancas, reticula suave, iconos lineales pastel y bordes inferiores del color de cada senal.</p>
+          <div class="mood-rules">
+            <div class="mood-rule"><span>UI</span><p>Filas grandes, estados legibles y paneles que explican sin parecer dashboard de vigilancia.</p></div>
+            <div class="mood-rule"><span>Imagen</span><p>Acompanamiento familiar, luz, pacto y tecnologia discreta sin lectura de chats.</p></div>
+            <div class="mood-rule"><span>Familia</span><p>Pulso por hijo, artefacto por mision y guia ABRIR ligada al tema.</p></div>
+            <div class="mood-rule"><span>Tono</span><p>Sobrio, cercano y adulto; suficiente informacion para conversar.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sistema">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Sistema visual</div>
+          <h2>Tokens y reglas para senales familiares.</h2>
+        </div>
+        <p class="section-note">Faro ADA usa luz, pulso y cuidado. Cada senal indica que se comparte con la familia y que permanece privado para el alumno.</p>
+      </div>
+      <div class="tokens">
+        <div class="token-card" style="--c: var(--cyan)">
+          <h3>Paleta Faro ADA</h3>
+          <div class="palette">
+            <div class="color" style="--c: var(--deep)">deep<br>#081824</div>
+            <div class="color" style="--c: var(--cyan); color:#07313a">luz ADA<br>#12C8D6</div>
+            <div class="color" style="--c: var(--blue)">orientacion<br>#2478FF</div>
+            <div class="color" style="--c: var(--coral)">senal<br>#FF665C</div>
+            <div class="color" style="--c: var(--amber); color:#3c2b00">pacto<br>#FFC557</div>
+            <div class="color" style="--c: var(--green)">pulso<br>#35BD85</div>
+            <div class="color" style="--c: var(--violet)">ADA<br>#8068FF</div>
+            <div class="color" style="--c: var(--surface-2); color:var(--ink)">surface<br>grid</div>
+          </div>
+        </div>
+        <div class="token-card" style="--c: var(--amber)">
+          <h3>Reglas visuales</h3>
+          <div class="rules">
+            <div class="rule"><strong>Cyan = senal.</strong> Presencia de guia, avance y orientacion.</div>
+            <div class="rule"><strong>Coral = limite.</strong> Privacidad o tema delicado, nunca alarma roja.</div>
+            <div class="rule"><strong>Ambar = pacto.</strong> Promesa, cuidado y conversacion familiar.</div>
+            <div class="rule"><strong>Deep = custodia.</strong> Barra lateral, confianza y contencion institucional.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="inicial">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Lo inicial</div>
+          <h2>El pacto enciende la experiencia.</h2>
+        </div>
+        <p class="section-note">Antes de mostrar el tablero familiar, DIGIZEN explica que hay reflexion privada, conclusion compartible y guia familiar. El adulto recibe artefactos y guias, no el proceso completo.</p>
+      </div>
+      <div class="initial-grid">
+        <div class="onboarding-panel">
+          <h3>Tu rol no es revisar todo.</h3>
+          <p>Tu rol es acompanar con avance, artefactos de conclusion, conversaciones mejores y respeto por su privacidad.</p>
+          <div class="promise-card">
+            <div class="promise-visual"><img src="../generated-assets/digizen-v04-faro-ada-pinky-promise-gpt-image-2-v01.png" alt="Meniques unidos con liston como promesa de acompanamiento"></div>
+            <div><strong>Acuerdo de acompanamiento</strong><span>Prometo usar esta informacion para conversar, no para interrogar. Respetare su espacio salvo cuando exista una senal delicada.</span></div>
+          </div>
+        </div>
+        <div class="initial-steps">
+          <div class="initial-step" style="--c: var(--cyan)"><div class="step-num">1</div><strong>Bienvenida con ADA</strong><span>ADA presenta misiones como practica de decisiones digitales.</span></div>
+          <div class="initial-step" style="--c: var(--coral)"><div class="step-num">2</div><strong>Que veras y que no veras</strong><span>Avance, temas, badges, artefactos y senales; no conversaciones privadas.</span></div>
+          <div class="initial-step" style="--c: var(--amber)"><div class="step-num">3</div><strong>Alta por etapa</strong><span>Primaria alta asistida; secundaria y prepa con invitacion y autonomia.</span></div>
+          <div class="initial-step" style="--c: var(--green)"><div class="step-num">4</div><strong>Primera guia ABRIR</strong><span>Un caso externo ayuda a conversar sin presionar ni espiar.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="mockups">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Mockups de sistema</div>
+          <h2>Alumno y familia, una misma promesa.</h2>
+        </div>
+        <p class="section-note">El alumno ve guia cercana y reflexion privada. La familia ve pulso por hijo, artefactos y guias por mision, con limites visibles sobre lo que no se comparte.</p>
+      </div>
+      <div class="mockup-grid">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="status"><span>9:41</span><span>DIGIZEN</span></div>
+            <div class="app-scroll">
+              <div class="app-top"><div class="identity"><div class="avatar"><img src="../assets/shared/ada-profile-low.png" alt="ADA"></div><div><strong>Hola, Sofia</strong><span>1o prepa</span></div></div><div class="icon-tile">+</div></div>
+              <div class="hero-tile"><h3>Compartir una captura defiende o exhibe?</h3><p>Vamos a pensar el limite antes de actuar. No tienes que tener la respuesta perfecta.</p><img src="../assets/shared/ADA-full-body.png" alt="ADA"></div>
+              <div class="topic-list">
+                <div class="topic" style="--c: var(--blue)"><div class="topic-mark">ID</div><div><strong>Identidad digital</strong><span>2 misiones activas</span></div><div class="percent">68%</div></div>
+                <div class="topic" style="--c: var(--coral)"><div class="topic-mark">PR</div><div><strong>Privacidad critica</strong><span>Artefacto pendiente</span></div><div class="percent">42%</div></div>
+                <div class="topic" style="--c: var(--green)"><div class="topic-mark">BI</div><div><strong>Bienestar digital</strong><span>Completado</span></div><div class="percent">100%</div></div>
+              </div>
+            </div>
+            <div class="tabbar"><div class="tab active"><i></i><span>Inicio</span></div><div class="tab"><i></i><span>Mapa</span></div><div class="tab"><i></i><span>ADA</span></div><div class="tab"><i></i><span>Perfil</span></div></div>
+          </div>
+        </div>
+
+        <div class="desktop">
+          <aside class="side">
+            <div class="brand"><div class="brand-mark"></div><span>DIGIZEN</span></div>
+            <div class="side-menu"><div class="active">Faro familiar</div><div>Misiones</div><div>ABRIR por mision</div><div>Artefactos</div><div>Privacidad</div></div>
+            <div class="agreement"><img src="../generated-assets/digizen-v04-faro-ada-pinky-promise-gpt-image-2-v01.png" alt="Acuerdo"><strong>Acompanamiento</strong>Ver avance y senales sin leer respuestas privadas.</div>
+          </aside>
+          <div class="desk-main">
+            <div class="desk-top"><div><h3>Faro familiar</h3><p>Conclusiones suficientes para conversar, no expedientes para fiscalizar.</p></div><button class="btn secondary">Invitar alumno</button></div>
+            <div class="desk-grid">
+              <div class="white-card" style="--c: var(--cyan)">
+                <h4>Hijos activos</h4>
+                <div class="child-row"><div class="pic"><img class="avatar-img" src="../generated-assets/digizen-v04-faro-avatar-diego-15.png" alt="Avatar Diego"></div><div><strong>Diego · 15</strong><span>3o secundaria · Reputacion digital · 74%</span></div><div class="badge" style="--c: var(--blue)">En curso</div></div>
+                <div class="child-row"><div class="pic"><img class="avatar-img" src="../generated-assets/digizen-v04-faro-avatar-ana-12.png" alt="Avatar Ana"></div><div><strong>Ana · 12</strong><span>5o primaria · Bienestar digital · artefacto listo</span></div><div class="badge" style="--c: var(--green)">Listo</div></div>
+                <div class="child-row"><div class="pic"><img class="avatar-img" src="../generated-assets/digizen-v04-faro-avatar-valeria-17.png" alt="Avatar Valeria"></div><div><strong>Valeria · 17</strong><span>1o prepa · Privacidad critica · guia sugerida</span></div><div class="badge" style="--c: var(--coral)">Senal</div></div>
+              </div>
+              <div class="privacy-card" style="--c: var(--amber)">
+                <h4>Capas visibles</h4>
+                <p class="section-note">Cada senal separa reflexion privada, conclusion compartible y guia familiar.</p>
+                <div class="privacy-scale">
+                  <div class="scale-row"><span>Avance</span><div class="bar" style="--c: var(--green)"><span style="--w: 100%"></span></div></div>
+                  <div class="scale-row"><span>Temas</span><div class="bar" style="--c: var(--blue)"><span style="--w: 82%"></span></div></div>
+                  <div class="scale-row"><span>Artefacto</span><div class="bar" style="--c: var(--amber)"><span style="--w: 58%"></span></div></div>
+                  <div class="scale-row"><span>Respuestas</span><div class="bar" style="--c: var(--coral)"><span style="--w: 12%"></span></div></div>
+                </div>
+              </div>
+              <div class="dialogue-card" style="--c: var(--cyan)">
+                <h4>Misiones, artefactos y guias de conversacion</h4>
+                <div class="student-context"><div class="left"><div class="mini-avatar"><img src="../generated-assets/digizen-v04-faro-avatar-diego-15.png" alt="Avatar Diego"></div><div><strong>Diego</strong><span>3o secundaria · Reputacion y criterio digital</span></div></div><button class="switch-student">Cambiar hijo</button></div>
+                <div class="coach-intro"><strong>ABRIR para familias:</strong> coaching para conversar desde un tema de ciudadania digital, aportar algo propio, invitar criterio, escuchar y retirarse sin presionar.</div>
+                <div class="mission-abrir-list">
+                  <div class="mission-abrir-card" style="--c: var(--blue)">
+                    <div class="artifact-summary">
+                      <div class="mission-meta"><span class="mission-dot"></span><span>Mision 03 · Huella, reputacion y futuro</span></div>
+                      <div class="artifact-head"><div class="artifact-icon"></div><div><span>Artefacto entregado</span><strong>Conclusion compartible</strong></div></div>
+                      <p>"Aprendi que una captura no solo muestra palabras: tambien puede quitar contexto. Antes de compartir algo, voy a pensar a quien afecta y que historia cuenta incompleta."</p>
+                    </div>
+                    <div class="abrir-summary">
+                      <strong>Guia de conversacion de esta mision</strong>
+                      <p>Tema familiar: compartir capturas sin convertir la charla en revision de celular.</p>
+                      <div class="coach-script">
+                        <div class="script-block"><span>Entrada natural</span><p>"El otro dia escuche una discusion sobre capturas: a veces sirven para aclarar algo y a veces pueden sacar una conversacion de contexto. Yo antes lo veia mas simple, pero ahora me hace dudar."</p></div>
+                        <div class="script-block"><span>Invitacion de criterio</span><p>"Tu como crees que alguien deberia decidir antes de reenviar una captura?"</p></div>
+                        <div class="script-block"><span>Si responde</span><p>"Tiene sentido: no estas diciendo que siempre este mal, sino que depende de para que, con quien y en que contexto se comparte."</p></div>
+                        <div class="script-block"><span>Salida digna</span><p>"Lo dejamos aqui. Me interesaba saber como lo ves, no revisar nada."</p></div>
+                      </div>
+                      <div class="tone-note">Tono sugerido: caso externo primero; criterio antes que conducta.</div>
+                    </div>
+                  </div>
+                  <div class="mission-abrir-card" style="--c: var(--coral)">
+                    <div class="artifact-summary">
+                      <div class="mission-meta"><span class="mission-dot"></span><span>Mision 04 · Privacidad critica</span></div>
+                      <div class="artifact-head"><div class="artifact-icon"></div><div><span>Artefacto entregado</span><strong>Conclusion compartible</strong></div></div>
+                      <p>"Mi regla personal: si una imagen, dato o mensaje no fue creado para todos, necesito permiso antes de moverlo de lugar."</p>
+                    </div>
+                    <div class="abrir-summary">
+                      <strong>Guia de conversacion de esta mision</strong>
+                      <p>Tema familiar: consentimiento, permiso y datos personales sin pedir confesiones.</p>
+                      <div class="coach-script">
+                        <div class="script-block"><span>Entrada natural</span><p>"Me acorde de algo que pasa mucho: alguien reenvia una foto o un dato sin querer hacer dano, pero la otra persona no esperaba que saliera de ahi."</p></div>
+                        <div class="script-block"><span>Aporte del adulto</span><p>"A mi tambien me cuesta saber cuando pedir permiso es necesario y cuando parece demasiado."</p></div>
+                        <div class="script-block"><span>Invitacion de criterio</span><p>"Para ti, que hace que algo deje de ser solo informacion y se vuelva confianza?"</p></div>
+                        <div class="script-block"><span>Salida digna</span><p>"No tienes que contestar todo ahora. Me sirve que podamos pensar estas cosas sin convertirlo en interrogatorio."</p></div>
+                      </div>
+                      <div class="tone-note">Tono sugerido: criterio antes que conducta personal.</div>
+                    </div>
+                  </div>
+                  <div class="mission-abrir-card" style="--c: var(--green)">
+                    <div class="artifact-summary">
+                      <div class="mission-meta"><span class="mission-dot"></span><span>Mision 05 · Bienestar digital</span></div>
+                      <div class="artifact-head"><div class="artifact-icon"></div><div><span>Artefacto entregado</span><strong>Conclusion compartible</strong></div></div>
+                      <p>"Me sirve notar cuando una app me cambia el ritmo. No todo cansancio digital se arregla con apagar; a veces hay que cambiar como entro."</p>
+                    </div>
+                    <div class="abrir-summary">
+                      <strong>Guia de conversacion de esta mision</strong>
+                      <p>Tema familiar: ritmo digital y descanso sin moralizar el uso de pantallas.</p>
+                      <div class="coach-script">
+                        <div class="script-block"><span>Entrada natural</span><p>"Hay apps que no se sienten malas, pero si te cambian el ritmo. A mi me pasa que algunas me dejan acelerado o disperso."</p></div>
+                        <div class="script-block"><span>Invitacion de criterio</span><p>"Como crees que una persona puede notar que una app le esta cambiando el ritmo, sin que eso se vuelva culpa?"</p></div>
+                        <div class="script-block"><span>Si responde</span><p>"Claro, para ti no se trata solo de tiempo de pantalla; tambien importa como te deja despues."</p></div>
+                        <div class="script-block"><span>Salida digna</span><p>"No quiero poner una regla ahorita. Solo queria abrir el tema y escucharte."</p></div>
+                      </div>
+                      <div class="tone-note">Tono sugerido: no moralizar, no cerrar con una regla inmediata.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="assets">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Assets Faro ADA</div>
+          <h2>Escenas de acompanamiento, luz y conversacion.</h2>
+        </div>
+        <p class="section-note">Assets representativos: hogar, luz de orientacion, pacto de privacidad, retratos sobrios y conversacion familiar sin vigilancia.</p>
+      </div>
+      <div class="asset-grid">
+        <div class="asset-card" style="--c: var(--cyan)"><div class="asset-visual scene"></div><div class="asset-copy"><strong>Escena Faro ADA</strong><p>Acompanamiento familiar, tecnologia discreta y luz de guia.</p></div></div>
+        <div class="asset-card" style="--c: var(--coral)"><div class="asset-visual"><img src="../generated-assets/digizen-v04-faro-ada-pinky-promise-gpt-image-2-v01.png" alt="Pinky promise"></div><div class="asset-copy"><strong>Acuerdo de acompanamiento</strong><p>Meniques unidos con liston como pacto de confianza.</p></div></div>
+        <div class="asset-card" style="--c: var(--amber)"><div class="asset-visual"><img src="../generated-assets/digizen-v04-faro-avatar-strip.png" alt="Avatares"></div><div class="asset-copy"><strong>Avatares</strong><p>Personajes prediseñados mexicanos diversos, sobrios y por edad.</p></div></div>
+        <div class="asset-card" style="--c: var(--violet)"><div class="asset-visual"><div class="icon-tile" style="margin:60px auto 0;--c:var(--violet)"><svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="4"/><path d="M9 11h.01M15 11h.01"/></svg></div></div><div class="asset-copy"><strong>ADA</strong><p>Presencia grande para orientacion, no icono minimo.</p></div></div>
+      </div>
+      <div class="usage-note"><strong>Regla de uso:</strong> para iconos de mision, usar pictogramas/objetos simples por tema; ADA funciona mejor en escenas grandes de onboarding, landing y ayuda contextual.</div>
+    </section>
+  </main>
+  <script>
+    const themeToggle = document.querySelector('.theme-toggle');
+    const requestedTheme = new URLSearchParams(window.location.search).get('theme');
+    if (requestedTheme === 'dark' || requestedTheme === 'light') {
+      document.documentElement.dataset.theme = requestedTheme;
+    }
+    const syncThemeLabel = () => {
+      themeToggle.textContent = document.documentElement.dataset.theme === 'dark' ? 'Claro' : 'Oscuro';
+    };
+    syncThemeLabel();
+    themeToggle?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const isDark = root.dataset.theme === 'dark';
+      root.dataset.theme = isDark ? 'light' : 'dark';
+      syncThemeLabel();
+    });
+  </script>
+</body>
+</html>

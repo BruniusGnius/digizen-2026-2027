@@ -74,3 +74,28 @@ FAQ, Reglas de ADA y legales permanecen como contenedores pendientes porque el c
 
 **Puntaje ponderado:** 4.7 / 5  
 **Resultado:** aprobado internamente; build implementado con pendientes externos explícitos.
+
+---
+
+## Revisión visual v2 — 2026-09-11
+
+La revisión se aplicó exclusivamente en `angular-build/src/styles.css`. No se modificaron `app.html`, `app.ts`, copy, diagramación, estructura, CTAs, pricing, responsive ni interacciones.
+
+- Fondo migrado a una base gris-azulada fría; se eliminaron retícula, formas y degradados usados como placeholders cuando no hay imagen.
+- Cards, formularios, precios, citas y controles usan superficie opaca, borde fino, radio compacto y sombra contenida.
+- Inter ajustada a pesos variables legibles: cuerpo `450`, lead `520`, `strong` `700`, H2 principal `760` y H2 secundario gris `560`.
+- La estrategia de titulares gris/negro se conserva mediante `.dg-h2-muted` y `.dg-h2`.
+- El violeta actual se preserva como acento de CTA, decisiones y progreso; cyan, coral, verde y dorado quedan reservados para sus estados semánticos.
+- Iconos y números ahora usan placas compactas con fondo de color semántico; se conservan los iconos, cantidad y orden existentes.
+- El build de producción finalizó correctamente: 307.62 kB sin comprimir, 94.84 kB estimado de transferencia.
+
+### Evaluación — Fase 3, revisión visual v2
+
+| Lente | Puntaje | Objeciones |
+|---|---:|---|
+| Purista | 4.8/5 | Los placeholders fotográficos externos siguen pendientes de assets definitivos. |
+| Arquitecto de Sistemas | 4.8/5 | Los cambios se concentran en tokens y selectores visuales; no hay cambios de markup. |
+| Guardián de Lectura | 4.7/5 | Conviene una revisión final con imágenes definitivas antes de publicar. |
+
+**Puntaje ponderado:** 4.8 / 5
+**Resultado:** aprobado internamente; la revisión preserva el wireframe y el copy.
