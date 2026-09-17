@@ -1,0 +1,60 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Projects/digizen-landing/angular-build/**'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Un deploy a la vez: si se empujan dos commits seguidos, gana el ultimo.
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Projects/digizen-landing/angular-build
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: Projects/digizen-landing/angular-build/package-lock.json
+
+      - run: npm ci
+
+      # base-href tiene que coincidir con la subcarpeta del sitio en Pages.
+      - run: npx ng build --configuration production --base-href /digizen-2026-2027/
+
+      - name: Preparar salida para Pages
+        run: |
+          cd dist/angular-build/browser
+          # SPA: cualquier ruta desconocida cae en el index.
+          cp index.html 404.html
+          # Evita que Pages procese la salida con Jekyll.
+          touch .nojekyll
+
+      - name: Publicar en gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd dist/angular-build/browser
+          git init -q
+          git config user.name 'BruniusGnius'
+          git config user.email 'bruno@gnius.club'
+          git add -A
+          git commit -q -m 'Deploy production build to GitHub Pages'
+          # Historia de un solo commit: el sitio pesa >140MB y acumular
+          # versiones engordaria el repositorio en cada deploy.
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:gh-pages

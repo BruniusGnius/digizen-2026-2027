@@ -22,7 +22,17 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "ignore": [
+                  "**/ada-saludando-video-edicion/**",
+                  "**/ElevenLabs_*",
+                  "**/ada saludando.*",
+                  "**/ada-saludando-croma.png",
+                  "**/*-source-*.mp4",
+                  "**/dg-scene-a05-decision-tree-v0*.png",
+                  "**/digizen-v05-scene-decision-context.png",
+                  "**/.DS_Store"
+                ]
               }
             ],
             "styles": [
