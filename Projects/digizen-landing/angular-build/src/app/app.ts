@@ -44,6 +44,7 @@ type DeliveryChannel = 'correo' | 'whatsapp';
 })
 export class App implements AfterViewInit, OnDestroy {
   @ViewChild('adaDialog') private adaDialog?: ElementRef<HTMLDialogElement>;
+  @ViewChild('clockScrollVideo') private clockScrollVideo?: ElementRef<HTMLVideoElement>;
   protected readonly theme = inject(ThemeService);
   protected readonly channel = signal<DeliveryChannel>('correo');
   protected readonly expandedReadMore = signal<ReadonlySet<string>>(new Set());
@@ -63,13 +64,25 @@ export class App implements AfterViewInit, OnDestroy {
   protected readonly mobileCtaVisible = signal(false);
   protected readonly mobileCtaClosed = signal(false);
   protected readonly mobileCtaMode = signal<'ada' | 'checkout'>('ada');
+  protected readonly adaFrames = Array.from(
+    { length: 24 },
+    (_, i) => `assets/digizen/ada-wave/f${String(i).padStart(2, '0')}.webp`,
+  );
 
   private frame = 0;
+  private clockVideoFrame = 0;
   private observer?: IntersectionObserver;
-  private trigger?: ScrollTrigger;
+  private clockVideoTrigger?: ScrollTrigger;
+  private clockVideoQuery?: MediaQueryList;
+  private chatTrigger?: ScrollTrigger;
+  private adaImages: HTMLImageElement[] = [];
+  private adaWaveTrigger?: ScrollTrigger;
+  private adaWaveQuery?: MediaQueryList;
 
   ngAfterViewInit(): void {
-    this.setupNarrativeMotion();
+    this.setupChatSequence();
+    this.setupClockScrollVideo();
+    this.setupAdaWave();
     this.setupSectionObserver();
     this.measureNav();
     this.scheduleNavRemeasure();
@@ -86,8 +99,11 @@ export class App implements AfterViewInit, OnDestroy {
     this.navMeasureTimers.forEach((timer) => window.clearTimeout(timer));
     window.removeEventListener('scroll', this.queueScroll);
     cancelAnimationFrame(this.frame);
+    cancelAnimationFrame(this.clockVideoFrame);
     this.observer?.disconnect();
-    this.trigger?.kill();
+    this.clockVideoTrigger?.kill();
+    this.chatTrigger?.kill();
+    this.adaWaveTrigger?.kill();
   }
 
   protected toggleTheme(): void {
@@ -279,42 +295,200 @@ export class App implements AfterViewInit, OnDestroy {
     window.addEventListener('scroll', this.queueScroll, { passive: true });
   }
 
-  private setupNarrativeMotion(): void {
-    if (
-      typeof window.matchMedia !== 'function' ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    )
-      return;
-    const visual = document.querySelector<HTMLElement>('[data-criteria-visual]');
-    if (!visual) return;
+
+  private setupChatSequence(): void {
+    // Diferido hasta que la fuente este lista: el alto del hilo se mide para
+    // reservarlo, y con Inter a medio cargar esa medida sale corta.
+    const fonts = (document as Document & { fonts?: FontFaceSet }).fonts;
+    if (fonts?.ready) void fonts.ready.then(() => this.buildChatSequence());
+    else this.buildChatSequence();
+  }
+
+  private buildChatSequence(): void {
+    const thread = document.querySelector<HTMLElement>('[data-chat-thread]');
+    if (!thread) return;
+    const rows = Array.from(thread.querySelectorAll<HTMLElement>('[data-chat-row]'));
+    if (!rows.length) return;
+
+    // Con "Reducir movimiento" no se cancela la secuencia: se quita el desplazamiento
+    // y el rebote, y queda el mismo guion resuelto solo con opacidad.
+    const soft =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     gsap.registerPlugin(ScrollTrigger);
-    const orbit = visual.querySelectorAll('.dg-orbit');
-    const labels = visual.querySelectorAll('.dg-feed-labels span');
-    const node = visual.querySelector('.dg-criteria-node');
+
+    // Reservar el alto final antes de ocultar nada, para que la tarjeta no crezca
+    // a saltos mientras entran los mensajes.
+    thread.style.minHeight = `${thread.offsetHeight}px`;
+
+    const bubbles = rows.map((row) => row.querySelector<HTMLElement>('[data-chat-bubble]'));
+    gsap.set(rows, { autoAlpha: 0, y: soft ? 0 : 12 });
+    bubbles.forEach((bubble) => bubble && gsap.set(bubble, { display: 'none' }));
+
     const timeline = gsap.timeline({ paused: true });
-    timeline
-      .fromTo(
-        labels,
-        { opacity: 0.25, x: -12 },
-        { opacity: 1, x: 0, stagger: 0.12, duration: 0.5, ease: 'power2.out' },
-      )
-      .fromTo(
-        orbit,
-        { scale: 0.82, opacity: 0.2 },
-        { scale: 1, opacity: 1, stagger: 0.1, duration: 0.7, ease: 'power3.out' },
-        '<.1',
-      )
-      .fromTo(
-        node,
-        { scale: 0.9, opacity: 0.5 },
-        { scale: 1, opacity: 1, duration: 0.55, ease: 'power2.out' },
-        '-=.35',
-      );
-    this.trigger = ScrollTrigger.create({
-      trigger: visual,
-      start: 'top 72%',
+    rows.forEach((row, index) => {
+      const typing = row.querySelector<HTMLElement>('[data-chat-typing]');
+      const bubble = bubbles[index];
+
+      if (typing && bubble) {
+        // Turno de ADA: entra la fila con los tres puntos, "piensa", y recien
+        // entonces aparece el mensaje.
+        timeline
+          .set(typing, { display: 'inline-flex' })
+          .to(row, { autoAlpha: 1, y: 0, duration: 0.34, ease: 'power2.out' })
+          .to({}, { duration: 1.15 })
+          .set(typing, { display: 'none' })
+          .set(bubble, { display: 'block' })
+          .fromTo(
+            bubble,
+            { autoAlpha: 0, scale: soft ? 1 : 0.94, y: soft ? 0 : 8 },
+            {
+              autoAlpha: 1,
+              scale: 1,
+              y: 0,
+              duration: 0.42,
+              ease: soft ? 'power1.out' : 'back.out(1.7)',
+            },
+          );
+      } else {
+        timeline.to(row, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.4,
+          ease: soft ? 'power1.out' : 'back.out(1.5)',
+        });
+      }
+
+      if (index < rows.length - 1) timeline.to({}, { duration: 0.55 });
+    });
+
+    this.chatTrigger = ScrollTrigger.create({
+      trigger: thread,
+      start: 'top 78%',
       once: true,
       onEnter: () => timeline.play(),
     });
+  }
+
+  private setupAdaWave(): void {
+    const canvas = document.querySelector<HTMLCanvasElement>('canvas[data-ada-wave]');
+    const ctx = canvas?.getContext('2d');
+    if (!canvas || !ctx || typeof window.matchMedia !== 'function') return;
+
+    const sources = this.adaFrames;
+    let shown = -1;
+
+    const draw = (i: number) => {
+      const img = this.adaImages[i];
+      if (!img || i === shown) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      shown = i;
+    };
+
+    // Nada se dibuja hasta que los 24 cuadros estan decodificados: es lo que
+    // evitaba el parpadeo de la version con <img> apilados.
+    void Promise.all(
+      sources.map(
+        (src) =>
+          new Promise<HTMLImageElement | null>((resolve) => {
+            const img = new Image();
+            img.decoding = 'async';
+            img.onload = () => img.decode().then(() => resolve(img), () => resolve(img));
+            img.onerror = () => resolve(null);
+            img.src = src;
+          }),
+      ),
+    ).then((loaded) => {
+      this.adaImages = loaded.filter((i): i is HTMLImageElement => i !== null);
+      if (this.adaImages.length !== sources.length) return;
+
+      draw(0);
+      canvas.classList.add('is-ready');
+
+      // El saludo va pegado al scroll, pero ocupa solo un tramo del recorrido:
+      // antes del 45% ADA esta quieta, entre el 45% y el 70% saluda una vez, y
+      // despues se queda en reposo. Asi el gesto cae a media seccion en vez de
+      // repetirse todo el rato. Al subir, se deshace igual de natural.
+      const FROM = 0.45;
+      const TO = 0.7;
+      const last = sources.length - 1;
+
+      gsap.registerPlugin(ScrollTrigger);
+      const stage = canvas.closest<HTMLElement>('.dg-ada-composite') ?? canvas;
+
+      // Solo desktop: en tablet y movil ADA se queda estatica en el primer cuadro.
+      this.adaWaveQuery = window.matchMedia('(min-width: 1024px)');
+      const sync = () => {
+        this.adaWaveTrigger?.kill();
+        this.adaWaveTrigger = undefined;
+        if (!this.adaWaveQuery?.matches) {
+          draw(0);
+          return;
+        }
+        this.adaWaveTrigger = ScrollTrigger.create({
+          trigger: stage,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+          onUpdate: (self) => {
+            const t = (self.progress - FROM) / (TO - FROM);
+            draw(t <= 0 || t >= 1 ? 0 : Math.round(t * last));
+          },
+        });
+      };
+      this.adaWaveQuery.addEventListener('change', sync);
+      sync();
+    });
+  }
+
+  private setupClockScrollVideo(): void {
+    const video = this.clockScrollVideo?.nativeElement;
+    if (!video) return;
+    const trigger = video.closest<HTMLElement>('.dg-evidence-visual') ?? video;
+
+    gsap.registerPlugin(ScrollTrigger);
+    video.pause();
+
+    const createTrigger = () => {
+      const duration = video.duration;
+      if (!Number.isFinite(duration) || duration <= 0) return;
+      const end = Math.max(0, duration - 0.04);
+
+      video.currentTime = 0.01;
+      video.classList.add('is-ready');
+      this.clockVideoTrigger?.kill();
+      this.clockVideoTrigger = ScrollTrigger.create({
+        trigger,
+        start: 'bottom bottom',
+        end: 'top top',
+        scrub: true,
+        onUpdate: (self) => {
+          cancelAnimationFrame(this.clockVideoFrame);
+          this.clockVideoFrame = requestAnimationFrame(() => {
+            video.currentTime = Math.min(end, Math.max(0, duration * self.progress));
+          });
+        },
+      });
+      ScrollTrigger.refresh();
+    };
+
+    // El video solo existe en desktop; en tablet y movil se muestra la imagen horizontal.
+    this.clockVideoQuery = window.matchMedia('(min-width: 1024px)');
+    const sync = () => {
+      if (!this.clockVideoQuery?.matches) {
+        cancelAnimationFrame(this.clockVideoFrame);
+        this.clockVideoTrigger?.kill();
+        this.clockVideoTrigger = undefined;
+        video.classList.remove('is-ready');
+        return;
+      }
+      if (Number.isFinite(video.duration) && video.duration > 0) createTrigger();
+      else video.addEventListener('loadedmetadata', createTrigger, { once: true });
+      video.load();
+    };
+    this.clockVideoQuery.addEventListener('change', sync);
+    sync();
   }
 }

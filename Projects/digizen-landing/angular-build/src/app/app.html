@@ -317,9 +317,15 @@
           </div>
         </div>
         <div class="dg-media-pair dg-evidence-media-pair">
-          <figure class="dg-media dg-placeholder-scene dg-evidence-visual"
-            aria-label="Placeholder para reloj reactivo al scroll">
-            <span class="dg-placeholder-label">Reloj que reacciona con el scroll</span>
+          <figure class="dg-media dg-evidence-visual">
+            <video #clockScrollVideo class="dg-scroll-video"
+              src="assets/digizen/generated/scenes/dg-scene-a04-clock-scroll-video.mp4"
+              poster="assets/digizen/generated/scenes/dg-scene-a04-clock-scroll-poster.png" width="810" height="1080"
+              preload="metadata" muted playsinline
+              aria-label="Reloj de sala avanzando mientras un adolescente mira su celular al fondo"></video>
+            <img class="dg-evidence-still" src="assets/digizen/generated/scenes/dg-scene-a04-clock-scroll-4-3.png"
+              alt="Reloj de sala en primer plano mientras un adolescente mira su celular al fondo" width="1670"
+              height="1253" loading="lazy" />
           </figure>
           <blockquote class="dg-note dg-note--coral">
             <div class="dg-note-avatar" aria-hidden="true"><svg lucideCompass></svg></div>
@@ -334,20 +340,15 @@
 
     <section class="dg-section dg-section--violet" aria-labelledby="beat-4-title">
       <div class="dg-grid-2 dg-grid-2--media-first">
-        <div class="dg-criteria-visual" data-criteria-visual aria-label="Diagrama conceptual del feed al criterio">
-          <div class="dg-criteria-path" aria-hidden="true"></div>
-          <div class="dg-orbit"></div>
-          <div class="dg-orbit dg-orbit--two"></div>
-          <div class="dg-feed-labels">
-            <span><strong>Feed</strong> impulso</span>
-            <span><strong>Pausa</strong> pregunta</span>
-            <span><strong>Criterio</strong> decisión</span>
-          </div>
-          <div class="dg-criteria-node">Esto me sirve<br />¿o me usa?</div>
-          <div class="dg-criteria-signal dg-criteria-signal--one" aria-hidden="true"></div>
-          <div class="dg-criteria-signal dg-criteria-signal--two" aria-hidden="true"></div>
-          <div class="dg-criteria-signal dg-criteria-signal--three" aria-hidden="true"></div>
-        </div>
+        <figure class="dg-media dg-media--decision-tree">
+          <picture>
+            <source media="(min-width: 1024px)"
+              srcset="assets/digizen/generated/scenes/dg-scene-a05-decision-tree.png" />
+            <img src="assets/digizen/generated/scenes/dg-scene-a05-decision-tree-16-9.png"
+              alt="Adolescente viendo su criterio convertirse en un mapa geométrico de decisiones" width="2360"
+              height="1328" loading="lazy" />
+          </picture>
+        </figure>
         <div>
           <p class="dg-kicker">Otro camino</p>
           <h2 id="beat-4-title" class="dg-h2">
@@ -505,40 +506,47 @@
                     <p class="dg-chat-status">Mentora digital</p>
                   </div>
                 </div>
-                <div class="dg-chat-thread">
-                  <div class="dg-chat-row dg-chat-row--child">
+                <div class="dg-chat-thread" data-chat-thread>
+                  <div class="dg-chat-row dg-chat-row--child" data-chat-row>
                     <div class="dg-child-avatar">
                       <img src="assets/digizen/digizen-preset-avatar-set-mx-v03-white-03.png" alt="" width="1024"
                         height="1024" />
                     </div>
                     <p class="dg-chat-bubble dg-chat-bubble--child">Hola ADA</p>
                   </div>
-                  <div class="dg-chat-row">
+                  <div class="dg-chat-row" data-chat-row>
                     <div class="dg-ada-avatar dg-ada-avatar--small">
                       <img src="assets/digizen/ada-profile-low.png" alt="" width="1200" height="1200" />
                     </div>
-                    <p class="dg-chat-bubble">¿Alguna vez te han mandado captura de un chat de alguien más?</p>
+                    <div class="dg-chat-slot">
+                      <div class="dg-chat-typing" data-chat-typing><span></span><span></span><span></span></div>
+                      <p class="dg-chat-bubble" data-chat-bubble>¿Alguna vez te han mandado captura de un
+                        chat de alguien más?</p>
+                    </div>
                   </div>
-                  <div class="dg-chat-row dg-chat-row--child">
+                  <div class="dg-chat-row dg-chat-row--child" data-chat-row>
                     <div class="dg-child-avatar">
                       <img src="assets/digizen/digizen-preset-avatar-set-mx-v03-white-03.png" alt="" width="512"
                         height="512" />
                     </div>
                     <p class="dg-chat-bubble dg-chat-bubble--child">Sí, en un grupo de WhatsApp.</p>
                   </div>
-                  <div class="dg-chat-row">
+                  <div class="dg-chat-row" data-chat-row>
                     <div class="dg-ada-avatar dg-ada-avatar--small">
                       <img src="assets/digizen/ada-profile-low.png" alt="" width="1200" height="1200" />
                     </div>
-                    <p class="dg-chat-bubble">Antes de reenviarla: ¿qué tendría que pasar para que estuviera bien
-                      compartirla?</p>
+                    <div class="dg-chat-slot">
+                      <div class="dg-chat-typing" data-chat-typing><span></span><span></span><span></span></div>
+                      <p class="dg-chat-bubble" data-chat-bubble>Antes de reenviarla: ¿qué tendría que
+                        pasar para que estuviera bien compartirla?</p>
+                    </div>
                   </div>
                 </div>
                 <div class="dg-chat-input">Escribe aquí...</div>
               </div>
             </div>
-            <img class="dg-ada-render" src="assets/digizen/ADA-full-body.png" alt="" width="1200" height="1600"
-              loading="lazy" />
+            <canvas class="dg-ada-render" data-ada-wave width="492" height="782" role="img"
+              aria-label="ADA saludando a la cámara"></canvas>
             <figcaption class="dg-support text-center">Vista de producto · chat ADA</figcaption>
           </figure>
         </div>

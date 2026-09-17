@@ -561,6 +561,39 @@ details > summary::-webkit-details-marker {
   height: 100%;
   object-fit: cover;
 }
+.dg-media picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.dg-media--decision-tree {
+  aspect-ratio: 3 / 4;
+}
+.dg-media--decision-tree img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dg-scroll-video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+.dg-scroll-video.is-ready {
+  opacity: 1;
+}
+.dg-evidence-still {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 /* .dg-media::after {
   position: absolute;
   inset: auto 14px 14px;
@@ -1282,6 +1315,7 @@ details[open] .dg-chevron {
   width: min(88%, 410px);
 }
 .dg-product-window {
+  overflow: hidden;
   border: 1px solid var(--dg-line);
   border-radius: 12px;
   padding: 15px;
@@ -1292,8 +1326,15 @@ details[open] .dg-chevron {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--dg-line);
+  margin: -15px -15px 14px;
+  padding: 13px 15px;
+  background: linear-gradient(135deg, #3561f3 0%, #7057e6 100%);
+}
+.dg-product-top .dg-chat-name {
+  color: #ffffff;
+}
+.dg-product-top .dg-chat-status {
+  color: rgba(255, 255, 255, 0.78);
 }
 .dg-ada-avatar {
   width: 42px;
@@ -1380,6 +1421,48 @@ details[open] .dg-chevron {
   font-weight: var(--dg-weight-copy);
   line-height: 1.35;
 }
+.dg-chat-slot {
+  min-width: 0;
+  max-width: 78%;
+}
+.dg-chat-slot .dg-chat-bubble {
+  max-width: 100%;
+}
+/* Indicador "escribiendo": oculto por defecto, solo lo muestra el timeline de GSAP. */
+.dg-chat-typing {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  padding: 14px 13px;
+  border-radius: 16px 16px 16px 5px;
+  background: var(--dg-subtle);
+}
+.dg-chat-typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dg-soft);
+  animation: dg-chat-typing-dot 1.3s infinite ease-in-out;
+}
+.dg-chat-typing span:nth-child(2) {
+  animation-delay: 0.16s;
+}
+.dg-chat-typing span:nth-child(3) {
+  animation-delay: 0.32s;
+}
+@keyframes dg-chat-typing-dot {
+  0%,
+  62%,
+  100% {
+    opacity: 0.32;
+    transform: translateY(0);
+  }
+  31% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
 .dg-chat-bubble--child {
   border-radius: 16px 16px 5px 16px;
   color: color-mix(in srgb, var(--dg-blue) 72%, var(--dg-ink));
@@ -1398,29 +1481,41 @@ details[open] .dg-chevron {
   font-size: 12px;
   font-weight: 650;
 }
+.dg-ada-composite picture {
+  display: contents;
+}
+/* Plano medio: sangra por el borde inferior del panel, no "pisa" el piso.
+   Por eso desaparece la elipse de sombra que llevaba la version de cuerpo entero. */
+/* ADA saluda: sprite de 24 cuadros en una tira horizontal. El scroll mueve el cuadro
+   via --ada-frame (0-23); en tablet y movil se cambia por la imagen fija. */
+/* ADA saluda: 24 cuadros dibujados en un canvas, GSAP elige cual segun el scroll.
+   No es una tira de sprite (la hoja de 11040px se reescalaba y el resampleo cambiaba
+   con cada posicion: vibraba) ni 24 <img> apilados (con opacity:0 el navegador no los
+   decodifica hasta encenderlos, y de ahi el parpadeo). El canvas mide 492x782 sobre
+   una caja de 246px: reduccion limpia 2:1 y una sola capa que componer. */
 .dg-ada-render {
   position: absolute;
   z-index: 2;
-  right: clamp(-45px, -3.5vw, -21px);
-  bottom: -8px;
-  width: clamp(125px, 15vw, 205px);
-  max-width: none;
-  filter: drop-shadow(0 28px 30px rgba(21, 32, 51, 0.2));
+  /* En proporcion al panel, no en px: el panel pasa de ~486px a 1440 de ventana a
+     ~332px a 1024, y con medidas fijas ADA se salia por la izquierda y el borde del
+     panel (overflow:hidden) le cortaba el cabello. right:47% + width:50% la deja lo
+     mas a la izquierda posible sin salirse: 3% de margen contra el borde. */
+  right: 47%;
+  bottom: clamp(-64px, -5vw, -34px);
+  width: 50%;
+  aspect-ratio: 492 / 782;
+  filter: drop-shadow(-14px 18px 26px rgba(21, 32, 51, 0.22));
   pointer-events: none;
 }
-.dg-ada-composite::after {
-  position: absolute;
-  right: clamp(18px, 4vw, 58px);
-  bottom: 24px;
-  z-index: 1;
-  width: clamp(170px, 19vw, 270px);
-  height: 28px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--dg-ink) 15%, transparent);
-  filter: blur(14px);
-  content: '';
-  pointer-events: none;
+.dg-ada-render {
+  height: auto;
+  opacity: 0;
+  transition: opacity 240ms ease;
 }
+.dg-ada-render.is-ready {
+  opacity: 1;
+}
+
 .dg-bubbles {
   margin: 16px 0;
   display: grid;
@@ -2250,6 +2345,12 @@ details[open] .dg-chevron {
   .dg-media-pair .dg-media {
     aspect-ratio: 16 / 9;
   }
+  .dg-media-pair .dg-evidence-visual {
+    aspect-ratio: 4 / 3;
+  }
+  .dg-media--decision-tree {
+    aspect-ratio: 16 / 9;
+  }
   .dg-media-pair .dg-media:last-child {
     display: none;
   }
@@ -2282,9 +2383,11 @@ details[open] .dg-chevron {
   }
   .dg-ada-chat-layer {
     width: min(82%, 430px);
+    margin-left: auto;
   }
   .dg-ada-render {
-    right: -46px;
+    right: auto;
+    left: 12px;
     bottom: -6px;
     width: min(42vw, 320px);
   }
@@ -2350,10 +2453,20 @@ details[open] .dg-chevron {
     display: block;
   }
   .dg-evidence-visual {
+    display: block;
+    margin-bottom: 24px;
+  }
+  .dg-evidence-visual .dg-evidence-still {
+    display: block;
+  }
+  .dg-evidence-visual .dg-scroll-video {
     display: none;
   }
   .dg-evidence-media-pair {
     display: contents;
+  }
+  .dg-evidence-media-pair .dg-evidence-visual {
+    order: -1;
   }
   .dg-evidence-media-pair .dg-note {
     order: 2;
@@ -2479,9 +2592,10 @@ details[open] .dg-chevron {
     width: 100%;
   }
   .dg-ada-render {
-    right: -38px;
+    right: auto;
+    left: 14px;
     bottom: -6px;
-    width: 210px;
+    width: 126px;
   }
   .dg-mobile-cta.is-visible {
     display: flex;
@@ -2525,5 +2639,23 @@ details[open] .dg-chevron {
   *::after {
     animation-duration: 1ms !important;
     transition-duration: 1ms !important;
+  }
+}
+/* Excepcion al reset de arriba: los puntos de "escribiendo" solo pulsan en opacidad,
+   no desplazan nada, y sin ellos la simulacion del chat no se entiende. */
+@keyframes dg-chat-typing-dot-soft {
+  0%,
+  62%,
+  100% {
+    opacity: 0.32;
+  }
+  31% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dg-chat-typing span {
+    animation-name: dg-chat-typing-dot-soft;
+    animation-duration: 1.3s !important;
   }
 }
