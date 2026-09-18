@@ -306,11 +306,18 @@ details > summary::-webkit-details-marker {
   font-size: 12px;
   font-weight: 750;
   text-decoration: none;
+  transition:
+    color 160ms var(--dg-ease),
+    background-color 160ms var(--dg-ease),
+    transform 160ms var(--dg-ease);
 }
 .dg-nav-links a:hover,
 .dg-nav-links a.active {
   color: var(--dg-blue);
   background: var(--dg-selected);
+}
+.dg-nav-links a:active {
+  transform: scale(0.97);
 }
 .dg-theme {
   width: 38px;
@@ -323,6 +330,22 @@ details > summary::-webkit-details-marker {
   color: var(--dg-ink);
   background: var(--dg-raised);
   cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    transform 160ms var(--dg-ease),
+    border-color 160ms var(--dg-ease),
+    background-color 160ms var(--dg-ease),
+    box-shadow 160ms var(--dg-ease);
+  will-change: transform;
+}
+.dg-theme:hover {
+  border-color: color-mix(in srgb, var(--dg-blue) 28%, var(--dg-line));
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--dg-blue) 12%, transparent);
+  transform: translateY(-1px);
+}
+.dg-theme:active {
+  box-shadow: none;
+  transform: scale(0.94);
 }
 .dg-theme svg {
   width: 18px;
@@ -487,10 +510,23 @@ details > summary::-webkit-details-marker {
   text-decoration-color: color-mix(in srgb, var(--dg-violet) 45%, transparent);
   text-underline-offset: 3px;
   white-space: nowrap;
+  transition:
+    color 160ms var(--dg-ease),
+    text-decoration-color 160ms var(--dg-ease),
+    transform 160ms var(--dg-ease);
+  touch-action: manipulation;
+}
+.dg-readmore-trigger:hover {
+  color: color-mix(in srgb, var(--dg-violet) 78%, var(--dg-ink));
+  text-decoration-color: currentColor;
+}
+.dg-readmore-trigger:active {
+  transform: translateY(1px) scale(0.98);
 }
 .dg-readmore-trigger svg {
   width: 14px;
   height: 14px;
+  transition: transform 180ms var(--dg-ease);
 }
 .dg-readmore-trigger--collapse {
   /* fit-content: siendo flex de nivel bloque se estiraba a toda la columna, y su
@@ -505,6 +541,11 @@ details > summary::-webkit-details-marker {
 .dg-readmore-panel {
   height: 0;
   overflow: hidden;
+}
+.dg-readmore-panel-inner {
+  transition:
+    opacity 220ms var(--dg-ease),
+    transform 220ms var(--dg-ease);
 }
 .dg-inline-attribution {
   display: block;
@@ -752,9 +793,13 @@ blockquote.dg-note .dg-note-avatar svg {
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
+  touch-action: manipulation;
   transition:
-    transform 180ms var(--dg-ease),
-    box-shadow 180ms var(--dg-ease);
+    transform 210ms var(--dg-ease),
+    box-shadow 210ms var(--dg-ease),
+    background-color 210ms var(--dg-ease),
+    border-color 210ms var(--dg-ease);
+  will-change: transform;
 }
 .dg-btn:hover {
   transform: translateY(-1px);
@@ -763,7 +808,11 @@ blockquote.dg-note .dg-note-avatar svg {
     0 12px 24px color-mix(in srgb, var(--dg-btn-bg) 30%, transparent);
 }
 .dg-btn:active {
-  transform: translateY(1px) scale(0.97);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.18),
+    0 4px 10px color-mix(in srgb, var(--dg-btn-bg) 18%, transparent);
+  transform: translateY(1px) scale(0.965);
+  transition-duration: 90ms;
 }
 .dg-btn svg {
   width: 18px;
@@ -1052,6 +1101,12 @@ blockquote.dg-note .dg-note-avatar svg {
 }
 .dg-accordion details {
   border-bottom: 1px solid var(--dg-line);
+  transition:
+    background-color 180ms var(--dg-ease),
+    border-color 180ms var(--dg-ease);
+}
+.dg-accordion details[open] {
+  background: color-mix(in srgb, var(--dg-raised) 56%, transparent);
 }
 .dg-accordion summary {
   min-height: 62px;
@@ -1062,6 +1117,7 @@ blockquote.dg-note .dg-note-avatar svg {
   padding: 16px 3px;
   color: var(--dg-ink);
   cursor: pointer;
+  touch-action: manipulation;
 }
 .dg-accordion-title {
   display: flex;
@@ -1096,12 +1152,19 @@ blockquote.dg-note .dg-note-avatar svg {
   transition:
     transform 180ms var(--dg-ease),
     background-color 180ms var(--dg-ease);
+  will-change: transform;
 }
 .dg-accordion summary:hover .dg-chevron {
-  background: var(--dg-accent);
+  background: var(--dg-blue);
+}
+.dg-accordion summary:active .dg-chevron {
+  transform: scale(0.92);
 }
 details[open] .dg-chevron {
   transform: rotate(180deg);
+}
+.dg-accordion details[open] summary:active .dg-chevron {
+  transform: rotate(180deg) scale(0.92);
 }
 .dg-accordion-body {
   margin: 0;
@@ -1110,6 +1173,15 @@ details[open] .dg-chevron {
   font-size: 15px;
   font-weight: var(--dg-weight-copy);
   line-height: 1.68;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 220ms var(--dg-ease),
+    transform 220ms var(--dg-ease);
+}
+.dg-accordion details[open] .dg-accordion-body {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .dg-sticky {
@@ -1763,12 +1835,22 @@ details[open] .dg-chevron {
   color: var(--dg-muted);
   background: var(--dg-raised);
   cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    transform 160ms var(--dg-ease),
+    border-color 160ms var(--dg-ease),
+    background-color 160ms var(--dg-ease),
+    box-shadow 160ms var(--dg-ease),
+    color 160ms var(--dg-ease);
 }
 .dg-channel button[aria-pressed='true'] {
   border-color: var(--dg-blue);
   color: var(--dg-blue);
   background: var(--dg-selected);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--dg-blue) 10%, transparent);
+}
+.dg-channel button:active {
+  transform: scale(0.97);
 }
 
 .dg-safety-intro {
@@ -2252,6 +2334,14 @@ details[open] .dg-chevron {
   border-radius: 12px;
   background: var(--dg-raised);
   box-shadow: var(--dg-shadow-card);
+  transition:
+    border-color 180ms var(--dg-ease),
+    box-shadow 180ms var(--dg-ease),
+    transform 180ms var(--dg-ease);
+}
+.dg-pending details[open] {
+  border-color: color-mix(in srgb, var(--dg-blue) 22%, var(--dg-line));
+  box-shadow: var(--dg-shadow-float);
 }
 .dg-pending summary {
   min-height: 54px;
@@ -2262,12 +2352,22 @@ details[open] .dg-chevron {
   color: var(--dg-ink);
   font-weight: 750;
   cursor: pointer;
+  touch-action: manipulation;
 }
 .dg-pending p {
   margin: 0;
   padding: 0 18px 18px;
   color: var(--dg-muted);
   font-size: 13px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 220ms var(--dg-ease),
+    transform 220ms var(--dg-ease);
+}
+.dg-pending details[open] p {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .dg-mobile-cta {
@@ -2285,6 +2385,11 @@ details[open] .dg-chevron {
   background: var(--dg-nav);
   box-shadow: var(--dg-shadow-float);
   backdrop-filter: blur(18px);
+  transform: translateY(calc(100% + 18px));
+  transition:
+    opacity 220ms var(--dg-ease),
+    transform 300ms var(--dg-ease);
+  will-change: transform, opacity;
 }
 .dg-mobile-cta .dg-btn {
   flex: 1;
@@ -2300,6 +2405,18 @@ details[open] .dg-chevron {
   color: var(--dg-muted);
   background: transparent;
   cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    color 160ms var(--dg-ease),
+    background-color 160ms var(--dg-ease),
+    transform 160ms var(--dg-ease);
+}
+.dg-mobile-cta-close:hover {
+  color: var(--dg-ink);
+  background: var(--dg-subtle);
+}
+.dg-mobile-cta-close:active {
+  transform: scale(0.9);
 }
 
 .dg-dialog {
@@ -2312,10 +2429,39 @@ details[open] .dg-chevron {
   color: var(--dg-ink);
   background: var(--dg-raised);
   box-shadow: var(--dg-shadow-float);
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+  transition:
+    opacity 220ms var(--dg-ease),
+    transform 260ms var(--dg-ease),
+    overlay 260ms allow-discrete,
+    display 260ms allow-discrete;
+  will-change: transform, opacity;
+}
+.dg-dialog[open] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 .dg-dialog::backdrop {
   background: rgba(7, 16, 24, 0.42);
   backdrop-filter: blur(4px);
+  opacity: 0;
+  transition:
+    opacity 220ms var(--dg-ease),
+    overlay 260ms allow-discrete,
+    display 260ms allow-discrete;
+}
+.dg-dialog[open]::backdrop {
+  opacity: 1;
+}
+@starting-style {
+  .dg-dialog[open] {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  .dg-dialog[open]::backdrop {
+    opacity: 0;
+  }
 }
 .dg-dialog-inner {
   padding: 28px;
@@ -2336,6 +2482,19 @@ details[open] .dg-chevron {
   color: var(--dg-muted);
   background: var(--dg-subtle);
   cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    color 160ms var(--dg-ease),
+    background-color 160ms var(--dg-ease),
+    transform 160ms var(--dg-ease),
+    border-color 160ms var(--dg-ease);
+}
+.dg-dialog-close:hover {
+  border-color: color-mix(in srgb, var(--dg-blue) 28%, var(--dg-line));
+  color: var(--dg-ink);
+}
+.dg-dialog-close:active {
+  transform: scale(0.9);
 }
 .dg-footer {
   width: min(1440px, 100%);
@@ -2681,14 +2840,25 @@ details[open] .dg-chevron {
     left: 14px;
     width: 126px;
   }
-  .dg-mobile-cta.is-visible {
+  .dg-mobile-cta {
     display: flex;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .dg-mobile-cta.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
   .dg-dialog {
     width: 100%;
     max-width: none;
     margin: auto 0 0;
     border-radius: 22px 22px 0 0;
+    transform: translateY(18px) scale(1);
+  }
+  .dg-dialog[open] {
+    transform: translateY(0) scale(1);
   }
   .dg-dialog-inner {
     padding: 24px 18px calc(24px + env(safe-area-inset-bottom));
