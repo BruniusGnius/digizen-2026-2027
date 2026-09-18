@@ -65,8 +65,8 @@ export class App implements AfterViewInit, OnDestroy {
   protected readonly mobileCtaClosed = signal(false);
   protected readonly mobileCtaMode = signal<'ada' | 'checkout'>('ada');
   protected readonly adaFrames = Array.from(
-    { length: 24 },
-    (_, i) => `assets/digizen/ada-wave/f${String(i).padStart(2, '0')}.webp`,
+    { length: 130 },
+    (_, i) => `assets/digizen/ada-wave/f${String(i).padStart(3, '0')}.webp`,
   );
 
   private frame = 0;
@@ -78,7 +78,6 @@ export class App implements AfterViewInit, OnDestroy {
   private adaImages: HTMLImageElement[] = [];
   private anchorTween?: gsap.core.Tween;
   private adaWaveTrigger?: ScrollTrigger;
-  private adaWaveQuery?: MediaQueryList;
 
   ngAfterViewInit(): void {
     this.setupAnchorScroll();
@@ -441,6 +440,7 @@ export class App implements AfterViewInit, OnDestroy {
     if (!canvas || !ctx || typeof window.matchMedia !== 'function') return;
 
     const sources = this.adaFrames;
+    const desktop = window.matchMedia('(min-width: 1024px)');
     let shown = -1;
 
     const draw = (i: number) => {
@@ -451,58 +451,48 @@ export class App implements AfterViewInit, OnDestroy {
       shown = i;
     };
 
-    // Nada se dibuja hasta que los 24 cuadros estan decodificados: es lo que
-    // evitaba el parpadeo de la version con <img> apilados.
-    void Promise.all(
-      sources.map(
-        (src) =>
-          new Promise<HTMLImageElement | null>((resolve) => {
-            const img = new Image();
-            img.decoding = 'async';
-            img.onload = () => img.decode().then(() => resolve(img), () => resolve(img));
-            img.onerror = () => resolve(null);
-            img.src = src;
-          }),
-      ),
-    ).then((loaded) => {
-      // Si algun cuadro falla, se sigue con los que si cargaron en vez de abortar:
-      // antes un solo fallo dejaba el canvas invisible y sin error visible.
-      this.adaImages = loaded.filter((i): i is HTMLImageElement => i !== null);
-      if (!this.adaImages.length) return;
+    const load = (src: string) =>
+      new Promise<HTMLImageElement | null>((resolve) => {
+        const img = new Image();
+        img.decoding = 'async';
+        img.onload = () => img.decode().then(() => resolve(img), () => resolve(img));
+        img.onerror = () => resolve(null);
+        img.src = src;
+      });
 
+    // El primer cuadro se pinta en cuanto llega: con 130 cuadros, esperar a todos
+    // dejaria el hueco vacio demasiado tiempo.
+    void load(sources[0]).then((first) => {
+      if (!first) return;
+      this.adaImages[0] = first;
       draw(0);
       canvas.classList.add('is-ready');
 
-      // Saludo en bucle pegado al scroll: mientras la tarjeta del CTA cruza la
-      // pantalla, ADA repite el ciclo CYCLES veces. El bucle vive en el mapeo, no en
-      // los archivos, asi que subir el numero no agrega peso. Al subir se deshace.
-      const CYCLES = 3;
+      // El resto solo hace falta en escritorio, que es donde ADA se anima. En tablet
+      // y movil se queda el primer cuadro y no se descargan los otros 129.
+      if (!desktop.matches) return;
 
-      gsap.registerPlugin(ScrollTrigger);
-      const stage = canvas.closest<HTMLElement>('.dg-ada-cta') ?? canvas;
+      void Promise.all(sources.slice(1).map(load)).then((rest) => {
+        rest.forEach((img, i) => {
+          if (img) this.adaImages[i + 1] = img;
+        });
+        if (this.adaImages.filter(Boolean).length < sources.length) return;
 
-      // Solo desktop: en tablet y movil ADA se queda estatica en el primer cuadro.
-      this.adaWaveQuery = window.matchMedia('(min-width: 1024px)');
-      const sync = () => {
-        this.adaWaveTrigger?.kill();
-        this.adaWaveTrigger = undefined;
-        if (!this.adaWaveQuery?.matches) {
-          draw(0);
-          return;
-        }
+        gsap.registerPlugin(ScrollTrigger);
+        const stage = canvas.closest<HTMLElement>('.dg-ada-cta') ?? canvas;
+        const last = sources.length - 1;
+
+        // La secuencia completa se recorre UNA vez a lo largo del scroll: son los 130
+        // cuadros actuados, con sus cambios de expresion y su ritmo propio. Antes se
+        // repetia un ciclo de 24 tres veces, y por eso se sentia robotico.
         this.adaWaveTrigger = ScrollTrigger.create({
           trigger: stage,
           start: 'top bottom',
           end: 'bottom top',
           scrub: true,
-          onUpdate: (self) => {
-            const n = this.adaImages.length;
-            draw(Math.floor(self.progress * n * CYCLES) % n);
-          },
+          onUpdate: (self) => draw(Math.round(self.progress * last)),
         });
-      };
-      this.adaWaveQuery.addEventListener('change', sync);
-      sync();
+      });
     });
   }
 

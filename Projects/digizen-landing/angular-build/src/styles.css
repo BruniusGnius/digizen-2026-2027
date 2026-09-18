@@ -1657,7 +1657,7 @@ details[open] .dg-chevron {
     z-index: 0;
     display: block;
     width: clamp(186px, 15.6vw, 232px);
-    aspect-ratio: 492 / 782;
+    aspect-ratio: 400 / 616;
     filter: drop-shadow(-14px 18px 26px rgba(21, 32, 51, 0.22));
     pointer-events: none;
   }
