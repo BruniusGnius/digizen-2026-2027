@@ -515,6 +515,19 @@ details > summary::-webkit-details-marker {
   font-size: clamp(1.55rem, 2.6vw, 2.25rem);
   letter-spacing: -0.03em;
 }
+/* Mismo tamano que .dg-h3.dg-bridge-title ("El control caduca. El criterio no."):
+   es la entrada a las cuatro tarjetas de seguridad, no un parrafo mas. */
+.dg-copy .dg-copy-title {
+  margin-top: clamp(22px, 2.2vw, 32px);
+  color: var(--dg-ink);
+  font-size: clamp(1.55rem, 2.6vw, 2.25rem);
+  font-weight: 720;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+.dg-copy .dg-copy-title strong {
+  font-weight: inherit;
+}
 .dg-criteria-bridge {
   margin-top: clamp(44px, 5vw, 72px);
   display: grid;
