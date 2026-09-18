@@ -67,7 +67,7 @@
   --dg-soft: #8190a5;
   --dg-line: rgba(223, 231, 238, 0.16);
   --dg-line-strong: rgba(223, 231, 238, 0.32);
-  --dg-blue: #75aaff;
+  --dg-blue: #4a90ff;
   --dg-cyan: #43deea;
   --dg-violet: #aa98ff;
   --dg-coral: #ff8077;
@@ -75,15 +75,15 @@
   --dg-gold: #ffd477;
   --dg-green: #63d59f;
   --dg-teal: #43deea;
-  --dg-text-blue: #75aaff;
+  --dg-text-blue: #4a90ff;
   --dg-text-cyan: #43deea;
   --dg-text-violet: #aa98ff;
   --dg-text-coral: #ff9b94;
   --dg-text-green: #7ae0ae;
-  --dg-kicker-ink: #75aaff;
-  --dg-btn-bg: #75aaff;
+  --dg-kicker-ink: #4a90ff;
+  --dg-btn-bg: #4a90ff;
   --dg-btn-ink: #ffffff;
-  --dg-selected: rgba(117, 170, 255, 0.12);
+  --dg-selected: rgba(74, 144, 255, 0.16);
   --dg-focus: rgba(67, 222, 234, 0.38);
   --dg-grid: transparent;
   --dg-nav: rgba(23, 35, 56, 0.92);
@@ -629,6 +629,29 @@ details > summary::-webkit-details-marker {
 .dg-media--portrait {
   aspect-ratio: 4 / 5;
 }
+/* Escena "Antes de decidir": 4:3 en escritorio, 16:9 en tablet y movil, que son las
+   proporciones en que se entrego. Doble clase por la misma razon que --presence. */
+.dg-media.dg-media--invite {
+  aspect-ratio: 4 / 3;
+}
+@media (max-width: 1023px) {
+  .dg-media.dg-media--invite {
+    aspect-ratio: 16 / 9;
+  }
+}
+/* Modificador propio: las otras tres figuras --portrait comparten el 4/5 y sus recortes
+   estan hechos para eso. Esta escena se entrego en 3:4 (escritorio) y 16:9 (tablet y
+   movil), asi que se ajusta el contenedor a la imagen en vez de recortarla.
+   Doble clase a proposito: la regla de tablet de .dg-media--portrait vive ~1700 lineas
+   mas abajo y con un solo nombre de clase ganaba por orden, dejando el 16/9. */
+.dg-media.dg-media--presence {
+  aspect-ratio: 3 / 4;
+}
+@media (max-width: 1023px) {
+  .dg-media.dg-media--presence {
+    aspect-ratio: 16 / 9;
+  }
+}
 .dg-media--flip img {
   transform: scaleX(-1);
 }
@@ -940,6 +963,7 @@ blockquote.dg-note .dg-note-avatar svg {
 }
 .dg-founder-media {
   grid-area: media;
+  aspect-ratio: 16 / 9;
   margin-bottom: clamp(28px, 3vw, 40px);
 }
 .dg-founder-kicker {
@@ -1748,6 +1772,13 @@ details[open] .dg-chevron {
 .dg-safety-image {
   aspect-ratio: 3 / 4;
 }
+/* Solo escritorio: en tablet y movil .dg-safety-intro es display:block y align-self
+   no aplica, pero se acota igual para dejarlo explicito. */
+@media (min-width: 1024px) {
+  .dg-safety-image {
+    align-self: center;
+  }
+}
 
 .dg-guard-grid {
   display: grid;
@@ -2089,7 +2120,7 @@ details[open] .dg-chevron {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(24px, 3vw, 40px);
-  align-items: start;
+  align-items: center;
 }
 .dg-pricing-card {
   position: relative;
@@ -2418,8 +2449,10 @@ details[open] .dg-chevron {
   .dg-safety-intro {
     display: block;
   }
+  /* Se ocultaba por falta de un recorte horizontal; ya existe la version 16:9. */
   .dg-safety-image {
-    display: none;
+    margin-top: clamp(24px, 4vw, 36px);
+    aspect-ratio: 16 / 9;
   }
   .dg-ada-cta {
     grid-template-columns: 1fr;
