@@ -485,6 +485,9 @@ details > summary::-webkit-details-marker {
   height: 14px;
 }
 .dg-readmore-trigger--collapse {
+  /* fit-content: siendo flex de nivel bloque se estiraba a toda la columna, y su
+     area llegaba hasta el borde, chocando con el chat de al lado. */
+  width: fit-content;
   display: flex;
   margin: clamp(20px, 2.4vw, 28px) 0 0;
 }
@@ -815,9 +818,6 @@ blockquote.dg-note .dg-note-avatar svg {
   }
   .dg-decision--with-portrait .dg-decision-copy {
     padding-left: clamp(18px, 2vw, 30px);
-  }
-  .dg-ada-cta-portrait {
-    align-self: end;
   }
 }
 .dg-eyebrow {
@@ -1314,6 +1314,51 @@ details[open] .dg-chevron {
   z-index: 1;
   width: min(88%, 410px);
 }
+/* ADA estatica en tablet y movil, donde no existe la version del CTA. */
+.dg-ada-still {
+  position: absolute;
+  z-index: 2;
+  bottom: -6px;
+  left: 12px;
+  width: min(42vw, 320px);
+  height: auto;
+  pointer-events: none;
+}
+/* Solo escritorio: ahi ADA se mudo al CTA, asi que el panel deja de tener sentido
+   (seria tarjeta dentro de tarjeta) y el chat pasa a ser el elemento, en 3:4. */
+@media (min-width: 1024px) {
+  .dg-ada-composite {
+    min-height: 0;
+    margin-left: clamp(28px, 3.4vw, 56px);
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .dg-ada-chat-layer {
+    width: 100%;
+  }
+  .dg-ada-still {
+    display: none;
+  }
+  .dg-product-window {
+    aspect-ratio: 3 / 4;
+    min-height: clamp(520px, 54vw, 680px);
+    display: flex;
+    flex-direction: column;
+  }
+  .dg-chat-thread {
+    flex: 1 1 auto;
+    max-height: none;
+    align-content: start;
+    gap: clamp(15px, 1.5vw, 22px);
+    margin-top: 22px;
+  }
+  .dg-chat-input {
+    flex: none;
+    margin-top: auto;
+  }
+}
 .dg-product-window {
   overflow: hidden;
   border: 1px solid var(--dg-line);
@@ -1397,10 +1442,18 @@ details[open] .dg-chevron {
   border-radius: 99px;
   background: var(--dg-subtle);
 }
+/* El hilo se desplaza solo conforme entran los mensajes, como un chat real: la
+   conversacion completa no cabe en la ventana y crecerla desbordaria la tarjeta. */
 .dg-chat-thread {
+  max-height: 420px;
   margin-top: 18px;
   display: grid;
   gap: 12px;
+  overflow: hidden;
+  scrollbar-width: none;
+}
+.dg-chat-thread::-webkit-scrollbar {
+  display: none;
 }
 .dg-chat-row {
   display: flex;
@@ -1481,9 +1534,6 @@ details[open] .dg-chevron {
   font-size: 12px;
   font-weight: 650;
 }
-.dg-ada-composite picture {
-  display: contents;
-}
 /* Plano medio: sangra por el borde inferior del panel, no "pisa" el piso.
    Por eso desaparece la elipse de sombra que llevaba la version de cuerpo entero. */
 /* ADA saluda: sprite de 24 cuadros en una tira horizontal. El scroll mueve el cuadro
@@ -1491,23 +1541,11 @@ details[open] .dg-chevron {
 /* ADA saluda: 24 cuadros dibujados en un canvas, GSAP elige cual segun el scroll.
    No es una tira de sprite (la hoja de 11040px se reescalaba y el resampleo cambiaba
    con cada posicion: vibraba) ni 24 <img> apilados (con opacity:0 el navegador no los
-   decodifica hasta encenderlos, y de ahi el parpadeo). El canvas mide 492x782 sobre
-   una caja de 246px: reduccion limpia 2:1 y una sola capa que componer. */
+   decodifica hasta encenderlos, y de ahi el parpadeo).
+   Vive en el CTA "Conversa con ADA", con el mismo patron que los otros CTA con
+   retrato: abajo a la izquierda, sangrando por arriba de la tarjeta. Solo escritorio. */
 .dg-ada-render {
-  position: absolute;
-  z-index: 2;
-  /* En proporcion al panel, no en px: el panel pasa de ~486px a 1440 de ventana a
-     ~332px a 1024, y con medidas fijas ADA se salia por la izquierda y el borde del
-     panel (overflow:hidden) le cortaba el cabello. right:47% + width:50% la deja lo
-     mas a la izquierda posible sin salirse: 3% de margen contra el borde. */
-  right: 47%;
-  bottom: clamp(-64px, -5vw, -34px);
-  width: 50%;
-  aspect-ratio: 492 / 782;
-  filter: drop-shadow(-14px 18px 26px rgba(21, 32, 51, 0.22));
-  pointer-events: none;
-}
-.dg-ada-render {
+  display: none;
   height: auto;
   opacity: 0;
   transition: opacity 240ms ease;
@@ -1565,6 +1603,29 @@ details[open] .dg-chevron {
   );
   box-shadow: var(--dg-shadow-card);
 }
+/* Despues de la regla base a proposito: el `padding` en forma corta y el
+   `overflow: hidden` de arriba pisan estas si van antes. */
+@media (min-width: 1024px) {
+  .dg-ada-cta {
+    /* ADA sobresale ~117px por encima de la tarjeta; sin este margen su cabeza
+       choca con el boton "Ver menos" de la columna de texto. */
+    margin-top: clamp(124px, 11vw, 158px);
+    overflow: visible;
+    padding-left: clamp(214px, 17.5vw, 268px);
+  }
+  .dg-ada-render {
+    position: absolute;
+    bottom: 0;
+    left: clamp(26px, 3vw, 48px);
+    z-index: 0;
+    display: block;
+    width: clamp(186px, 15.6vw, 232px);
+    aspect-ratio: 492 / 782;
+    filter: drop-shadow(-14px 18px 26px rgba(21, 32, 51, 0.22));
+    pointer-events: none;
+  }
+}
+
 .dg-ada-cta .dg-form {
   position: relative;
   z-index: 1;
@@ -1573,31 +1634,6 @@ details[open] .dg-chevron {
   border: 0;
   background: transparent;
   box-shadow: none;
-}
-.dg-ada-cta-portrait {
-  position: relative;
-  z-index: 1;
-  width: auto;
-  aspect-ratio: 3 / 4;
-  flex: 1 1 0;
-  max-width: 160px;
-  margin: 0;
-  display: grid;
-  place-items: center;
-  pointer-events: none;
-}
-.dg-ada-cta-placeholder {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  border: 1px dashed color-mix(in srgb, var(--dg-orange) 58%, var(--dg-line));
-  border-radius: var(--dg-radius-card);
-  color: color-mix(in srgb, var(--dg-orange) 68%, var(--dg-ink));
-  background: color-mix(in srgb, var(--dg-orange) 12%, var(--dg-raised));
-  font-size: 18px;
-  font-weight: 850;
-  letter-spacing: 0.08em;
 }
 .dg-ada-form-horizontal {
   display: grid;
@@ -2375,21 +2411,9 @@ details[open] .dg-chevron {
   .dg-ada-cta {
     grid-template-columns: 1fr;
   }
-  .dg-ada-cta-portrait {
-    display: none;
-  }
-  .dg-ada-composite {
-    min-height: 560px;
-  }
   .dg-ada-chat-layer {
     width: min(82%, 430px);
     margin-left: auto;
-  }
-  .dg-ada-render {
-    right: auto;
-    left: 12px;
-    bottom: -6px;
-    width: min(42vw, 320px);
   }
   .dg-guard-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2485,6 +2509,17 @@ details[open] .dg-chevron {
   }
   .dg-grid-2--media-first > .dg-media-pair > .dg-note--coral {
     order: 3;
+  }
+}
+/* Solo tablet. El canal de entrega son dos botones, no un campo: ocupa su propia
+   fila, y debajo van los dos inputs escribibles a dos columnas. Antes los tres
+   competian por una rejilla de dos y el correo quedaba huerfano a media anchura. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dg-ada-form-horizontal > fieldset {
+    grid-column: 1 / -1;
+  }
+  .dg-ada-form-horizontal > .dg-label {
+    grid-column: span 1;
   }
 }
 @media (max-width: 767px) {
@@ -2585,16 +2620,11 @@ details[open] .dg-chevron {
     margin: 0;
     padding: 32px 24px;
   }
-  .dg-ada-composite {
-    min-height: 520px;
-  }
   .dg-ada-chat-layer {
     width: 100%;
   }
-  .dg-ada-render {
-    right: auto;
+  .dg-ada-still {
     left: 14px;
-    bottom: -6px;
     width: 126px;
   }
   .dg-mobile-cta.is-visible {

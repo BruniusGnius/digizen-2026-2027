@@ -318,13 +318,18 @@ export class App implements AfterViewInit, OnDestroy {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Reservar el alto final antes de ocultar nada, para que la tarjeta no crezca
-    // a saltos mientras entran los mensajes.
-    thread.style.minHeight = `${thread.offsetHeight}px`;
-
     const bubbles = rows.map((row) => row.querySelector<HTMLElement>('[data-chat-bubble]'));
     gsap.set(rows, { autoAlpha: 0, y: soft ? 0 : 12 });
     bubbles.forEach((bubble) => bubble && gsap.set(bubble, { display: 'none' }));
+
+    // La conversacion no cabe entera en la ventana: el hilo se desplaza para que el
+    // mensaje recien llegado quede a la vista, como haria un chat de verdad.
+    const seguir = (row: HTMLElement) =>
+      gsap.to(thread, {
+        scrollTop: Math.max(0, row.offsetTop + row.offsetHeight - thread.clientHeight),
+        duration: soft ? 0 : 0.45,
+        ease: 'power2.out',
+      });
 
     const timeline = gsap.timeline({ paused: true });
     rows.forEach((row, index) => {
@@ -337,6 +342,7 @@ export class App implements AfterViewInit, OnDestroy {
         timeline
           .set(typing, { display: 'inline-flex' })
           .to(row, { autoAlpha: 1, y: 0, duration: 0.34, ease: 'power2.out' })
+          .add(() => seguir(row))
           .to({}, { duration: 1.15 })
           .set(typing, { display: 'none' })
           .set(bubble, { display: 'block' })
@@ -350,14 +356,17 @@ export class App implements AfterViewInit, OnDestroy {
               duration: 0.42,
               ease: soft ? 'power1.out' : 'back.out(1.7)',
             },
-          );
+          )
+          .add(() => seguir(row));
       } else {
-        timeline.to(row, {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.4,
-          ease: soft ? 'power1.out' : 'back.out(1.5)',
-        });
+        timeline
+          .to(row, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.4,
+            ease: soft ? 'power1.out' : 'back.out(1.5)',
+          })
+          .add(() => seguir(row));
       }
 
       if (index < rows.length - 1) timeline.to({}, { duration: 0.55 });
@@ -401,22 +410,21 @@ export class App implements AfterViewInit, OnDestroy {
           }),
       ),
     ).then((loaded) => {
+      // Si algun cuadro falla, se sigue con los que si cargaron en vez de abortar:
+      // antes un solo fallo dejaba el canvas invisible y sin error visible.
       this.adaImages = loaded.filter((i): i is HTMLImageElement => i !== null);
-      if (this.adaImages.length !== sources.length) return;
+      if (!this.adaImages.length) return;
 
       draw(0);
       canvas.classList.add('is-ready');
 
-      // El saludo va pegado al scroll, pero ocupa solo un tramo del recorrido:
-      // antes del 45% ADA esta quieta, entre el 45% y el 70% saluda una vez, y
-      // despues se queda en reposo. Asi el gesto cae a media seccion en vez de
-      // repetirse todo el rato. Al subir, se deshace igual de natural.
-      const FROM = 0.45;
-      const TO = 0.7;
-      const last = sources.length - 1;
+      // Saludo en bucle pegado al scroll: mientras la tarjeta del CTA cruza la
+      // pantalla, ADA repite el ciclo CYCLES veces. El bucle vive en el mapeo, no en
+      // los archivos, asi que subir el numero no agrega peso. Al subir se deshace.
+      const CYCLES = 3;
 
       gsap.registerPlugin(ScrollTrigger);
-      const stage = canvas.closest<HTMLElement>('.dg-ada-composite') ?? canvas;
+      const stage = canvas.closest<HTMLElement>('.dg-ada-cta') ?? canvas;
 
       // Solo desktop: en tablet y movil ADA se queda estatica en el primer cuadro.
       this.adaWaveQuery = window.matchMedia('(min-width: 1024px)');
@@ -433,8 +441,8 @@ export class App implements AfterViewInit, OnDestroy {
           end: 'bottom top',
           scrub: true,
           onUpdate: (self) => {
-            const t = (self.progress - FROM) / (TO - FROM);
-            draw(t <= 0 || t >= 1 ? 0 : Math.round(t * last));
+            const n = this.adaImages.length;
+            draw(Math.floor(self.progress * n * CYCLES) % n);
           },
         });
       };
