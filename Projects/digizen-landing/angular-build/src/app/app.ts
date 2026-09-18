@@ -76,10 +76,12 @@ export class App implements AfterViewInit, OnDestroy {
   private clockVideoQuery?: MediaQueryList;
   private chatTrigger?: ScrollTrigger;
   private adaImages: HTMLImageElement[] = [];
+  private anchorTween?: gsap.core.Tween;
   private adaWaveTrigger?: ScrollTrigger;
   private adaWaveQuery?: MediaQueryList;
 
   ngAfterViewInit(): void {
+    this.setupAnchorScroll();
     this.setupChatSequence();
     this.setupClockScrollVideo();
     this.setupAdaWave();
@@ -104,6 +106,7 @@ export class App implements AfterViewInit, OnDestroy {
     this.clockVideoTrigger?.kill();
     this.chatTrigger?.kill();
     this.adaWaveTrigger?.kill();
+    this.anchorTween?.kill();
   }
 
   protected toggleTheme(): void {
@@ -176,7 +179,8 @@ export class App implements AfterViewInit, OnDestroy {
 
   protected checkout(plan?: 'diferido' | 'contado'): void {
     if (!plan) {
-      document.querySelector('#precio')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const precio = document.querySelector<HTMLElement>('#precio');
+      if (precio) this.scrollToElement(precio, 108);
       return;
     }
     window.dispatchEvent(new CustomEvent('digizen:checkout', { detail: { plan } }));
@@ -295,6 +299,55 @@ export class App implements AfterViewInit, OnDestroy {
     window.addEventListener('scroll', this.queueScroll, { passive: true });
   }
 
+
+  /**
+   * Desplazamiento a anclas con duracion acotada. Sustituye al scroll-behavior nativo
+   * por dos razones: el nativo recorre toda la distancia, asi que un salto del menu al
+   * footer tarda segundos en una pagina tan larga; y bajo "Reducir movimiento" el
+   * navegador lo apaga del todo y el salto queda seco. Aqui se acorta en vez de
+   * apagarse, que es el mismo criterio del chat.
+   */
+  private setupAnchorScroll(): void {
+    if (typeof window.matchMedia !== 'function') return;
+    const OFFSET = 108; // igual que el scroll-margin-top de las secciones
+
+    document.addEventListener('click', (event) => {
+      const link = (event.target as HTMLElement | null)?.closest?.('a[href^="#"]');
+      if (!(link instanceof HTMLAnchorElement)) return;
+      const id = link.getAttribute('href');
+      if (!id || id === '#') return;
+      const target = document.querySelector<HTMLElement>(id);
+      if (!target) return;
+
+      event.preventDefault();
+      this.scrollToElement(target, OFFSET);
+      history.pushState(null, '', id);
+    });
+  }
+
+  private scrollToElement(target: HTMLElement, offset: number): void {
+    const soft = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const to = Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset);
+    const from = window.scrollY;
+    const distance = Math.abs(to - from);
+    if (distance < 2) return;
+
+    // Duracion proporcional a la distancia pero con tope: sin el, saltar de una punta
+    // a otra de la landing se vuelve un viaje largo que atraviesa las animaciones.
+    const base = soft ? 220 : 520;
+    const duration = Math.min(base, 140 + distance * 0.22) / 1000;
+
+    // Se anima un objeto intermedio en vez de usar ScrollToPlugin, para no sumar
+    // otra dependencia de GSAP solo por esto.
+    const pos = { y: from };
+    this.anchorTween?.kill();
+    this.anchorTween = gsap.to(pos, {
+      y: to,
+      duration,
+      ease: 'power2.inOut',
+      onUpdate: () => window.scrollTo(0, pos.y),
+    });
+  }
 
   private setupChatSequence(): void {
     // Diferido hasta que la fuente este lista: el alto del hilo se mide para
