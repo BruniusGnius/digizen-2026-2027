@@ -334,8 +334,8 @@ export class App implements AfterViewInit, OnDestroy {
 
     // Duracion proporcional a la distancia pero con tope: sin el, saltar de una punta
     // a otra de la landing se vuelve un viaje largo que atraviesa las animaciones.
-    const base = soft ? 220 : 520;
-    const duration = Math.min(base, 140 + distance * 0.22) / 1000;
+    const base = soft ? 280 : 680;
+    const duration = Math.min(base, 180 + distance * 0.26) / 1000;
 
     // Se anima un objeto intermedio en vez de usar ScrollToPlugin, para no sumar
     // otra dependencia de GSAP solo por esto.
@@ -344,7 +344,9 @@ export class App implements AfterViewInit, OnDestroy {
     this.anchorTween = gsap.to(pos, {
       y: to,
       duration,
-      ease: 'power2.inOut',
+      // Arranque rapido y cola larga: la mayor parte del tiempo se gasta frenando,
+      // que es lo que se siente como aterrizaje en vez de como frenazo.
+      ease: 'power3.out',
       onUpdate: () => window.scrollTo(0, pos.y),
     });
   }
