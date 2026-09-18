@@ -1015,6 +1015,7 @@ blockquote.dg-note .dg-note-avatar svg {
     'kicker'
     'title'
     'copy'
+    'subtitle'
     'cards'
     'quote';
 }
@@ -1032,6 +1033,9 @@ blockquote.dg-note .dg-note-avatar svg {
 .dg-founder-copy {
   grid-area: copy;
 }
+.dg-founder-subtitle {
+  grid-area: subtitle;
+}
 .dg-founder-quote {
   grid-area: quote;
   margin-top: clamp(38px, 3vw, 48px);
@@ -1048,6 +1052,7 @@ blockquote.dg-note .dg-note-avatar svg {
       'kicker kicker'
       'title title'
       'copy quote'
+      'subtitle subtitle'
       'cards cards';
   }
   .dg-founder-quote {
