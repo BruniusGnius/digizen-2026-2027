@@ -17,7 +17,7 @@ export class ThemeService {
     this.document.documentElement.dataset['theme'] = theme;
     this.document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', theme === 'dark' ? '#071018' : '#f6f8fb');
+      ?.setAttribute('content', theme === 'dark' ? '#030303' : '#f6f8fb');
     try {
       localStorage.setItem('digizen-theme', theme);
     } catch {

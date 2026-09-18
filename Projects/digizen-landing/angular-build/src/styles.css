@@ -57,11 +57,11 @@
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --dg-canvas: #0f1728;
-  --dg-canvas-end: #0a1020;
-  --dg-surface: #121d32;
-  --dg-raised: #172338;
-  --dg-subtle: #202e45;
+  --dg-canvas: #030303;
+  --dg-canvas-end: #0f1412;
+  --dg-surface: #0e0e0f;
+  --dg-raised: #151516;
+  --dg-subtle: #202022;
   --dg-ink: #f4f7fb;
   --dg-muted: #aab7c8;
   --dg-soft: #8190a5;
@@ -86,9 +86,9 @@
   --dg-selected: rgba(74, 144, 255, 0.16);
   --dg-focus: rgba(67, 222, 234, 0.38);
   --dg-grid: transparent;
-  --dg-nav: rgba(23, 35, 56, 0.92);
-  --dg-decision: #132238;
-  --dg-featured: #172338;
+  --dg-nav: rgba(21, 21, 22, 0.92);
+  --dg-decision: #111112;
+  --dg-featured: #151516;
   --dg-shadow-card: 0 12px 30px rgba(0, 0, 0, 0.24);
   --dg-shadow-float: 0 20px 52px rgba(0, 0, 0, 0.34);
   --dg-weight-body: 450;
@@ -149,6 +149,14 @@ details > summary::-webkit-details-marker {
   background:
     linear-gradient(116deg, color-mix(in srgb, var(--dg-cyan) 14%, transparent), transparent 36%),
     linear-gradient(292deg, color-mix(in srgb, var(--dg-coral) 10%, transparent), transparent 34%),
+    linear-gradient(180deg, var(--dg-surface) 0%, var(--dg-canvas) 44%, var(--dg-canvas-end) 100%);
+}
+:root[data-theme='dark'] .dg-shell {
+  background:
+    linear-gradient(135deg, #030303 0%, #030303 26%, transparent 58%),
+    linear-gradient(45deg, color-mix(in srgb, var(--dg-green) 10%, transparent), transparent 44%),
+    linear-gradient(116deg, color-mix(in srgb, var(--dg-cyan) 5%, transparent), transparent 38%),
+    linear-gradient(292deg, color-mix(in srgb, var(--dg-coral) 4%, transparent), transparent 36%),
     linear-gradient(180deg, var(--dg-surface) 0%, var(--dg-canvas) 44%, var(--dg-canvas-end) 100%);
 }
 
