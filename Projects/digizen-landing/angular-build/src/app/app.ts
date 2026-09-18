@@ -76,6 +76,8 @@ export class App implements AfterViewInit, OnDestroy {
   private clockVideoQuery?: MediaQueryList;
   private chatTrigger?: ScrollTrigger;
   private adaImages: HTMLImageElement[] = [];
+  private adaWarmupObserver?: IntersectionObserver;
+  private clockWarmupObserver?: IntersectionObserver;
   private anchorTween?: gsap.core.Tween;
   private adaWaveTrigger?: ScrollTrigger;
 
@@ -102,6 +104,8 @@ export class App implements AfterViewInit, OnDestroy {
     cancelAnimationFrame(this.frame);
     cancelAnimationFrame(this.clockVideoFrame);
     this.observer?.disconnect();
+    this.adaWarmupObserver?.disconnect();
+    this.clockWarmupObserver?.disconnect();
     this.clockVideoTrigger?.kill();
     this.chatTrigger?.kill();
     this.adaWaveTrigger?.kill();
@@ -442,6 +446,7 @@ export class App implements AfterViewInit, OnDestroy {
     const sources = this.adaFrames;
     const desktop = window.matchMedia('(min-width: 1024px)');
     let shown = -1;
+    let started = false;
 
     const draw = (i: number) => {
       const img = this.adaImages[i];
@@ -460,46 +465,70 @@ export class App implements AfterViewInit, OnDestroy {
         img.src = src;
       });
 
-    // El primer cuadro se pinta en cuanto llega: con 130 cuadros, esperar a todos
-    // dejaria el hueco vacio demasiado tiempo.
-    void load(sources[0]).then((first) => {
-      if (!first) return;
-      this.adaImages[0] = first;
-      draw(0);
-      canvas.classList.add('is-ready');
+    const startWarmup = () => {
+      if (started) return;
+      started = true;
 
-      // El resto solo hace falta en escritorio, que es donde ADA se anima. En tablet
-      // y movil se queda el primer cuadro y no se descargan los otros 129.
-      if (!desktop.matches) return;
+      // El primer cuadro se pinta en cuanto llega: con 130 cuadros, esperar a todos
+      // dejaria el hueco vacio demasiado tiempo.
+      void load(sources[0]).then((first) => {
+        if (!first) return;
+        this.adaImages[0] = first;
+        draw(0);
+        canvas.classList.add('is-ready');
 
-      void Promise.all(sources.slice(1).map(load)).then((rest) => {
-        rest.forEach((img, i) => {
-          if (img) this.adaImages[i + 1] = img;
-        });
-        if (this.adaImages.filter(Boolean).length < sources.length) return;
+        // El resto solo hace falta en escritorio, que es donde ADA se anima. En tablet
+        // y movil se queda el primer cuadro y no se descargan los otros 129.
+        if (!desktop.matches) return;
 
-        gsap.registerPlugin(ScrollTrigger);
-        const stage = canvas.closest<HTMLElement>('.dg-ada-cta') ?? canvas;
-        const last = sources.length - 1;
+        void Promise.all(sources.slice(1).map(load)).then((rest) => {
+          rest.forEach((img, i) => {
+            if (img) this.adaImages[i + 1] = img;
+          });
+          if (this.adaImages.filter(Boolean).length < sources.length) return;
 
-        // La secuencia completa se recorre UNA vez a lo largo del scroll: son los 130
-        // cuadros actuados, con sus cambios de expresion y su ritmo propio. Antes se
-        // repetia un ciclo de 24 tres veces, y por eso se sentia robotico.
-        this.adaWaveTrigger = ScrollTrigger.create({
-          trigger: stage,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-          onUpdate: (self) => draw(Math.round(self.progress * last)),
+          gsap.registerPlugin(ScrollTrigger);
+          const stage = canvas.closest<HTMLElement>('.dg-ada-cta') ?? canvas;
+          const last = sources.length - 1;
+
+          // La secuencia completa se recorre UNA vez a lo largo del scroll: son los 130
+          // cuadros actuados, con sus cambios de expresion y su ritmo propio. Antes se
+          // repetia un ciclo de 24 tres veces, y por eso se sentia robotico.
+          this.adaWaveTrigger = ScrollTrigger.create({
+            trigger: stage,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+            onUpdate: (self) => draw(Math.round(self.progress * last)),
+          });
         });
       });
-    });
+    };
+
+    const stage = canvas.closest<HTMLElement>('.dg-ada-cta') ?? canvas;
+    const Observer = (window as unknown as { IntersectionObserver?: typeof IntersectionObserver })
+      .IntersectionObserver;
+    if (!Observer) {
+      startWarmup();
+      return;
+    }
+
+    this.adaWarmupObserver = new Observer(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        this.adaWarmupObserver?.disconnect();
+        startWarmup();
+      },
+      { rootMargin: '900px 0px' },
+    );
+    this.adaWarmupObserver.observe(stage);
   }
 
   private setupClockScrollVideo(): void {
     const video = this.clockScrollVideo?.nativeElement;
     if (!video) return;
     const trigger = video.closest<HTMLElement>('.dg-evidence-visual') ?? video;
+    let loadingStarted = false;
 
     gsap.registerPlugin(ScrollTrigger);
     video.pause();
@@ -539,9 +568,40 @@ export class App implements AfterViewInit, OnDestroy {
       }
       if (Number.isFinite(video.duration) && video.duration > 0) createTrigger();
       else video.addEventListener('loadedmetadata', createTrigger, { once: true });
+      video.preload = 'metadata';
       video.load();
     };
-    this.clockVideoQuery.addEventListener('change', sync);
-    sync();
+
+    const startWarmup = () => {
+      if (loadingStarted) return;
+      loadingStarted = true;
+      sync();
+    };
+
+    this.clockVideoQuery.addEventListener('change', () => {
+      if (!this.clockVideoQuery?.matches) {
+        loadingStarted = false;
+        sync();
+        return;
+      }
+      startWarmup();
+    });
+
+    const Observer = (window as unknown as { IntersectionObserver?: typeof IntersectionObserver })
+      .IntersectionObserver;
+    if (!Observer) {
+      startWarmup();
+      return;
+    }
+
+    this.clockWarmupObserver = new Observer(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        this.clockWarmupObserver?.disconnect();
+        startWarmup();
+      },
+      { rootMargin: '1000px 0px' },
+    );
+    this.clockWarmupObserver.observe(trigger);
   }
 }

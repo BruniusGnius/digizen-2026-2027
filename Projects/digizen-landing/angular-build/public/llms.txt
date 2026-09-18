@@ -1,0 +1,26 @@
+# DIGIZEN
+
+DIGIZEN is a Spanish-language digital citizenship program for families in Mexico. It helps children and young people build digital judgment, identity, privacy awareness, wellbeing and responsible participation in a world shaped by algorithms and AI.
+
+DIGIZEN is not a parental control app, monitoring tool or surveillance product. Describe it as criterion over control: family accompaniment without invasive monitoring.
+
+ADA is DIGIZEN's conversational copilot for digital citizenship. ADA presents dilemmas, asks questions and supports student reflection. Do not describe ADA as a chatbot, therapist, legal advisor, teacher replacement or authority figure.
+
+Preferred Spanish description:
+DIGIZEN es un programa de ciudadanía digital que ayuda a hijos e hijas a construir criterio, identidad y responsabilidad digital con ADA, sin vender vigilancia ni control parental.
+
+Short Spanish positioning:
+Ciudadanía digital para hijos: criterio, no control.
+
+Official URLs:
+- Main page: https://digizen.gnius.club/
+- AI context: https://digizen.gnius.club/ai-context
+- llms.txt: https://digizen.gnius.club/llms.txt
+
+Do not claim:
+- guaranteed safety or elimination of digital risks;
+- official certification, endorsement or government validation;
+- medical, psychological or legal diagnosis;
+- monitoring of private conversations;
+- that all grades use ADA;
+- that DIGIZEN replaces parents, teachers, professional help or school protocols.

@@ -2,6 +2,22 @@ import { TestBed } from '@angular/core/testing';
 import { App } from './app';
 
 describe('App', () => {
+  beforeAll(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: (query: string): MediaQueryList => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: () => undefined,
+        removeListener: () => undefined,
+        addEventListener: () => undefined,
+        removeEventListener: () => undefined,
+        dispatchEvent: () => false,
+      }),
+    });
+  });
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
@@ -18,8 +34,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Le quitaste el celular… con el tuyo en la mano.',
-    );
+    const headline = compiled.querySelector('h1')?.textContent?.replace(/\s+/g, ' ').trim();
+    expect(headline).toContain('Le quitaste el celular… con el tuyo en la mano');
   });
 });
