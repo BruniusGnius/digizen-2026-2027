@@ -73,7 +73,6 @@ export class App implements AfterViewInit, OnDestroy {
   private chatTrigger?: ScrollTrigger;
   private adaImages: HTMLImageElement[] = [];
   private adaWarmupObserver?: IntersectionObserver;
-  private clockWarmupObserver?: IntersectionObserver;
   private anchorTween?: gsap.core.Tween;
   private adaWaveTrigger?: ScrollTrigger;
 
@@ -100,7 +99,6 @@ export class App implements AfterViewInit, OnDestroy {
     cancelAnimationFrame(this.clockVideoFrame);
     this.observer?.disconnect();
     this.adaWarmupObserver?.disconnect();
-    this.clockWarmupObserver?.disconnect();
     this.clockVideoTrigger?.kill();
     this.chatTrigger?.kill();
     this.adaWaveTrigger?.kill();
@@ -507,7 +505,6 @@ export class App implements AfterViewInit, OnDestroy {
     const video = this.clockScrollVideo?.nativeElement;
     if (!video) return;
     const trigger = video.closest<HTMLElement>('.dg-evidence-visual') ?? video;
-    let loadingStarted = false;
 
     gsap.registerPlugin(ScrollTrigger);
     video.pause();
@@ -547,40 +544,11 @@ export class App implements AfterViewInit, OnDestroy {
       }
       if (Number.isFinite(video.duration) && video.duration > 0) createTrigger();
       else video.addEventListener('loadedmetadata', createTrigger, { once: true });
-      video.preload = 'metadata';
+      video.preload = 'auto';
       video.load();
     };
 
-    const startWarmup = () => {
-      if (loadingStarted) return;
-      loadingStarted = true;
-      sync();
-    };
-
-    this.clockVideoQuery.addEventListener('change', () => {
-      if (!this.clockVideoQuery?.matches) {
-        loadingStarted = false;
-        sync();
-        return;
-      }
-      startWarmup();
-    });
-
-    const Observer = (window as unknown as { IntersectionObserver?: typeof IntersectionObserver })
-      .IntersectionObserver;
-    if (!Observer) {
-      startWarmup();
-      return;
-    }
-
-    this.clockWarmupObserver = new Observer(
-      (entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        this.clockWarmupObserver?.disconnect();
-        startWarmup();
-      },
-      { rootMargin: '1000px 0px' },
-    );
-    this.clockWarmupObserver.observe(trigger);
+    this.clockVideoQuery.addEventListener('change', sync);
+    sync();
   }
 }
