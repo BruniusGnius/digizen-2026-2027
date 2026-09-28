@@ -271,7 +271,7 @@ El espécimen usa un solo acento, `#2F4DFF`. La restricción fija lo sustituye p
     - ADA a la izquierda sobre `violeta-tinte`; HIJO a la derecha sobre `cian-tinte`.
     - Texto `body` 500, ancho máximo de 34ch.
     - Etiquetas `micro`: ADA en violeta, HIJO en `ink`.
-  - Sin avatares, horas, "escribiendo…" ni palomitas de leído.
+  - **Con avatares como en la versión A** (ajuste del usuario, 2026-09-28): cuadrados de 34 px con radio 10; ADA a la izquierda y el hijo a la derecha. Sin horas, "escribiendo…" ni palomitas de leído.
   - Un mensaje por paso de scroll, entrando desde su lado.
   - La conversación (4 mensajes) cabe en un encuadre móvil. Son 4 paradas dentro de un pin: 4 E.
 - **Bloque de precio.**
@@ -288,8 +288,9 @@ El espécimen usa un solo acento, `#2F4DFF`. La restricción fija lo sustituye p
   - Indicador: círculo de 32 px con contorno `azul-900` y chevron que gira 180°.
   - Respuesta Inter `body`.
   - Apertura con resorte crítico, que se puede interrumpir.
+- **Escenas: dos versiones (decisión del usuario, 2026-09-28).** Horizontal para desktop y tablet horizontal (≥ 860 px); **vertical 3:4** para móvil y tablet vertical (< 860 px). Las verticales las hace el usuario en Photoshop a partir de la misma imagen base (especificación en `00-context/scenes/vertical/LEEME.md`). Cada escena define en su estación su encuadre (llenar o completa sin recortar) y su movimiento (zoom-in, zoom-out o solo disolvencia). En 03.4: scrub de video en desktop e imagen fija en móvil.
 - **Sello (escena).**
-  - Radio 0, sin caption, bordes fundidos con máscara en degradado sobre el 8–12 % de cada lado.
+  - Radio 0, sin caption, **sin viñeta ni bordes fundidos**: la escena va con sus bordes limpios (ajuste del usuario, 2026-09-28; antes llevaba una máscara en degradado).
   - `alt=""` (decorativa: el significado lo lleva el texto).
   - Ocupa un encuadre propio: 1 E.
 - **Hero.**
@@ -353,7 +354,7 @@ El espécimen usa un solo acento, `#2F4DFF`. La restricción fija lo sustituye p
 
 **Hero**
 - Un `ScrollTrigger.create()` con pin de 1.5 E, cuyos `onEnter`/`onEnterBack` reproducen una timeline autoplay independiente (lección v2).
-- Valores iniciales: zoom-out 2.2 s → pausa 0.6 s → disolvencia 0.5 s → texto 0.5 s.
+- Valores: zoom-out 3.7 s (ajustado por el usuario el 2026-09-28; antes 2.2 s) → pausa 0.6 s → disolvencia 0.5 s → texto 0.5 s.
 
 **Interacción**
 - Respuesta en `pointerdown`, con resorte crítico interrumpible y sin rebote (apple-design §1, §3, §4).
@@ -386,7 +387,7 @@ Por defecto manda el espécimen. Las decisiones 1 y 2 aplican reglas que tú esc
 7. **Interpretaciones de maquetación:**
    - El «·» entre los CTA es la separación entre los dos botones.
    - «ADA:» y «HIJO:» son las etiquetas de las burbujas.
-   - «Escenas tal cual» = no se edita ningún archivo; el encuadre y la máscara en el layout sí se permiten.
+   - «Escenas tal cual» = no se edita ningún archivo; el encuadre en el layout sí se permite (sin máscara ni viñeta, ajuste del 2026-09-28).
    
    *Por defecto: sí.*
 8. **Cuerpo 16 px en móvil**, como en el espécimen. Mi revisión 1 subía a 18. A 16 px caben ~107 palabras por encuadre en el móvil de 360; a 18 px bajaría a unas 85, y habría más paradas. *Por defecto: 16, el del espécimen.*

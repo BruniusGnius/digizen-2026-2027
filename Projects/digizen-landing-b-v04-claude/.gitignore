@@ -1,2 +1,6 @@
 __pycache__/
 *.pyc
+
+# Videos fuente: pesados y el sitio no los consume (se usan sus secuencias en assets/seq/).
+# Misma regla que el .gitignore raíz para la landing A.
+00-context/scenes/*.mp4

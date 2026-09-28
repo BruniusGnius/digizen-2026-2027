@@ -31,6 +31,31 @@ Reglas de esta fase que se respetan:
 - Sin animación final: solo cortes y fundidos de trabajo.
 - La tipografía es la real (Playfair + Inter con la escala del espécimen), porque la ocupación depende de ella.
 
+## Refinamiento con gramática narrativa (2026-09-28)
+
+Se parte de la versión 1. La iteración 2 (variedad de composiciones) se descartó y quedó en git stash. El criterio está en [`02-gramatica-narrativa.md`](02-gramatica-narrativa.md): cada función narrativa tiene un layout, y se repite.
+
+**Aplicado:**
+- **A1:** 03.2 «¿Qué sentiste?» pasa a la voz de puente de todos (Inter 500, subhead).
+- **A2:** las aperturas (L06, incluidos 02.1 y 11.2) y los golpes dentro de párrafo comparten el borde izquierdo de la columna de lectura (el eje de lectura).
+- **B3:** 01.4 como «golpe + remate»: «Pero no por lo que crees.» en grande, «Y ahí es donde se pone interesante.» chico.
+- **B4:** 03.7 y 08.4 como «golpe dentro de párrafo», el mismo layout de 12.4.
+- **C5:** voz citada en itálica: las citas-eco del cap. 02, el título de 08.1 y la cita del niño en 10.5 (10.3 ya lo estaba).
+- **C6:** la tesis (05.7) con la forma del cierre de marca (B06), como 12.7.
+- **C7:** «Eres tú.» (10.1) y «Ya lo tienes.» (12.2) en monumental-xl, como rima.
+- **Escenas:** se cargan desde `00-context/scenes/` (ruta relativa). Si alguna no carga, el wireframe muestra un aviso con la ruta.
+
+**Imágenes (ajustes por estación):**
+- Sin viñeta en ninguna escena.
+- 02.6: zoom-in largo hacia el celular.
+- 03.4: scrub de video en desktop (`assets/seq/03-fastidio/`, 49 frames) e imagen fija provisional en móvil.
+- 03.8 (escudos): completa, sin recortar, y solo disolvencia.
+- **Versiones verticales para móvil y tablet:** faltan las 8 (lista y especificación en `00-context/scenes/vertical/LEEME.md`). El wireframe muestra un aviso en móvil donde falta alguna.
+
+**Pendiente, se decide al llegar a su estación:**
+- 8: en 12.4, ¿una frase en grande o las dos?
+- 9: ¿remate en negrita dentro de los párrafos?
+
 ## 1. Escala del recorrido
 
 | Concepto | Desktop | Móvil |
@@ -119,56 +144,61 @@ Reglas de esta fase que se respetan:
 
 ## 7. Partitura completa (pin → parada)
 
+La genera `wireframe-src/build.py` desde `content.py`; no la edites a mano.
+
+<!-- PARTITURA:INICIO -->
 | Pin | Parada | Composición | E | Marcas | Intención |
 |---|---|---|---:|---|---|
-| P-H0 | H.1 | Hero | 1.5 | ★ | Secuencia autoplay (no scrub): zoom-out extremo de 01-dinner → pausa → velo → aparece la frase. Se repite si regresas a este punto (onEnterBack). Sin texto de 'scroll'. |
+| P-H0 | H.1 | Hero | 1.5 | ★ | Autoplay (no scrub): zoom-out extremo de 01-dinner en 3.7 s → pausa → velo → aparece la frase en semimonumental. Desktop con su propia configuración: texto abajo a la izquierda (7 columnas, 3 líneas, 24 % del encuadre) y velo solo en el tercio inferior, para no tapar las caras. Móvil: centrado, 4 líneas. Se repite al regresar (onEnterBack). Al final aparece el indicador de continuar. |
 | P-H | H.2 | B01 | 1.25 | ★ | Golpe lapidario del Hero. Composición B01 literal del espécimen (mismas dos frases). El caption va en ink (decisión 2). |
 | P-H | H.3 | Puente (lead) | 1 |  | Puente solo, en la línea lead de B03. Empuja hacia el cap. 01. |
 | P-01 | 01.1 | B01 (secundario) | 1.25 | ★ | Título = golpe (confirmado). Secundario → baja un paso: semimonumental. |
 | P-01 | 01.2 | L03 | 1 | ★ | L03 = la lista 01–05. La fila 05 recibe el acento del espécimen recién al salir de la parada (anticipa la revelación, no la delata antes). |
-| P-01 | 01.3 | B03 | 1.5 | ★ oscuro | Bisagra 1 (oscuro). Dos tiempos: puente → golpe lapidario por corte. |
-| P-01 | 01.4 | B01 (secundario) | 1.25 | oscuro | Sigue en oscuro. Golpe secundario (semimonumental, 4 líneas en móvil 360). Al salir vuelve la luz. |
-| P-01 | 02.1 | L06 (solo título) | 1 | ★ | Título A. Parada corta que abre el carrusel. |
-| P-02b | 02.2 | L05 (cita-eco + prosa) | 1 | ★ | Patrón 3+5: pin + desplazamiento horizontal (ease none), snap por panel. Panel 1/4. La cita-eco es micro-golpe de apertura del bloque. |
+| P-01 | 01.3 | B03 (revelación en tres tiempos) | 1.75 | ★ oscuro | Bisagra 1 (oscuro). Tres tiempos (pedido del usuario): 1) el puente solo; 2) el puente se desvanece y aparece «La cinco.» (semimonumental, solo señala); 3) cae «No te escucha.» (monumental, revela, con acento). Puente y revelación ocupan el mismo lugar: nunca hay más de dos tamaños en pantalla. |
+| P-01 | 01.4 | B01 (golpe + remate) | 1.25 | oscuro | Sigue en oscuro. Gramática «golpe + remate», como H.2: «Pero no por lo que crees.» es el giro (grande); «Y ahí es donde se pone interesante.» solo anuncia (remate). Al salir vuelve la luz. |
+| P-01 | 02.1 | B01 (título en display) | 1 | ★ | Título en semimonumental con la gramática de los títulos que golpean (B01, centrado). Camino de triángulos centrado abajo, fuera del bloque del título (así no hereda su transform ni choca con el texto). |
+| P-02b | 02.2 | L05 (cita-eco + prosa) | 1 | ★ | Patrón 3+5: pin + desplazamiento horizontal. Cada panel llega y se estaciona el 70 % de su E; el paso al siguiente ocurre en el 30 % restante. Snap a la mitad de cada estacionamiento, sin inercia (corrección del usuario: antes cambiaba casi en automático). Panel 1/4. La cita-eco es micro-golpe de apertura del bloque. |
 | P-02b | 02.3 | L05 | 1 | ★ | Panel 2/4. Entra desde la derecha; si regresas, sale por la derecha. |
 | P-02b | 02.4 | L05 | 1 | ★ | Panel 3/4. |
 | P-02b | 02.5 | L05 | 1 | ★ | Panel 4/4. «Aguanta. Ahorita llegamos ahí.» es el puente de cierre, pero vive dentro del párrafo: no se separa. |
-| P-03a | 02.6 | Sello | 1 |  | Sella el capítulo completo. La referencia usa «candados»; aquí la pantalla del celular muestra candado y reloj de arena (tiempo + contraseña). Alternativa: 02-facial-recognition-alt. |
+| P-03a | 02.6 | Sello (zoom-in largo) | 1.5 |  | Sella el capítulo completo. Zoom-in largo con scroll (pedido del usuario): de 1× a 1.5× en 1.5 E, hacia el celular con el candado y el reloj; en el encuadre final siguen la cara del chico, el celular y parte de la laptop. El snap se detiene al terminar el zoom. La referencia usa «candados»; aquí la pantalla del celular muestra candado y reloj de arena (tiempo + contraseña). Alternativa: 02-facial-recognition-alt. |
 | P-03a | 03.1 | L06 | 1 | ★ | Título-puente («Ahora…») + primera línea. |
-| P-03a | 03.2 | L06 (título en voz de puente) | 1 |  | La pregunta va en la línea lead de B05 (Playfair 600, heading). Dos párrafos de lectura debajo. |
+| P-03a | 03.2 | L06 (título en voz de puente) | 1 |  | Gramática «puente + lectura»: el encabezado en el subhead del espécimen (Playfair 500 romana, 24/19; corrección del usuario); los párrafos en body (Inter), con negritas según el criterio editorial: la voz citada «ya lo sé… ¿y entonces qué hago?» y el remate que gira el argumento. |
 | P-03a | 03.3 | B03 (cierre secundario) | 1.5 | ★ | Puente → golpe secundario (semimonumental). La escena lo sella en la siguiente parada. |
-| P-03a | 03.4 | Sello | 1 |  | Sella el beat de «los ojos al techo» (primera de las dos imágenes del capítulo). Alternativa: 03-eyes-wide. |
+| P-03a | 03.4 | Secuencia con scrub (desktop) | 1.5 | solo desktop | Desktop: video con scrub (decisión del usuario). 49 cuadros WebP de 1280 px (3.0 MB) sacados de «initial_image»; el scroll recorre el gesto completo (mira el celular → ojos al techo → cabeza atrás) en 1.5 E y se estaciona al final. Póster = cuadro 64 (modo reducido y mientras carga). |
+| P-03a | 03.4m | Sello (imagen fija) | 1 | solo móvil | Móvil y tablet: imagen fija (decisión del usuario: ahí el scrub de video es más frágil). PROVISIONAL: el cuadro más expresivo del video, hasta generar la imagen fija nueva. |
 | P-03b | 03.5 | B03 | 1.5 | ★ oscuro | Bisagra 2 (oscuro). Lapidario del capítulo (confirmado). El lead termina en dos puntos: anuncia el corte. |
 | P-03b | 03.6 | L07 | 1 |  | Vuelve la luz. Lectura. |
-| P-03b | 03.7 | L07 | 1 |  | Lectura. Va aparte de 03.6: juntos pasan de ~100 palabras. |
-| P-03b | 03.8 | Sello | 1 |  | Sella el capítulo: mamá e hija, cada una con su escudo, separadas. |
+| P-03b | 03.7 | B01 (golpe dentro de párrafo) | 1.25 | ★ | Gramática «golpe dentro de párrafo» (layout de 03.7, 08.4 y 12.4): la primera frase paga la revelación del cap. 01 y va en grande y centrada (ajuste del usuario); el resto del párrafo sigue en la columna de lectura, 32/48 px debajo, en el mismo encuadre. |
+| P-03b | 03.8 | Sello | 1 |  | Sella el capítulo: mamá e hija, cada una con su escudo, separadas. Se muestra COMPLETA (ajuste por altura, sin recortar cabezas ni pies; pedido del usuario): en desktop quedan franjas angostas a los lados, del color del fondo. Movimiento: solo disolvencia de entrada, sin zoom (pedido del usuario). |
 | P-04 | 04.1 | L06 | 1 | ★ | Capítulo de respiro: solo composiciones L, sin acento, sin oscuro, sin imagen. |
 | P-04 | 04.2 | L07 | 1 |  | Lectura. |
 | P-04 | 04.3 | L07 | 1 |  | Lectura. VISION §4 proponía un golpe aquí; se respeta §1.1/§5 (sin golpe) — ver decisión en 02-wireframe.md. |
 | P-05a | 05.1 | L06 | 1 | ★ | Título-puente («Ahora sí:»). |
 | P-05a | 05.2 | L07 | 1 |  | Lectura: la metáfora de cruzar la calle. |
-| P-05a | 05.3 | L06 (título en voz de puente) | 1 |  | Puente (línea lead de B03) + lectura. |
-| P-05a | 05.4 | B01 (secundario) | 1.25 | ★ | Golpe intermedio, secundario (semimonumental). |
-| P-05a | 05.5 | Sello | 1 |  | Sella la metáfora a mitad del capítulo. El lapidario viene después, sin imagen propia. Alternativa: 05-crossing-alt. |
+| P-05a | 05.3 | B01 (golpe dentro de párrafo) | 1.25 | ★ | Mismo layout que 03.7 (pedido del usuario): la frase en semimonumental y centrada; el párrafo en la columna de lectura, 32/48 px debajo, en el mismo encuadre. |
+| P-05a | 05.4 | B01 (golpe en dos alturas) | 1.5 | ★ | Golpe en dos alturas (pedido del usuario, mismo patrón que 01.3): «Bloquearle el celular es» señala → semimonumental; «no cruces». revela → monumental. Dos tiempos: primero lo que señala, al seguir scrolleando lo que revela. |
+| P-05a | 05.5 | Secuencia con scrub (desktop) | 1.5 | solo desktop | Desktop: video con scrub (pedido del usuario): el feed de la calle fluye mientras la mamá señala. 49 cuadros WebP de 1280 px, calidad 50 (4.5 MB; el detalle de las fichas pesa más que en fastidio), sacados del video «Style_Hybrid…» (1908×1084, 5 s). Se estaciona al final. Sella la metáfora a mitad del capítulo; el lapidario viene después, sin imagen propia. |
+| P-05a | 05.5m | Sello (imagen fija) | 1 | solo móvil | Móvil y tablet: imagen fija. Falta su versión vertical (00-context/scenes/vertical/05-crossing-v.webp). Alternativa: 05-crossing-alt. |
 | P-05b | 05.6 | Puente (lead) | 1 |  | Puente solo que prepara la tesis. |
-| P-05b | 05.7 | B03 | 1.5 | ★ oscuro | Bisagra 3 (oscuro). Tesis de la pieza. B03 del espécimen: lead «El control caduca.» → cierre «El criterio no.» (misma línea del copy, en dos tiempos). |
-| P-05b | 05.8 | L07 | 1 |  | Vuelve la luz. Una sola frase de lectura cierra el capítulo. |
+| P-05b | 05.7 | B06 (antítesis) | 1.25 | ★ oscuro | Bisagra 3 (oscuro). Tesis de la pieza. Gramática «antítesis»: la misma forma que el cierre de marca (12.7), dos líneas iguales con acento en la segunda, para que al final el lector reconozca la tesis en «Presencia, no vigilancia. / Criterio, no candado.». |
+| P-05b | 05.8 | B03 (entrada → revelación) | 1.5 | ★ | Vuelve la luz. La frase se parte en entrada y revelación (pedido del usuario): «lo que le hayas enseñado antes.» en semimonumental, un paso abajo de la tesis (05.7, monumental) para no competir con ella. |
 | P-06 | 06.1 | L06 | 1 | ★ | Respiro: solo L. |
 | P-06 | 06.2 | L07 | 1 |  | Lectura. |
 | P-06 | 06.3 | L07 | 1 |  | Lectura. VISION §4 proponía golpe con la primera frase; está dentro del párrafo y el capítulo es de respiro — ver decisión. |
 | P-06 | 06.4 | L07 | 1 |  | Lectura. |
 | P-06 | 06.5 | Puente (lead) | 1 |  | Puente de cierre hacia ADA. |
-| P-07a | 07.1 | L06 | 1 | ★ | Título A + primer párrafo. |
+| P-07a | 07.1 | Presentación de ADA (texto 7 col + ADA 5 col) | 1 | ★ | ADA de la versión A (copiada sin modificar A; sin su animación de chat). Texto a la izquierda y ADA a la derecha (pedido del usuario). Desktop: el saludo se reproduce SOLO, en tiempo real (130 cuadros a 24 fps ≈ 5.4 s), cuando la parada entra en pantalla, y se repite al regresar. No va atado al scroll: con scrub era demasiado sensible (ajuste del usuario); es un gesto de un solo uso, como el Hero. Móvil y tablet: primer cuadro fijo, abajo del párrafo, sin descargar el resto. |
 | P-07a | 07.2 | L07 | 1 |  | Lectura. |
 | P-07a | 07.3 | L07 | 1 |  | Lectura. |
-| P-07a | 07.4 | Diálogo | 4 | ★ | Un mensaje por paso de scroll (4 snaps). ADA entra por la izquierda, HIJO por la derecha; al regresar salen por el mismo lado. Burbujas: tinte violeta (ADA) / cian (HIJO) en el build. |
+| P-07a | 07.4 | Diálogo | 4 | ★ | Un mensaje por paso de scroll (4 snaps). ADA entra por la izquierda, HIJO por la derecha; al regresar salen por el mismo lado. Avatares como en la versión A (pedido del usuario): cuadrados de 34 px con radio 10, ADA a la izquierda y el hijo a la derecha; imágenes de A copiadas sin modificar A. Burbujas: tinte violeta (ADA) / cian (HIJO) en el build. |
 | P-07c | 07.5 | B01 | 1.25 | ★ | Lapidario del capítulo: staccato de tres tiempos (candidato a SplitText por frase, patrón 9). |
 | P-07c | 07.6 | L07 | 1 |  | Lectura. |
 | P-07c | 07.7 | L07 | 1 |  | Lectura. Sin pausa de cierre: fluye directo al cap. 08 (como en la referencia). |
-| P-08a | 08.1 | B01 (secundario) | 1.25 | ★ | Título = golpe (confirmado). Secundario: semimonumental. |
+| P-08a | 08.1 | B01 (secundario) | 1.25 | ★ | Título = golpe (confirmado), semimonumental. Es la objeción del lector entre «»: va en voz citada (itálica), como las creencias del cap. 02. |
 | P-08a | 08.2 | L07 | 1 |  | Lectura (~88 palabras: al límite de un encuadre móvil). |
 | P-08a | 08.3 | B09 | 1.25 | ★ | Dato = Registro B (confirmado). B09: el numeral en su lugar dentro de la frase, sin duplicarlo ni reordenar. Lapidario del capítulo. Candidato a patrón 10 (contador). |
-| P-08a | 08.4 | Puente (lead) | 1 |  | El puente («No es que vaya a pasar. Ya está pasando.») abre un párrafo que no se parte: todo el párrafo va en voz lead. |
+| P-08a | 08.4 | B01 (golpe dentro de párrafo) | 1.25 | ★ | Gramática «golpe dentro de párrafo» (layout de 12.4): «No es que vaya a pasar. Ya está pasando.» en grande; el resto del párrafo en lectura, mismo encuadre. |
 | P-08b | 08.5 | L08 | 1 | ★ solo desktop | Desktop: una parada, tres columnas. Viñetas completas; la primera frase en 700 como etiqueta. |
 | P-08b | 08.5a | L08 | 1 | ★ solo móvil | Móvil: la lista se reparte en dos paradas (juntas pasan de la capacidad del encuadre). Ninguna viñeta se corta. |
 | P-08b | 08.5b | L08 (cont.) | 1 | solo móvil | Móvil, segunda parada de la lista. |
@@ -176,11 +206,11 @@ Reglas de esta fase que se respetan:
 | P-09 | 09.1 | L06 | 1 | ★ | Respiro instruccional: solo L. |
 | P-09 | 09.2 | L07 | 1 |  | Lectura. |
 | P-09 | 09.3 | Enlace + puente | 1 | ★ | PRIMER CTA del recorrido: el salto a la inscripción que ya trae el copy. Toque → feedback inmediato; el scroll animado se interrumpe si el usuario hace scroll. El puente empalma con el título del cap. 10. |
-| P-10a | 10.1 | B03 | 1.5 | ★ | Título + primera línea = un solo golpe (confirmado). Dos tiempos. Secundario (el lapidario del capítulo es la cita del niño): cierre en monumental. |
+| P-10a | 10.1 | B03 | 1.5 | ★ | Título + primera línea = un solo golpe (confirmado). Rima con «Ya lo tienes.» (12.2): los dos momentos en que la pieza le devuelve el protagonismo al papá van en monumental-xl. |
 | P-10a | 10.2 | L07 | 1 |  | Lectura. |
 | P-10a | 10.3 | L04 (cita + remate) | 1 | ★ | L04: la cita en Playfair itálica; el remate debajo en lectura (no se inventa fuente). |
 | P-10a | 10.4 | Puente (lead) | 1 |  | Párrafo completo en voz lead: arranca con el puente «Y aquí pasa algo que no te esperas.» |
-| P-10b | 10.5 | B03 | 1.5 | ★ oscuro | Bisagra 4 (oscuro). Lapidario (confirmado). Semimonumental porque en monumental serían 6 líneas en móvil 360. Sin acento: la cita ya pesa sola. |
+| P-10b | 10.5 | B03 | 1.5 | ★ oscuro | Bisagra 4 (oscuro). Lapidario (confirmado). Semimonumental porque en monumental serían 6 líneas en móvil 360. Habla el niño: voz citada (itálica). Sin acento: la cita ya pesa sola. |
 | P-10b | 10.6 | L07 | 1 |  | Vuelve la luz. Lectura. |
 | P-10b | 10.7 | Sello | 1 |  | Sella el capítulo más emocional: mamá e hija juntas, celulares boca abajo. Alternativa: 07-together-father-son. |
 | P-11a | 11.1 | L06 | 1 | ★ | Destino del ancla #inscripcion. Sin golpe B: capítulo transaccional. |
@@ -194,14 +224,17 @@ Reglas de esta fase que se respetan:
 | P-11b | 11.5 | Bloque de precio | 1 | ★ | Dos piezas iguales (el párrafo que sigue pasa a 11.6 para no llenar el encuadre). Monto en su lugar (Inter 800), nunca duplicado. El marcador gris = ámbar de valor en el build. |
 | P-11b | 11.6 | Cierre de pago + garantía + par de CTA | 1 | ★ | Cierre del pago + garantía pegada al par de CTA. Los dos botones pesan igual (en el build: azul / violeta). Feedback en pointerdown. Destinos pendientes. |
 | P-12a | 12.1 | B01 (secundario) | 1.25 | ★ | Título = golpe y puente a la vez (confirmado). |
-| P-12a | 12.2 | B03 | 1.5 | ★ | Lapidario del capítulo, en paralelo con «Eres tú.» (cap. 10). |
+| P-12a | 12.2 | B03 | 1.5 | ★ | Lapidario del capítulo. Rima con «Eres tú.» (10.1): monumental-xl. |
 | P-12a | 12.3 | Puente (lead) | 1 |  | Puente («Ahora…»). |
-| P-12a | 12.4 | B01 (secundario, a la izquierda) | 1.25 | ★ | El golpe son las dos primeras frases del párrafo; la tercera sigue en lectura dentro del MISMO encuadre (el párrafo no se parte entre paradas). Semimonumental: 6 líneas en móvil 360 (excepción a la regla de ≤5, anotada). |
+| P-12a | 12.4 | B01 (golpe dentro de párrafo) | 1.25 | ★ | El golpe son las dos primeras frases del párrafo; la tercera sigue en lectura dentro del MISMO encuadre (el párrafo no se parte entre paradas). Semimonumental: 6 líneas en móvil 360 (excepción a la regla de ≤5, anotada). |
 | P-12b | 12.5 | Par de CTA | 1 | ★ | Parada de decisión: solo los dos botones, mismo peso. |
 | P-12b | 12.6 | Sello | 1 |  | Pago visual de la metáfora: el hijo cruza solo, el papá observa sin celular. Alternativa: 08-autonomy-mother. |
 | P-12b | 12.7 | B06 | 1.25 | ★ oscuro | Bisagra 5 (oscuro). B06: dos líneas, la segunda en acento itálico. Resumen de marca. |
 | FAQ | — | Acordeón | flujo | ★ | Flujo normal (no pineado). Todas cerradas por defecto: las 7 preguntas se escanean de un vistazo. Toda la fila es el botón; feedback inmediato; abre hacia abajo y cierra por el mismo camino; se puede interrumpir. |
 | FOOT | — | Footer | flujo | ★ | Flujo normal. «digizen» = logo (00-context/logo/digizen-logo-light.svg). Enlaces del copy: gnius.club y aviso de privacidad. |
+
+**Totales:** paradas 86.50 E (desktop) / 87.50 E (móvil) · 21 pines → 20 E de tránsito · total aprox. 109 E desktop / 111 E móvil (con FAQ y footer).
+<!-- PARTITURA:FIN -->
 
 ## 8. Auditoría fuente → wireframe
 
@@ -209,7 +242,7 @@ Reglas de esta fase que se respetan:
 - **Interpretaciones de maquetación** (aprobadas en la Fase 1, decisión 7):
   - El «·» entre los CTA es el espacio entre los dos botones.
   - `ADA` / `HIJO` son etiquetas de burbuja sin los dos puntos (así aparecen en el sitio de referencia).
-  - Las escenas se encuadran y se funden con máscara, sin editar los archivos.
+  - Las escenas se encuadran sin editar los archivos, con bordes limpios (sin viñeta).
 - **Notas internas conservadas fuera de la UI** (no son copy de página):
   - Etiqueta de sección «## Footer» (no aparece en el sitio de referencia).
   - Etiqueta «(FAQ)» del encabezado «Por si te quedó una duda. (FAQ)» (no aparece en el sitio de referencia).

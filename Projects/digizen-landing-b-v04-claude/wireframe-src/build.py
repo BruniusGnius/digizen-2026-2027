@@ -28,6 +28,7 @@ TEMPLATE = r"""<!doctype html>
   color-scheme: light;
   --micro:11px; --small:13px; --body:16px; --sub:19px; --head:24px; --semi:34px; --mon:48px; --mxl:64px;
   --gap:16px; --padY:28px; --padX:24px;
+  --col-read:27rem; /* columna de lectura (≈38 caracteres de cuerpo); su borde izquierdo es el eje de lectura */
   /* wireframe: solo grises */
   --bg:#f1f1f1; --ink:#141414; --panel:#ffffff; --line:#d4d4d4; --night:#171717; --night-ink:#ececec;
   --chrome:#5c5c5c; --btn:#262626;
@@ -70,16 +71,24 @@ mark.val{background:#d9d9d9;color:inherit;padding:0 .15em}
 .c{width:100%;max-width:1180px;margin:0 auto}
 .ctr{text-align:center} .left{text-align:left}
 .stack{display:flex;flex-direction:column;gap:10px} .ctr.stack{align-items:center}
-.b01-l{align-items:flex-start;max-width:900px}
-.b01-l .t-semi{max-width:18ch}
+.l06{margin-left:max(0px, calc((100% - var(--col-read)) / 2));margin-right:0;
+  width:calc(100% - max(0px, calc((100% - var(--col-read)) / 2)));max-width:none}
+/* golpe dentro de párrafo: el golpe centrado; el resto del párrafo en la columna de lectura, 32/48 px debajo */
+.b01-l{align-items:center}
+.b01-l .t-semi{max-width:18ch;text-align:center}
+.b01-l > .t-body{width:min(100%, var(--col-read));text-align:left;margin-top:22px}
+@media (min-width:860px){ .b01-l > .t-body{margin-top:38px} }
 .b03 .lead-l{max-width:34ch}
+.b03 > [data-beat=close]{margin-top:22px} /* entrada → golpe: 32 px en móvil (10 de gap + 22) */
+@media (min-width:860px){ .b03 > [data-beat=close]{margin-top:38px} } /* 48 px en desktop */
+.reveal > [data-beat=close]{margin-top:0}
 .solo-lead .lead-l{max-width:32ch}
 .b09{gap:24px} .b09 .t-small{max-width:40ch}
 .b06{gap:0}
-.l06{max-width:1180px} .l06.ctr{text-align:center}
-.l06 .sup{max-width:34ch;margin-top:12px} .l06 .sup.essay{max-width:38ch}
+.l06 .t-head{max-width:22ch}
+.l06 .sup{max-width:var(--col-read);margin-top:12px}
 .l06 .sup p + p{margin-top:1em}
-.l07 .essay{max-width:38ch;margin:0 auto} .l07 .essay p{line-height:1.6} .l07 .essay p + p{margin-top:1em}
+.l07 .essay{width:min(100%, var(--col-read));margin:0 auto} .l07 .essay p{line-height:1.6} .l07 .essay p + p{margin-top:1em}
 .l07 .essay h3{margin:1em 0 .5em}
 .l03{max-width:720px}
 .l03 .row{display:flex;align-items:baseline;gap:20px;padding:16px 0;position:relative}
@@ -90,6 +99,11 @@ mark.val{background:#d9d9d9;color:inherit;padding:0 .15em}
 .l05 .w-q{grid-column:span 5}
 .l05 .def{grid-column:span 7;border-left:1px solid var(--line);padding-left:20px}
 .l05 .def p{max-width:44ch}
+.l05 .def p + p{margin-top:.8em}
+.q-in{margin:.15em 0}
+.reveal{display:grid;align-items:center;justify-items:center}
+.reveal > *{grid-area:1 / 1}
+.flowmode .reveal{display:flex;flex-direction:column;gap:10px}
 .l04 .q{max-width:32ch}
 .l08 .entries{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap);margin-top:22px}
 .l08 .entries:first-child{margin-top:0}
@@ -109,11 +123,26 @@ mark.val{background:#d9d9d9;color:inherit;padding:0 .15em}
 .msg.ada{align-self:flex-start;background:#e2e2e2;border-bottom-left-radius:6px}
 .msg.hijo{align-self:flex-end;background:#cbcbcb;border-bottom-right-radius:6px;text-align:left}
 .who{display:block;margin-bottom:4px}
+/* avatares como en la versión A: cuadrados de 34 px, radio 10, 9 px de la burbuja; el hijo a la derecha */
+.msg-row{display:flex;align-items:flex-end;gap:9px;max-width:92%}
+.msg-row.ada{align-self:flex-start}
+.msg-row.hijo{align-self:flex-end;flex-direction:row-reverse}
+.msg-row .msg{max-width:none;align-self:auto}
+.avatar{width:52px;height:52px;border-radius:14px;overflow:hidden;flex:none;background:#d0d0d0} /* más grandes que en A (pedido del usuario) */
+.avatar img{width:100%;height:100%;object-fit:cover;filter:grayscale(1)}
 .stop.k-seal{padding:0}
 .c-seal{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-.c-seal img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(.95);
-  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 10%,#000 90%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 10%,#000 90%,transparent 100%);
-  -webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent 0,#000 10%,#000 90%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 10%,#000 90%,transparent 100%);mask-composite:intersect}
+.c-seq canvas{position:absolute;inset:0}
+.c-seq .seq-poster{position:absolute;inset:0}
+.c-seq.ready .seq-poster{visibility:hidden}
+.flowmode .c-seq canvas{display:none}
+.c-seal img,.c-seq canvas{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(.95)} /* sin viñeta: bordes limpios (decisión del usuario) */
+picture{display:contents}
+.c-seal[data-fit=contain] img{object-fit:contain} /* escena completa, sin recortar (04-shield) */
+.vmiss{display:none}
+@media (max-width:859px){ .vmiss{display:block;position:absolute;left:12px;right:12px;bottom:44px;z-index:5;font:500 11px/1.4 ui-monospace,Menlo,monospace;color:#1a1a1a;background:rgba(255,255,255,.94);border:1px dashed #444;padding:6px 8px;text-align:left} }
+.nonotes .vmiss{display:none!important}
+.img-missing{position:absolute;inset:12%;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;border:2px dashed #555;background:#e9e9e9;color:#222;font:500 12px/1.5 ui-monospace,Menlo,monospace;z-index:2}
 .wf-file{position:absolute;bottom:10px;right:12px;font:500 10px/1.2 ui-monospace,Menlo,monospace;color:var(--chrome);background:rgba(255,255,255,.85);padding:2px 6px}
 .stop.k-hero{padding:0}
 .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1);transform-origin:50% 45%}
@@ -128,9 +157,47 @@ mark.val{background:#d9d9d9;color:inherit;padding:0 .15em}
   .piece{padding:16px}
   .cta{flex-direction:column;align-items:stretch}
   .dlg{gap:10px} .msg{max-width:92%;padding:10px 14px} .who{margin-bottom:2px}
+  .msg-row{max-width:100%;gap:8px} .avatar{width:34px;height:34px;border-radius:10px}
+  .dlg{gap:8px} .msg{padding:8px 12px} .dlg-k{margin-bottom:2px}
   .btn{max-width:none}
   .c-seal img{height:auto;max-height:100%}
 }
+
+/* ===== Hero: configuración propia de desktop (no es la de móvil escalada) ===== */
+@media (min-width:860px){
+  .stop.k-hero{align-items:flex-end}
+  .stop .hero-text{text-align:left;width:100%;max-width:1180px;margin:0 auto;padding:0 var(--padX) 10vh}
+  .stop .hero-text h1{max-width:calc(1180px * 7 / 12)}
+  .stop .scrim{background:linear-gradient(to top,rgba(16,16,16,.82) 0%,rgba(16,16,16,.5) 30%,rgba(16,16,16,0) 60%)}
+}
+
+/* ===== presentación de ADA: texto a la izquierda (7 col), ADA a la derecha (5 col) ===== */
+.ada-intro{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap);align-items:center}
+.ada-text{grid-column:1 / span 7;display:flex;flex-direction:column;gap:12px;max-width:var(--col-read);justify-self:end}
+.ada-fig{grid-column:8 / span 5;position:relative;justify-self:center;margin:0;height:min(70svh, 616px);aspect-ratio:400 / 616}
+.ada-fig canvas,.ada-fig .ada-still{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:grayscale(1)}
+.ada-fig.ready .ada-still{visibility:hidden}
+.flowmode .ada-fig canvas{display:none}
+@media (max-width:859px){
+  .ada-text,.ada-fig{grid-column:1 / -1}
+  .ada-text{justify-self:stretch;max-width:none}
+  .ada-fig{height:28svh} /* móvil/tablet: abajo del párrafo */
+  .ada-fig canvas{display:none}
+}
+
+/* tablet vertical (600–859 px): el texto de la presentación de ADA no se estira a todo el ancho */
+@media (min-width:600px) and (max-width:859px){
+  .ada-text{max-width:var(--col-read);justify-self:center}
+}
+
+/* ===== indicador de continuar (triángulos que titilan en secuencia) ===== */
+.cue{position:absolute;left:50%;bottom:calc(var(--padY) + 6px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;z-index:4;pointer-events:none}
+.cue span{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid currentColor;opacity:.2;animation:cueBlink 1.8s ease-in-out infinite}
+.cue span:nth-child(2){animation-delay:.25s} .cue span:nth-child(3){animation-delay:.5s}
+@keyframes cueBlink{0%,100%{opacity:.2;transform:translateY(0)}40%{opacity:1;transform:translateY(3px)}}
+.cue-path{gap:10px} /* camino: centrado a lo ancho, como los demás indicadores */
+.stop.k-hero .cue{color:var(--night-ink)}
+.flowmode .cue span{animation:none;opacity:.6}
 
 /* ===== horizontal (cap. 02) ===== */
 .t-h .track{display:flex;height:100%;width:calc(var(--n,4) * 100vw)}
@@ -186,9 +253,9 @@ mark.val{background:#d9d9d9;color:inherit;padding:0 .15em}
 #ruler{position:fixed;right:6px;top:6vh;height:88vh;width:14px;z-index:55;background:#fff;border:1px solid #bdbdbd}
 #ruler .seg{position:absolute;left:0;right:0}
 .s-read,.s-lead,.s-cta,.s-panel,.s-dialog{background:#cfcfcf}
-.s-golpe,.s-two,.s-hero{background:#7d7d7d}
+.s-golpe,.s-two,.s-reveal,.s-hero{background:#7d7d7d}
 .s-night{background:#111}
-.s-seal{background:repeating-linear-gradient(45deg,#9b9b9b 0 2px,#e4e4e4 2px 5px)}
+.s-seal,.s-seq{background:repeating-linear-gradient(45deg,#9b9b9b 0 2px,#e4e4e4 2px 5px)}
 .s-transit{background:#fff}
 .s-flow{background:#ececec}
 #ruler .tick{position:absolute;left:-5px;width:22px;height:9px;margin-top:-4px;padding:0;border:0;background:transparent;cursor:pointer}
@@ -265,6 +332,17 @@ DATA.pins.forEach(function(pin){
   });
   sec.appendChild(stage); root.appendChild(sec);
 });
+// ---------- imágenes: si no cargan, aviso visible con la ruta (no se esconde el problema) ----------
+Array.prototype.forEach.call(document.querySelectorAll('#wf img'), function(img){
+  function missing(){
+    if(img.dataset.missing) return; img.dataset.missing = '1';
+    var box = document.createElement('div'); box.className = 'img-missing';
+    box.textContent = 'No se pudo cargar: ' + img.getAttribute('src') + ' · Abre 02-wireframe.html desde su carpeta del proyecto (Chrome o Safari); una vista previa que solo recibe el HTML no ve la carpeta 00-context/scenes/.';
+    img.insertAdjacentElement('afterend', box);
+  }
+  img.addEventListener('error', missing);
+  if(img.complete && img.naturalWidth === 0 && img.getAttribute('src')) missing();
+});
 function rec(s){ for(var i=0;i<STOPS.length;i++){ if(STOPS[i].s===s) return STOPS[i]; } }
 function visible(s){ return !s.bp || s.bp==='all' || (isD ? s.bp==='d' : s.bp==='m'); }
 
@@ -312,7 +390,7 @@ function setActive(p, y){
 function measureFills(){
   STOPS.forEach(function(x){
     var f = x.el.querySelector(':scope > .tag .fill'); if(!f) return;
-    if(x.flow || x.s.kind==='seal' || x.s.kind==='hero'){ f.textContent=''; return; }
+    if(x.flow || x.s.kind==='seal' || x.s.kind==='seq' || x.s.kind==='hero'){ f.textContent=''; return; }
     var c = x.el.querySelector(':scope > .c'); if(!c || !x.el.offsetParent && getComputedStyle(x.el).display==='none'){ f.textContent=''; return; }
     var cs = getComputedStyle(x.el);
     var inner = (mode==='full' ? x.el.clientHeight : innerHeight) - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
@@ -389,7 +467,7 @@ function buildPin(sec, vis, pin){
     else {
       tl.fromTo(el, {opacity:0}, {opacity:1, duration:dIn}, t);
       if(s.kind==='read' || s.kind==='cta' || s.kind==='dialog') tl.fromTo(c, {y:24}, {y:0, duration:dIn, ease:'power2.out'}, t);
-      if(s.kind==='lead' || s.kind==='two'){ var ld = el.querySelector('[data-beat=lead]') || c; tl.fromTo(ld, {x:-16}, {x:0, duration:dIn, ease:'power2.out'}, t); }
+      if(s.kind==='lead' || s.kind==='two' || s.kind==='reveal'){ var ld = el.querySelector('[data-beat=lead]') || c; tl.fromTo(ld, {x:-16}, {x:0, duration:dIn, ease:'power2.out'}, t); }
       if(s.night && !prevN) tl.to(night, {opacity:1, duration:span*0.10}, t);
     }
     var holdStart = t + (first ? 0 : dIn), holdEnd = t + span*0.85, lt;
@@ -401,18 +479,44 @@ function buildPin(sec, vis, pin){
       tl.addLabel(s.id+'·a', la); labels.push([s.id+' (puente)', la, x]);
       holdStart = t + span*0.40;
     }
+    if(el.querySelector('[data-seq]')) buildSeq(el, tl, t, span);
+    if(s.kind==='reveal'){ /* revelación en tres tiempos: puente → se desvanece → paso 1 → paso 2 */
+      var rl = el.querySelector('[data-beat=lead]'), steps = el.querySelectorAll('[data-step]');
+      if(rl){ /* con puente: puente → se desvanece → paso 1 → paso 2 (01.3) */
+        Array.prototype.forEach.call(steps, function(st){ gsap.set(st, {opacity:0}); });
+        var la1 = first ? t : t + span*0.18;
+        tl.addLabel(s.id+'·a', la1); labels.push([s.id+' (puente)', la1, x]);
+        tl.to(rl, {opacity:0, duration:span*0.08}, t + span*0.26);
+        if(steps[0]){ tl.to(steps[0], {opacity:1, duration:span*0.05}, t + span*0.36); tl.addLabel(s.id+'·b', t + span*0.46); labels.push([s.id+' (paso 1)', t + span*0.46, x]); }
+        if(steps[1]){ tl.to(steps[1], {opacity:1, duration:span*0.05}, t + span*0.54); }
+        holdStart = t + span*0.60;
+      } else { /* golpe en dos alturas sin puente: paso 1 entra con la parada → paso 2 (05.4) */
+        if(steps[1]){ gsap.set(steps[1], {opacity:0}); tl.to(steps[1], {opacity:1, duration:span*0.05}, t + span*0.36); }
+        var lb = first ? t : t + span*0.2;
+        tl.addLabel(s.id+'·a', lb); labels.push([s.id+' (paso 1)', lb, x]);
+        holdStart = t + span*0.45;
+      }
+    }
     if(s.kind==='dialog'){
-      var msgs = el.querySelectorAll('.msg');
+      var msgs = el.querySelectorAll('.msg-row'); if(!msgs.length) msgs = el.querySelectorAll('.msg'); /* el avatar entra con su burbuja */
       Array.prototype.forEach.call(msgs, function(m, k){
         var at = t + span*(0.12 + k*0.18);
         tl.fromTo(m, {opacity:0, x:(m.classList.contains('hijo') ? 16 : -16)}, {opacity:1, x:0, duration:span*0.08, ease:'power2.out'}, at);
         tl.addLabel(s.id+'·'+(k+1), at + span*0.09); labels.push([s.id+' · mensaje '+(k+1), at + span*0.09, x]);
       });
     }
-    if(s.kind==='seal'){ var img = el.querySelector('img'); if(img) tl.fromTo(img, {scale:1.06}, {scale:1, duration:span}, t); }
+    if(s.kind==='seal'){ /* zoom-out con scroll; data-zoom = escala inicial (por defecto 1.06) */
+      var img = el.querySelector('img'), fig = el.querySelector('[data-zoom]');
+      var z = fig ? parseFloat(fig.getAttribute('data-zoom')) : 1.06;
+      var zin = fig && fig.getAttribute('data-zoom-dir') === 'in';
+      if(img){
+        if(fig && fig.getAttribute('data-origin')) gsap.set(img, {transformOrigin:fig.getAttribute('data-origin')});
+        tl.fromTo(img, {scale:(zin ? 1 : z)}, {scale:(zin ? z : 1), duration:span*0.7, ease:(z > 1.2 ? (zin ? 'power1.in' : 'power1.out') : 'none')}, t);
+      }
+    }
     Array.prototype.forEach.call(el.querySelectorAll('[data-at=exit]'), function(m){ gsap.set(m, {opacity:0}); tl.to(m, {opacity:1, duration:span*0.08}, t + span*0.78); });
     if(s.kind!=='dialog'){
-      lt = (first && s.kind!=='two') ? t : (holdStart + holdEnd)/2;
+      lt = (s.kind==='seal' || s.kind==='seq') ? t + span*0.78 : ((first && s.kind!=='two' && s.kind!=='reveal') ? t : (holdStart + holdEnd)/2); /* escena: se estaciona cuando terminó el zoom-out */
       tl.addLabel(s.id, lt); labels.push([s.id, lt, x]);
     }
     if(!last){
@@ -425,26 +529,87 @@ function buildPin(sec, vis, pin){
   tl.addLabel('fin', total);
   sec._wf = {total:total, labels:labels, vis:vis};
 }
+/* ---- scrub de video como secuencia de cuadros en canvas ---- */
+function drawCover(ctx, im, cw, ch){
+  var ir = im.naturalWidth / im.naturalHeight, cr = cw / ch, w, h, x, y;
+  if(ir > cr){ h = ch; w = h * ir; x = (cw - w) / 2; y = 0; } else { w = cw; h = w / ir; x = 0; y = (ch - h) / 2; }
+  ctx.drawImage(im, x, y, w, h);
+}
+function drawContain(ctx, im, cw, ch){
+  var s = Math.min(cw / im.naturalWidth, ch / im.naturalHeight), w = im.naturalWidth * s, h = im.naturalHeight * s;
+  ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
+}
+function buildSeq(el, tl, t, span){
+  var fig = el.querySelector('[data-seq]'); if(!fig) return;
+  if(!isD && fig.getAttribute('data-mobile') === 'still') return; /* móvil/tablet: cuadro fijo, sin descargar la secuencia (como en A) */
+  var cv = fig.querySelector('canvas'), ctx = cv.getContext('2d');
+  var n = +fig.getAttribute('data-n'), base = fig.getAttribute('data-seq');
+  var start = +(fig.getAttribute('data-start') || 1), contain = fig.getAttribute('data-fit') === 'contain';
+  var dur = parseFloat(fig.getAttribute('data-span') || 0.7);
+  var imgs = [], state = {f:0};
+  function ok(im){ return im && im.complete && im.naturalWidth; }
+  function draw(){
+    var i = Math.max(0, Math.min(n - 1, Math.round(state.f))), im = imgs[i];
+    while(i > 0 && !ok(im)){ i--; im = imgs[i]; }
+    if(!ok(im)) return;
+    ctx.clearRect(0, 0, cv.width, cv.height); (contain ? drawContain : drawCover)(ctx, im, cv.width, cv.height);
+  }
+  function size(){
+    var r = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.max(1, Math.round(cv.clientWidth * r)); cv.height = Math.max(1, Math.round(cv.clientHeight * r)); draw();
+  }
+  for(var k = 1; k <= n; k++){ (function(k){
+    var im = new Image(); im.decoding = 'async';
+    im.onload = function(){ if(k === 1){ fig.classList.add('ready'); size(); } else if(Math.round(state.f) === k - 1) draw(); };
+    im.src = base + '/f' + ('00' + (start + k - 1)).slice(-3) + '.webp'; imgs.push(im);
+  })(k); }
+  if(fig._seqSize) window.removeEventListener('resize', fig._seqSize);
+  fig._seqSize = size; window.addEventListener('resize', size);
+  if(fig.getAttribute('data-play') === 'time'){ /* gesto de un solo uso: en tiempo real al entrar, se repite al regresar (no scrub) */
+    var fps = +(fig.getAttribute('data-fps') || 24);
+    var play = gsap.fromTo(state, {f:0}, {f:n - 1, duration:(n - 1) / fps, ease:'none', paused:true, onUpdate:draw});
+    ScrollTrigger.create({ trigger:el.closest('.pin'), start:'top 60%',
+      onEnter:function(){ play.restart(); }, onEnterBack:function(){ play.restart(); } });
+    return;
+  }
+  tl.fromTo(state, {f:0}, {f:n - 1, duration:span * dur, ease:'none', onUpdate:draw}, t);
+}
 function buildH(sec, vis, pin){
+  /* Carrusel horizontal: cada panel LLEGA y se ESTACIONA (70 % de su E) y solo después se desplaza (30 %).
+     Snap a la mitad de cada estacionamiento, sin inercia: si el usuario deja de scrollear, el panel se queda. */
   var track = sec.querySelector('.track'), n = vis.length;
   track.style.setProperty('--n', n);
   vis.forEach(function(x){ gsap.set(x.el, {opacity:1}); });
-  gsap.to(track, { x:function(){ return -(n-1) * window.innerWidth; }, ease:'none', scrollTrigger:{
+  var total = vis.reduce(function(a,x){ return a + x.s.E; }, 0);
+  var tl = gsap.timeline({ defaults:{ease:'none'}, scrollTrigger:{
     id:pin.id, trigger:sec, pin:true, start:'top top',
-    end:function(){ return '+=' + (n * window.innerHeight); },
+    end:function(){ return '+=' + (total * window.innerHeight); },
     scrub:0.4, invalidateOnRefresh:true,
-    snap:{ snapTo:1/(n-1), duration:{min:0.2, max:0.5}, delay:0.08, ease:'power1.inOut' }
+    snap:{ snapTo:'labels', duration:{min:0.3, max:0.6}, delay:0.15, ease:'power1.inOut', inertia:false }
   }});
-  sec._wf = {total:n, labels:vis.map(function(x,i){ return [x.s.id, i/(n-1)*n, x]; }), vis:vis};
+  tl.to({}, {duration:total}, 0);
+  var labels = [], t = 0;
+  vis.forEach(function(x, i){
+    var last = i === n - 1, hold = last ? x.s.E : x.s.E * 0.7, move = x.s.E - hold;
+    var lt = t + hold / 2;
+    tl.addLabel(x.s.id, lt); labels.push([x.s.id, lt, x]);
+    if(!last){
+      tl.to(track, { x:function(){ return -(i + 1) * window.innerWidth; }, duration:move, ease:'power2.inOut' }, t + hold);
+    }
+    t += x.s.E;
+  });
+  tl.addLabel('fin', total);
+  sec._wf = {total:total, labels:labels, vis:vis};
 }
 function buildHero(sec, vis, pin){
   var x = vis[0], el = x.el; gsap.set(el, {opacity:1});
   var img = el.querySelector('.hero-img'), scrim = el.querySelector('.scrim'), txt = el.querySelector('.hero-text');
   var tl = gsap.timeline({paused:true});
-  tl.fromTo(img, {scale:2.6}, {scale:1, duration:2.2, ease:'power2.inOut'})
+  tl.fromTo(img, {scale:2.6}, {scale:1, duration:3.7, ease:'power2.inOut'})
     .to({}, {duration:0.6})
     .fromTo(scrim, {opacity:0}, {opacity:1, duration:0.5})
     .fromTo(txt, {opacity:0}, {opacity:1, duration:0.5});
+  var cue = el.querySelector('.cue'); if(cue) tl.fromTo(cue, {opacity:0}, {opacity:1, duration:0.4});
   ScrollTrigger.create({ id:pin.id, trigger:sec, pin:true, start:'top top',
     end:function(){ return '+=' + (x.s.E * window.innerHeight); },
     onEnterBack:function(){ tl.restart(); } });
@@ -529,7 +694,7 @@ class TextOf(HTMLParser):
         super().__init__(); self.out = []; self.skip = 0
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
-        if 'wf-file' in (a.get('class') or '') or 'acc-mark' in (a.get('class') or ''):
+        if any(k in (a.get('class') or '') for k in ('wf-file', 'acc-mark', 'vmiss')):
             self.skip += 1
     def handle_endtag(self, tag):
         if self.skip and tag in ('figcaption', 'span'):
@@ -617,12 +782,12 @@ class Blocks(HTMLParser):
     def handle_starttag(self, tag, attrs):
         cls = dict(attrs).get('class') or ''
         self.stack.append(cls)
-        if 'wf-file' in cls or 'acc-mark' in cls: self.skip += 1
+        if any(k in cls for k in ('wf-file', 'acc-mark', 'vmiss')): self.skip += 1
         if tag in self.BLOCK or (tag == 'span' and 'who' in cls):
             self.cur = [cls, '', ' '.join(self.stack)]
     def handle_endtag(self, tag):
         cls = self.stack.pop() if self.stack else ''
-        if 'wf-file' in cls or 'acc-mark' in cls: self.skip -= 1
+        if any(k in cls for k in ('wf-file', 'acc-mark', 'vmiss')): self.skip -= 1
         if self.cur and (tag in self.BLOCK or (tag == 'span' and 'who' in cls)):
             self.blocks.append(self.cur); self.cur = None
     def handle_data(self, d):
@@ -640,21 +805,50 @@ def estimate(h, W=312, Hs=556):
         ital = 'it' in cls.split()
         width = W
         if ' row' in ' ' + ctx or 'row' in ctx.split(): width = W - 34 - 20
-        if 'msg' in ctx: width = W * .92 - 28
+        if 'msg' in ctx: width = W - 42 - 24  # avatar 34 + separación 8 + padding de la burbuja (móvil)
         if 'piece' in ctx: width = W - 32
         if 'summary' in ctx or 'faq' in ctx: width = W - 48
         n = lines(font(fam, MOB[size], w, ital), txt, width)
         tot += n * MOB[size] * LH[size]; nb += 1
     tot += max(0, nb - 1) * 10
-    tot += h.count("class='row") * 33 + h.count("class='entry") * 26 + h.count("class='piece'") * 48 + h.count("class='msg") * 32
+    tot += h.count("class='row") * 33 + h.count("class='entry") * 26 + h.count("class='piece'") * 48 + h.count("class='msg ") * 26
     if "class='entries'" in h and '<h3' in h: tot += 22
     if "class='btn'" in h: tot += 2 * 56 + 16
     tot += (h.count("<p class='in w5 t-body'>") - 1) * 6 if ('essay' in h or "class='sup'" in h) else 0
     return tot / Hs
 
 # ------------------------------------------------------------------ salida
+VERT_REL = '00-context/scenes/vertical'
+
+def with_verticals(pins):
+    """Cada escena tiene versión horizontal (desktop) y vertical 3:4 (móvil/tablet, < 860 px).
+    Si la vertical existe en 00-context/scenes/vertical/<nombre>-v.webp se usa con <picture>;
+    si todavía no existe, en móvil se muestra un aviso con el archivo que falta."""
+    import copy
+    P = copy.deepcopy(pins)
+    pat = re.compile(r"<img([^>]*?) src='00-context/scenes/([^'/]+)\.webp'([^>]*)>")
+    def sub(m):
+        vrel = f"{VERT_REL}/{m.group(2)}-v.webp"
+        if os.path.exists(os.path.join(ROOT, vrel)):
+            return f"<picture><source media='(max-width: 859px)' srcset='{vrel}'>{m.group(0)}</picture>"
+        return m.group(0) + f"<span class='vmiss'>Falta versión vertical 3:4 (móvil/tablet) · {vrel}</span>"
+    for p in P:
+        for st in p.get('stops', []):
+            st['html'] = pat.sub(sub, st['html'])
+            if st['id'] == '03.4m':
+                vrel = f"{VERT_REL}/03-fastidio-v.webp"
+                if os.path.exists(os.path.join(ROOT, vrel)):
+                    st['html'] = st['html'].replace('assets/seq/03-fastidio/fastidio-f064.webp', vrel).replace('PROVISIONAL · cuadro 64 del video · se reemplaza por la imagen fija nueva', '03-fastidio-v.webp')
+                else:
+                    st['html'] = st['html'].replace('</figure>', f"<span class='vmiss'>Imagen fija PROVISIONAL · falta la vertical 3:4 · {vrel}</span></figure>", 1)
+    return P
+
+def vertical_status():
+    names = sorted(set(re.findall(r"src='00-context/scenes/([^'/]+)\.webp'", json.dumps({'p': C.PINS}, ensure_ascii=False)))) + ['03-fastidio']
+    return [(nm, os.path.exists(os.path.join(ROOT, VERT_REL, f'{nm}-v.webp'))) for nm in names]
+
 def main():
-    data = json.dumps({'pins': C.PINS}, ensure_ascii=False).replace('</', '<\\/')
+    data = json.dumps({'pins': with_verticals(C.PINS)}, ensure_ascii=False).replace('</', '<\\/')
     out = TEMPLATE.replace('/*__DATA__*/', data)
     open(os.path.join(ROOT, '02-wireframe.html'), 'w', encoding='utf-8').write(out)
 
@@ -663,6 +857,8 @@ def main():
         n, miss = audit(bp)
         print(f"  {'desktop' if bp=='d' else 'móvil  '}: {n} segmentos de la fuente · {len(miss)} problemas")
         for m in miss: print('     ', m)
+    print('\n== Versiones verticales (móvil/tablet) ==')
+    for nm, ok in vertical_status(): print(f"  {'OK   ' if ok else 'FALTA'} {VERT_REL}/{nm}-v.webp")
     print('\n== Partitura (E por pin) ==')
     tots = {'d': 0, 'm': 0}; npins = 0
     rows = []
@@ -686,5 +882,33 @@ def main():
             print(f"  {s['id']:7s} {s['comp'][:28]:28s} {r*100:5.0f} %{'  <-- justo' if .85 < r <= 1 else ('  <-- DESBORDA' if r > 1 else '')}")
     print('  paradas > 85 %:', flag)
 
+def partitura_md():
+    rows = ["| Pin | Parada | Composición | E | Marcas | Intención |", "|---|---|---|---:|---|---|"]
+    tot = {'d': 0, 'm': 0}; npins = 0
+    for pin in C.PINS:
+        if pin['type'] == 'flow':
+            rows.append(f"| {pin['id']} | — | {pin['comp']} | flujo | ★ | {pin['note'].replace('|','/')} |"); continue
+        npins += 1
+        for s in pin['stops']:
+            for bp in ('d', 'm'):
+                if s['bp'] in ('all', bp): tot[bp] += s['E']
+            marks = ' '.join(x for x in [('★' if s['scan'] else ''), ('oscuro' if s['night'] else ''), ({'d': 'solo desktop', 'm': 'solo móvil'}.get(s['bp'], ''))] if x)
+            rows.append(f"| {pin['id']} | {s['id']} | {s['comp']} | {s['E']:g} | {marks} | {s['note'].replace('|','/')} |")
+    rows.append('')
+    rows.append(f"**Totales:** paradas {tot['d']:.2f} E (desktop) / {tot['m']:.2f} E (móvil) · {npins} pines → {npins-1} E de tránsito · "
+                f"total aprox. {tot['d']+npins-1+2.5:.0f} E desktop / {tot['m']+npins-1+3.5:.0f} E móvil (con FAQ y footer).")
+    return '\n'.join(rows)
+
+def write_md_partitura():
+    md_path = os.path.join(ROOT, '02-wireframe.md')
+    if not os.path.exists(md_path): return
+    md = open(md_path, encoding='utf-8').read()
+    a, b = '<!-- PARTITURA:INICIO -->', '<!-- PARTITURA:FIN -->'
+    if a in md and b in md:
+        md = md.split(a)[0] + a + '\n' + partitura_md() + '\n' + b + md.split(b)[1]
+        open(md_path, 'w', encoding='utf-8').write(md)
+        print('\n02-wireframe.md: partitura actualizada')
+
 if __name__ == '__main__':
     main()
+    write_md_partitura()
