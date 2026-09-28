@@ -1,0 +1,33 @@
+---
+project: digizen-landing-b-v04-claude
+created: 2026-09-26
+fase_actual: 2
+---
+- contenido_fuente:
+  - 00-context/COPY-PUBLICADO.md (copy literal, fuente de verdad)
+  - 00-context/VISION-NARRATIVA.md (dirección creativa; el mapeo por capítulo es borrador a validar en Fase 2)
+  - 00-context/METAPROMPT.md (instrucciones y lecciones validadas en v2)
+- sistema_previo:
+  - 00-context/Tipografía esencial.html
+  - 00-context/Scroll Patterns — Especimen Completo.html
+- assets:
+  - 00-context/scenes/ (14 .webp, copiadas de Projects/digizen-landing-b-v2/angular-build/public/assets/scenes/)
+  - 00-context/logo/ (5 .svg, copiados de Projects/digizen-landing/angular-build/public/assets/digizen/logo-SVG/)
+- publico: Mamás y papás que llegan fríos, desde anuncio o redes; no conocen Digizen ni Gnius Club. Llegan con la preocupación del celular de su hijo.
+- reto_legibilidad: Sí. El copy tiene ~2,900 palabras, es argumentativo y emocional, y se lee en frío, mayormente en móvil.
+- tono_marca: Directo, empático, sin sermón.
+- objetivo_conversion: Dos CTAs con el mismo peso: «Inscribir a mi hijo» y «Conversar con ADA primero». Ninguno es secundario del otro.
+- restricciones_fijas:
+  - Tailwind CSS para composición.
+  - Copy literal: no omitir, resumir, parafrasear ni inventar.
+  - GSAP + ScrollTrigger; recorrido continuo con Pin + Scrub como patrón dominante.
+  - Texto protagonista; imágenes como sello de concepto (excepción: Hero).
+  - Las 14 escenas de 00-context/scenes/ se usan tal cual.
+  - Tipografías: Playfair Display + Inter.
+  - Paleta completa del logo: degradado azul #1A75EA → #2C1DDB, cian #00C4F0, ámbar #EF9600, coral #E65C4D, violeta #7B27D6.
+  - No modificar Projects/digizen-landing, Projects/digizen-landing-b ni Projects/digizen-landing-b-v3.
+- pendientes_conocidos (no bloquean Fase 1):
+  - Destino de «Inscribir a mi hijo» (pago) y del formulario de «Conversar con ADA primero».
+  - Destino del enlace «Conocer las reglas de ADA ↗».
+  - Imagen del cap. 02: la referencia usa «candados»; en scenes/ solo existe 02-facial-recognition (+ alt). Decidir en Fase 2.
+---

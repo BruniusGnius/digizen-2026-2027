@@ -1,0 +1,969 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Tipografía esencial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<style>
+  /* ============ tokens ============ */
+  :root{
+    color-scheme: light;
+    --bg: #f4f3f0;
+    --panel: #ffffff;
+    --panel-2: #fbfaf8;
+    --ink: #14120f;
+    --muted: #6d675f;
+    --line: #dfdad2;
+    --accent: #2f4dff;
+    --accent-ink: #ffffff;
+
+    /* type scale — desktop */
+    --fs-micro: 12px;
+    --fs-small: 14px;
+    --fs-body: 18px;
+    --fs-subhead: 24px;
+    --fs-heading: 32px;
+    --fs-semimonumental: 56px;
+    --fs-monumental: 96px;
+    --fs-monumental-xl: 144px;
+
+    --grid-gap: 24px;
+    --font-display: "Playfair Display", "Iowan Old Style", Georgia, serif;
+    --font-body: "Inter", "Inter Variable", -apple-system, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --bg: #100f0d;
+      --panel: #1a1815;
+      --panel-2: #1f1c18;
+      --ink: #f1ede6;
+      --muted: #9d968c;
+      --line: #322e28;
+      --accent: #6f85ff;
+      --accent-ink: #0c0b0a;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg: #100f0d;
+    --panel: #1a1815;
+    --panel-2: #1f1c18;
+    --ink: #f1ede6;
+    --muted: #9d968c;
+    --line: #322e28;
+    --accent: #6f85ff;
+    --accent-ink: #0c0b0a;
+  }
+
+  /* type scale — mobile / this document's own responsiveness */
+  @media (max-width: 860px){
+    :root{
+      --fs-micro: 11px;
+      --fs-small: 13px;
+      --fs-body: 16px;
+      --fs-subhead: 19px;
+      --fs-heading: 24px;
+      --fs-semimonumental: 34px;
+      --fs-monumental: 48px;
+      --fs-monumental-xl: 64px;
+      --grid-gap: 16px;
+    }
+  }
+
+  *{ box-sizing: border-box; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    padding-inline: 24px;
+    padding-block: 48px 96px;
+  }
+  h1,h2,h3,h4{ font-family: var(--font-display); margin: 0; text-wrap: balance; }
+  p{ margin: 0; }
+  .wrap{ max-width: 1180px; margin-inline: auto; }
+
+  /* ============ doc chrome ============ */
+  .doc-head{
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 24px; flex-wrap: wrap;
+    padding-bottom: 40px; margin-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  .doc-title{ font-size: clamp(32px, 5vw, 48px); font-weight: 700; }
+  .doc-sub{ color: var(--muted); font-size: var(--fs-small); max-width: 46ch; margin-top: 10px; }
+  .doc-meta{ font-size: var(--fs-micro); color: var(--muted); letter-spacing: .04em; text-align: right; }
+  .doc-meta div{ margin-bottom: 4px; }
+
+  #theme-toggle{
+    font-family: var(--font-body); font-size: var(--fs-micro);
+    letter-spacing: .04em;
+    background: var(--panel); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 8px 16px; cursor: pointer;
+  }
+  #theme-toggle:hover{ border-color: var(--accent); }
+  #theme-toggle:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .footnote{
+    font-size: var(--fs-micro); color: var(--muted);
+    border-left: 2px solid var(--line); padding-left: 12px;
+    max-width: 62ch; margin: 24px 0 56px;
+  }
+
+  section.ref{ margin-bottom: 64px; }
+  .ref-label{
+    font-size: var(--fs-micro); letter-spacing: .04em;
+    color: var(--accent); font-weight: 700; margin-bottom: 8px;
+  }
+  .ref-title{ font-size: var(--fs-heading); font-weight: 700; margin-bottom: 12px; }
+  .ref-copy{ color: var(--muted); max-width: 62ch; margin-bottom: 28px; }
+
+  /* ============ scale table ============ */
+  .scale-table{ display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+  .scale-row{
+    display: grid; grid-template-columns: 200px 90px 90px 1fr;
+    align-items: center; gap: 16px;
+    padding-block: 14px; border-bottom: 1px solid var(--line);
+  }
+  .scale-name{ font-family: var(--font-body); font-weight: 700; font-size: var(--fs-small); }
+  .scale-name code{ display:block; font-weight:400; color: var(--muted); font-size: var(--fs-micro); margin-top: 2px; }
+  .scale-px{ font-size: var(--fs-small); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .scale-px b{ color: var(--ink); font-weight: 600; }
+  .scale-sample{
+    font-family: var(--font-display); font-weight: 700; line-height: 1;
+    color: var(--ink); overflow: hidden; white-space: nowrap;
+  }
+  @media (max-width: 640px){
+    .scale-row{ grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  /* ============ grid demo ============ */
+  .grid-demo{
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--grid-gap);
+    margin-top: 24px;
+  }
+  .grid-demo span{
+    background: var(--panel-2); border: 1px dashed var(--line);
+    border-radius: 4px; padding-block: 18px;
+    text-align: center; font-size: var(--fs-micro); color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ============ composition sections ============ */
+  .section-head{ margin: 88px 0 32px; }
+  .section-head .ref-label{ margin-bottom: 10px; }
+  .section-head h2{ font-size: var(--fs-heading); font-weight: 700; margin-bottom: 12px; }
+  .section-head p{ color: var(--muted); max-width: 64ch; }
+
+  .comp{ margin-bottom: 56px; }
+  .comp-label{
+    font-family: var(--font-body); font-size: var(--fs-small); font-weight: 700;
+    margin-bottom: 14px; display: flex; align-items: baseline; gap: 8px;
+  }
+  .comp-label .num{ color: var(--accent); font-variant-numeric: tabular-nums; }
+
+  .frame-pair{ display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+
+  .frame-block{ display: flex; flex-direction: column; gap: 8px; }
+  .frame-tag{
+    font-size: var(--fs-micro); letter-spacing: .04em;
+    color: var(--muted);
+  }
+
+  .frame{
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+  }
+  .frame-desktop{
+    aspect-ratio: 16 / 8.6;
+    width: 600px;
+    --fs-micro: 12px; --fs-small: 14px; --fs-body: 18px; --fs-subhead: 24px;
+    --fs-heading: 32px; --fs-semimonumental: 56px; --fs-monumental: 96px; --fs-monumental-xl: 144px;
+    --grid-gap: 24px;
+  }
+  .frame-mobile{
+    aspect-ratio: 9 / 15.3;
+    width: 280px;
+    padding: 28px 24px;
+    --fs-micro: 11px; --fs-small: 13px; --fs-body: 16px; --fs-subhead: 19px;
+    --fs-heading: 24px; --fs-semimonumental: 34px; --fs-monumental: 48px; --fs-monumental-xl: 64px;
+    --grid-gap: 14px;
+  }
+  .frame-inner{
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+    min-height: 0;
+  }
+  .frame .grid-12{ display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--grid-gap); align-items: center; }
+
+  /* composition typography helpers — every size below is one of the 8 vars */
+  .center{ text-align: center; }
+  .left{ text-align: left; }
+  .muted{ color: var(--muted); }
+  .accent{ color: var(--accent); }
+  .ital{ font-style: italic; }
+  .display{ font-family: var(--font-display); }
+  .ui{ font-family: var(--font-body); }
+  .tight{ letter-spacing: -0.01em; }
+
+  .stack{ display: flex; flex-direction: column; gap: 10px; }
+  .stack.center{ align-items: center; }
+
+  .rule{ height: 1px; background: var(--line); border: 0; margin: 0; }
+  .vrule{ width: 1px; align-self: stretch; background: var(--line); }
+
+  /* B group micro-adjustments */
+  .b01 h3{ font-family: var(--font-display); font-weight: 800; font-size: var(--fs-monumental); line-height: 1.02; }
+  .b02 .word{ font-family: var(--font-display); font-weight: 700; font-size: var(--fs-monumental); letter-spacing: -0.01em; line-height: 1; }
+  .b03 .lead{ font-family: var(--font-body); font-weight: 500; font-size: var(--fs-subhead); color: var(--muted); }
+  .b03 .close{ font-family: var(--font-display); font-weight: 800; font-size: var(--fs-monumental); line-height: 1.02; }
+  .b04 .lead{ font-family: var(--font-body); font-weight: 300; font-size: var(--fs-subhead); color: var(--muted); }
+  .b04 .close{ font-family: var(--font-display); font-weight: 800; font-size: var(--fs-monumental); line-height: 1.02; }
+  .b05 .lead{ font-family: var(--font-display); font-weight: 600; font-size: var(--fs-heading); color: var(--muted); }
+  .b05 .big{ font-family: var(--font-display); font-weight: 800; font-size: var(--fs-monumental); line-height: 1.02; color: var(--ink); }
+  .b05 .dot{ color: var(--accent); }
+  .b05 .nobreak{ white-space: nowrap; }
+  .b06 .word{ font-family: var(--font-display); font-weight: 800; font-size: var(--fs-monumental); line-height: 1.02; }
+  .b07 .word{ font-family: var(--font-display); font-weight: 900; font-size: var(--fs-monumental-xl); line-height: .95; letter-spacing: -0.02em; }
+  .b07 .cap{ font-family: var(--font-body); font-size: var(--fs-small); color: var(--muted); max-width: 320px; margin-inline: auto; }
+  .b08 .l1{ font-family: var(--font-body); font-weight: 100; font-size: var(--fs-subhead); color: var(--muted); }
+  .b08 .l2{ font-family: var(--font-body); font-weight: 900; font-size: var(--fs-heading); }
+  .b09 .num{ font-family: var(--font-display); font-weight: 800; font-size: var(--fs-monumental-xl); line-height: 1; }
+  .b09 .cap{ font-family: var(--font-body); font-style: italic; font-size: var(--fs-small); color: var(--muted); }
+  .b09 .stack{ gap: 24px; }
+
+  /* L group */
+  .l-eyebrow{ font-size: var(--fs-micro); text-transform: lowercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 6px; }
+  .l01 .figure{ font-family: var(--font-display); font-weight: 700; font-size: var(--fs-semimonumental); grid-column: span 4; color: var(--accent); line-height: 0.9; }
+  .l01 .label{ font-family: var(--font-body); font-weight: 700; font-size: var(--fs-body); grid-column: span 8; align-self: end; }
+  .l01 .support{ font-family: var(--font-body); font-size: var(--fs-small); color: var(--muted); grid-column: span 12; margin-top: 14px; }
+  /* desktop: propiedades explícitas, sin heredar del .frame-inner base (que asume columna) */
+  .l01 .frame-desktop .frame-inner{
+    display: flex; flex-direction: row; flex-wrap: wrap;
+    justify-content: flex-start; align-items: center; align-content: center;
+    column-gap: 14px;
+  }
+  .l01 .frame-desktop .label{ align-self: center; max-width: 200px; }
+  .l01 .frame-desktop .support{ flex-basis: 100%; margin-top: 8px; }
+  .l01 .frame-mobile .frame-inner{ align-content: center; }
+  .l01 .frame-mobile .figure{ grid-column: span 12; text-align: center; }
+  .l01 .frame-mobile .label{ grid-column: span 12; align-self: auto; text-align: center; margin-top: 8px; }
+  .l01 .frame-mobile .support{ text-align: center; }
+
+  .l02 .frame-inner{ align-content: center; }
+  .l02 .col{ grid-column: span 6; display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+  .l02 .line{ font-family: var(--font-display); font-size: var(--fs-heading); line-height: 1.1; }
+  .l02 .line.a{ font-weight: 400; }
+  .l02 .line.b{ font-weight: 800; color: var(--accent); }
+
+  .l03 .row{ display: flex; align-items: center; gap: 20px; padding-block: 16px; }
+  .l03 .row + .row{ border-top: 1px solid var(--line); }
+  .l03 .n{ font-family: var(--font-display); font-weight: 800; font-size: var(--fs-heading); color: var(--muted); width: 1.4em; flex-shrink: 0; }
+  .l03 .row:last-child .n{ color: var(--accent); }
+  .l03 .t{ font-family: var(--font-body); font-weight: 700; font-size: var(--fs-body); }
+  .l03 .s{ font-family: var(--font-body); font-size: var(--fs-small); color: var(--muted); margin-top: 2px; }
+
+  .l04 .frame-inner{ align-content: center; }
+  .l04 .q{ grid-column: 3 / span 8; font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: var(--fs-subhead); text-align: center; }
+  .l04 .src{ grid-column: 3 / span 8; font-family: var(--font-body); font-size: var(--fs-micro); color: var(--muted); text-align: center; margin-top: 10px; }
+
+  .l05 .word{ grid-column: span 5; font-family: var(--font-display); font-weight: 700; font-size: var(--fs-semimonumental); }
+  .l05 .def{ grid-column: span 7; border-left: 1px solid var(--line); padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .l05 .def p:first-child{ font-family: var(--font-display); font-style: italic; font-size: var(--fs-body); }
+  .l05 .def p:last-child{ font-family: var(--font-body); font-size: var(--fs-small); color: var(--muted); }
+  .l05 .frame-mobile .word{ grid-column: span 12; }
+  .l05 .frame-mobile .def{ grid-column: span 12; border-left: 0; border-top: 1px solid var(--line); padding-left: 0; padding-top: 16px; margin-top: 6px; }
+
+  .l06{ position: relative; }
+  .l06 .ghost{
+    position: absolute; right: -6px; bottom: -30px; z-index: 0;
+    font-family: var(--font-display); font-weight: 800; font-size: var(--fs-monumental-xl);
+    color: var(--ink); opacity: .06; line-height: 1; pointer-events: none;
+  }
+  .l06 .content{ position: relative; z-index: 1; }
+  .l06 .eyebrow{ display: flex; align-items: center; gap: 10px; font-size: var(--fs-micro); color: var(--muted); text-transform: lowercase; letter-spacing: .06em; margin-bottom: 10px; }
+  .l06 .eyebrow::after{ content: ""; height: 1px; background: var(--line); flex: 1; }
+  .l06 .title{ font-family: var(--font-display); font-weight: 700; font-size: var(--fs-heading); margin-bottom: 8px; }
+  .l06 .support{ font-family: var(--font-body); font-size: var(--fs-body); color: var(--muted); max-width: 34ch; }
+
+  .l07{ display: flex; gap: 16px; align-items: flex-start; }
+  .l07 .mark{ font-family: var(--font-display); font-style: italic; font-weight: 800; font-size: var(--fs-subhead); color: var(--accent); flex-shrink: 0; }
+  .l07 p{ font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.6; max-width: 38ch; }
+
+  .l08 .head{ grid-column: span 8; }
+  .l08 .badge{
+    grid-column: span 4; justify-self: end; align-self: start;
+    font-size: var(--fs-micro); text-transform: lowercase; letter-spacing: .06em;
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; color: var(--muted);
+  }
+  .l08 h4{ font-family: var(--font-display); font-weight: 700; font-size: var(--fs-heading); }
+  .l08 .desc{ grid-column: span 12; font-family: var(--font-display); font-style: italic; font-size: var(--fs-body); color: var(--muted); margin-top: 8px; max-width: 56ch; }
+  .l08 .entries{ grid-column: span 12; display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--grid-gap); margin-top: 22px; }
+  .l08 .entry{ grid-column: span 3; display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--line); padding-top: 12px; }
+  .l08 .entry .tag{ font-size: var(--fs-micro); color: var(--accent); font-variant-numeric: tabular-nums; }
+  .l08 .entry .et{ font-family: var(--font-body); font-weight: 700; font-size: var(--fs-body); }
+  .l08 .entry .ed{ font-family: var(--font-body); font-size: var(--fs-small); color: var(--muted); }
+  .l08 .frame-mobile .head, .l08 .frame-mobile .badge{ grid-column: span 12; justify-self: start; }
+  .l08 .frame-mobile .entries{ grid-template-columns: 1fr; }
+  .l08 .frame-mobile .entry{ grid-column: span 1; }
+
+  @media (max-width: 640px){
+    .frame-pair{ flex-direction: column; }
+    .frame-desktop, .frame-mobile{ width: 100%; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="doc-head">
+    <div>
+      <h1 class="doc-title">Tipografía esencial</h1>
+      <p class="doc-sub">Sistema tipográfico reducido de Digizen — 8 pasos de escala, grid de 12 columnas, 17 composiciones en desktop y móvil·tablet.</p>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:20px;">
+      <div class="doc-meta">
+        <div>Digizen / ADA</div>
+        <div>Playfair Display + Inter</div>
+        <div>v2 — sistema reducido</div>
+      </div>
+      <button id="theme-toggle" type="button">Modo oscuro</button>
+    </div>
+  </header>
+
+  <p class="footnote">
+    Nota de proceso: el ratio del frame móvil·tablet (9 / 15.3) es una estimación derivada del mismo criterio que el ratio desktop
+    (restar el espacio de chrome real — barra de navegación, status bar) y debe corregirse cuando se tengan medidas reales de header/nav.
+  </p>
+
+  <!-- ===================== reference: scale ===================== -->
+  <section class="ref">
+    <div class="ref-label">Referencia — 01</div>
+    <h2 class="ref-title">Escala funcional</h2>
+    <p class="ref-copy">Ocho pasos, sin excepciones. Todo tamaño de fuente en este documento —en cualquier composición— referencia una de estas ocho variables. No hay clamp(), no hay multiplicadores: un valor fijo en desktop, uno más chico en el breakpoint de 860px.</p>
+
+    <div class="scale-table">
+      <div class="scale-row">
+        <div class="scale-name">micro<code>--fs-micro</code></div>
+        <div class="scale-px"><b>12px</b> · 11px móvil</div>
+        <div></div>
+        <div class="scale-sample" style="font-size:var(--fs-micro); font-family:var(--font-body); font-weight:600; letter-spacing:.04em;">etiqueta / eyebrow</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-name">small<code>--fs-small</code></div>
+        <div class="scale-px"><b>14px</b> · 13px móvil</div>
+        <div></div>
+        <div class="scale-sample" style="font-size:var(--fs-small); font-family:var(--font-body); font-weight:400;">texto de apoyo, captions</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-name">body<code>--fs-body — ancla</code></div>
+        <div class="scale-px"><b>18px</b> · 16px móvil</div>
+        <div></div>
+        <div class="scale-sample" style="font-size:var(--fs-body); font-family:var(--font-body); font-weight:400;">párrafo, cuerpo de texto</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-name">subhead<code>--fs-subhead</code></div>
+        <div class="scale-px"><b>24px</b> · 19px móvil</div>
+        <div></div>
+        <div class="scale-sample" style="font-size:var(--fs-subhead); font-family:var(--font-display); font-weight:500;">subtítulo</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-name">heading<code>--fs-heading</code></div>
+        <div class="scale-px"><b>32px</b> · 24px móvil</div>
+        <div></div>
+        <div class="scale-sample" style="font-size:var(--fs-heading); font-family:var(--font-display); font-weight:700;">título de sección</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-name">semimonumental<code>--fs-semimonumental</code></div>
+        <div class="scale-px"><b>56px</b> · 34px móvil</div>
+        <div></div>
+        <div class="scale-sample" style="font-size:var(--fs-semimonumental); font-family:var(--font-display); font-weight:700;">componente</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-name">monumental<code>--fs-monumental</code></div>
+        <div class="scale-px"><b>96px</b> · 48px móvil</div>
+        <div></div>
+        <div class="scale-sample" style="font-size:var(--fs-monumental); font-family:var(--font-display); font-weight:800;">display</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-name">monumental-xl<code>--fs-monumental-xl</code></div>
+        <div class="scale-px"><b>144px</b> · 64px móvil</div>
+        <div></div>
+        <div class="scale-sample" style="font-size:var(--fs-monumental-xl); font-family:var(--font-display); font-weight:900;">Basta.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== reference: grid ===================== -->
+  <section class="ref">
+    <div class="ref-label">Referencia — 02</div>
+    <h2 class="ref-title">Grid de 12 columnas</h2>
+    <p class="ref-copy">Toda composición asimétrica —palabra/definición, dato/etiqueta, 2/3–1/3— se resuelve con <code>grid-column: span N</code> sobre un contenedor <code>.grid-12</code>. Nunca con porcentajes de flex-basis.</p>
+    <div class="grid-demo">
+      <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+      <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+    </div>
+  </section>
+
+  <!-- ===================== B group ===================== -->
+  <div class="section-head">
+    <div class="ref-label">Sección 01</div>
+    <h2>Composiciones brutalistas / semibrutalistas</h2>
+    <p>Nueve declaraciones de máxima reducción: como máximo dos pasos de tamaño por pieza, un solo acento de color, espacio negativo generoso y centrado vertical casi siempre. La jerarquía la hace el peso y el tamaño — nunca una cascada de tres o cuatro tamaños en el mismo bloque.</p>
+  </div>
+
+  <!-- B01 -->
+  <section class="comp b01">
+    <div class="comp-label"><span class="num">B01</span> Referencia principal — display + caption</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner stack center">
+            <h3 class="center">Cuatro son <em class="ital accent">falsas.</em></h3>
+            <p class="ui muted center" style="font-size:var(--fs-body);">Y sé cuál te va a doler.</p>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner stack center">
+            <h3 class="center">Cuatro son <em class="ital accent">falsas.</em></h3>
+            <p class="ui muted center" style="font-size:var(--fs-body);">Y sé cuál te va a doler.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B02 -->
+  <section class="comp b02">
+    <div class="comp-label"><span class="num">B02</span> Palabra gigante + caption mínimo</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner stack center">
+            <div class="word tight center">Criterio</div>
+            <p class="ui accent center" style="font-size:var(--fs-micro); letter-spacing:.04em;">El control caduca. El criterio no. — Digizen</p>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner stack center">
+            <div class="word tight center">Criterio</div>
+            <p class="ui accent center" style="font-size:var(--fs-micro); letter-spacing:.04em;">El control caduca. El criterio no. — Digizen</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B03 -->
+  <section class="comp b03">
+    <div class="comp-label"><span class="num">B03</span> Cierre con acento</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner stack center">
+            <p class="lead center">El criterio</p>
+            <p class="close center">no <em class="ital accent">caduca.</em></p>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner stack center">
+            <p class="lead center">El criterio</p>
+            <p class="close center">no <em class="ital accent">caduca.</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B04 -->
+  <section class="comp b04">
+    <div class="comp-label"><span class="num">B04</span> Bloque suspendido — jerarquía de peso</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner stack center">
+            <p class="lead center">El control</p>
+            <p class="close accent center"><em class="ital">caduca.</em></p>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner stack center">
+            <p class="lead center">El control</p>
+            <p class="close accent center"><em class="ital">caduca.</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B05 -->
+  <section class="comp b05">
+    <div class="comp-label"><span class="num">B05</span> Punto de acento — simplificado</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner center">
+            <div class="display"><span class="lead">El criterio </span><span class="nobreak"><span class="big">no caduca</span><span class="big dot">.</span></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner center">
+            <div class="display"><span class="lead">El criterio </span><span class="nobreak"><span class="big">no caduca</span><span class="big dot">.</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B06 -->
+  <section class="comp b06">
+    <div class="comp-label"><span class="num">B06</span> Dos palabras, todo el frame</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner stack center" style="gap:0;">
+            <div class="word center">Sin</div>
+            <div class="word accent center"><em class="ital">miedo.</em></div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner stack center" style="gap:0;">
+            <div class="word center">Sin</div>
+            <div class="word accent center"><em class="ital">miedo.</em></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B07 -->
+  <section class="comp b07">
+    <div class="comp-label"><span class="num">B07</span> Palabra sola, tamaño extremo</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner stack center">
+            <div class="word center">Basta.</div>
+            <p class="cap">De adivinar qué hace tu hijo solo con una IA. Digizen te lo enseña, sin espiarlo.</p>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner stack center">
+            <div class="word center">Basta.</div>
+            <p class="cap">De adivinar qué hace tu hijo solo con una IA. Digizen te lo enseña, sin espiarlo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B08 -->
+  <section class="comp b08">
+    <div class="comp-label"><span class="num">B08</span> Peso extremo vs. peso mínimo</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner stack center">
+            <p class="l1 center">El control caduca.</p>
+            <p class="l2 center">El criterio no.</p>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner stack center">
+            <p class="l1 center">El control caduca.</p>
+            <p class="l2 center">El criterio no.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B09 -->
+  <section class="comp b09">
+    <div class="comp-label"><span class="num">B09</span> Numeral protagonista</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner stack center">
+            <div class="num center">30</div>
+            <p class="cap ital center">días de garantía, sin preguntas</p>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner stack center">
+            <div class="num center">30</div>
+            <p class="cap ital center">días de garantía, sin preguntas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== L group ===================== -->
+  <div class="section-head">
+    <div class="ref-label">Sección 02</div>
+    <h2>Componentes de layout</h2>
+    <p>Ocho bloques funcionales construidos sobre el grid de 12 columnas: piezas reutilizables de landing page —datos, citas, pasos, divisores— con más estructura que el grupo brutalista, pero siempre limitadas a los mismos ocho pasos de escala.</p>
+  </div>
+
+  <!-- L01 -->
+  <section class="comp l01">
+    <div class="comp-label"><span class="num">L01</span> Dato / estadística</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner grid-12">
+            <div class="figure">7/10</div>
+            <div class="label">adolescentes ya conversan con IA</div>
+            <div class="support">Solos, sin reglas, en plataformas hechas para adultos.</div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner grid-12">
+            <div class="figure">7/10</div>
+            <div class="label">adolescentes ya conversan con IA</div>
+            <div class="support">Solos, sin reglas, en plataformas hechas para adultos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L02 -->
+  <section class="comp l02">
+    <div class="comp-label"><span class="num">L02</span> Dos voces en columna</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner grid-12" style="align-items:stretch;">
+            <div class="col" style="grid-column: span 6; border-right:1px solid var(--line); padding-right:20px;">
+              <span class="l-eyebrow">se dice</span>
+              <p class="line a">Le quité el celular.</p>
+            </div>
+            <div class="col" style="grid-column: span 6; padding-left:20px;">
+              <span class="l-eyebrow">se siente</span>
+              <p class="line b">le tuve miedo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner grid-12" style="align-items:stretch;">
+            <div class="col" style="grid-column: span 12; border-right:0; border-bottom:1px solid var(--line); padding-right:0; padding-bottom:14px;">
+              <span class="l-eyebrow">se dice</span>
+              <p class="line a">Le quité el celular.</p>
+            </div>
+            <div class="col" style="grid-column: span 12; padding-left:0; padding-top:14px;">
+              <span class="l-eyebrow">se siente</span>
+              <p class="line b">le tuve miedo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L03 -->
+  <section class="comp l03">
+    <div class="comp-label"><span class="num">L03</span> Pasos numerados</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner">
+            <div class="row">
+              <span class="n">01</span>
+              <div><p class="t">Habla tú con ADA primero</p><p class="s">Antes de pagar un peso</p></div>
+            </div>
+            <div class="row">
+              <span class="n">02</span>
+              <div><p class="t">Inscribe a tu hijo</p><p class="s">Su ciclo empieza el día que decidan</p></div>
+            </div>
+            <div class="row">
+              <span class="n">03</span>
+              <div><p class="t">Revisen juntos cada semana</p><p class="s">Un tema real para la cena</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner">
+            <div class="row">
+              <span class="n">01</span>
+              <div><p class="t">Habla tú con ADA primero</p><p class="s">Antes de pagar un peso</p></div>
+            </div>
+            <div class="row">
+              <span class="n">02</span>
+              <div><p class="t">Inscribe a tu hijo</p><p class="s">Su ciclo empieza el día que decidan</p></div>
+            </div>
+            <div class="row">
+              <span class="n">03</span>
+              <div><p class="t">Revisen juntos cada semana</p><p class="s">Un tema real para la cena</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L04 -->
+  <section class="comp l04">
+    <div class="comp-label"><span class="num">L04</span> Cita + fuente</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner grid-12">
+            <p class="q">Ni siquiera me mira a los ojos.</p>
+            <p class="src">— Una madre</p>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner grid-12">
+            <p class="q">Ni siquiera me mira a los ojos.</p>
+            <p class="src">— Una madre</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L05 -->
+  <section class="comp l05">
+    <div class="comp-label"><span class="num">L05</span> Palabra + definición</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner grid-12">
+            <div class="word">Cruzar</div>
+            <div class="def">
+              <p>Soltar la mano en el momento correcto, no antes.</p>
+              <p>«El día en que cruce solo va a llegar de todos modos.»</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner grid-12">
+            <div class="word">Cruzar</div>
+            <div class="def">
+              <p>Soltar la mano en el momento correcto, no antes.</p>
+              <p>«El día en que cruce solo va a llegar de todos modos.»</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L06 -->
+  <section class="comp l06">
+    <div class="comp-label"><span class="num">L06</span> Divisor de sección con índice</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <span class="ghost">05</span>
+          <div class="frame-inner content">
+            <div class="eyebrow">sección 05</div>
+            <p class="title">El reframe</p>
+            <p class="support">De candado a puente: el mismo problema, visto distinto.</p>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <span class="ghost">05</span>
+          <div class="frame-inner content">
+            <div class="eyebrow">sección 05</div>
+            <p class="title">El reframe</p>
+            <p class="support">De candado a puente: el mismo problema, visto distinto.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L07 -->
+  <section class="comp l07">
+    <div class="comp-label"><span class="num">L07</span> Ensayo con número al margen</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner l07">
+            <span class="mark">§1</span>
+            <p>El instinto no está roto. Está calibrado para un problema que no es éste — uno de calles y bicicletas, no de feeds infinitos.</p>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner l07">
+            <span class="mark">§1</span>
+            <p>El instinto no está roto. Está calibrado para un problema que no es éste — uno de calles y bicicletas, no de feeds infinitos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L08 -->
+  <section class="comp l08">
+    <div class="comp-label"><span class="num">L08</span> Grid editorial con entradas numeradas</div>
+    <div class="frame-pair">
+      <div class="frame-block">
+        <span class="frame-tag">Desktop</span>
+        <div class="frame frame-desktop">
+          <div class="frame-inner grid-12">
+            <div class="head"><h4>El sistema en cuatro piezas</h4></div>
+            <div class="badge">grid · 12 col</div>
+            <p class="desc">Cada bloque ocupa su propio tramo de columnas — el mecanismo del grid queda a la vista.</p>
+            <div class="entries">
+              <!-- span 3 / span 3 / span 3 / span 3 -->
+              <div class="entry" style="grid-column: span 3;">
+                <span class="tag">01 · span 3</span>
+                <p class="et">Habla</p>
+                <p class="ed">Una conversación antes de instalar nada.</p>
+              </div>
+              <div class="entry" style="grid-column: span 3;">
+                <span class="tag">02 · span 3</span>
+                <p class="et">Inscribe</p>
+                <p class="ed">El ciclo empieza cuando la familia decide.</p>
+              </div>
+              <div class="entry" style="grid-column: span 3;">
+                <span class="tag">03 · span 3</span>
+                <p class="et">Acompaña</p>
+                <p class="ed">Revisiones semanales, temas reales.</p>
+              </div>
+              <div class="entry" style="grid-column: span 3;">
+                <span class="tag">04 · span 3</span>
+                <p class="et">Confía</p>
+                <p class="ed">Criterio, no vigilancia.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-block">
+        <span class="frame-tag">Móvil · Tablet</span>
+        <div class="frame frame-mobile">
+          <div class="frame-inner grid-12">
+            <div class="head"><h4>El sistema en cuatro piezas</h4></div>
+            <div class="badge">grid · 12 col</div>
+            <p class="desc">Cada bloque ocupa su propio tramo de columnas — el mecanismo del grid queda a la vista.</p>
+            <div class="entries">
+              <div class="entry">
+                <span class="tag">01</span>
+                <p class="et">Habla</p>
+                <p class="ed">Una conversación antes de instalar nada.</p>
+              </div>
+              <div class="entry">
+                <span class="tag">02</span>
+                <p class="et">Inscribe</p>
+                <p class="ed">El ciclo empieza cuando la familia decide.</p>
+              </div>
+              <div class="entry">
+                <span class="tag">03</span>
+                <p class="et">Acompaña</p>
+                <p class="ed">Revisiones semanales, temas reales.</p>
+              </div>
+              <div class="entry">
+                <span class="tag">04</span>
+                <p class="et">Confía</p>
+                <p class="ed">Criterio, no vigilancia.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  try{
+    var root = document.documentElement;
+    var btn = document.getElementById('theme-toggle');
+    var saved = null;
+    try{ saved = localStorage.getItem('digizen-type-theme'); }catch(e){}
+    if(saved === 'dark' || saved === 'light'){
+      root.setAttribute('data-theme', saved);
+      btn.textContent = saved === 'dark' ? 'Modo claro' : 'Modo oscuro';
+    }
+    btn.addEventListener('click', function(){
+      var current = root.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      btn.textContent = next === 'dark' ? 'Modo claro' : 'Modo oscuro';
+      try{ localStorage.setItem('digizen-type-theme', next); }catch(e){}
+    });
+  }catch(e){}
+})();
+</script>
+
+</body></html>
