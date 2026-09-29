@@ -83,12 +83,13 @@ mark.val{background:#d9d9d9;color:inherit;padding:0 .15em}
 @media (min-width:860px){ .b03 > [data-beat=close]{margin-top:38px} } /* 48 px en desktop */
 .reveal > [data-beat=close]{margin-top:0}
 .solo-lead .lead-l{max-width:32ch}
-.b09{gap:24px} .b09 .t-small{max-width:40ch}
+.b09{gap:24px} .b09 .t-small{max-width:40ch} .b09 .t-body{max-width:44ch}
 .b06{gap:0}
 .l06 .t-head{max-width:22ch}
 .l06 .sup{max-width:var(--col-read);margin-top:12px}
 .l06 .sup p + p{margin-top:1em}
-.l07 .essay{width:min(100%, var(--col-read));margin:0 auto} .l07 .essay p{line-height:1.6} .l07 .essay p + p{margin-top:1em}
+.l07 .essay{width:min(100%, var(--col-read));margin:0 auto}
+.l07.wide .essay{width:min(100%, 42rem)} /* lectura extensa (08.2): ~60 caracteres por línea */ .l07 .essay p{line-height:1.6} .l07 .essay p + p{margin-top:1em}
 .l07 .essay h3{margin:1em 0 .5em}
 .l03{max-width:720px}
 .l03 .row{display:flex;align-items:baseline;gap:20px;padding:16px 0;position:relative}
@@ -104,10 +105,29 @@ mark.val{background:#d9d9d9;color:inherit;padding:0 .15em}
 .reveal{display:grid;align-items:center;justify-items:center}
 .reveal > *{grid-area:1 / 1}
 .flowmode .reveal{display:flex;flex-direction:column;gap:10px}
-.l04 .q{max-width:32ch}
-.l08 .entries{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap);margin-top:22px}
+.l04 .q{max-width:32ch} .l04 .q.t-semi{max-width:20ch} .l04 .q + .t-body{margin-top:38px}
+@media (max-width:859px){ .l04 .q + .t-body{margin-top:22px} }
+.l08 .entries{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap);margin-top:48px}
 .l08 .entries:first-child{margin-top:0}
 .entry{border-top:1px solid var(--line);padding-top:12px}
+/* tarjetas de L08 (08.5): superficie, separadas, con subtítulo */
+.entry.card{background:var(--panel);border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:10px}
+.btn-sec{align-self:flex-start;margin-top:6px;display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border:1.5px solid var(--btn);border-radius:999px;font-weight:600;font-size:var(--small);color:inherit;text-decoration:none;cursor:pointer;position:relative}
+.btn-sec:active{transform:scale(.97)}
+.ctr .btn-sec{align-self:center;text-align:center;justify-content:center;padding:10px 24px;line-height:1.3}
+.go-stack{gap:22px}
+.l07 .essay .go-in{margin-top:48px} .l07 .essay .go-in p{line-height:1.3} .go-in .tc{text-align:center}
+@media (max-width:859px){ .l07 .essay .go-in{margin-top:32px} }
+/* mazo apilado (08.5m): solo móvil < 600 px y fuera del modo reducido; en tablet, flujo normal */
+.entries.deck{--peek:54px}
+@media (max-width:599px){
+  body:not(.flowmode) .l08 .entries.deck{grid-template-columns:1fr;gap:0}
+  body:not(.flowmode) .entries.deck > .card{grid-area:1/1;box-shadow:0 -6px 16px rgba(0,0,0,.07)}
+  body:not(.flowmode) .entries.deck > .card:nth-child(1){align-self:start}
+  body:not(.flowmode) .entries.deck > .card:nth-child(2){margin-top:var(--peek)}
+  body:not(.flowmode) .entries.deck > .card:nth-child(3){margin-top:calc(var(--peek) * 2)}
+}
+.wf-new{align-self:flex-start;font:600 10px/1.3 ui-monospace,Menlo,monospace;border:1px dashed var(--ink);padding:2px 6px;margin-bottom:-2px}
 .s3{grid-column:span 3}.s4{grid-column:span 4}.s12{grid-column:span 12}
 .price{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
 .piece{background:var(--panel);border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:10px}
@@ -139,6 +159,9 @@ mark.val{background:#d9d9d9;color:inherit;padding:0 .15em}
 .c-seal img,.c-seq canvas{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(.95)} /* sin viñeta: bordes limpios (decisión del usuario) */
 picture{display:contents}
 .c-seal[data-fit=contain] img{object-fit:contain} /* escena completa, sin recortar (04-shield) */
+/* desktop: la escena se ve COMPLETA, como es el archivo, sin recortes ni reencuadres (decisión del usuario, 2026-09-28).
+   Si la ventana no tiene la proporción de la imagen, lo que sobra queda como banda del color del fondo. */
+@media (min-width:860px){ .c-seal img{object-fit:contain} }
 .vmiss{display:none}
 @media (max-width:859px){ .vmiss{display:block;position:absolute;left:12px;right:12px;bottom:44px;z-index:5;font:500 11px/1.4 ui-monospace,Menlo,monospace;color:#1a1a1a;background:rgba(255,255,255,.94);border:1px dashed #444;padding:6px 8px;text-align:left} }
 .nonotes .vmiss{display:none!important}
@@ -152,7 +175,8 @@ picture{display:contents}
   .l05 .w-q,.l05 .def{grid-column:span 12}
   .l05 .def{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:16px}
   .s3,.s4{grid-column:span 12}
-  .l08 .entries{gap:14px}
+  .l08 .entries{gap:14px;margin-top:32px}
+  .entry.card{padding:16px}
   .price{grid-template-columns:1fr}
   .piece{padding:16px}
   .cta{flex-direction:column;align-items:stretch}
@@ -188,6 +212,25 @@ picture{display:contents}
 /* tablet vertical (600–859 px): el texto de la presentación de ADA no se estira a todo el ancho */
 @media (min-width:600px) and (max-width:859px){
   .ada-text{max-width:var(--col-read);justify-self:center}
+}
+
+/* ===== evolución de → a (07.6): dos columnas con flecha ===== */
+.evo{display:flex;flex-direction:column;align-items:center}
+.evo-pre{width:min(100%, var(--col-read));margin-bottom:32px}
+.evo-cols{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:28px;width:100%;max-width:1040px}
+.evo-col{display:flex}
+.evo-col.a{justify-content:flex-end;text-align:right}
+.evo-col.b{justify-content:flex-start;text-align:left}
+.evo-col p{max-width:15ch}
+.evo-conn{display:flex;flex-direction:column;align-items:center;gap:8px}
+.evo-arrow{display:block;width:80px;height:2px;background:currentColor;position:relative}
+.evo-arrow::after{content:"";position:absolute;right:0;top:50%;width:12px;height:12px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:translate(0,-50%) rotate(45deg)}
+@media (max-width:859px){
+  .evo-pre{margin-bottom:20px}
+  .evo-cols{grid-template-columns:1fr;gap:10px}
+  .evo-col.a,.evo-col.b{justify-content:center;text-align:center}
+  .evo-arrow{width:2px;height:34px}
+  .evo-arrow::after{right:auto;left:50%;top:auto;bottom:0;transform:translate(-50%,0) rotate(135deg)}
 }
 
 /* ===== indicador de continuar (triángulos que titilan en secuencia) ===== */
@@ -236,8 +279,8 @@ picture{display:contents}
 .tag .fill{margin-left:4px}
 .tag .fill.tight{font-weight:700}
 .tag .fill.over{background:#000;color:#fff;padding:0 4px;font-weight:700}
-.btn::after{content:attr(data-role);position:absolute;top:-16px;left:50%;transform:translateX(-50%);font:500 9px/1 ui-monospace,Menlo,monospace;color:var(--chrome);white-space:nowrap}
-.nonotes .tag,.nonotes .btn::after,.nonotes .wf-file,.nonotes .acc-mark::after{display:none}
+.btn::after,.btn-sec::after{content:attr(data-role);position:absolute;top:-16px;left:50%;transform:translateX(-50%);font:500 9px/1 ui-monospace,Menlo,monospace;color:var(--chrome);white-space:nowrap}
+.nonotes .tag,.nonotes .btn::after,.nonotes .btn-sec::after,.nonotes .wf-new,.nonotes .wf-file,.nonotes .acc-mark::after{display:none}
 .t-flow .tag{position:relative;top:auto;left:auto;display:inline-block;margin-bottom:16px}
 #hud{position:fixed;left:10px;bottom:10px;z-index:60;width:min(440px,calc(100vw - 44px));font:500 11px/1.45 ui-monospace,Menlo,monospace;color:#1a1a1a;background:rgba(255,255,255,.96);border:1px solid #bdbdbd;box-shadow:0 2px 10px rgba(0,0,0,.12);padding:8px 10px}
 #hud b{font-weight:700}
@@ -466,7 +509,7 @@ function buildPin(sec, vis, pin){
     if(first){ gsap.set(el, {opacity:1}); if(s.night) gsap.set(night, {opacity:1}); }
     else {
       tl.fromTo(el, {opacity:0}, {opacity:1, duration:dIn}, t);
-      if(s.kind==='read' || s.kind==='cta' || s.kind==='dialog') tl.fromTo(c, {y:24}, {y:0, duration:dIn, ease:'power2.out'}, t);
+      if(s.kind==='read' || s.kind==='cta' || s.kind==='dialog' || s.kind==='deck') tl.fromTo(c, {y:24}, {y:0, duration:dIn, ease:'power2.out'}, t);
       if(s.kind==='lead' || s.kind==='two' || s.kind==='reveal'){ var ld = el.querySelector('[data-beat=lead]') || c; tl.fromTo(ld, {x:-16}, {x:0, duration:dIn, ease:'power2.out'}, t); }
       if(s.night && !prevN) tl.to(night, {opacity:1, duration:span*0.10}, t);
     }
@@ -491,11 +534,30 @@ function buildPin(sec, vis, pin){
         if(steps[1]){ tl.to(steps[1], {opacity:1, duration:span*0.05}, t + span*0.54); }
         holdStart = t + span*0.60;
       } else { /* golpe en dos alturas sin puente: paso 1 entra con la parada → paso 2 (05.4) */
-        if(steps[1]){ gsap.set(steps[1], {opacity:0}); tl.to(steps[1], {opacity:1, duration:span*0.05}, t + span*0.36); }
-        var lb = first ? t : t + span*0.2;
+        var lb = first ? t : t + span*0.2, lastAt = 0;
         tl.addLabel(s.id+'·a', lb); labels.push([s.id+' (paso 1)', lb, x]);
-        holdStart = t + span*0.45;
+        var b0 = steps.length > 3 ? 0.30 : 0.36, gp = steps.length > 3 ? 0.14 : 0.18; /* con más pasos, más juntos para dejar estacionamiento */
+        for(var k = 1; k < steps.length; k++){ /* pasos siguientes */
+          var at = t + span*(b0 + (k - 1)*gp); lastAt = at;
+          gsap.set(steps[k], {opacity:0}); tl.to(steps[k], {opacity:1, duration:span*0.05}, at);
+          var ar = steps[k].querySelector('.evo-arrow'); /* la flecha se dibuja */
+          if(ar) tl.fromTo(ar, isD ? {scaleX:0} : {scaleY:0}, isD ? {scaleX:1, duration:span*0.08, transformOrigin:'left center'} : {scaleY:1, duration:span*0.08, transformOrigin:'center top'}, at);
+          if(k < steps.length - 1){ tl.addLabel(s.id+'·p'+(k+1), at + span*0.08); labels.push([s.id+' (paso '+(k+1)+')', at + span*0.08, x]); }
+        }
+        holdStart = lastAt ? lastAt + span*0.09 : t + span*0.45;
       }
+    }
+    if(s.kind==='deck'){ /* móvil < 600: cada tarjeta sube y se apila sobre la anterior; tablet: aparece debajo */
+      var cards = el.querySelectorAll('.entries.deck > .card'), small = window.matchMedia('(max-width:599px)');
+      var ld0 = first ? t : t + span*0.18, lastD = 0;
+      tl.addLabel(s.id+'·1', ld0); labels.push([s.id+' · tarjeta 1', ld0, x]);
+      for(var q = 1; q < cards.length; q++){
+        var atd = t + span*(0.30 + (q - 1)*0.24); lastD = atd;
+        tl.fromTo(cards[q], {opacity:0, y:function(){ return small.matches ? window.innerHeight*0.6 : 24; }},
+                  {opacity:1, y:0, duration:span*0.14, ease:'power2.out', immediateRender:true}, atd);
+        if(q < cards.length - 1){ tl.addLabel(s.id+'·'+(q+1), atd + span*0.16); labels.push([s.id+' · tarjeta '+(q+1), atd + span*0.16, x]); }
+      }
+      holdStart = lastD ? lastD + span*0.16 : holdStart;
     }
     if(s.kind==='dialog'){
       var msgs = el.querySelectorAll('.msg-row'); if(!msgs.length) msgs = el.querySelectorAll('.msg'); /* el avatar entra con su burbuja */
@@ -516,7 +578,7 @@ function buildPin(sec, vis, pin){
     }
     Array.prototype.forEach.call(el.querySelectorAll('[data-at=exit]'), function(m){ gsap.set(m, {opacity:0}); tl.to(m, {opacity:1, duration:span*0.08}, t + span*0.78); });
     if(s.kind!=='dialog'){
-      lt = (s.kind==='seal' || s.kind==='seq') ? t + span*0.78 : ((first && s.kind!=='two' && s.kind!=='reveal') ? t : (holdStart + holdEnd)/2); /* escena: se estaciona cuando terminó el zoom-out */
+      lt = (s.kind==='seal' || s.kind==='seq') ? t + span*0.78 : ((first && s.kind!=='two' && s.kind!=='reveal' && s.kind!=='deck') ? t : (holdStart + holdEnd)/2); /* escena: se estaciona cuando terminó el zoom-out */
       tl.addLabel(s.id, lt); labels.push([s.id, lt, x]);
     }
     if(!last){
@@ -544,7 +606,7 @@ function buildSeq(el, tl, t, span){
   if(!isD && fig.getAttribute('data-mobile') === 'still') return; /* móvil/tablet: cuadro fijo, sin descargar la secuencia (como en A) */
   var cv = fig.querySelector('canvas'), ctx = cv.getContext('2d');
   var n = +fig.getAttribute('data-n'), base = fig.getAttribute('data-seq');
-  var start = +(fig.getAttribute('data-start') || 1), contain = fig.getAttribute('data-fit') === 'contain';
+  var start = +(fig.getAttribute('data-start') || 1), contain = isD || fig.getAttribute('data-fit') === 'contain'; /* desktop: cuadro completo, sin recorte */
   var dur = parseFloat(fig.getAttribute('data-span') || 0.7);
   var imgs = [], state = {f:0};
   function ok(im){ return im && im.complete && im.naturalWidth; }
@@ -694,7 +756,7 @@ class TextOf(HTMLParser):
         super().__init__(); self.out = []; self.skip = 0
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
-        if any(k in (a.get('class') or '') for k in ('wf-file', 'acc-mark', 'vmiss')):
+        if any(k in (a.get('class') or '') for k in ('wf-file', 'acc-mark', 'vmiss', 'wf-new')):
             self.skip += 1
     def handle_endtag(self, tag):
         if self.skip and tag in ('figcaption', 'span'):
@@ -776,24 +838,29 @@ def lines(F, text, width):
     return n + (1 if cur else 0)
 
 class Blocks(HTMLParser):
-    BLOCK = ('p', 'h1', 'h2', 'h3', 'summary')
+    BLOCK = ('p', 'h1', 'h2', 'h3', 'h4', 'summary')
     def __init__(self):
         super().__init__(); self.stack = []; self.blocks = []; self.cur = None; self.skip = 0
     def handle_starttag(self, tag, attrs):
         cls = dict(attrs).get('class') or ''
         self.stack.append(cls)
-        if any(k in cls for k in ('wf-file', 'acc-mark', 'vmiss')): self.skip += 1
+        if any(k in cls for k in ('wf-file', 'acc-mark', 'vmiss', 'wf-new')): self.skip += 1
         if tag in self.BLOCK or (tag == 'span' and 'who' in cls):
             self.cur = [cls, '', ' '.join(self.stack)]
     def handle_endtag(self, tag):
         cls = self.stack.pop() if self.stack else ''
-        if any(k in cls for k in ('wf-file', 'acc-mark', 'vmiss')): self.skip -= 1
+        if any(k in cls for k in ('wf-file', 'acc-mark', 'vmiss', 'wf-new')): self.skip -= 1
         if self.cur and (tag in self.BLOCK or (tag == 'span' and 'who' in cls)):
             self.blocks.append(self.cur); self.cur = None
     def handle_data(self, d):
         if self.cur is not None and not self.skip: self.cur[1] += d
 
 def estimate(h, W=312, Hs=556):
+    if "class='entries deck'" in h:  # mazo apilado: título + la tarjeta más alta + dos asomos de 54 px
+        head, _, rest = h.partition("<div class='entries deck'>")
+        cards = re.findall(r"<div class='entry card[^']*'>.*?</div>", rest, re.S)
+        top = estimate(head + "</div>", W, Hs) * Hs + 32
+        return (top + max(estimate(c, W, Hs) * Hs for c in cards) + 54 * (len(cards) - 1)) / Hs
     P = Blocks(); P.feed(h)
     tot = 0.0; nb = 0
     for cls, txt, ctx in P.blocks:
@@ -814,6 +881,7 @@ def estimate(h, W=312, Hs=556):
     tot += h.count("class='row") * 33 + h.count("class='entry") * 26 + h.count("class='piece'") * 48 + h.count("class='msg ") * 26
     if "class='entries'" in h and '<h3' in h: tot += 22
     if "class='btn'" in h: tot += 2 * 56 + 16
+    tot += h.count("class='btn-sec'") * 50 + h.count("entry card") * 32
     tot += (h.count("<p class='in w5 t-body'>") - 1) * 6 if ('essay' in h or "class='sup'" in h) else 0
     return tot / Hs
 
@@ -857,6 +925,10 @@ def main():
         n, miss = audit(bp)
         print(f"  {'desktop' if bp=='d' else 'móvil  '}: {n} segmentos de la fuente · {len(miss)} problemas")
         for m in miss: print('     ', m)
+    adds = sorted({(st['id'], re.sub(r'<[^>]+>', '', h)) for pin in C.PINS for st in pin.get('stops', [])
+                   for h in re.findall(r"<h4[^>]*data-new='aprobado'[^>]*>(.*?)</h4>", st['html'])})
+    print(f"  adiciones de copy aprobadas por el usuario (no están en la fuente): {len(adds)}")
+    for sid, tx in adds: print(f"      {sid}: «{tx}»")
     print('\n== Versiones verticales (móvil/tablet) ==')
     for nm, ok in vertical_status(): print(f"  {'OK   ' if ok else 'FALTA'} {VERT_REL}/{nm}-v.webp")
     print('\n== Partitura (E por pin) ==')

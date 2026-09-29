@@ -19,19 +19,20 @@ La versión 1 ya seguía esta gramática sin haberla escrito. Este documento la 
 
 | Función narrativa | Cómo se reconoce en el copy | Layout | Tamaño | Eje | Paradas (v1) |
 |---|---|---|---|---|---|
-| **Apertura de capítulo** | Título que presenta el tema | L06: título Playfair 700 + apoyo | heading | lectura | 02.1, 03.1, 04.1, 05.1, 06.1, 07.1, 09.1, 11.1, 11.2 |
+| **Apertura de capítulo** | Título que presenta el tema | L06: título Playfair 700 + apoyo | heading | lectura | 02.1, 03.1, 04.1, 05.1, 06.1, 07.1, 11.1, 11.2 |
 | **Título que golpea** | Título que ya es sentencia (confirmado por ti) | B01 | semimonumental (N2) | centro | 01.1, 08.1, 12.1 |
 | **Golpe** | Se sostiene sola y reencuadra | B01; si le sigue un anuncio, este va como remate chico debajo | semimonumental (N2) | centro | 01.4, 05.4 |
 | **Lapidario** | El golpe principal del capítulo (uno) | B01 o B03 | monumental (N1). Es el único con acento; va en oscuro si es bisagra | centro | H.2, 01.3, 03.5, 05.7, 07.5, 10.5, 12.2, 12.7 |
-| **Puente → golpe** | Una frase anuncia y la siguiente remata | B03 (entrada → cierre) | entrada en subhead; cierre del nivel del golpe | centro | 01.3, 03.3, 03.5, 05.7, 10.1, 10.5, 12.2 |
-| **Puente solo** | Anuncia, pregunta o conecta («Ahora…», «Y…») | Línea lead: Inter 500 | subhead | centro | H.3, 05.6, 06.5, 08.4, 10.4, 12.3 |
+| **Puente → golpe** | Una frase anuncia y la siguiente remata | B03 (entrada → cierre) | entrada en subhead; cierre del nivel del golpe | centro | 01.3, 03.3, 03.5, 05.7, 10.1, 10.4, 10.5, 12.2 |
+| **Puente solo** | Anuncia, pregunta o conecta («Ahora…», «Y…») | Línea lead: Inter 500 | subhead | centro | H.3, 05.6, 06.5, 08.4, 12.3 |
 | **Puente + lectura** | Un puente que abre un párrafo | Encabezado en subhead del espécimen (Playfair 500 romana) + L07 | subhead + body | lectura | 03.2 |
-| **Lectura** | Narración, argumento | L07: columna de 38 caracteres | body | lectura | Todas las de lectura |
+| **Lectura** | Narración, argumento | L07. **Ancho por largo** (regla del usuario, 2026-09-28): si algún párrafo pasa de 250 caracteres, columna ancha (42rem, ~60 caracteres por línea); si no, la angosta (27rem, ~38 caracteres). En el móvil de 360 las dos miden lo mismo | body | lectura | Anchas: 03.6, 04.2, 07.3, 07.7, 08.2, 09.2, 10.2, 10.6 · angostas: 04.3, 05.2, 06.2, 06.3, 06.4, 07.2, 11.4 |
 | **Golpe dentro de párrafo** | Frase de impacto que abre un párrafo que continúa | La frase en semimonumental, **centrada**; el resto del párrafo en la columna de lectura, 32/48 px debajo, en el mismo encuadre (ajuste del usuario, 2026-09-28) | semi + body | centro + lectura | 03.7, 05.3, 08.4, 12.4 |
-| **Golpe en dos alturas** | Una parte del golpe solo señala y la otra revela («La cinco.» / «No te escucha.») | La parte que señala en semimonumental y la que revela en monumental, en dos tiempos: primero señala, luego revela (patrón del usuario, 2026-09-28) | semi → mon | centro | 01.3, 05.4 |
+| **Golpe en dos alturas** | Una parte del golpe solo señala y la otra revela («La cinco.» / «No te escucha.») | La parte que señala en semimonumental y la que revela en monumental, en dos tiempos: primero señala, luego revela (patrón del usuario, 2026-09-28) | semi → mon | centro | 01.3, 05.4, 07.5 (tres tiempos), 09.1 |
 | **Voz citada** | Habla otro: el niño, la mamá, las creencias y objeciones del lector entre «» | Playfair itálica | según su nivel | — | 10.3 |
 | **Presentación de ADA** | El momento en que aparece ADA («Esto se llama ADA.») | Texto a la izquierda (7 col) + ADA a la derecha (5 col). ADA es el personaje de la versión A (130 cuadros con transparencia, copiados sin modificar A): scrub del saludo en desktop, primer cuadro fijo en móvil | heading + body | lectura + figura | 07.1 |
-| **Lista** | Creencias numeradas / elementos paralelos | L03 / L08 | — | — | 01.2 / 08.5, 11.3 |
+| **Evolución (de → a)** | El copy describe un paso de un estado a otro («de «…» a «…»») | Frase de entrada en lectura + dos columnas: el antes en Playfair 400, el después en Playfair 800, y en medio el «a» con una flecha que se dibuja (↓ en móvil). En tiempos (pedido del usuario, 2026-09-28) | body + heading | centro | 07.6 |
+| **Lista** | Creencias numeradas / elementos paralelos | L03 / L08 | — | — | 01.2 / 08.5 (tarjetas; en móvil, mazo apilado), 11.3 |
 | **Dato** | La cifra | B09 | monumental-xl | centro | 08.3 |
 | **Antítesis** | Dos mitades con la misma estructura, en tensión | B06: dos líneas iguales, con acento en la segunda | monumental | centro | 12.7 |
 | **Escena** | Sella un concepto ya argumentado | Pantalla completa | — | — | 02.6, 03.4, 03.8, 05.5, 08.6, 10.7, 12.6 |
@@ -130,9 +131,7 @@ Generado desde `wireframe-src/content.py`. Para quitar una, dímelo por ID.
 | 07.7 | «ADA está viva y está creciendo.» · «cómo hablar tú con ADA antes de pagar un peso» |
 | 08.2 | «tienes razón en desconfiar» · «Por eso ADA existe.» · «riesgos inaceptables para menores» · «ADA tiene un propósito educativo» |
 | 08.4 | «una hecha para tu hijo, con reglas y con tu participación» |
-| 08.5 | «Cero rol romántico.» · «Tú también participas.» · «Un hijo espiado deja de hablar.» · «Con un tiempo definido para cada conversación.» · «Quiere su criterio.» |
-| 08.5a | «Cero rol romántico.» |
-| 08.5b | «Tú también participas.» · «Un hijo espiado deja de hablar.» · «Con un tiempo definido para cada conversación.» · «Quiere su criterio.» |
+| 08.5 · 08.5m | «Un hijo espiado deja de hablar.» · «Quiere su criterio.» (los subtítulos «Cero rol romántico.», «Tú también participas.» y «Práctica y breve» ya son elementos propios en Playfair, sin negrita en el párrafo) |
 | 09.2 | «conversar tú con ADA antes de inscribir a tu hijo» · «Te va a contestar sin rodeos.» · «antes de pagar» |
 | 10.2 | «Los incluye a los dos.» · «Quedas adentro, del lado de tu hijo» · «un tema real para la cena» |
 | 10.3 | «la puerta queda abierta» |

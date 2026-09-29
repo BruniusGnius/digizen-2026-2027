@@ -14,6 +14,7 @@ Campos de cada parada:
   bp    'all' | 'd' (solo desktop) | 'm' (solo móvil)
   note  anotación de intención (no es UI)
 """
+import re
 
 S = "00-context/scenes/"
 
@@ -35,9 +36,14 @@ def l06(title, paras, title_cls="pf w7 t-head", tag="h2"):
     ps = "\n".join(f"<p class='in w5 t-body'>{p}</p>" for p in paras)
     return f"<div class='c l06'>\n<{tag} class='{title_cls} bw'>{title}</{tag}>\n<div class='sup'>\n{ps}\n</div>\n</div>"
 
-def l07(paras):
+WIDE_MIN = 250  # regla del usuario (2026-09-28): si algún párrafo pasa de 250 caracteres, columna ancha; si no, angosta
+
+def l07(paras, wide=None):
     ps = "\n".join(f"<p class='in w5 t-body'>{p}</p>" for p in paras)
-    return f"<div class='c l07'>\n<div class='essay'>\n{ps}\n</div>\n</div>"
+    if wide is None:
+        wide = max(len(re.sub(r"<[^>]+>", "", p)) for p in paras) >= WIDE_MIN
+    w = " wide" if wide else ""
+    return f"<div class='c l07{w}'>\n<div class='essay'>\n{ps}\n</div>\n</div>"
 
 def seal(fn, zoom=None, direction="out", origin=None, fit=None):
     z = f" data-zoom='{zoom}' data-zoom-dir='{direction}'" if zoom else ""
@@ -57,11 +63,19 @@ def l05(quote, prose):
 def entry(leadin, rest, span=4):
     return f"<div class='entry s{span}'>\n<p class='in w5 t-body'><b class='w7'>{leadin}</b> {rest}</p>\n</div>"
 
-def l08(head, entries, head_tag="h3"):
+def card(title, body, extra="", span=4, new=False):
+    """Tarjeta de L08 con subtítulo (subhead del espécimen, Playfair romana) + párrafo (+ botón opcional).
+    new=True: el subtítulo NO está en COPY-PUBLICADO.md; es una adición aprobada por el usuario y se rotula en el wireframe."""
+    mark = "<span class='wf-new'>copy agregado · aprobado</span>" if new else ""
+    dn = " data-new='aprobado'" if new else ""
+    return f"<div class='entry card s{span}'>{mark}\n<h4 class='pf w5 t-sub bw card-t'{dn}>{title}</h4>\n<p class='in w5 t-body'>{body}</p>{extra}\n</div>"
+
+def l08(head, entries, head_tag="h3", deck=False):
+    """deck=True: mazo apilado en móvil (< 600 px) y tarjetas una debajo de otra en tablet (kind 'deck')."""
     h = f"<div class='c l08'>\n"
     if head:
         h += f"<{head_tag} class='pf w7 t-head bw'>{head}</{head_tag}>\n"
-    return h + "<div class='entries'>\n" + "\n".join(entries) + "\n</div>\n</div>"
+    return h + f"<div class='entries{' deck' if deck else ''}'>\n" + "\n".join(entries) + "\n</div>\n</div>"
 
 CTA_INNER = ("<div class='cta'>\n"
              "<a class='btn' data-role='azul · inscripción'>Inscribir a mi hijo ↗</a>\n"
@@ -286,12 +300,16 @@ pin("P-07a", "07 · Esto se llama ADA. + conversación", "pin", [
        scan=True),
 ])
 pin("P-07c", "07 · cierre", "pin", [
-    st("07.5", "B01", "golpe", 1.25,
-       b01(f"Una pausa. Una consecuencia. Una idea {acc('propia.')}"),
-       "Lapidario del capítulo: staccato de tres tiempos (candidato a SplitText por frase, patrón 9).", scan=True),
-    st("07.6", "L07", "read", 1,
-       l07(["Lo que construye ahí adentro se lo lleva puesto a sus juegos, a sus chats, a su vida. Y empieza a cruzar de <b class='w7'>«lo que veo en redes me dice quién soy»</b> a <b class='w7'>«yo decido qué me sirve y qué quiero compartir»</b>."]),
-       "Lectura."),
+    st("07.5", "B01 (golpe en dos alturas, tres tiempos)", "reveal", 1.75,
+       "<div class='c ctr stack b01'>\n<p class='pf w8 t-semi bw' data-step='1'>Una pausa.</p>\n<p class='pf w8 t-semi bw' data-step='2'>Una consecuencia.</p>\n"
+       "<p class='pf w8 t-mon bw' data-step='3'>Una <em class='acc'>idea propia.</em></p>\n</div>",
+       "Lapidario del capítulo (ajuste del usuario): «Una pausa.» y «Una consecuencia.» en semimonumental, una por línea; «Una idea propia.» completa en monumental, con el acento subrayado en «idea propia.». Patrón «golpe en dos alturas» en tres tiempos: cada frase aparece al seguir scrolleando y «idea propia.» cae al final.", scan=True),
+    st("07.6", "Evolución (de → a, dos columnas)", "reveal", 1.5,
+       "<div class='c evo'>\n<p class='in w5 t-body evo-pre' data-step='1'>Lo que construye ahí adentro se lo lleva puesto a sus juegos, a sus chats, a su vida. Y empieza a cruzar de</p>\n<div class='evo-cols'>\n"
+       "<div class='evo-col a' data-step='2'><p class='pf w4 t-head bw'>«lo que veo en redes me dice quién soy»</p></div>\n"
+       "<div class='evo-conn' data-step='3'><span class='in w6 t-micro'>a</span><span class='evo-arrow' aria-hidden='true'></span></div>\n"
+       "<div class='evo-col b' data-step='4'><p class='pf w8 t-head bw'>«yo decido qué me sirve y qué quiero compartir».</p></div>\n</div>\n</div>",
+       "Evolución en dos columnas (pedido del usuario): el antes en Playfair 400 y el después en Playfair 800; en medio, el «a» del copy con una flecha que se dibuja (→ en desktop, ↓ en móvil). Entra en tiempos: frase → antes → flecha → después. Mismas palabras, mismo orden.", scan=True),
     st("07.7", "L07", "read", 1,
        l07(["Te lo digo derecho: <b class='w7'>ADA está viva y está creciendo.</b> Tu hijo empieza con ella el día que lo inscribas, y las familias que entran ahora la moldean: lo que tu familia necesite se construye primero. No te pido que confíes en una promesa bonita. Más abajo te explico <b class='w7'>cómo hablar tú con ADA antes de pagar un peso</b>."]),
        "Lectura. Sin pausa de cierre: fluye directo al cap. 08 (como en la referencia)."),
@@ -304,45 +322,43 @@ pin("P-08a", "08 · «Espera. ¿Una IA hablando con mi hijo?»", "pin", [
        "Título = golpe (confirmado), semimonumental. Es la objeción del lector entre «»: va en voz citada (itálica), como las creencias del cap. 02.", scan=True),
     st("08.2", "L07", "read", 1,
        l07(["Sí. Y si has leído las noticias sobre inteligencia artificial y algo en ti se cerró, <b class='w7'>tienes razón en desconfiar</b>. Nosotros también las leemos. Y también nos preocupan. <b class='w7'>Por eso ADA existe.</b>",
-            "Hay aplicaciones que simulan amistades o relaciones románticas. Common Sense Media advirtió en 2025 que los compañeros de inteligencia artificial presentaban <b class='w7'>riesgos inaceptables para menores</b>. <b class='w7'>ADA tiene un propósito educativo</b>: ayudarle a pensar y a tomar sus propias decisiones. No está planteada como pareja, terapeuta ni sustituto de las personas que lo acompañan."]),
-       "Lectura (~88 palabras: al límite de un encuadre móvil)."),
+            "Hay aplicaciones que simulan amistades o relaciones románticas. Common Sense Media advirtió en 2025 que los compañeros de inteligencia artificial presentaban <b class='w7'>riesgos inaceptables para menores</b>. <b class='w7'>ADA tiene un propósito educativo</b>: ayudarle a pensar y a tomar sus propias decisiones. No está planteada como pareja, terapeuta ni sustituto de las personas que lo acompañan."], wide=True),
+       "Lectura con columna ancha (~60 caracteres por línea; pedido del usuario: con ~88 palabras la columna estándar quedaba angosta y muy alta). En móvil, igual que las demás."),
     st("08.3", "B09", "golpe", 1.25,
        "<div class='c ctr stack b09'>\n<p class='in w5 t-small'>Pero hay un dato que quiero que te lleves en la cabeza:</p>\n"
        "<p class='pf w8 t-mxl' data-beat='close'>7 de cada 10</p>\n"
-       "<p class='in w5 t-small it'>adolescentes ya conversan con inteligencias artificiales. Solos, sin reglas, en plataformas hechas para adultos. México es tercer lugar mundial en adopción juvenil de IA.</p>\n</div>",
+       "<p class='in w7 t-body'>adolescentes ya conversan con inteligencias artificiales. Solos, sin reglas, en plataformas hechas para adultos. México es tercer lugar mundial en adopción juvenil de IA.</p>\n</div>",
        "Dato = Registro B (confirmado). B09: el numeral en su lugar dentro de la frase, sin duplicarlo ni reordenar. Lapidario del capítulo. Candidato a patrón 10 (contador).",
        scan=True),
     st("08.4", "B01 (golpe dentro de párrafo)", "golpe", 1.25,
        "<div class='c left stack b01 b01-l'>\n<p class='pf w8 t-semi bw'>No es que vaya a pasar. Ya está pasando.</p>\n<p class='in w5 t-body'>Lo único que queda por decidir es cuál: una IA hecha para adultos, o <b class='w7'>una hecha para tu hijo, con reglas y con tu participación</b>.</p>\n</div>",
        "Gramática «golpe dentro de párrafo» (layout de 12.4): «No es que vaya a pasar. Ya está pasando.» en grande; el resto del párrafo en lectura, mismo encuadre.", scan=True),
 ])
-_b1 = entry("Cero rol romántico.", "Cero secretos peligrosos. Sus reglas están escritas y las vas a poder leer antes de empezar: qué hace ADA y qué no. <a class='lnk' data-role='violeta · destino pendiente'>Conocer las reglas de ADA ↗</a>")
-_b2 = entry("Tú también participas.", "Recibes su avance, qué está construyendo, qué está aprendiendo a decidir, sin espiar sus conversaciones. <b class='w7'>Un hijo espiado deja de hablar.</b> Y si algo de lo que dice indica que necesita ayuda de un adulto, te avisamos. ADA puede equivocarse: no diagnostica ni garantiza detectarlo todo. Antes de empezar vas a saber exactamente en qué casos te llega ese aviso.")
-_b3 = entry("Con un tiempo definido para cada conversación.", "ADA no quiere sus horas. <b class='w7'>Quiere su criterio.</b>")
+_b1 = card("Cero rol romántico.", "Cero secretos peligrosos. Sus reglas están escritas y las vas a poder leer antes de empezar: qué hace ADA y qué no.",
+           "\n<a class='btn-sec' data-role='violeta · destino pendiente'>Conocer las reglas de ADA ↗</a>")
+_b2 = card("Tú también participas.", "Recibes su avance, qué está construyendo, qué está aprendiendo a decidir, sin espiar sus conversaciones. <b class='w7'>Un hijo espiado deja de hablar.</b> Y si algo de lo que dice indica que necesita ayuda de un adulto, te avisamos. ADA puede equivocarse: no diagnostica ni garantiza detectarlo todo. Antes de empezar vas a saber exactamente en qué casos te llega ese aviso.")
+_b3 = card("Práctica y breve", "Con un tiempo definido para cada conversación. ADA no quiere sus horas. <b class='w7'>Quiere su criterio.</b>", new=True)  # «Práctica y breve»: adición de copy aprobada por el usuario (02-wireframe.md §8)
 pin("P-08b", "08 · reglas", "pin", [
     st("08.5", "L08", "read", 1, l08("ADA es lo segundo, por diseño:", [_b1, _b2, _b3]),
-       "Desktop: una parada, tres columnas. Viñetas completas; la primera frase en 700 como etiqueta.", scan=True, bp="d"),
-    st("08.5a", "L08", "read", 1, l08("ADA es lo segundo, por diseño:", [_b1]),
-       "Móvil: la lista se reparte en dos paradas (juntas pasan de la capacidad del encuadre). Ninguna viñeta se corta.", scan=True, bp="m"),
-    st("08.5b", "L08 (cont.)", "read", 1, l08(None, [_b2, _b3]),
-       "Móvil, segunda parada de la lista.", bp="m"),
-    st("08.6", "Sello", "seal", 1, seal("06-rules.webp"),
-       "Sella la tranquilización: papá revisando las reglas. Alternativa: 06-rules-alt."),
+       "Tres tarjetas separadas (pedido del usuario): subtítulo (subhead Playfair) + párrafo; «Conocer las reglas de ADA ↗» como botón secundario; la tercera lleva el título «Práctica y breve», adición de copy aprobada por el usuario. Desktop: tres columnas.", scan=True, bp="d"),
+    st("08.5m", "L08 (mazo apilado)", "deck", 1.75, l08("ADA es lo segundo, por diseño:", [_b1, _b2, _b3], deck=True),
+       "Móvil y tablet: las tres tarjetas en la MISMA parada (pedido del usuario). Tablet (600–859 px): caben juntas; aparecen una debajo de otra con el scroll. Móvil (< 600 px): no caben (~150 % a 360 px), así que van en mazo apilado (decisión del usuario; patrón 3 + 8 del catálogo): el título se queda, cada tarjeta sube desde abajo y se apila sobre la anterior, que queda asomada por su subtítulo. Snap por tarjeta. Al volver hacia arriba reaparece el botón «Conocer las reglas de ADA ↗» de la primera tarjeta.", scan=True, bp="m"),
+    st("08.6", "Sello", "seal", 1, seal("06-rules.webp", zoom=1),
+       "Sella la tranquilización: papá revisando las reglas. Sin zoom, solo disolvencia de entrada (pedido del usuario). Alternativa: 06-rules-alt."),
 ])
 
 # 09 · respiro / instruccional
 pin("P-09", "09 · Y la prueba no te la pido por fe.", "pin", [
-    st("09.1", "L06", "read", 1,
-       l06("Y la prueba no te la pido por fe.", ["Habla tú con ADA primero."]),
-       "Respiro instruccional: solo L.", scan=True),
-    st("09.2", "L07", "read", 1,
-       l07(["Pide tu acceso al final de esta página para <b class='w7'>conversar tú con ADA antes de inscribir a tu hijo</b>. Interrógala. Trata de sacarla de sus reglas. Pregúntale lo que un niño le preguntaría. Pregúntale qué no va a hacer nunca con tu hijo. <b class='w7'>Te va a contestar sin rodeos.</b>",
-            "Queremos que conozcas a la inteligencia artificial con la que hablará tu hijo <b class='w7'>antes de pagar</b>. Por eso la ponemos por delante."]),
-       "Lectura."),
-    st("09.3", "Enlace + puente", "read", 1,
-       "<div class='c ctr stack'>\n<p class='in w5 t-body'><a class='lnk' data-goto='11.1' data-role='azul · ancla #inscripcion'>Si ya viste suficiente, la inscripción está al final de esta página ↓</a></p>\n"
-       "<p class='in w5 t-sub bw lead-l'>Si no, sigue leyendo; falta lo más importante.</p>\n</div>" + CUE,
-       "PRIMER CTA del recorrido: el salto a la inscripción que ya trae el copy. Toque → feedback inmediato; el scroll animado se interrumpe si el usuario hace scroll. El puente empalma con el título del cap. 10.",
+    st("09.1", "B01 (golpe en dos alturas)", "reveal", 1.5,
+       "<div class='c ctr stack b01'>\n<h2 class='pf w8 t-semi bw' data-step='1'>Y la prueba no te la pido por fe.</h2>\n<p class='pf w8 t-mon bw' data-step='2'>Habla tú con ADA primero.</p>\n</div>",
+       "Golpe en dos alturas (pedido del usuario, mismo patrón que 01.3 y 05.4): «Y la prueba no te la pido por fe.» señala → semimonumental; «Habla tú con ADA primero.» revela → monumental. Dos tiempos.", scan=True),
+    st("09.2", "L07 + botón + puente", "read", 1.25,
+       "<div class='c l07 wide'>\n<div class='essay'>\n"
+       "<p class='in w5 t-body'>Pide tu acceso al final de esta página para <b class='w7'>conversar tú con ADA antes de inscribir a tu hijo</b>. Interrógala. Trata de sacarla de sus reglas. Pregúntale lo que un niño le preguntaría. Pregúntale qué no va a hacer nunca con tu hijo. <b class='w7'>Te va a contestar sin rodeos.</b></p>\n"
+       "<p class='in w5 t-body'>Queremos que conozcas a la inteligencia artificial con la que hablará tu hijo <b class='w7'>antes de pagar</b>. Por eso la ponemos por delante.</p>\n"
+       "<div class='ctr stack go-stack go-in'>\n<a class='btn-sec' data-goto='11.1' data-role='azul · ancla #inscripcion'>Si ya viste suficiente, la inscripción está al final de esta página ↓</a>\n"
+       "<p class='in w5 t-body bw tc'>Si no, sigue leyendo; falta lo más importante.</p>\n</div>\n</div>\n</div>" + CUE,
+       "UNA sola lámina (pedido del usuario): lectura en la columna ancha (como 08.2), y debajo, centrados a lo ancho (pedido del usuario), el botón secundario (mismo estilo que «Conocer las reglas de ADA ↗») y el texto debajo. PRIMER CTA del recorrido: el salto a la inscripción que ya trae el copy. Toque → feedback inmediato; el scroll animado se interrumpe si el usuario hace scroll. El puente empalma con el título del cap. 10.",
        scan=True),
 ])
 
@@ -354,15 +370,15 @@ pin("P-10a", "10 · Lo más importante no es ADA.", "pin", [
        scan=True),
     st("10.2", "L07", "read", 1,
        l07(["Esto no es una app que le instalas en el teléfono y te olvidas. <b class='w7'>Los incluye a los dos.</b>",
-            "Tú no quedas afuera vigilando. <b class='w7'>Quedas adentro, del lado de tu hijo</b>, enseñándole a cruzar mientras todavía puedes caminar a su lado. Al terminar cada sesión, él revisa un resumen de lo que pensó y decide compartírtelo. Y a ti te llega algo mejor que «hoy estuvo en el celular»: <b class='w7'>un tema real para la cena</b>."]),
-       "Lectura."),
+            "Tú no quedas afuera vigilando. <b class='w7'>Quedas adentro, del lado de tu hijo</b>, enseñándole a cruzar mientras todavía puedes caminar a su lado. Al terminar cada sesión, él revisa un resumen de lo que pensó y decide compartírtelo. Y a ti te llega algo mejor que «hoy estuvo en el celular»: <b class='w7'>un tema real para la cena</b>."], wide=True),
+       "Lectura en la columna ancha (pedido del usuario, como 08.2 y 09.2). «Los incluye a los dos.» sigue corrido, en negrita (se probó aparte y se revirtió: se leía como subtítulo)."),
     st("10.3", "L04 (cita + remate)", "read", 1,
-       "<div class='c ctr stack l04'>\n<p class='pf it w4 t-sub q bw'>«Oye, ¿a ti te ha tocado ver algo así en un grupo?»</p>\n"
+       "<div class='c ctr stack l04'>\n<p class='pf it w7 t-semi q bw'>«Oye, ¿a ti te ha tocado ver algo así en un grupo?»</p>\n"
        "<p class='in w5 t-body'>Quizá te cuenta. Quizá hoy no. Pero <b class='w7'>la puerta queda abierta</b>, y no es un interrogatorio.</p>\n</div>",
-       "L04: la cita en Playfair itálica; el remate debajo en lectura (no se inventa fuente).", scan=True),
-    st("10.4", "Puente (lead)", "lead", 1,
-       lead("Y aquí pasa algo que no te esperas. Cuando dejas de ser tú-contra-la-pantalla, <b class='w7'>se vuelven ustedes dos, del mismo lado</b>. <b class='w7'>El criterio que lo cuida es el mismo puente que te lo regresa.</b>"),
-       "Párrafo completo en voz lead: arranca con el puente «Y aquí pasa algo que no te esperas.»"),
+       "L04: la cita en voz citada a semimonumental (Playfair 700 itálica, como las citas-eco del cap. 02; pedido del usuario); el remate debajo en lectura, con aire amplio de 32/48 px (pedido del usuario). No se inventa fuente.", scan=True),
+    st("10.4", "B03 (puente → golpe)", "two", 1.5,
+       b03("Y aquí pasa algo que no te esperas. Cuando dejas de ser tú-contra-la-pantalla, <b class='w7'>se vuelven ustedes dos, del mismo lado</b>.", "El criterio que lo cuida es el mismo puente que te lo regresa.", size="semi"),
+       "Puente → golpe (pedido del usuario, mismo layout que 05.8): el puente en voz lead; «El criterio que lo cuida es el mismo puente que te lo regresa.» cae después en semimonumental."),
 ])
 pin("P-10b", "10 · (cont.)", "pin", [
     st("10.5", "B03", "two", 1.5,
@@ -371,10 +387,10 @@ pin("P-10b", "10 · (cont.)", "pin", [
        "Bisagra 4 (oscuro). Lapidario (confirmado). Semimonumental porque en monumental serían 6 líneas en móvil 360. Habla el niño: voz citada (itálica). Sin acento: la cita ya pesa sola.",
        night=True, scan=True),
     st("10.6", "L07", "read", 1,
-       l07(["Esa pausa antes de decidir no es solo para él. Con lo que te comparte, y con SAFE, los cursos breves para mamás y papás que van incluidos, <b class='w7'>tú también vas entrenando el tuyo</b>: qué preguntar, cuándo escuchar, cómo acompañar sin interrogar. <b class='w7'>Él aprende a mirar a los dos lados. Tú aprendes a caminar a su lado.</b>"]),
-       "Vuelve la luz. Lectura."),
-    st("10.7", "Sello", "seal", 1, seal("07-together-mother-daughter.webp"),
-       "Sella el capítulo más emocional: mamá e hija juntas, celulares boca abajo. Alternativa: 07-together-father-son."),
+       l07(["Esa pausa antes de decidir no es solo para él. Con lo que te comparte, y con SAFE, los cursos breves para mamás y papás que van incluidos, <b class='w7'>tú también vas entrenando el tuyo</b>: qué preguntar, cuándo escuchar, cómo acompañar sin interrogar. <b class='w7'>Él aprende a mirar a los dos lados. Tú aprendes a caminar a su lado.</b>"], wide=True),
+       "Vuelve la luz. Lectura en la columna ancha (pedido del usuario, como 08.2, 09.2 y 10.2)."),
+    st("10.7", "Sello", "seal", 1, seal("07-together-mother-daughter.webp", zoom=1),
+       "Sella el capítulo más emocional: mamá e hija juntas, celulares boca abajo. Sin zoom, solo disolvencia de entrada (pedido del usuario). Alternativa: 07-together-father-son."),
 ])
 
 # 11 · Inscríbelo hoy.

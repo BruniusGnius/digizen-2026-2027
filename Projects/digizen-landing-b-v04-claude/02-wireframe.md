@@ -56,6 +56,11 @@ Se parte de la versión 1. La iteración 2 (variedad de composiciones) se descar
 - 8: en 12.4, ¿una frase en grande o las dos?
 - 9: ¿remate en negrita dentro de los párrafos?
 
+**Pendiente para la versión final de la página (usuario, 2026-09-28):**
+- **Indicador de recorrido / navegación por capítulos.** La regla derecha del wireframe es solo instrumento. Para la final se propusieron tres opciones: 1) riel de capítulos (recomendado; en móvil, solo barra fina arriba), 2) barra de progreso fina, 3) píldora con capítulo actual + índice. Se decide en la versión final. Sería un componente nuevo que hay que agregar al sistema de diseño.
+- **Nombres de capítulo:** lo más sintéticos posible y con títulos atractivos. Es **copy nuevo**: requiere propuesta y aprobación del usuario; no se toma ni se inventa sin aprobación.
+- **Escenas en desktop:** exportarlas en 16:8.6 (2560×1376) para que las bandas sean mínimas; 07-together-mother-daughter está hoy en 2:1 (1412×706). 12.6: ¿solo disolvencia en vez del zoom de entrada de 106 %?
+
 ## 1. Escala del recorrido
 
 | Concepto | Desktop | Móvil |
@@ -105,7 +110,7 @@ Se parte de la versión 1. La iteración 2 (variedad de composiciones) se descar
 ## 3. Estrategia contra la densidad
 
 - **Acordeón:** solo el FAQ, con las 7 preguntas cerradas para que se escaneen de un vistazo.
-- **Primer CTA:** el salto que ya trae el copy en 09.3, «Si ya viste suficiente, la inscripción está al final de esta página ↓», que lleva a 11.1. Los botones aparecen donde los pone el copy: 11.6 y 12.5.
+- **Primer CTA:** el salto que ya trae el copy en 09.2 (misma lámina que la lectura), «Si ya viste suficiente, la inscripción está al final de esta página ↓», que lleva a 11.1. Los botones aparecen donde los pone el copy: 11.6 y 12.5.
 - **CTA flotante en móvil:** no se agrega por defecto, porque repetiría las etiquetas del copy en lugares donde el copy no las puso (decisión 2).
 - **Progreso:** la línea de 3 px del sistema (decisión 6 de la Fase 1). En el wireframe, la regla lateral hace ese papel y además muestra la escala.
 - **Anclas:** solo `#inscripcion`, la que trae el copy.
@@ -115,7 +120,7 @@ Se parte de la versión 1. La iteración 2 (variedad de composiciones) se descar
 
 | Bloque | Desktop | Móvil |
 |---|---|---|
-| Reglas de ADA (08.5) | 1 parada, 3 columnas | 2 paradas (08.5a, 08.5b) |
+| Reglas de ADA (08.5) | 1 parada, 3 columnas | 1 parada (08.5m): en tablet, las tres una debajo de otra; en móvil < 600 px, mazo apilado (cada tarjeta sube y deja asomada la anterior por su subtítulo) |
 | Inscripción fundadora (11.3) | 2 paradas (4 + 3 viñetas) | 3 paradas (2 + 3 + 2) |
 | Citas-eco del cap. 02 (L05) | Cita a la izquierda (5 col), prosa a la derecha (7 col) | Apiladas, con separador arriba |
 | Par de CTA | Lado a lado, mismo ancho | Apilados a todo el ancho, en el orden del copy |
@@ -127,7 +132,7 @@ Se parte de la versión 1. La iteración 2 (variedad de composiciones) se descar
 | Componente | Feedback inmediato | Interrumpible | Entra / sale |
 |---|---|---|---|
 | Par de CTA | Sí, `scale(.97)` en `pointerdown` | — (un toque) | — (destinos pendientes) |
-| Enlace a la inscripción (09.3) | Sí, al tocar | Sí: el scroll animado se corta si el usuario hace scroll | Baja a 11.1; se regresa con scroll normal |
+| Botón a la inscripción (09.2) | Sí, al tocar | Sí: el scroll animado se corta si el usuario hace scroll | Baja a 11.1; se regresa con scroll normal |
 | Acordeón FAQ | Sí, el indicador se encoge en `pointerdown` | Sí, apertura y cierre a medio camino | Abre hacia abajo, cierra por el mismo camino |
 | Carrusel del cap. 02 | — (lo mueve el scroll, no se arrastra) | Sí, scrub reversible y snap por panel | Entra por la derecha; al regresar sale por la derecha |
 | Diálogo ADA / HIJO | — | Sí (scrub) | ADA por la izquierda, HIJO por la derecha; al regresar salen por su mismo lado |
@@ -192,27 +197,25 @@ La genera `wireframe-src/build.py` desde `content.py`; no la edites a mano.
 | P-07a | 07.2 | L07 | 1 |  | Lectura. |
 | P-07a | 07.3 | L07 | 1 |  | Lectura. |
 | P-07a | 07.4 | Diálogo | 4 | ★ | Un mensaje por paso de scroll (4 snaps). ADA entra por la izquierda, HIJO por la derecha; al regresar salen por el mismo lado. Avatares como en la versión A (pedido del usuario): cuadrados de 34 px con radio 10, ADA a la izquierda y el hijo a la derecha; imágenes de A copiadas sin modificar A. Burbujas: tinte violeta (ADA) / cian (HIJO) en el build. |
-| P-07c | 07.5 | B01 | 1.25 | ★ | Lapidario del capítulo: staccato de tres tiempos (candidato a SplitText por frase, patrón 9). |
-| P-07c | 07.6 | L07 | 1 |  | Lectura. |
+| P-07c | 07.5 | B01 (golpe en dos alturas, tres tiempos) | 1.75 | ★ | Lapidario del capítulo (ajuste del usuario): «Una pausa.» y «Una consecuencia.» en semimonumental, una por línea; «Una idea propia.» completa en monumental, con el acento subrayado en «idea propia.». Patrón «golpe en dos alturas» en tres tiempos: cada frase aparece al seguir scrolleando y «idea propia.» cae al final. |
+| P-07c | 07.6 | Evolución (de → a, dos columnas) | 1.5 | ★ | Evolución en dos columnas (pedido del usuario): el antes en Playfair 400 y el después en Playfair 800; en medio, el «a» del copy con una flecha que se dibuja (→ en desktop, ↓ en móvil). Entra en tiempos: frase → antes → flecha → después. Mismas palabras, mismo orden. |
 | P-07c | 07.7 | L07 | 1 |  | Lectura. Sin pausa de cierre: fluye directo al cap. 08 (como en la referencia). |
 | P-08a | 08.1 | B01 (secundario) | 1.25 | ★ | Título = golpe (confirmado), semimonumental. Es la objeción del lector entre «»: va en voz citada (itálica), como las creencias del cap. 02. |
-| P-08a | 08.2 | L07 | 1 |  | Lectura (~88 palabras: al límite de un encuadre móvil). |
+| P-08a | 08.2 | L07 | 1 |  | Lectura con columna ancha (~60 caracteres por línea; pedido del usuario: con ~88 palabras la columna estándar quedaba angosta y muy alta). En móvil, igual que las demás. |
 | P-08a | 08.3 | B09 | 1.25 | ★ | Dato = Registro B (confirmado). B09: el numeral en su lugar dentro de la frase, sin duplicarlo ni reordenar. Lapidario del capítulo. Candidato a patrón 10 (contador). |
 | P-08a | 08.4 | B01 (golpe dentro de párrafo) | 1.25 | ★ | Gramática «golpe dentro de párrafo» (layout de 12.4): «No es que vaya a pasar. Ya está pasando.» en grande; el resto del párrafo en lectura, mismo encuadre. |
-| P-08b | 08.5 | L08 | 1 | ★ solo desktop | Desktop: una parada, tres columnas. Viñetas completas; la primera frase en 700 como etiqueta. |
-| P-08b | 08.5a | L08 | 1 | ★ solo móvil | Móvil: la lista se reparte en dos paradas (juntas pasan de la capacidad del encuadre). Ninguna viñeta se corta. |
-| P-08b | 08.5b | L08 (cont.) | 1 | solo móvil | Móvil, segunda parada de la lista. |
-| P-08b | 08.6 | Sello | 1 |  | Sella la tranquilización: papá revisando las reglas. Alternativa: 06-rules-alt. |
-| P-09 | 09.1 | L06 | 1 | ★ | Respiro instruccional: solo L. |
-| P-09 | 09.2 | L07 | 1 |  | Lectura. |
-| P-09 | 09.3 | Enlace + puente | 1 | ★ | PRIMER CTA del recorrido: el salto a la inscripción que ya trae el copy. Toque → feedback inmediato; el scroll animado se interrumpe si el usuario hace scroll. El puente empalma con el título del cap. 10. |
+| P-08b | 08.5 | L08 | 1 | ★ solo desktop | Tres tarjetas separadas (pedido del usuario): subtítulo (subhead Playfair) + párrafo; «Conocer las reglas de ADA ↗» como botón secundario; la tercera lleva el título «Práctica y breve», adición de copy aprobada por el usuario. Desktop: tres columnas. |
+| P-08b | 08.5m | L08 (mazo apilado) | 1.75 | ★ solo móvil | Móvil y tablet: las tres tarjetas en la MISMA parada (pedido del usuario). Tablet (600–859 px): caben juntas; aparecen una debajo de otra con el scroll. Móvil (< 600 px): no caben (~150 % a 360 px), así que van en mazo apilado (decisión del usuario; patrón 3 + 8 del catálogo): el título se queda, cada tarjeta sube desde abajo y se apila sobre la anterior, que queda asomada por su subtítulo. Snap por tarjeta. Al volver hacia arriba reaparece el botón «Conocer las reglas de ADA ↗» de la primera tarjeta. |
+| P-08b | 08.6 | Sello | 1 |  | Sella la tranquilización: papá revisando las reglas. Sin zoom, solo disolvencia de entrada (pedido del usuario). Alternativa: 06-rules-alt. |
+| P-09 | 09.1 | B01 (golpe en dos alturas) | 1.5 | ★ | Golpe en dos alturas (pedido del usuario, mismo patrón que 01.3 y 05.4): «Y la prueba no te la pido por fe.» señala → semimonumental; «Habla tú con ADA primero.» revela → monumental. Dos tiempos. |
+| P-09 | 09.2 | L07 + botón + puente | 1.25 | ★ | UNA sola lámina (pedido del usuario): lectura en la columna ancha (como 08.2), y debajo, centrados a lo ancho (pedido del usuario), el botón secundario (mismo estilo que «Conocer las reglas de ADA ↗») y el texto debajo. PRIMER CTA del recorrido: el salto a la inscripción que ya trae el copy. Toque → feedback inmediato; el scroll animado se interrumpe si el usuario hace scroll. El puente empalma con el título del cap. 10. |
 | P-10a | 10.1 | B03 | 1.5 | ★ | Título + primera línea = un solo golpe (confirmado). Rima con «Ya lo tienes.» (12.2): los dos momentos en que la pieza le devuelve el protagonismo al papá van en monumental-xl. |
-| P-10a | 10.2 | L07 | 1 |  | Lectura. |
-| P-10a | 10.3 | L04 (cita + remate) | 1 | ★ | L04: la cita en Playfair itálica; el remate debajo en lectura (no se inventa fuente). |
-| P-10a | 10.4 | Puente (lead) | 1 |  | Párrafo completo en voz lead: arranca con el puente «Y aquí pasa algo que no te esperas.» |
+| P-10a | 10.2 | L07 | 1 |  | Lectura en la columna ancha (pedido del usuario, como 08.2 y 09.2). «Los incluye a los dos.» sigue corrido, en negrita (se probó aparte y se revirtió: se leía como subtítulo). |
+| P-10a | 10.3 | L04 (cita + remate) | 1 | ★ | L04: la cita en voz citada a semimonumental (Playfair 700 itálica, como las citas-eco del cap. 02; pedido del usuario); el remate debajo en lectura, con aire amplio de 32/48 px (pedido del usuario). No se inventa fuente. |
+| P-10a | 10.4 | B03 (puente → golpe) | 1.5 |  | Puente → golpe (pedido del usuario, mismo layout que 05.8): el puente en voz lead; «El criterio que lo cuida es el mismo puente que te lo regresa.» cae después en semimonumental. |
 | P-10b | 10.5 | B03 | 1.5 | ★ oscuro | Bisagra 4 (oscuro). Lapidario (confirmado). Semimonumental porque en monumental serían 6 líneas en móvil 360. Habla el niño: voz citada (itálica). Sin acento: la cita ya pesa sola. |
-| P-10b | 10.6 | L07 | 1 |  | Vuelve la luz. Lectura. |
-| P-10b | 10.7 | Sello | 1 |  | Sella el capítulo más emocional: mamá e hija juntas, celulares boca abajo. Alternativa: 07-together-father-son. |
+| P-10b | 10.6 | L07 | 1 |  | Vuelve la luz. Lectura en la columna ancha (pedido del usuario, como 08.2, 09.2 y 10.2). |
+| P-10b | 10.7 | Sello | 1 |  | Sella el capítulo más emocional: mamá e hija juntas, celulares boca abajo. Sin zoom, solo disolvencia de entrada (pedido del usuario). Alternativa: 07-together-father-son. |
 | P-11a | 11.1 | L06 | 1 | ★ | Destino del ancla #inscripcion. Sin golpe B: capítulo transaccional. |
 | P-11a | 11.2 | L06 (solo título) | 1 | ★ | Copy de venta punchy: NO entra en B (decisión Fase 1). Va como título Playfair 700. |
 | P-11a | 11.3 | L08 | 1 | ★ solo desktop | Desktop: la lista de 7 se reparte en dos paradas (4 + 3). Viñetas completas. |
@@ -233,7 +236,7 @@ La genera `wireframe-src/build.py` desde `content.py`; no la edites a mano.
 | FAQ | — | Acordeón | flujo | ★ | Flujo normal (no pineado). Todas cerradas por defecto: las 7 preguntas se escanean de un vistazo. Toda la fila es el botón; feedback inmediato; abre hacia abajo y cierra por el mismo camino; se puede interrumpir. |
 | FOOT | — | Footer | flujo | ★ | Flujo normal. «digizen» = logo (00-context/logo/digizen-logo-light.svg). Enlaces del copy: gnius.club y aviso de privacidad. |
 
-**Totales:** paradas 86.50 E (desktop) / 87.50 E (móvil) · 21 pines → 20 E de tránsito · total aprox. 109 E desktop / 111 E móvil (con FAQ y footer).
+**Totales:** paradas 87.75 E (desktop) / 88.50 E (móvil) · 21 pines → 20 E de tránsito · total aprox. 110 E desktop / 112 E móvil (con FAQ y footer).
 <!-- PARTITURA:FIN -->
 
 ## 8. Auditoría fuente → wireframe
@@ -247,6 +250,8 @@ La genera `wireframe-src/build.py` desde `content.py`; no la edites a mano.
   - Etiqueta de sección «## Footer» (no aparece en el sitio de referencia).
   - Etiqueta «(FAQ)» del encabezado «Por si te quedó una duda. (FAQ)» (no aparece en el sitio de referencia).
   - Nota de procedencia al final del archivo: **Nota de procedencia:** este copy se extrajo del sitio renderizado en `Digizen-Cinco-Creencias-Diseno-2026-09-22/sitio/dist/index.html` (el usuario lo señaló como la versión más completa/adecuada — incluye el FAQ con respuestas completas, que `COPY-PUBLICADO.md` de iteraciones anteriores no tenía). Tratar como fuente de verdad literal: no omitir, resumir, parafrasear ni inventar contenido, por la regla de fidelidad de `Skills/landing-builder/SKILL.md`.
+- **Adiciones de copy aprobadas por el usuario** (no están en `COPY-PUBLICADO.md`; en el wireframe llevan la etiqueta «copy agregado · aprobado» y la auditoría las lista aparte):
+  - 08.5 / 08.5m · subtítulo **«Práctica y breve»** sobre «Con un tiempo definido para cada conversación. ADA no quiere sus horas. Quiere su criterio.». Pedido del 2026-09-28: «Agregar un titulo similar a 'Práctica y breve'». Redacción por confirmar.
 - **Contenidos que faltan (contenedor marcado, sin inventar nada):**
   - Destino de «Inscribir a mi hijo ↗» (pago).
   - Destino de «Conversar con ADA primero»: el copy y los campos de la solicitud de acceso no están en la fuente. El FAQ lo menciona («para ver la solicitud de acceso»).

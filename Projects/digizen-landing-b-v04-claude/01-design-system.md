@@ -288,6 +288,7 @@ El espécimen usa un solo acento, `#2F4DFF`. La restricción fija lo sustituye p
   - Indicador: círculo de 32 px con contorno `azul-900` y chevron que gira 180°.
   - Respuesta Inter `body`.
   - Apertura con resorte crítico, que se puede interrumpir.
+- **Escenas completas en desktop (decisión del usuario, 2026-09-28).** Cada escena se muestra entera, tal como es el archivo, sin recortes ni reencuadres (`object-fit: contain`; en las secuencias, cuadro completo en el canvas). Si la ventana no tiene la proporción de la imagen, lo que sobra queda como banda del color del fondo. El único recorte es el que produce un zoom pedido para esa escena (02.6), y el Hero, que es de pantalla completa con el texto encima.
 - **Escenas: dos versiones (decisión del usuario, 2026-09-28).** Horizontal para desktop y tablet horizontal (≥ 860 px); **vertical 3:4** para móvil y tablet vertical (< 860 px). Las verticales las hace el usuario en Photoshop a partir de la misma imagen base (especificación en `00-context/scenes/vertical/LEEME.md`). Cada escena define en su estación su encuadre (llenar o completa sin recortar) y su movimiento (zoom-in, zoom-out o solo disolvencia). En 03.4: scrub de video en desktop e imagen fija en móvil.
 - **Sello (escena).**
   - Radio 0, sin caption, **sin viñeta ni bordes fundidos**: la escena va con sus bordes limpios (ajuste del usuario, 2026-09-28; antes llevaba una máscara en degradado).
