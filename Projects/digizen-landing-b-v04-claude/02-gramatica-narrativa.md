@@ -26,17 +26,17 @@ La versión 1 ya seguía esta gramática sin haberla escrito. Este documento la 
 | **Puente → golpe** | Una frase anuncia y la siguiente remata | B03 (entrada → cierre) | entrada en subhead; cierre del nivel del golpe | centro | 01.3, 03.3, 03.5, 05.7, 10.1, 10.4, 10.5, 12.2 |
 | **Puente solo** | Anuncia, pregunta o conecta («Ahora…», «Y…») | Línea lead: Inter 500 | subhead | centro | H.3, 05.6, 06.5, 08.4, 12.3 |
 | **Puente + lectura** | Un puente que abre un párrafo | Encabezado en subhead del espécimen (Playfair 500 romana) + L07 | subhead + body | lectura | 03.2 |
-| **Lectura** | Narración, argumento | L07. **Ancho por largo** (regla del usuario, 2026-09-28): si algún párrafo pasa de 250 caracteres, columna ancha (42rem, ~60 caracteres por línea); si no, la angosta (27rem, ~38 caracteres). En el móvil de 360 las dos miden lo mismo | body | lectura | Anchas: 03.6, 04.2, 07.3, 07.7, 08.2, 09.2, 10.2, 10.6 · angostas: 04.3, 05.2, 06.2, 06.3, 06.4, 07.2, 11.4 |
+| **Lectura** | Narración, argumento | L07. **Ancho por largo** (regla del usuario, 2026-09-28): si algún párrafo pasa de 230 caracteres, columna ancha (42rem, ~60 caracteres por línea); si no, la angosta (27rem, ~38 caracteres). Vale también para las aperturas L06. En el móvil de 360 las dos miden lo mismo | body | lectura | Anchas: 03.6, 04.2, 07.3, 07.7, 08.2, 09.2, 10.2, 10.6, 11.1, 11.4 (por pedido: lleva el precio a dos columnas), 11.6 · angostas: 04.3, 05.2, 06.2, 06.3, 06.4, 07.2, 11.4 |
 | **Golpe dentro de párrafo** | Frase de impacto que abre un párrafo que continúa | La frase en semimonumental, **centrada**; el resto del párrafo en la columna de lectura, 32/48 px debajo, en el mismo encuadre (ajuste del usuario, 2026-09-28) | semi + body | centro + lectura | 03.7, 05.3, 08.4, 12.4 |
 | **Golpe en dos alturas** | Una parte del golpe solo señala y la otra revela («La cinco.» / «No te escucha.») | La parte que señala en semimonumental y la que revela en monumental, en dos tiempos: primero señala, luego revela (patrón del usuario, 2026-09-28) | semi → mon | centro | 01.3, 05.4, 07.5 (tres tiempos), 09.1 |
 | **Voz citada** | Habla otro: el niño, la mamá, las creencias y objeciones del lector entre «» | Playfair itálica | según su nivel | — | 10.3 |
 | **Presentación de ADA** | El momento en que aparece ADA («Esto se llama ADA.») | Texto a la izquierda (7 col) + ADA a la derecha (5 col). ADA es el personaje de la versión A (130 cuadros con transparencia, copiados sin modificar A): scrub del saludo en desktop, primer cuadro fijo en móvil | heading + body | lectura + figura | 07.1 |
 | **Evolución (de → a)** | El copy describe un paso de un estado a otro («de «…» a «…»») | Frase de entrada en lectura + dos columnas: el antes en Playfair 400, el después en Playfair 800, y en medio el «a» con una flecha que se dibuja (↓ en móvil). En tiempos (pedido del usuario, 2026-09-28) | body + heading | centro | 07.6 |
-| **Lista** | Creencias numeradas / elementos paralelos | L03 / L08 | — | — | 01.2 / 08.5 (tarjetas; en móvil, mazo apilado), 11.3 |
+| **Lista** | Creencias numeradas / elementos paralelos | L03 / L08 | — | — | 01.2 / 08.5 y 11.3 (tarjetas con título; en móvil, mazo apilado) |
 | **Dato** | La cifra | B09 | monumental-xl | centro | 08.3 |
 | **Antítesis** | Dos mitades con la misma estructura, en tensión | B06: dos líneas iguales, con acento en la segunda | monumental | centro | 12.7 |
 | **Escena** | Sella un concepto ya argumentado | Pantalla completa | — | — | 02.6, 03.4, 03.8, 05.5, 08.6, 10.7, 12.6 |
-| **Interfaz** | Diálogo, precio, CTA, FAQ | Los componentes de la Fase 1 | — | — | 07.4, 11.5, 11.6, 12.5, FAQ |
+| **Interfaz** | Diálogo, precio, CTA, FAQ | Los componentes de la Fase 1 | — | — | 07.4, 11.4 (precio dentro de la lámina de lectura; en móvil, 11.5m), 11.6 y 12.4 (par de CTA al ancho de la columna), FAQ |
 
 **Reglas que la sostienen:**
 - **Dos tamaños de golpe:** N1 (lapidario) en monumental y N2 (golpe) en semimonumental. Solo se baja un paso si no cabe (5 líneas o menos, 60 % o menos del alto en el móvil de 360).
@@ -138,12 +138,9 @@ Generado desde `wireframe-src/content.py`. Para quitar una, dímelo por ID.
 | 10.4 | «se vuelven ustedes dos, del mismo lado» · «El criterio que lo cuida es el mismo puente que te lo regresa.» |
 | 10.6 | «tú también vas entrenando el tuyo» · «Él aprende a mirar a los dos lados. Tú aprendes a caminar a su lado.» |
 | 11.1 | «Pagas hoy y ADA se presenta con tu hijo hoy mismo.» · «el día que ustedes deciden» |
-| 11.3 | «ADA, su mentor personal, todo el ciclo.» · «Cada semana pasa algo.» · «Y entre semana, para lo que traiga.» · «Un resumen de su avance.» |
-| 11.3b | «SAFE gratis todo el ciclo.» · «Código de descuento en Alquimistas de I.A.» · «Precio fundador congelado cuando lo reinscribas al siguiente nivel.» |
-| 11.3m1 | «ADA, su mentor personal, todo el ciclo.» · «Cada semana pasa algo.» |
-| 11.3m2 | «Y entre semana, para lo que traiga.» · «Un resumen de su avance.» · «SAFE gratis todo el ciclo.» |
-| 11.3m3 | «Código de descuento en Alquimistas de I.A.» · «Precio fundador congelado cuando lo reinscribas al siguiente nivel.» |
+| 11.3 · 11.3b · 11.3m · 11.3bm | Tarjetas: la primera frase de cada viñeta es el título de la tarjeta (Playfair), así que ya no va en negrita |
 | 11.4 | «de tercero de primaria a tercero de prepa» · «Es un solo precio.» |
 | 11.6 | «No es una suscripción» · «pruébalo un mes» · «cancelas en un clic y no pagas» |
 | 12.3 | «Ahora te toca dárselo a él.» |
+| 12.2 | «te dije un «no»» · «te debí el «cómo»» (pedido del usuario, 2026-09-29) |
 | 12.4 | «el día en que cruce solo va a llegar» · «si llega sabiendo mirar» |

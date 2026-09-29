@@ -16,6 +16,8 @@ Campos de cada parada:
 """
 import re
 
+WIDE_MIN = 230  # regla del usuario (2026-09-28): si algún párrafo pasa de 230 caracteres, columna ancha; si no, angosta (umbral ajustado el 2026-09-29 para incluir 11.1)
+
 S = "00-context/scenes/"
 
 # ---------- helpers de composición (clases = pasos de la escala del espécimen) ----------
@@ -32,11 +34,11 @@ def b03(lead, close, size="mon", w=8, lead_cls="in w5 t-sub", lead_tag="p"):
 def lead(text, cls="in w5 t-sub"):
     return f"<div class='c ctr stack solo-lead'>\n<p class='{cls} lead-l bw' data-beat='lead'>{text}</p>\n</div>"
 
-def l06(title, paras, title_cls="pf w7 t-head", tag="h2"):
+def l06(title, paras, title_cls="pf w7 t-head", tag="h2", wide=None):
     ps = "\n".join(f"<p class='in w5 t-body'>{p}</p>" for p in paras)
-    return f"<div class='c l06'>\n<{tag} class='{title_cls} bw'>{title}</{tag}>\n<div class='sup'>\n{ps}\n</div>\n</div>"
-
-WIDE_MIN = 250  # regla del usuario (2026-09-28): si algún párrafo pasa de 250 caracteres, columna ancha; si no, angosta
+    if wide is None:
+        wide = bool(paras) and max(len(re.sub(r"<[^>]+>", "", p)) for p in paras) >= WIDE_MIN
+    return f"<div class='c l06{' wide' if wide else ''}'>\n<{tag} class='{title_cls} bw'>{title}</{tag}>\n<div class='sup'>\n{ps}\n</div>\n</div>"
 
 def l07(paras, wide=None):
     ps = "\n".join(f"<p class='in w5 t-body'>{p}</p>" for p in paras)
@@ -51,9 +53,10 @@ def seal(fn, zoom=None, direction="out", origin=None, fit=None):
     z += f" data-origin='{origin}'" if origin else ""
     return f"<figure class='c-seal'{z}><img src='{S}{fn}' alt=''><figcaption class='wf-file'>{fn}</figcaption></figure>"
 
-def seq(folder, n, poster):
+def seq(folder, n, poster, reverse=False):
     """Secuencia de cuadros controlada con el scroll (scrub de video), dibujada en canvas. El póster se ve mientras carga y en modo reducido."""
-    return (f"<figure class='c-seal c-seq' data-seq='{folder}' data-n='{n}'><canvas></canvas>"
+    rv = " data-reverse='1'" if reverse else ""
+    return (f"<figure class='c-seal c-seq' data-seq='{folder}' data-n='{n}'{rv}><canvas></canvas>"
             f"<img class='seq-poster' src='{folder}/{poster}' alt=''><figcaption class='wf-file'>{folder} · {n} frames · scrub</figcaption></figure>")
 
 def l05(quote, prose):
@@ -78,8 +81,10 @@ def l08(head, entries, head_tag="h3", deck=False):
     return h + f"<div class='entries{' deck' if deck else ''}'>\n" + "\n".join(entries) + "\n</div>\n</div>"
 
 CTA_INNER = ("<div class='cta'>\n"
-             "<a class='btn' data-role='azul · inscripción'>Inscribir a mi hijo ↗</a>\n"
-             "<a class='btn' data-role='violeta · ADA'>Conversar con ADA primero</a>\n</div>")
+             "<a class='btn' data-role='azul · inscripción'>Inscribir a mi hijo <span class='arr' data-dir='ne'>↗</span></a>\n"
+             "<a class='btn alt' data-role='violeta · ADA'>Conversar con ADA primero<span class='arr' data-dir='e' data-icon='→' aria-hidden='true'></span></a>\n</div>")
+# Botones = filas de acción (criterio del usuario, 2026-09-29): texto a la izquierda, flecha en un círculo a la derecha.
+# La flecha que trae el copy (↗, ↓) es texto real dentro del círculo; si el copy no trae flecha, el ícono va por CSS (data-icon), sin texto.
 CTA = "<div class='c ctr stack cta-wrap'>\n" + CTA_INNER + "\n</div>"
 
 CUE = "<div class='cue' aria-hidden='true'><span></span><span></span><span></span></div>"
@@ -99,7 +104,7 @@ def pin(id, cap, type_, stops=None, **kw):
 # HERO — autoplay (única imagen antes del texto)
 pin("P-H0", "Hero", "hero", [
     st("H.1", "Hero", "hero", 1.5,
-       f"<img class='hero-img' src='{S}01-dinner.webp' alt=''><div class='scrim'></div>"
+       f"<img class='hero-img' src='{S}01-dinner.webp' alt=''><div class='scrim'></div><img class='hero-logo' src='00-context/logo/digizen-logo-dark.svg' alt=''>"
        "<div class='c ctr hero-text'>\n<h1 class='pf w8 t-semi bw'>Te voy a decir cinco cosas que crees sobre tu hijo y el celular.</h1>\n</div>" + CUE,
        "Autoplay (no scrub): zoom-out extremo de 01-dinner en 3.7 s → pausa → velo → aparece la frase en semimonumental. Desktop con su propia configuración: texto abajo a la izquierda (7 columnas, 3 líneas, 24 % del encuadre) y velo solo en el tercio inferior, para no tapar las caras. Móvil: centrado, 4 líneas. Se repite al regresar (onEnterBack). Al final aparece el indicador de continuar.",
        scan=True),
@@ -236,8 +241,8 @@ pin("P-05a", "05 · Ahora sí: el «cómo»", "pin", [
     st("05.4", "B01 (golpe en dos alturas)", "reveal", 1.5,
        "<div class='c ctr stack b01'>\n<p class='pf w8 t-semi bw' data-step='1'>Bloquearle el celular es</p>\n<p class='pf w8 t-mon bw' data-step='2'>«no cruces».</p>\n</div>",
        "Golpe en dos alturas (pedido del usuario, mismo patrón que 01.3): «Bloquearle el celular es» señala → semimonumental; «no cruces». revela → monumental. Dos tiempos: primero lo que señala, al seguir scrolleando lo que revela.", scan=True),
-    st("05.5", "Secuencia con scrub (desktop)", "seq", 1.5, seq("assets/seq/05-crossing", 49, "05-crossing-poster.webp"),
-       "Desktop: video con scrub (pedido del usuario): el feed de la calle fluye mientras la mamá señala. 49 cuadros WebP de 1280 px, calidad 50 (4.5 MB; el detalle de las fichas pesa más que en fastidio), sacados del video «Style_Hybrid…» (1908×1084, 5 s). Se estaciona al final. Sella la metáfora a mitad del capítulo; el lapidario viene después, sin imagen propia.", bp="d"),
+    st("05.5", "Secuencia con scrub (desktop)", "seq", 1.5, seq("assets/seq/05-crossing", 49, "05-crossing-poster.webp", reverse=True),
+       "Desktop: video con scrub (pedido del usuario), REPRODUCIDO AL REVÉS (pedido del usuario, 2026-09-29; se estaciona en el cuadro inicial del video, que es la escena fija): el feed de la calle fluye mientras la mamá señala. 49 cuadros WebP de 1280 px, calidad 50 (4.5 MB; el detalle de las fichas pesa más que en fastidio), sacados del video «Style_Hybrid…» (1908×1084, 5 s). Se estaciona al final. Sella la metáfora a mitad del capítulo; el lapidario viene después, sin imagen propia.", bp="d"),
     st("05.5m", "Sello (imagen fija)", "seal", 1, seal("05-crossing.webp"),
        "Móvil y tablet: imagen fija. Falta su versión vertical (00-context/scenes/vertical/05-crossing-v.webp). Alternativa: 05-crossing-alt.", bp="m"),
 ])
@@ -335,7 +340,7 @@ pin("P-08a", "08 · «Espera. ¿Una IA hablando con mi hijo?»", "pin", [
        "Gramática «golpe dentro de párrafo» (layout de 12.4): «No es que vaya a pasar. Ya está pasando.» en grande; el resto del párrafo en lectura, mismo encuadre.", scan=True),
 ])
 _b1 = card("Cero rol romántico.", "Cero secretos peligrosos. Sus reglas están escritas y las vas a poder leer antes de empezar: qué hace ADA y qué no.",
-           "\n<a class='btn-sec' data-role='violeta · destino pendiente'>Conocer las reglas de ADA ↗</a>")
+           "\n<a class='btn sec' data-role='violeta · destino pendiente'>Conocer las reglas de ADA <span class='arr' data-dir='ne'>↗</span></a>")
 _b2 = card("Tú también participas.", "Recibes su avance, qué está construyendo, qué está aprendiendo a decidir, sin espiar sus conversaciones. <b class='w7'>Un hijo espiado deja de hablar.</b> Y si algo de lo que dice indica que necesita ayuda de un adulto, te avisamos. ADA puede equivocarse: no diagnostica ni garantiza detectarlo todo. Antes de empezar vas a saber exactamente en qué casos te llega ese aviso.")
 _b3 = card("Práctica y breve", "Con un tiempo definido para cada conversación. ADA no quiere sus horas. <b class='w7'>Quiere su criterio.</b>", new=True)  # «Práctica y breve»: adición de copy aprobada por el usuario (02-wireframe.md §8)
 pin("P-08b", "08 · reglas", "pin", [
@@ -356,7 +361,7 @@ pin("P-09", "09 · Y la prueba no te la pido por fe.", "pin", [
        "<div class='c l07 wide'>\n<div class='essay'>\n"
        "<p class='in w5 t-body'>Pide tu acceso al final de esta página para <b class='w7'>conversar tú con ADA antes de inscribir a tu hijo</b>. Interrógala. Trata de sacarla de sus reglas. Pregúntale lo que un niño le preguntaría. Pregúntale qué no va a hacer nunca con tu hijo. <b class='w7'>Te va a contestar sin rodeos.</b></p>\n"
        "<p class='in w5 t-body'>Queremos que conozcas a la inteligencia artificial con la que hablará tu hijo <b class='w7'>antes de pagar</b>. Por eso la ponemos por delante.</p>\n"
-       "<div class='ctr stack go-stack go-in'>\n<a class='btn-sec' data-goto='11.1' data-role='azul · ancla #inscripcion'>Si ya viste suficiente, la inscripción está al final de esta página ↓</a>\n"
+       "<div class='ctr stack go-stack go-in'>\n<a class='btn sec' data-goto='11.1' data-role='azul · ancla #inscripcion'>Si ya viste suficiente, la inscripción está al final de esta página <span class='arr' data-dir='s'>↓</span></a>\n"
        "<p class='in w5 t-body bw tc'>Si no, sigue leyendo; falta lo más importante.</p>\n</div>\n</div>\n</div>" + CUE,
        "UNA sola lámina (pedido del usuario): lectura en la columna ancha (como 08.2), y debajo, centrados a lo ancho (pedido del usuario), el botón secundario (mismo estilo que «Conocer las reglas de ADA ↗») y el texto debajo. PRIMER CTA del recorrido: el salto a la inscripción que ya trae el copy. Toque → feedback inmediato; el scroll animado se interrumpe si el usuario hace scroll. El puente empalma con el título del cap. 10.",
        scan=True),
@@ -394,49 +399,52 @@ pin("P-10b", "10 · (cont.)", "pin", [
 ])
 
 # 11 · Inscríbelo hoy.
-_i1 = lambda s: entry("ADA, su mentor personal, todo el ciclo.", "Uno a uno, por mensajes, en su idioma. Un espacio para conversar, hacer preguntas y practicar decisiones con ayuda de la inteligencia artificial.", s)
-_i2 = lambda s: entry("Cada semana pasa algo.", "Una semana ADA le trae un tema nuevo, pensado para su etapa y para lo que usa a su edad. La siguiente, lo pone a prueba con una situación real. Veinte temas a lo largo del ciclo. Para él, misiones.", s)
-_i3 = lambda s: entry("Y entre semana, para lo que traiga.", "Le mandaron algo raro, un juego le pidió dinero, no sabe si algo es cierto: se lo cuenta y ADA le hace las preguntas para que él decida.", s)
-_i4 = lambda s: entry("Un resumen de su avance.", "Ves su avance sin vigilarlo.", s)
-_i5 = lambda s: entry("SAFE gratis todo el ciclo.", "Los cursos breves de Gnius Club para mamás y papás.", s)
-_i6 = lambda s: entry("Código de descuento en Alquimistas de I.A.", "El curso para aprender a usar inteligencia artificial en tu trabajo, para ti. Tu hijo entrena criterio; tú entrenas tu ventaja.", s)
-_i7 = lambda s: entry("Precio fundador congelado cuando lo reinscribas al siguiente nivel.", "Nunca te sube mientras sigas.", s)
+_i1 = lambda s: card("ADA, su mentor personal, todo el ciclo.", "Uno a uno, por mensajes, en su idioma. Un espacio para conversar, hacer preguntas y practicar decisiones con ayuda de la inteligencia artificial.", span=s)
+_i2 = lambda s: card("Cada semana pasa algo.", "Una semana ADA le trae un tema nuevo, pensado para su etapa y para lo que usa a su edad. La siguiente, lo pone a prueba con una situación real. Veinte temas a lo largo del ciclo. Para él, misiones.", span=s)
+_i3 = lambda s: card("Y entre semana, para lo que traiga.", "Le mandaron algo raro, un juego le pidió dinero, no sabe si algo es cierto: se lo cuenta y ADA le hace las preguntas para que él decida.", span=s)
+_i4 = lambda s: card("Un resumen de su avance.", "Ves su avance sin vigilarlo.", span=s)
+_i5 = lambda s: card("SAFE gratis todo el ciclo.", "Los cursos breves de Gnius Club para mamás y papás.", span=s)
+_i6 = lambda s: card("Código de descuento en Alquimistas de I.A.", "El curso para aprender a usar inteligencia artificial en tu trabajo, para ti. Tu hijo entrena criterio; tú entrenas tu ventaja.", span=s)
+_i7 = lambda s: card("Precio fundador congelado cuando lo reinscribas al siguiente nivel.", "Nunca te sube mientras sigas.", span=s)
 HEAD11 = "Tu inscripción fundadora incluye:"
 pin("P-11a", "11 · Inscríbelo hoy. Generación Fundadora.", "pin", [
     st("11.1", "L06", "read", 1,
        l06("Inscríbelo hoy. Generación Fundadora.",
            ["Hay algo que hace más sencillo empezar: no hay grupo que esperar, ni temporada, ni lista. <b class='w7'>Pagas hoy y ADA se presenta con tu hijo hoy mismo.</b> Su ciclo de 12 meses empieza <b class='w7'>el día que ustedes deciden</b>, no el día que a un calendario le conviene."]),
-       "Destino del ancla #inscripcion. Sin golpe B: capítulo transaccional.", scan=True),
+       "Destino del ancla #inscripcion. Sin golpe B: capítulo transaccional. Columna ancha (pedido del usuario; regla por largo, párrafo de 240 caracteres).", scan=True),
     st("11.2", "L06 (solo título)", "read", 1,
        "<div class='c l06'>\n<p class='pf w7 t-head bw'>Doce meses, no diez: el verano va incluido, porque las redes no salen de vacaciones.</p>\n</div>",
        "Copy de venta punchy: NO entra en B (decisión Fase 1). Va como título Playfair 700.", scan=True),
-    st("11.3", "L08", "read", 1, l08(HEAD11, [_i1(3), _i2(3), _i3(3), _i4(3)]),
-       "Desktop: la lista de 7 se reparte en dos paradas (4 + 3). Viñetas completas.", scan=True, bp="d"),
-    st("11.3b", "L08 (cont.)", "read", 1, l08(None, [_i5(4), _i6(4), _i7(4)]),
-       "Desktop, segunda parada de la lista.", bp="d"),
-    st("11.3m1", "L08", "read", 1, l08(HEAD11, [_i1(12), _i2(12)]),
-       "Móvil: la lista de 7 se reparte en tres paradas.", scan=True, bp="m"),
-    st("11.3m2", "L08 (cont.)", "read", 1, l08(None, [_i3(12), _i4(12), _i5(12)]),
-       "Móvil, 2/3.", bp="m"),
-    st("11.3m3", "L08 (cont.)", "read", 1, l08(None, [_i6(12), _i7(12)]),
-       "Móvil, 3/3.", bp="m"),
+    st("11.3", "L08 (tarjetas)", "read", 1, l08(HEAD11, [_i1(3), _i2(3), _i3(3), _i4(3)]),
+       "Tarjetas con título (pedido del usuario; mismo estilo que 08.5). El título de cada tarjeta es la primera frase de su viñeta, literal; el párrafo es el resto. Desktop: 4 tarjetas en una fila.", scan=True, bp="d"),
+    st("11.3b", "L08 (tarjetas, cont.)", "read", 1, l08(None, [_i5(4), _i6(4), _i7(4)]),
+       "Desktop: las otras 3 tarjetas en una fila.", bp="d"),
+    st("11.3m", "L08 (mazo apilado)", "deck", 1.75, l08(HEAD11, [_i1(12), _i2(12), _i3(12), _i4(12)], deck=True),
+       "Móvil y tablet: las 4 tarjetas en una parada. Tablet: una debajo de otra. Móvil < 600 px: mazo apilado, como 08.5m.", scan=True, bp="m"),
+    st("11.3bm", "L08 (mazo apilado, cont.)", "deck", 1.5, l08(None, [_i5(12), _i6(12), _i7(12)], deck=True),
+       "Móvil y tablet: las otras 3 tarjetas, mismo comportamiento.", bp="m"),
 ])
 pin("P-11b", "11 · precio y garantía", "pin", [
-    st("11.4", "L07 + título", "read", 1,
-       "<div class='c l07'>\n<div class='essay'>\n<p class='in w5 t-body'>El programa va <b class='w7'>de tercero de primaria a tercero de prepa</b>. Tu hijo arranca en el primer nivel de su sección y cada año sube uno.</p>\n"
-       "<h3 class='pf w7 t-head bw'>¿Cuánto cuesta y cómo se paga?</h3>\n"
-       "<p class='in w5 t-body'>El ciclo completo de 12 meses cuesta $5,990. <b class='w7'>Es un solo precio.</b> No hay cuota de inscripción aparte ni cargos escondidos. Tú eliges cómo pagarlo:</p>\n</div>\n</div>",
-       "Lectura con subtítulo del copy.", scan=True),
-    st("11.5", "Bloque de precio", "read", 1,
+    st("11.4", "L07 + título + bloque de precio", "read", 1.25,
+       "<div class='c l07 wide'>\n<div class='essay'>\n<p class='in w5 t-body'>El programa va <b class='w7'>de tercero de primaria a tercero de prepa</b>. Tu hijo arranca en el primer nivel de su sección y cada año sube uno.</p>\n<h3 class='pf w7 t-head bw'>¿Cuánto cuesta y cómo se paga?</h3>\n<p class='in w5 t-body'>El ciclo completo de 12 meses cuesta $5,990. <b class='w7'>Es un solo precio.</b> No hay cuota de inscripción aparte ni cargos escondidos. Tú eliges cómo pagarlo:</p>\n"
+       "<div class='price'>\n"
+       "<div class='piece'><p class='in w8 t-head amt'>Todo hoy, de una vez: $4,990.</p>\n<p class='in w5 t-body'><mark class='val'>Te ahorras $1,000 por pagarlo completo.</mark> Es el precio fundador y vale hasta el 31 de octubre.</p></div>\n"
+       "<div class='piece'><p class='in w8 t-head amt'>En 10 pagos mensuales de $599.</p>\n<p class='in w5 t-body'>Son los mismos $5,990, divididos en diez. Terminas de pagar en el mes diez; ADA sigue con tu hijo hasta el doce.</p></div>\n"
+       "</div>\n</div>\n</div>",
+       "UNA lámina (pedido del usuario): lectura con subtítulo del copy en la columna ancha y, debajo, las dos piezas de precio al ancho de esa columna. Monto en su lugar (Inter 800), nunca duplicado. El marcador gris = ámbar de valor en el build.", scan=True, bp="d"),
+    st("11.4m", "L07 + título", "read", 1,
+       "<div class='c l07 wide'>\n<div class='essay'>\n<p class='in w5 t-body'>El programa va <b class='w7'>de tercero de primaria a tercero de prepa</b>. Tu hijo arranca en el primer nivel de su sección y cada año sube uno.</p>\n<h3 class='pf w7 t-head bw'>¿Cuánto cuesta y cómo se paga?</h3>\n<p class='in w5 t-body'>El ciclo completo de 12 meses cuesta $5,990. <b class='w7'>Es un solo precio.</b> No hay cuota de inscripción aparte ni cargos escondidos. Tú eliges cómo pagarlo:</p>\n</div>\n</div>",
+       "Móvil y tablet: juntas no caben en el teléfono (~125 % a 360 px), así que la lectura y el precio van en paradas seguidas.", scan=True, bp="m"),
+    st("11.5m", "Bloque de precio", "read", 1,
        "<div class='c price-wrap'>\n<div class='price'>\n"
        "<div class='piece'><p class='in w8 t-head amt'>Todo hoy, de una vez: $4,990.</p>\n<p class='in w5 t-body'><mark class='val'>Te ahorras $1,000 por pagarlo completo.</mark> Es el precio fundador y vale hasta el 31 de octubre.</p></div>\n"
        "<div class='piece'><p class='in w8 t-head amt'>En 10 pagos mensuales de $599.</p>\n<p class='in w5 t-body'>Son los mismos $5,990, divididos en diez. Terminas de pagar en el mes diez; ADA sigue con tu hijo hasta el doce.</p></div>\n"
        "</div>\n</div>",
-       "Dos piezas iguales (el párrafo que sigue pasa a 11.6 para no llenar el encuadre). Monto en su lugar (Inter 800), nunca duplicado. El marcador gris = ámbar de valor en el build.", scan=True),
+       "Móvil y tablet: las dos piezas apiladas.", scan=True, bp="m"),
     st("11.6", "Cierre de pago + garantía + par de CTA", "cta", 1,
-       "<div class='c ctr stack'>\n<p class='in w5 t-body guar'>En los dos casos tu hijo empieza hoy y tiene el ciclo completo. <b class='w7'>No es una suscripción</b>: es el ciclo entero, pagado de una vez o en diez partes.</p>\n<p class='in w5 t-body guar'>Y una garantía que nadie más da: <b class='w7'>pruébalo un mes</b>. Los 30 días cuentan desde la primera conversación de tu hijo con ADA, no desde que pagas. Si no es para ustedes, <b class='w7'>cancelas en un clic y no pagas</b>. Sin llamadas de venta. Sin letras chicas.</p>\n"
+       "<div class='c stack colbox'>\n<p class='in w5 t-body guar'>En los dos casos tu hijo empieza hoy y tiene el ciclo completo. <b class='w7'>No es una suscripción</b>: es el ciclo entero, pagado de una vez o en diez partes.</p>\n<p class='in w5 t-body guar'>Y una garantía que nadie más da: <b class='w7'>pruébalo un mes</b>. Los 30 días cuentan desde la primera conversación de tu hijo con ADA, no desde que pagas. Si no es para ustedes, <b class='w7'>cancelas en un clic y no pagas</b>. Sin llamadas de venta. Sin letras chicas.</p>\n"
        + CTA_INNER + "\n</div>",
-       "Cierre del pago + garantía pegada al par de CTA. Los dos botones pesan igual (en el build: azul / violeta). Feedback en pointerdown. Destinos pendientes.",
+       "Cierre del pago + garantía pegada al par de CTA, en la columna ancha; el par de botones mide lo mismo que la columna (pedido del usuario). Los dos botones pesan igual (en el build: azul / violeta). Feedback en pointerdown. Destinos pendientes.",
        scan=True),
 ])
 
@@ -446,20 +454,18 @@ pin("P-12a", "12 · Una última cosa, y ya te dejo.", "pin", [
        b01("Una última cosa, y ya te dejo.", size="semi"),
        "Título = golpe y puente a la vez (confirmado).", scan=True),
     st("12.2", "B03", "two", 1.5,
-       b03("Al principio te dije un «no» y te debí el «cómo» un buen rato.", f"Ya lo {acc('tienes.')}", size="mxl"),
+       b03("Al principio <b class='w7'>te dije un «no»</b> y <b class='w7'>te debí el «cómo»</b> un buen rato.", f"Ya lo {acc('tienes.')}", size="mxl"),
        "Lapidario del capítulo. Rima con «Eres tú.» (10.1): monumental-xl.", scan=True),
     st("12.3", "Puente (lead)", "lead", 1,
        lead("<b class='w7'>Ahora te toca dárselo a él.</b> Ésa es la lección completa. Lo demás son detalles."),
        "Puente («Ahora…»)."),
     st("12.4", "B01 (golpe dentro de párrafo)", "golpe", 1.25,
        "<div class='c left stack b01 b01-l'>\n<p class='pf w8 t-semi bw'>No inscribirlo también es una decisión. La diferencia es que ésa no tiene botón de cancelar.</p>\n"
-       "<p class='in w5 t-body'>No te lo digo para asustarte; te la digo porque <b class='w7'>el día en que cruce solo va a llegar</b> de todos modos, y lo único que cambia es <b class='w7'>si llega sabiendo mirar</b>.</p>\n</div>",
-       "El golpe son las dos primeras frases del párrafo; la tercera sigue en lectura dentro del MISMO encuadre (el párrafo no se parte entre paradas). Semimonumental: 6 líneas en móvil 360 (excepción a la regla de ≤5, anotada).",
+       "<p class='in w5 t-body'>No te lo digo para asustarte; te la digo porque <b class='w7'>el día en que cruce solo va a llegar</b> de todos modos, y lo único que cambia es <b class='w7'>si llega sabiendo mirar</b>.</p>\n" + CTA_INNER + "\n</div>",
+       "El golpe son las dos primeras frases del párrafo; la tercera sigue en lectura dentro del MISMO encuadre (el párrafo no se parte entre paradas). Debajo, el par de CTA al ancho de la columna (pedido del usuario; antes era la parada 12.5). Semimonumental: 6 líneas en móvil 360 (excepción a la regla de ≤5, anotada).",
        scan=True),
 ])
 pin("P-12b", "12 · decisión y cierre", "pin", [
-    st("12.5", "Par de CTA", "cta", 1, CTA,
-       "Parada de decisión: solo los dos botones, mismo peso.", scan=True),
     st("12.6", "Sello", "seal", 1, seal("08-autonomy-father.webp"),
        "Pago visual de la metáfora: el hijo cruza solo, el papá observa sin celular. Alternativa: 08-autonomy-mother."),
     st("12.7", "B06", "golpe", 1.25,
@@ -483,8 +489,8 @@ faq_html = ("<div class='faq'>\n<h2 class='pf w7 t-head bw'>Por si te quedó una
             + "\n</div>")
 pin("FAQ", "FAQ", "flow", html=faq_html, comp="Acordeón",
     note="Flujo normal (no pineado). Todas cerradas por defecto: las 7 preguntas se escanean de un vistazo. Toda la fila es el botón; feedback inmediato; abre hacia abajo y cierra por el mismo camino; se puede interrumpir.")
-footer_html = ("<div class='foot'>\n<p class='pf w8 t-head logo-ph'>digizen</p>\n"
+footer_html = ("<div class='foot'>\n<img class='foot-logo' src='00-context/logo/digizen-logo-light.svg' alt='digizen' data-copy='1'>\n"
                "<p class='in w5 t-small'>Presencia, no vigilancia.</p>\n<p class='in w5 t-small'>Criterio, no candado.</p>\n"
                "<p class='in w5 t-small foot-links'><a class='lnk'>Gnius Club ↗</a> · <a class='lnk'>Aviso de privacidad</a> · © 2026 Gnius Club</p>\n</div>")
 pin("FOOT", "Footer", "flow", html=footer_html, comp="Footer",
-    note="Flujo normal. «digizen» = logo (00-context/logo/digizen-logo-light.svg). Enlaces del copy: gnius.club y aviso de privacidad.")
+    note="Flujo normal. «digizen» = logo oficial (00-context/logo/digizen-logo-light.svg; la auditoría lo lee de su alt). En gris en el wireframe; a color en la versión avanzada. Enlaces del copy: gnius.club y aviso de privacidad.")

@@ -1,7 +1,8 @@
 ---
 project: digizen-landing-b-v04-claude
 fase: 2 - wireframe
-estado: propuesto
+estado: aprobado
+aprobado: 2026-09-29 — «ya completamos la fase del wireframe; me gusta mucho como está». En la construcción se refina lo que está, sin cambios drásticos salvo que sea un error.
 formato: wireframe de recorrido (HTML) + esta partitura
 ---
 
@@ -110,7 +111,7 @@ Se parte de la versión 1. La iteración 2 (variedad de composiciones) se descar
 ## 3. Estrategia contra la densidad
 
 - **Acordeón:** solo el FAQ, con las 7 preguntas cerradas para que se escaneen de un vistazo.
-- **Primer CTA:** el salto que ya trae el copy en 09.2 (misma lámina que la lectura), «Si ya viste suficiente, la inscripción está al final de esta página ↓», que lleva a 11.1. Los botones aparecen donde los pone el copy: 11.6 y 12.5.
+- **Primer CTA:** el salto que ya trae el copy en 09.2 (misma lámina que la lectura), «Si ya viste suficiente, la inscripción está al final de esta página ↓», que lleva a 11.1. Los botones aparecen donde los pone el copy: 11.6 y 12.4 (en la misma lámina que su texto).
 - **CTA flotante en móvil:** no se agrega por defecto, porque repetiría las etiquetas del copy en lugares donde el copy no las puso (decisión 2).
 - **Progreso:** la línea de 3 px del sistema (decisión 6 de la Fase 1). En el wireframe, la regla lateral hace ese papel y además muestra la escala.
 - **Anclas:** solo `#inscripcion`, la que trae el copy.
@@ -121,7 +122,8 @@ Se parte de la versión 1. La iteración 2 (variedad de composiciones) se descar
 | Bloque | Desktop | Móvil |
 |---|---|---|
 | Reglas de ADA (08.5) | 1 parada, 3 columnas | 1 parada (08.5m): en tablet, las tres una debajo de otra; en móvil < 600 px, mazo apilado (cada tarjeta sube y deja asomada la anterior por su subtítulo) |
-| Inscripción fundadora (11.3) | 2 paradas (4 + 3 viñetas) | 3 paradas (2 + 3 + 2) |
+| Inscripción fundadora (11.3) | 2 paradas de tarjetas (4 + 3), cada grupo en una fila | 2 paradas (11.3m con el título + 4 tarjetas; 11.3bm, 3 tarjetas). Tablet: una debajo de otra; móvil < 600 px: mazo apilado |
+| Lectura + precio (11.4) | 1 lámina: lectura en la columna ancha y las dos piezas de precio debajo | 2 paradas (11.4m, 11.5m): juntas no caben en el teléfono |
 | Citas-eco del cap. 02 (L05) | Cita a la izquierda (5 col), prosa a la derecha (7 col) | Apiladas, con separador arriba |
 | Par de CTA | Lado a lado, mismo ancho | Apilados a todo el ancho, en el orden del copy |
 | Precio | Dos piezas lado a lado | Apiladas |
@@ -183,7 +185,7 @@ La genera `wireframe-src/build.py` desde `content.py`; no la edites a mano.
 | P-05a | 05.2 | L07 | 1 |  | Lectura: la metáfora de cruzar la calle. |
 | P-05a | 05.3 | B01 (golpe dentro de párrafo) | 1.25 | ★ | Mismo layout que 03.7 (pedido del usuario): la frase en semimonumental y centrada; el párrafo en la columna de lectura, 32/48 px debajo, en el mismo encuadre. |
 | P-05a | 05.4 | B01 (golpe en dos alturas) | 1.5 | ★ | Golpe en dos alturas (pedido del usuario, mismo patrón que 01.3): «Bloquearle el celular es» señala → semimonumental; «no cruces». revela → monumental. Dos tiempos: primero lo que señala, al seguir scrolleando lo que revela. |
-| P-05a | 05.5 | Secuencia con scrub (desktop) | 1.5 | solo desktop | Desktop: video con scrub (pedido del usuario): el feed de la calle fluye mientras la mamá señala. 49 cuadros WebP de 1280 px, calidad 50 (4.5 MB; el detalle de las fichas pesa más que en fastidio), sacados del video «Style_Hybrid…» (1908×1084, 5 s). Se estaciona al final. Sella la metáfora a mitad del capítulo; el lapidario viene después, sin imagen propia. |
+| P-05a | 05.5 | Secuencia con scrub (desktop) | 1.5 | solo desktop | Desktop: video con scrub (pedido del usuario), REPRODUCIDO AL REVÉS (pedido del usuario, 2026-09-29; se estaciona en el cuadro inicial del video, que es la escena fija): el feed de la calle fluye mientras la mamá señala. 49 cuadros WebP de 1280 px, calidad 50 (4.5 MB; el detalle de las fichas pesa más que en fastidio), sacados del video «Style_Hybrid…» (1908×1084, 5 s). Se estaciona al final. Sella la metáfora a mitad del capítulo; el lapidario viene después, sin imagen propia. |
 | P-05a | 05.5m | Sello (imagen fija) | 1 | solo móvil | Móvil y tablet: imagen fija. Falta su versión vertical (00-context/scenes/vertical/05-crossing-v.webp). Alternativa: 05-crossing-alt. |
 | P-05b | 05.6 | Puente (lead) | 1 |  | Puente solo que prepara la tesis. |
 | P-05b | 05.7 | B06 (antítesis) | 1.25 | ★ oscuro | Bisagra 3 (oscuro). Tesis de la pieza. Gramática «antítesis»: la misma forma que el cierre de marca (12.7), dos líneas iguales con acento en la segunda, para que al final el lector reconozca la tesis en «Presencia, no vigilancia. / Criterio, no candado.». |
@@ -216,27 +218,26 @@ La genera `wireframe-src/build.py` desde `content.py`; no la edites a mano.
 | P-10b | 10.5 | B03 | 1.5 | ★ oscuro | Bisagra 4 (oscuro). Lapidario (confirmado). Semimonumental porque en monumental serían 6 líneas en móvil 360. Habla el niño: voz citada (itálica). Sin acento: la cita ya pesa sola. |
 | P-10b | 10.6 | L07 | 1 |  | Vuelve la luz. Lectura en la columna ancha (pedido del usuario, como 08.2, 09.2 y 10.2). |
 | P-10b | 10.7 | Sello | 1 |  | Sella el capítulo más emocional: mamá e hija juntas, celulares boca abajo. Sin zoom, solo disolvencia de entrada (pedido del usuario). Alternativa: 07-together-father-son. |
-| P-11a | 11.1 | L06 | 1 | ★ | Destino del ancla #inscripcion. Sin golpe B: capítulo transaccional. |
+| P-11a | 11.1 | L06 | 1 | ★ | Destino del ancla #inscripcion. Sin golpe B: capítulo transaccional. Columna ancha (pedido del usuario; regla por largo, párrafo de 240 caracteres). |
 | P-11a | 11.2 | L06 (solo título) | 1 | ★ | Copy de venta punchy: NO entra en B (decisión Fase 1). Va como título Playfair 700. |
-| P-11a | 11.3 | L08 | 1 | ★ solo desktop | Desktop: la lista de 7 se reparte en dos paradas (4 + 3). Viñetas completas. |
-| P-11a | 11.3b | L08 (cont.) | 1 | solo desktop | Desktop, segunda parada de la lista. |
-| P-11a | 11.3m1 | L08 | 1 | ★ solo móvil | Móvil: la lista de 7 se reparte en tres paradas. |
-| P-11a | 11.3m2 | L08 (cont.) | 1 | solo móvil | Móvil, 2/3. |
-| P-11a | 11.3m3 | L08 (cont.) | 1 | solo móvil | Móvil, 3/3. |
-| P-11b | 11.4 | L07 + título | 1 | ★ | Lectura con subtítulo del copy. |
-| P-11b | 11.5 | Bloque de precio | 1 | ★ | Dos piezas iguales (el párrafo que sigue pasa a 11.6 para no llenar el encuadre). Monto en su lugar (Inter 800), nunca duplicado. El marcador gris = ámbar de valor en el build. |
-| P-11b | 11.6 | Cierre de pago + garantía + par de CTA | 1 | ★ | Cierre del pago + garantía pegada al par de CTA. Los dos botones pesan igual (en el build: azul / violeta). Feedback en pointerdown. Destinos pendientes. |
+| P-11a | 11.3 | L08 (tarjetas) | 1 | ★ solo desktop | Tarjetas con título (pedido del usuario; mismo estilo que 08.5). El título de cada tarjeta es la primera frase de su viñeta, literal; el párrafo es el resto. Desktop: 4 tarjetas en una fila. |
+| P-11a | 11.3b | L08 (tarjetas, cont.) | 1 | solo desktop | Desktop: las otras 3 tarjetas en una fila. |
+| P-11a | 11.3m | L08 (mazo apilado) | 1.75 | ★ solo móvil | Móvil y tablet: las 4 tarjetas en una parada. Tablet: una debajo de otra. Móvil < 600 px: mazo apilado, como 08.5m. |
+| P-11a | 11.3bm | L08 (mazo apilado, cont.) | 1.5 | solo móvil | Móvil y tablet: las otras 3 tarjetas, mismo comportamiento. |
+| P-11b | 11.4 | L07 + título + bloque de precio | 1.25 | ★ solo desktop | UNA lámina (pedido del usuario): lectura con subtítulo del copy en la columna ancha y, debajo, las dos piezas de precio al ancho de esa columna. Monto en su lugar (Inter 800), nunca duplicado. El marcador gris = ámbar de valor en el build. |
+| P-11b | 11.4m | L07 + título | 1 | ★ solo móvil | Móvil y tablet: juntas no caben en el teléfono (~125 % a 360 px), así que la lectura y el precio van en paradas seguidas. |
+| P-11b | 11.5m | Bloque de precio | 1 | ★ solo móvil | Móvil y tablet: las dos piezas apiladas. |
+| P-11b | 11.6 | Cierre de pago + garantía + par de CTA | 1 | ★ | Cierre del pago + garantía pegada al par de CTA, en la columna ancha; el par de botones mide lo mismo que la columna (pedido del usuario). Los dos botones pesan igual (en el build: azul / violeta). Feedback en pointerdown. Destinos pendientes. |
 | P-12a | 12.1 | B01 (secundario) | 1.25 | ★ | Título = golpe y puente a la vez (confirmado). |
 | P-12a | 12.2 | B03 | 1.5 | ★ | Lapidario del capítulo. Rima con «Eres tú.» (10.1): monumental-xl. |
 | P-12a | 12.3 | Puente (lead) | 1 |  | Puente («Ahora…»). |
-| P-12a | 12.4 | B01 (golpe dentro de párrafo) | 1.25 | ★ | El golpe son las dos primeras frases del párrafo; la tercera sigue en lectura dentro del MISMO encuadre (el párrafo no se parte entre paradas). Semimonumental: 6 líneas en móvil 360 (excepción a la regla de ≤5, anotada). |
-| P-12b | 12.5 | Par de CTA | 1 | ★ | Parada de decisión: solo los dos botones, mismo peso. |
+| P-12a | 12.4 | B01 (golpe dentro de párrafo) | 1.25 | ★ | El golpe son las dos primeras frases del párrafo; la tercera sigue en lectura dentro del MISMO encuadre (el párrafo no se parte entre paradas). Debajo, el par de CTA al ancho de la columna (pedido del usuario; antes era la parada 12.5). Semimonumental: 6 líneas en móvil 360 (excepción a la regla de ≤5, anotada). |
 | P-12b | 12.6 | Sello | 1 |  | Pago visual de la metáfora: el hijo cruza solo, el papá observa sin celular. Alternativa: 08-autonomy-mother. |
 | P-12b | 12.7 | B06 | 1.25 | ★ oscuro | Bisagra 5 (oscuro). B06: dos líneas, la segunda en acento itálico. Resumen de marca. |
 | FAQ | — | Acordeón | flujo | ★ | Flujo normal (no pineado). Todas cerradas por defecto: las 7 preguntas se escanean de un vistazo. Toda la fila es el botón; feedback inmediato; abre hacia abajo y cierra por el mismo camino; se puede interrumpir. |
-| FOOT | — | Footer | flujo | ★ | Flujo normal. «digizen» = logo (00-context/logo/digizen-logo-light.svg). Enlaces del copy: gnius.club y aviso de privacidad. |
+| FOOT | — | Footer | flujo | ★ | Flujo normal. «digizen» = logo oficial (00-context/logo/digizen-logo-light.svg; la auditoría lo lee de su alt). En gris en el wireframe; a color en la versión avanzada. Enlaces del copy: gnius.club y aviso de privacidad. |
 
-**Totales:** paradas 87.75 E (desktop) / 88.50 E (móvil) · 21 pines → 20 E de tránsito · total aprox. 110 E desktop / 112 E móvil (con FAQ y footer).
+**Totales:** paradas 86.00 E (desktop) / 87.75 E (móvil) · 21 pines → 20 E de tránsito · total aprox. 108 E desktop / 111 E móvil (con FAQ y footer).
 <!-- PARTITURA:FIN -->
 
 ## 8. Auditoría fuente → wireframe
@@ -246,6 +247,7 @@ La genera `wireframe-src/build.py` desde `content.py`; no la edites a mano.
   - El «·» entre los CTA es el espacio entre los dos botones.
   - `ADA` / `HIJO` son etiquetas de burbuja sin los dos puntos (así aparecen en el sitio de referencia).
   - Las escenas se encuadran sin editar los archivos, con bordes limpios (sin viñeta).
+  - «digizen» del footer es el logo oficial (`00-context/logo/digizen-logo-light.svg`, `alt="digizen"`); la auditoría lo lee de su `alt`. El logo del Hero es decorativo (`alt=""`), no agrega texto. En el wireframe los logos van en gris; a color en la versión avanzada.
 - **Notas internas conservadas fuera de la UI** (no son copy de página):
   - Etiqueta de sección «## Footer» (no aparece en el sitio de referencia).
   - Etiqueta «(FAQ)» del encabezado «Por si te quedó una duda. (FAQ)» (no aparece en el sitio de referencia).

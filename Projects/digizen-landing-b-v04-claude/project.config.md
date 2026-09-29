@@ -26,6 +26,8 @@ fase_actual: 2
   - Tipografías: Playfair Display + Inter.
   - Paleta completa del logo: degradado azul #1A75EA → #2C1DDB, cian #00C4F0, ámbar #EF9600, coral #E65C4D, violeta #7B27D6.
   - No modificar Projects/digizen-landing, Projects/digizen-landing-b ni Projects/digizen-landing-b-v3.
+- fase_1: aprobada 2026-09-26
+- fase_2: aprobada 2026-09-29 (wireframe de recorrido). Criterio para la Fase 3: refinar lo que está, sin cambios drásticos salvo errores. fase_actual pasa a 3 cuando el usuario dé la orden de empezar.
 - pendientes_conocidos (no bloquean Fase 1):
   - Destino de «Inscribir a mi hijo» (pago) y del formulario de «Conversar con ADA primero».
   - Destino del enlace «Conocer las reglas de ADA ↗».

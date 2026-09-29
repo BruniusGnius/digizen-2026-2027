@@ -245,7 +245,7 @@ El espécimen usa un solo acento, `#2F4DFF`. La restricción fija lo sustituye p
 - Sin sombras.
 - **Radios:**
   - **0** en lo que se lee (escenas, piezas, bloques).
-  - **999 px** en lo que se toca (botones, indicador del acordeón). Es el mismo radio del botón del espécimen.
+  - **16 px** en los botones (filas de acción; criterio del usuario, 2026-09-29) y **999 px** en el indicador del acordeón y en el círculo de la flecha.
   - Excepción: las burbujas del diálogo, 18 px, porque la forma es el significado ("son mensajes").
 - **Texto sobre imagen (solo en el Hero):** velo en degradado de `#100F0D` de 0 a 72 %, con texto `#F1EDE6`.
 
@@ -253,15 +253,16 @@ El espécimen usa un solo acento, `#2F4DFF`. La restricción fija lo sustituye p
 
 ## 5. Componentes de interfaz (fuera del espécimen, hechos con sus pasos)
 
-- **Par de CTA, mismo peso.**
-  - Dos píldoras rellenas idénticas, texto Inter 600 `body` y 56 px de alto:
-    - «Inscribir a mi hijo ↗» en `azul-900`.
-    - «Conversar con ADA primero» en `violeta`.
-  - Lado a lado con el mismo ancho en desktop; apiladas a todo el ancho en móvil, en el orden del copy.
+- **Botones = filas de acción (criterio del usuario, 2026-09-29; sustituye a las píldoras).** Una sola familia para todos los botones:
+  - Al ancho de la columna de su lámina, 56 px de alto mínimo, esquinas de **16 px** (amable, sin ser píldora), texto Inter 600 `body` alineado a la izquierda; si el texto es largo, se acomoda en varias líneas sin deformar la forma.
+  - La flecha va a la derecha dentro de un círculo suave de 36 px y dice adónde lleva: ↗ sale del sitio, → hace una acción aquí, ↓ baja en la página. Si el copy trae la flecha, es ese mismo carácter; si no la trae («Conversar con ADA primero»), el ícono va por CSS, sin agregar texto.
+  - **Par de CTA, mismo peso:** dos filas rellenas del mismo tamaño, apiladas en el orden del copy, en desktop y en móvil: «Inscribir a mi hijo ↗» en `azul-900` y «Conversar con ADA primero» en `violeta`.
+  - **Secundario** («Conocer las reglas de ADA ↗», «Si ya viste suficiente, la inscripción está al final de esta página ↓»): superficie clara (`panel`) con borde de 1 px (`line`) y el mismo alto, texto y flecha.
   - Estados:
-    - Hover: sube 2 px.
-    - `pointerdown`: `scale(0.97)` inmediato y regreso con resorte crítico.
-    - Foco: anillo de 2 px `azul-900` separado 3 px.
+    - Hover: la fila sube 2 px y la flecha se mueve 2–3 px hacia donde lleva; en el secundario, el borde se oscurece.
+    - `pointerdown`: `scale(0.98)` inmediato.
+    - Foco: anillo de 2 px separado 3 px.
+    - Movimiento reducido: se degrada (1 px y más rápido; la flecha no se mueve), no se cancela.
 - **Enlace de texto.**
   - Inter 600, subrayado de 1 px (2 px en hover), opacidad 0.7 en `pointerdown` y área táctil de 44 px.
   - Color por rol: violeta para ADA, azul para la inscripción, `ink` en el footer.
