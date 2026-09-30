@@ -13,8 +13,9 @@
 
   /* Configuración por página (pruebas de scroll, 2026-09-30). Los valores por defecto son los del wireframe aprobado:
      stepFade/closeFade/msgFade = en cuánto de la parada aparece cada línea; minUnit = recorrido mínimo por encuadre (px);
-     touchMomentum = limitar la inercia del dedo; flow = sin scroll animado (solo los videos con scrub). */
-  DZ.cfg = Object.assign({ stepFade: 0.05, closeFade: 0.10, msgFade: 0.08, minUnit: 0, touchMomentum: false, flow: false }, window.DZ_CFG || {});
+     touchMomentum = limitar la inercia del dedo; flow = sin scroll animado (solo los videos con scrub);
+     pager = una estación por gesto (prueba 3, dz-pager.js). */
+  DZ.cfg = Object.assign({ stepFade: 0.05, closeFade: 0.10, msgFade: 0.08, minUnit: 0, touchMomentum: false, flow: false, pager: false }, window.DZ_CFG || {});
   DZ.unit = function () { return Math.max(window.innerHeight, DZ.cfg.minUnit || 0); }; /* 1 E en px */
   DZ.hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
   DZ.reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);

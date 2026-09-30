@@ -141,3 +141,14 @@ método: mismas fórmulas del motor (dz-pins.js, dz-carousel.js, dz-hero.js); 1 
 3. **Solo si después sigue saltándose paradas con un gesto fuerte:** limitar la inercia del dedo en pantallas táctiles.
 
 Se prueba primero en una carpeta aparte de GitHub Pages para comparar con la versión actual.
+
+## Pruebas publicadas (2026-09-30)
+
+- **Prueba 1** (`prueba-scroll-1.html`): puntos 1 y 2.
+- **Prueba 2** (`prueba-scroll-2.html`): puntos 1, 2 y 3.
+- **Prueba 3** (`prueba-scroll-3.html`) · **una estación por gesto** (`js/dz-pager.js`). El problema que señaló el jefe del usuario: «cuando yo le doy scroll para continuar con lo que sigue, se salta tres pasos y la gente no sabe que hay texto antes».
+  - Cada gesto (rueda, trackpad, dedo o teclado) mueve exactamente una estación. La inercia se ignora; cuenta un gesto nuevo después de una pausa o de un empujón nuevo.
+  - Las estaciones son las mismas 78 del wireframe y llegan compuestas: sin animaciones internas ni la entrada del Hero.
+  - Las 7 escenas con video o zoom tienen dos paradas (primer cuadro y final); el gesto entre las dos corre la escena en 1.6 s con el mismo scrub. El saludo de ADA corre por tiempo al llegar.
+  - Las estaciones más altas que la pantalla (en el teléfono: 08.5m, 09.3, 11.3m y 11.3bm) se recorren de pantalla en pantalla.
+  - Del FAQ hacia abajo, el scroll es libre; al subir, se detiene en el FAQ. El menú, el riel, el logo y los botones saltan a su estación.

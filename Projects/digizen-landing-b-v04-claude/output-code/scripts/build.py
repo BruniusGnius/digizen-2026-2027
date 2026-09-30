@@ -229,7 +229,7 @@ BASE_CFG = {'stepFade': 0.07, 'closeFade': 0.12, 'msgFade': 0.10, 'minUnit': 900
 VARIANTS = [
     ('prueba-scroll-1.html', 'Prueba 1 · más rango y recorrido mínimo', E_MAS_RANGO, dict(BASE_CFG)),
     ('prueba-scroll-2.html', 'Prueba 2 · + inercia del dedo limitada', E_MAS_RANGO, dict(BASE_CFG, touchMomentum=True)),
-    ('prueba-scroll-3.html', 'Prueba 3 · sin scroll animado (solo videos)', {}, {'flow': True}),
+    ('prueba-scroll-3.html', 'Prueba 3 · una estación por gesto', {}, {'flow': True, 'pager': True}),
 ]
 CURRENT = {'E': {}, 'cfg': None, 'tag': None}   # variante que se está generando (ninguna = la versión actual)
 
@@ -322,7 +322,8 @@ def page(pins, title, indexable=True):
         else:
             pre = f"<link rel='preload' as='image' imagesrcset='{srcset('01-dinner', hero)}' imagesizes='100vw' fetchpriority='high'>"
     ver = time.strftime('%Y%m%d%H%M%S')  # versión por build: el navegador no reutiliza CSS/JS viejos de la caché
-    scripts = '\n'.join(f"<script defer src='{s}?v={ver}'></script>" for s in SCRIPTS)
+    used = SCRIPTS[:-1] + (['js/dz-pager.js'] if (CURRENT['cfg'] or {}).get('pager') else []) + SCRIPTS[-1:]  # el paginador solo en la prueba 3
+    scripts = '\n'.join(f"<script defer src='{s}?v={ver}'></script>" for s in used)
     return f"""<!doctype html>
 <html lang="es-MX">
 <head>

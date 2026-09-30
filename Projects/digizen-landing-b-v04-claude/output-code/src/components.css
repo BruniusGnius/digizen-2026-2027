@@ -505,3 +505,6 @@
 @media (min-width: 860px) { .flow-video .c-seq canvas, .flow-video .ada-fig canvas { display: block; } }  /* prueba 3: los videos con scrub sí corren */
 .flowmode .cue span { animation: none; opacity: .6; }
 .flowmode .stop.k-hero { transition-duration: .3s; }
+/* prueba 3 · una estación por gesto: cada estación llega compuesta, sin fundido; sin rebote ni "jalar para recargar" */
+.paged .stop { transition: none; }
+html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
