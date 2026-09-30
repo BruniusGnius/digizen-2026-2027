@@ -12,7 +12,7 @@
     var total = vis.reduce(function (a, x) { return a + x.s.E; }, 0);
     var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
       id: pin.id, trigger: sec, pin: true, start: 'top top',
-      end: function () { return '+=' + (total * window.innerHeight); },
+      end: function () { return '+=' + (total * DZ.unit()); },
       scrub: 0.4, invalidateOnRefresh: true,
       onToggle: function (self) { sec.classList.toggle('is-pinned', self.isActive); }, /* B7: will-change solo mientras está activo */
       snap: { snapTo: 'labels', duration: { min: 0.3, max: 0.6 }, delay: 0.15, ease: 'power1.inOut', inertia: false }

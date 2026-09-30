@@ -11,13 +11,18 @@
   var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
   DZ.each = each;
 
+  /* Configuración por página (pruebas de scroll, 2026-09-30). Los valores por defecto son los del wireframe aprobado:
+     stepFade/closeFade/msgFade = en cuánto de la parada aparece cada línea; minUnit = recorrido mínimo por encuadre (px);
+     touchMomentum = limitar la inercia del dedo; flow = sin scroll animado (solo los videos con scrub). */
+  DZ.cfg = Object.assign({ stepFade: 0.05, closeFade: 0.10, msgFade: 0.08, minUnit: 0, touchMomentum: false, flow: false }, window.DZ_CFG || {});
+  DZ.unit = function () { return Math.max(window.innerHeight, DZ.cfg.minUnit || 0); }; /* 1 E en px */
   DZ.hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
   DZ.reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   /* movimiento reducido (o sin GSAP) → modo reducido del wireframe: flujo normal con fundidos */
   /* B5 (apple-design §10): si el usuario agrandó el texto del navegador, las paradas (un encuadre fijo)
      podrían no caber; entonces la página se lee en el modo de flujo, sin pines. Para el resto, nada cambia. */
   DZ.bigText = (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16) > 17;
-  DZ.mode = (DZ.hasGsap && !DZ.reduce && !DZ.bigText) ? 'full' : 'flow';
+  DZ.mode = (DZ.hasGsap && !DZ.reduce && !DZ.bigText && !DZ.cfg.flow) ? 'full' : 'flow';
   DZ.isD = window.innerWidth >= 860;
   /* conexión lenta o ahorro de datos: las secuencias se quedan en su cuadro fijo */
   var cn = navigator.connection || {};
