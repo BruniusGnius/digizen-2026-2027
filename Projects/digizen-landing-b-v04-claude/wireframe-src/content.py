@@ -394,8 +394,8 @@ pin("P-10a", "10 · Lo más importante no es ADA.", "pin", [
 pin("P-10b", "10 · (cont.)", "pin", [
     st("10.5", "B03", "two", 1.5,
        ("<div class='c ctr stack b03'>\n<p class='in w5 t-sub lead-l bw' data-beat='lead'>Un niño, en otra parte, dijo esto. Léelo despacio:</p>\n"
-        "<p class='pf w8 it t-semi bw' data-beat='close'>«Mi mamá se ríe más cuando ve el celular que cuando está conmigo.»</p>\n</div>"),
-       "Bisagra 4 (oscuro). Lapidario (confirmado). Semimonumental porque en monumental serían 6 líneas en móvil 360. Habla el niño: voz citada (itálica). En el build va en coral, «para que se sienta» (pedido del usuario, 2026-09-29; antes: sin acento).",
+        "<p class='pf w8 it t-semi bw' data-beat='close'>«Mi mamá se ríe más <span class='hl'>cuando ve el celular</span> que cuando está conmigo.»</p>\n</div>"),
+       "Bisagra 4 (oscuro). Lapidario (confirmado). Semimonumental porque en monumental serían 6 líneas en móvil 360. Habla el niño: voz citada (itálica). En el build solo «cuando ve el celular» va en coral (pedido del usuario, 2026-09-29).",
        night=True, scan=True),
     st("10.6", "L07", "read", 1,
        l07(["Esa pausa antes de decidir no es solo para él. Con lo que te comparte, y con SAFE, los cursos breves para mamás y papás que van incluidos, <b class='w7'>tú también vas entrenando el tuyo</b>: qué preguntar, cuándo escuchar, cómo acompañar sin interrogar. <b class='w7'>Él aprende a mirar a los dos lados. Tú aprendes a caminar a su lado.</b>"], wide=True),
@@ -475,7 +475,7 @@ pin("P-12b", "12 · decisión y cierre", "pin", [
     st("12.6", "Sello", "seal", 1, seal("08-autonomy-father.webp"),
        "Pago visual de la metáfora: el hijo cruza solo, el papá observa sin celular. Alternativa: 08-autonomy-mother."),
     st("12.7", "B06", "golpe", 1.25,
-       "<div class='c ctr stack b06'>\n<p class='pf w8 t-mon bw'>Presencia, no vigilancia.</p>\n<p class='pf w8 t-mon bw'><em class='acc'>Criterio, no candado.</em></p>\n</div>",
+       "<div class='c ctr stack b06'>\n<p class='pf w8 t-mon bw'><span class='hl'>Presencia,</span> no <span class='hl'>vigilancia.</span></p>\n<p class='pf w8 t-mon bw'><em class='acc'>Criterio, <span class='hl'>no</span> <span class='hl'>candado.</span></em></p>\n</div>",
        "Bisagra 5 (oscuro). B06: dos líneas, la segunda en acento itálico. Resumen de marca.",
        night=True, scan=True),
 ])

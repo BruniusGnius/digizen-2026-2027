@@ -50,6 +50,10 @@ Hasta ahora nada se ha visto en un navegador. Con tu permiso para abrir el naveg
 3. Conexión limitada (4G y 3G rápida) para confirmar que cada secuencia y escena llega antes de su parada.
 4. Rendimiento y accesibilidad (Lighthouse), y la rúbrica de la fase con `03-build-notes.md`.
 
+## Estado (2026-09-29)
+
+**Aplicado:** A1, A2, A3, B1, B2, B3, B4, B5, B6, B7. C, descartado por ahora. Falta la verificación en navegador (E).
+
 ## Orden sugerido
 
 A1 → A2 → A3 → B1 → B4 → B3 → B6 → B7 → B5 → B2, y al final la verificación (E). Las de C, solo si las apruebas.

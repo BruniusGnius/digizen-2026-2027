@@ -83,6 +83,14 @@
   /* movimiento de interacción (apple-design §1–4): respuesta inmediata, sin rebote */
   --ease-out: cubic-bezier(.2, .8, .2, 1);
   --t-fast: 160ms;
+  /* B1: resorte con amortiguación crítica (sin rebote) para todo lo que se toca; se asienta en ~0.5 s.
+     Las transiciones CSS retoman desde el valor actual si se interrumpen. */
+  --ease-spring: var(--ease-out);
+  --t-spring: 500ms;
+}
+
+@supports (transition-timing-function: linear(0, 1)) {
+  :root { --ease-spring: linear(0, 0.0369, 0.1219, 0.2275, 0.3374, 0.4422, 0.5372, 0.6204, 0.6916, 0.7513, 0.8009, 0.8414, 0.8743, 0.9008, 0.9220, 0.9389, 0.9523, 0.9628, 0.9711, 0.9776, 1); }
 }
 
 /* tablet (600–859 px): márgenes más generosos (pedido del usuario, 2026-09-29); misma escala tipográfica móvil */

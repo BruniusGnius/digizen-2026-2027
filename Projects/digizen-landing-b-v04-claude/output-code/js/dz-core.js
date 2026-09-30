@@ -14,7 +14,10 @@
   DZ.hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
   DZ.reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   /* movimiento reducido (o sin GSAP) → modo reducido del wireframe: flujo normal con fundidos */
-  DZ.mode = (DZ.hasGsap && !DZ.reduce) ? 'full' : 'flow';
+  /* B5 (apple-design §10): si el usuario agrandó el texto del navegador, las paradas (un encuadre fijo)
+     podrían no caber; entonces la página se lee en el modo de flujo, sin pines. Para el resto, nada cambia. */
+  DZ.bigText = (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16) > 17;
+  DZ.mode = (DZ.hasGsap && !DZ.reduce && !DZ.bigText) ? 'full' : 'flow';
   DZ.isD = window.innerWidth >= 860;
   /* conexión lenta o ahorro de datos: las secuencias se quedan en su cuadro fijo */
   var cn = navigator.connection || {};

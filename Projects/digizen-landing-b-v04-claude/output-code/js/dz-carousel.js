@@ -14,6 +14,7 @@
       id: pin.id, trigger: sec, pin: true, start: 'top top',
       end: function () { return '+=' + (total * window.innerHeight); },
       scrub: 0.4, invalidateOnRefresh: true,
+      onToggle: function (self) { sec.classList.toggle('is-pinned', self.isActive); }, /* B7: will-change solo mientras está activo */
       snap: { snapTo: 'labels', duration: { min: 0.3, max: 0.6 }, delay: 0.15, ease: 'power1.inOut', inertia: false }
     } });
     tl.to({}, { duration: total }, 0);

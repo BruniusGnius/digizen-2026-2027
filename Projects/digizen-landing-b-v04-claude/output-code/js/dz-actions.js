@@ -9,9 +9,11 @@
   var DZ = window.DZ;
   var dlg = document.getElementById('ada-dialog');
 
-  // ---------- respuesta inmediata en pointerdown (apple-design §1) ----------
+  // ---------- respuesta inmediata en pointerdown (apple-design §1, A2) ----------
+  var PRESSABLE = '.btn, .lnk, .channel button, .faq summary, .menu-item, .rail-item, .menu-btn, .close';
+  document.addEventListener('touchstart', function () {}, { passive: true }); /* iOS: activa :active al primer toque */
   document.addEventListener('pointerdown', function (e) {
-    var b = e.target.closest('.btn'); if (!b) return;
+    var b = e.target.closest(PRESSABLE); if (!b) return;
     b.classList.add('is-pressed');
     var up = function () { b.classList.remove('is-pressed'); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up); };
     window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
@@ -43,14 +45,42 @@
   }
   Array.prototype.forEach.call(chans, function (b) { b.addEventListener('click', function () { setChannel(b.getAttribute('data-channel')); }); });
 
-  function openAda(from) {
-    opener = from;
-    if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
-    var first = dlg.querySelector('input'); if (first) first.focus();
+  // ---------- A3: el diálogo emerge desde su botón y vuelve hacia él (apple-design §7), con resorte interrumpible ----------
+  var sp = null, closing = false;
+  function draw(p) {
+    dlg.style.opacity = Math.max(0, Math.min(1, p));
+    if (!DZ.reduce) dlg.style.transform = 'scale(' + (0.9 + 0.1 * p) + ')'; /* movimiento reducido: solo fundido */
   }
-  dlg.addEventListener('close', function () { if (opener && opener.focus) opener.focus(); });
-  dlg.querySelector('[data-close]').addEventListener('click', function () { dlg.close(); });
-  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); }); /* clic en el fondo */
+  function originFromOpener() {
+    var r = dlg.getBoundingClientRect(), o = opener && opener.getBoundingClientRect ? opener.getBoundingClientRect() : null;
+    var ox = o ? o.left + o.width / 2 - r.left : r.width / 2, oy = o ? o.top + o.height / 2 - r.top : r.height / 2;
+    dlg.style.transformOrigin = ox + 'px ' + oy + 'px';
+  }
+  function animate(to, done) {
+    if (sp && sp.running()) { sp.to(to); sp._done = done; return; }
+    var from = to ? 0 : 1;
+    sp = DZ.spring({ from: from, to: to, response: 0.36, eps: 0.002, onUpdate: draw,
+      onRest: function () { var d = sp && sp._done; sp = null; if (d) d(); } });
+    sp._done = done;
+  }
+  function openAda(from) {
+    opener = from; closing = false;
+    if (!dlg.open) {
+      if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+      originFromOpener(); draw(0);   /* el origen se mide sin escala */
+    }
+    animate(1, function () { dlg.style.transform = ''; });
+    var first = dlg.querySelector('input'); if (first) first.focus({ preventScroll: true });
+  }
+  function closeAda() {
+    if (!dlg.open || closing) return; closing = true;
+    originFromOpener();
+    animate(0, function () { closing = false; dlg.close(); dlg.style.opacity = ''; dlg.style.transform = ''; });
+  }
+  dlg.addEventListener('cancel', function (e) { e.preventDefault(); closeAda(); }); /* Esc */
+  dlg.addEventListener('close', function () { if (opener && opener.focus) opener.focus({ preventScroll: true }); });
+  dlg.querySelector('[data-close]').addEventListener('click', closeAda);
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) closeAda(); }); /* clic en el fondo */
   form.addEventListener('submit', function (e) {
     e.preventDefault(); /* como en A: sin envío todavía (destino pendiente) */
     if (!form.reportValidity()) return;

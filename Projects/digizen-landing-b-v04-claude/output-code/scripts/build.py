@@ -37,11 +37,12 @@ ADA_CARD_STOPS = {'08.5', '08.5m'}                                     # tarjeta
 # (una lista = un color por acento, en orden: 03.5 es una antítesis «no» / «cómo», pedido del usuario)
 ACC_ROLE = {'H.2': 'coral', '01.3': 'coral', '03.5': 'azul', '05.7': 'azul', '07.5': 'azul', '12.2': 'azul', '12.7': 'azul'}  # 07.5 «idea propia.»: color en el texto (azul = criterio), no banda (pedido del usuario)
 # conceptos fuertes resaltados solo con color (<span class='hl'>, sin cambio tipográfico; pedido del usuario, 2026-09-29)
-HL_ROLE = {'03.3': 'coral', '03.5': 'coral', '03.7': 'coral', '05.3': 'coral', '05.4': 'coral', '08.4': 'coral', '12.4': 'coral',
+HL_ROLE = {'12.7': ['azul', 'coral', 'plain', 'coral'],  # Presencia, / vigilancia. / no (blanco, como el texto) / candado.
+            '10.5': 'coral', '03.3': 'coral', '03.5': 'coral', '03.7': 'coral', '05.3': 'coral', '05.4': 'coral', '08.4': 'coral', '12.4': 'coral',
            '05.8': 'azul', '10.4': 'azul', '10.1': 'azul', '09.1': 'ia',
            '07.6': ['coral', 'azul']}   # evolución: el antes en coral (el problema), el después en azul (el criterio)
 # voz citada en color: coral cuando es alerta o negativa (creencias falsas, objeción); azul cuando es positiva (la pregunta de 10.3)
-VOICE_STOPS = {'02.2': 'coral', '02.3': 'coral', '02.4': 'coral', '02.5': 'coral', '08.1': 'coral', '10.3': 'azul', '10.5': 'coral'}  # 10.5: coral por pedido del usuario
+VOICE_STOPS = {'02.2': 'coral', '02.3': 'coral', '02.4': 'coral', '02.5': 'coral', '08.1': 'coral', '10.3': 'azul'}  # 10.5: solo «cuando ve el celular» en coral (HL_ROLE)
 IA_STOPS = {'08.3'}                                                     # dato sobre IA en violeta
 SCENE_W, VERT_W, QUALITY = (1280, 1920, 2560), (800, 1200), 72
 FOOT_LINKS = {'Gnius Club ↗': 'https://gnius.club/', 'Aviso de privacidad': 'https://gnius.club/aviso-de-privacidad.html'}
@@ -222,8 +223,8 @@ DIALOG = """<dialog class='ada-dialog' id='ada-dialog' aria-labelledby='ada-dial
 </dialog>"""
 
 SCRIPTS = ['assets/vendor/gsap.min.js', 'assets/vendor/ScrollTrigger.min.js', 'assets/vendor/ScrollToPlugin.min.js',
-           'js/dz-core.js', 'js/dz-seq.js', 'js/dz-pins.js', 'js/dz-carousel.js', 'js/dz-hero.js',
-           'js/dz-rail.js', 'js/dz-brand.js', 'js/dz-menu.js', 'js/dz-actions.js', 'js/dz-main.js']
+           'js/dz-core.js', 'js/dz-spring.js', 'js/dz-seq.js', 'js/dz-pins.js', 'js/dz-carousel.js', 'js/dz-hero.js',
+           'js/dz-rail.js', 'js/dz-brand.js', 'js/dz-menu.js', 'js/dz-faq.js', 'js/dz-actions.js', 'js/dz-main.js']
 
 def page(pins, title):
     main = '\n'.join(pin_html(p) for p in pins if p['id'] != 'FOOT')
@@ -248,7 +249,7 @@ def page(pins, title):
 <link rel="icon" type="image/svg+xml" href="assets/logo/Favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400..800;1,400..800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..800;1,14..32,400..800&display=swap">
 {pre}
 <link rel="stylesheet" href="dist/styles.css?v={ver}">
 </head>

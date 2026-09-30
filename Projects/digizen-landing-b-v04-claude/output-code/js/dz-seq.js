@@ -17,7 +17,9 @@
       var job = queue.shift(); active++;
       (function (job) {
         var done = function () { active--; pump(); };
-        job.im.addEventListener('load', done, { once: true });
+        var ready = function () { job.im._dzReady = true; job.im.dispatchEvent(new Event('dz-ready')); done(); };
+        /* B6 (apple-design §11): decodificar antes de dibujar, para que el scrub no dé tirones */
+        job.im.addEventListener('load', function () { if (job.im.decode) job.im.decode().then(ready, ready); else ready(); }, { once: true });
         job.im.addEventListener('error', done, { once: true });
         job.im.src = job.url;
       })(job);
@@ -79,7 +81,7 @@
     var rev = fig.getAttribute('data-reverse') === '1';
     var imgs = new Array(n), state = { f: (rev ? n - 1 : 0) };
     var url = function (k) { return base + '/f' + ('00' + (start + k)).slice(-3) + '.webp'; };
-    function ok(im) { return im && im.complete && im.naturalWidth; }
+    function ok(im) { return im && im._dzReady && im.naturalWidth; }
     function draw() {
       var i = Math.max(0, Math.min(n - 1, Math.round(state.f)));
       var im = imgs[i];
@@ -105,7 +107,7 @@
           if (k === firstIdx) { fig.classList.add('ready'); size(); }
           else if (Math.abs(Math.round(state.f) - k) <= 4) draw();
         };
-        if (ok(im)) onload(); else im.addEventListener('load', onload, { once: true });
+        if (ok(im)) onload(); else im.addEventListener('dz-ready', onload, { once: true });
       });
     };
     DZ.loader.near(el.closest('.pin'), loadAll);

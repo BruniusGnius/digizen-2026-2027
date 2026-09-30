@@ -21,7 +21,8 @@
     tl.call(function () { if (!told && DZ.afterHero) { told = true; DZ.afterHero(); } });
     ScrollTrigger.create({ id: pin.id, trigger: sec, pin: true, start: 'top top',
       end: function () { return '+=' + (x.s.E * window.innerHeight); },
-      onEnterBack: function () { tl.restart(); } });
+      onEnterBack: function () { tl.restart(); },
+      onToggle: function (self) { sec.classList.toggle('is-pinned', self.isActive); } });
     tl.restart();
     sec._wf = { total: x.s.E, labels: [[x.s.id, 0, x]], vis: vis };
   };

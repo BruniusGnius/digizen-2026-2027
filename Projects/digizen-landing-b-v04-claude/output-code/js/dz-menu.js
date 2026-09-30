@@ -72,4 +72,59 @@
   });
   var faq = menu.querySelector('[data-menu-goto]');
   if (faq) faq.addEventListener('click', function () { closeMenu(true); DZ.goTo(faq.getAttribute('data-menu-goto')); });
+
+  // ---------- B2: cerrar deslizando con el dedo (apple-design §2, §5, §6) ----------
+  /* El panel sigue al dedo 1:1 desde el punto donde se agarró. Hacia la derecha cierra; hacia la izquierda
+     (más allá de abierto) ofrece resistencia progresiva. Al soltar, el resorte continúa con la velocidad del
+     gesto y el destino sale de proyectar hacia dónde iba, no del punto más cercano. Solo tacto y lápiz. */
+  var drag = null, settle = null;
+  function place(x, W) {
+    panel.style.transform = 'translateX(' + x + 'px)';
+    backdrop.style.opacity = String(Math.max(0, Math.min(1, 1 - Math.max(0, x) / W)));
+  }
+  function rubber(d, W) { return (1 - 1 / (d * 0.55 / W + 1)) * W * 0.25; } /* resistencia creciente, tope suave */
+  function release() {
+    panel.style.transform = ''; panel.style.transition = ''; backdrop.style.transition = ''; backdrop.style.opacity = '';
+  }
+  panel.addEventListener('pointerdown', function (e) {
+    if (!open || e.pointerType === 'mouse') return;
+    if (settle) { settle.stop(); settle = null; }
+    var now = performance.now();
+    drag = { id: e.pointerId, x0: e.clientX, y0: e.clientY, x: 0, active: false, lastX: e.clientX, lastT: now, v: 0 };
+  });
+  window.addEventListener('pointermove', function (e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    var dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
+    if (!drag.active) {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+      if (Math.abs(dy) > Math.abs(dx)) { drag = null; return; }   /* gesto vertical: es el scroll de la lista */
+      drag.active = true;
+      panel.style.transition = 'none'; backdrop.style.transition = 'none';
+    }
+    var now = performance.now(), W = panel.offsetWidth;
+    drag.v = (e.clientX - drag.lastX) / Math.max(1, now - drag.lastT) * 1000;   /* px/s */
+    drag.lastX = e.clientX; drag.lastT = now;
+    drag.x = dx > 0 ? dx : -rubber(-dx, W);
+    place(drag.x, W);
+  });
+  function end(e) {
+    if (!drag || (e && e.pointerId !== drag.id)) return;
+    var d = drag; drag = null;
+    if (!d.active) return;
+    /* un arrastre no es un toque: se anula el clic que viene después */
+    var block = function (ev) { ev.stopPropagation(); ev.preventDefault(); };
+    window.addEventListener('click', block, true);
+    setTimeout(function () { window.removeEventListener('click', block, true); }, 60);
+    var W = panel.offsetWidth, projected = d.x + d.v * 0.2;   /* proyección de ~200 ms del gesto */
+    var shut = projected > W * 0.5;
+    settle = DZ.spring({ from: d.x, to: shut ? W : 0, velocity: d.v, response: 0.34, eps: 0.5,
+      onUpdate: function (x) { place(x, W); },
+      onRest: function () {
+        settle = null;
+        if (shut) { closeMenu(); menu.hidden = true; }
+        release();
+      } });
+  }
+  window.addEventListener('pointerup', end);
+  window.addEventListener('pointercancel', end);
 })();
