@@ -54,6 +54,7 @@ p,h1,h2,h3,figure{margin:0}
 .t-mxl{font-size:var(--mxl);line-height:.95;letter-spacing:-.02em}
 .bw{text-wrap:balance} .essay p, .sup p{text-wrap:pretty}
 .acc{font-style:italic;text-decoration:underline dotted;text-decoration-thickness:.05em;text-underline-offset:.12em}
+.hl{text-decoration:underline dotted;text-decoration-thickness:.05em;text-underline-offset:.12em} /* concepto con color en el build (sin itálica) */
 mark.val{background:#d9d9d9;color:inherit;padding:0 .15em}
 .lnk{font-weight:600;text-decoration:underline;text-underline-offset:.2em;color:inherit;cursor:pointer}
 
@@ -180,9 +181,6 @@ mark.val{background:#d9d9d9;color:inherit;padding:0 .15em}
 .c-seal img,.c-seq canvas{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(.95)} /* sin viñeta: bordes limpios (decisión del usuario) */
 picture{display:contents}
 .c-seal[data-fit=contain] img{object-fit:contain} /* escena completa, sin recortar (04-shield) */
-/* desktop: la escena se ve COMPLETA, como es el archivo, sin recortes ni reencuadres (decisión del usuario, 2026-09-28).
-   Si la ventana no tiene la proporción de la imagen, lo que sobra queda como banda del color del fondo. */
-@media (min-width:860px){ .c-seal img{object-fit:contain} }
 .vmiss{display:none}
 @media (max-width:859px){ .vmiss{display:block;position:absolute;left:12px;right:12px;bottom:44px;z-index:5;font:500 11px/1.4 ui-monospace,Menlo,monospace;color:#1a1a1a;background:rgba(255,255,255,.94);border:1px dashed #444;padding:6px 8px;text-align:left} }
 .nonotes .vmiss{display:none!important}
@@ -206,6 +204,7 @@ picture{display:contents}
   .msg-row{max-width:100%;gap:8px} .avatar{width:34px;height:34px;border-radius:10px}
   .dlg{gap:8px} .msg{padding:8px 12px} .dlg-k{margin-bottom:2px}
   .c-seal img{height:auto;max-height:100%}
+  .c-seal img[data-v]{height:100%;max-height:none;object-fit:cover} /* vertical 2:3: llena la pantalla; el recorte cae fuera de la zona segura */
 }
 
 /* ===== Hero: configuración propia de desktop (no es la de móvil escalada) ===== */
@@ -627,7 +626,7 @@ function buildSeq(el, tl, t, span){
   if(!isD && fig.getAttribute('data-mobile') === 'still') return; /* móvil/tablet: cuadro fijo, sin descargar la secuencia (como en A) */
   var cv = fig.querySelector('canvas'), ctx = cv.getContext('2d');
   var n = +fig.getAttribute('data-n'), base = fig.getAttribute('data-seq');
-  var start = +(fig.getAttribute('data-start') || 1), contain = isD || fig.getAttribute('data-fit') === 'contain'; /* desktop: cuadro completo, sin recorte */
+  var start = +(fig.getAttribute('data-start') || 1), contain = fig.getAttribute('data-fit') === 'contain'; /* cubre su contenedor (decisión del usuario, 2026-09-29) */
   var dur = parseFloat(fig.getAttribute('data-span') || 0.7);
   var rev = fig.getAttribute('data-reverse') === '1'; /* reproducción al revés: del último cuadro al primero */
   var imgs = [], state = {f:(rev ? n - 1 : 0)};
@@ -913,33 +912,49 @@ def estimate(h, W=312, Hs=556):
 
 # ------------------------------------------------------------------ salida
 VERT_REL = '00-context/scenes/vertical'
+# La vertical lleva el nombre de la original + el sufijo -v, SIN carpeta aparte (acuerdo con el usuario):
+# junto a la original en 00-context/scenes/ o junto a las imágenes del sitio en output-code/assets/scenes/.
+VERT_DIRS = ('00-context/scenes', 'output-code/assets/scenes', VERT_REL)
+VERT_ALIASES = {'03-fastidio': 'fastidio-f*-v.webp'}  # la imagen fija del fastidio sale de un cuadro del video
+
+def find_vertical(name):
+    """Ruta relativa de <nombre>-v.webp (mismo nombre que la original + sufijo -v), o None si todavía no existe."""
+    import glob
+    for d in VERT_DIRS:
+        rel = f"{d}/{name}-v.webp"
+        if os.path.exists(os.path.join(ROOT, rel)):
+            return rel
+        if name in VERT_ALIASES:
+            hits = sorted(glob.glob(os.path.join(ROOT, d, VERT_ALIASES[name])))
+            if hits: return os.path.relpath(hits[-1], ROOT)
+    return None
 
 def with_verticals(pins):
-    """Cada escena tiene versión horizontal (desktop) y vertical 3:4 (móvil/tablet, < 860 px).
-    Si la vertical existe en 00-context/scenes/vertical/<nombre>-v.webp se usa con <picture>;
+    """Cada escena tiene versión horizontal (desktop) y vertical 2:3 (un solo archivo para móvil y tablet, < 860 px).
+    Si existe <nombre>-v.webp (junto a la original o en 00-context/scenes/vertical/) se usa con <picture>;
     si todavía no existe, en móvil se muestra un aviso con el archivo que falta."""
     import copy
     P = copy.deepcopy(pins)
     pat = re.compile(r"<img([^>]*?) src='00-context/scenes/([^'/]+)\.webp'([^>]*)>")
     def sub(m):
-        vrel = f"{VERT_REL}/{m.group(2)}-v.webp"
-        if os.path.exists(os.path.join(ROOT, vrel)):
-            return f"<picture><source media='(max-width: 859px)' srcset='{vrel}'>{m.group(0)}</picture>"
-        return m.group(0) + f"<span class='vmiss'>Falta versión vertical 3:4 (móvil/tablet) · {vrel}</span>"
+        vrel = find_vertical(m.group(2))
+        if vrel:
+            return f"<picture><source media='(max-width: 859px)' srcset='{vrel}'>{m.group(0).replace('<img', '<img data-v=\'1\'', 1)}</picture>"
+        return m.group(0) + f"<span class='vmiss'>Falta versión vertical 2:3 (móvil/tablet) · 00-context/scenes/{m.group(2)}-v.webp</span>"
     for p in P:
         for st in p.get('stops', []):
             st['html'] = pat.sub(sub, st['html'])
             if st['id'] == '03.4m':
-                vrel = f"{VERT_REL}/03-fastidio-v.webp"
-                if os.path.exists(os.path.join(ROOT, vrel)):
+                vrel = find_vertical('03-fastidio') or f"00-context/scenes/03-fastidio-v.webp"
+                if find_vertical('03-fastidio'):
                     st['html'] = st['html'].replace('assets/seq/03-fastidio/fastidio-f064.webp', vrel).replace('PROVISIONAL · cuadro 64 del video · se reemplaza por la imagen fija nueva', '03-fastidio-v.webp')
                 else:
-                    st['html'] = st['html'].replace('</figure>', f"<span class='vmiss'>Imagen fija PROVISIONAL · falta la vertical 3:4 · {vrel}</span></figure>", 1)
+                    st['html'] = st['html'].replace('</figure>', f"<span class='vmiss'>Imagen fija PROVISIONAL · falta la vertical 2:3 · {vrel}</span></figure>", 1)
     return P
 
 def vertical_status():
     names = sorted(set(re.findall(r"src='00-context/scenes/([^'/]+)\.webp'", json.dumps({'p': C.PINS}, ensure_ascii=False)))) + ['03-fastidio']
-    return [(nm, os.path.exists(os.path.join(ROOT, VERT_REL, f'{nm}-v.webp'))) for nm in names]
+    return [(nm, bool(find_vertical(nm))) for nm in names]
 
 def main():
     data = json.dumps({'pins': with_verticals(C.PINS)}, ensure_ascii=False).replace('</', '<\\/')
@@ -956,7 +971,7 @@ def main():
     print(f"  adiciones de copy aprobadas por el usuario (no están en la fuente): {len(adds)}")
     for sid, tx in adds: print(f"      {sid}: «{tx}»")
     print('\n== Versiones verticales (móvil/tablet) ==')
-    for nm, ok in vertical_status(): print(f"  {'OK   ' if ok else 'FALTA'} {VERT_REL}/{nm}-v.webp")
+    for nm, ok in vertical_status(): print(f"  {'OK   ' if ok else 'FALTA'} {find_vertical(nm) or f'00-context/scenes/{nm}-v.webp'}")
     print('\n== Partitura (E por pin) ==')
     tots = {'d': 0, 'm': 0}; npins = 0
     rows = []

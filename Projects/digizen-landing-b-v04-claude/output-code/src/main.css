@@ -1,0 +1,10 @@
+/* Entrada de Tailwind v4: preflight + tokens del sistema + componentes.
+   Se compila con `npm run css` → dist/styles.css */
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./components.css";
+
+/* Tailwind solo mira los archivos del producto */
+@source "../index.html";
+@source "../prueba.html";
+@source "../js";

@@ -12,13 +12,13 @@
 2. `00-context/scenes/01-dinner.webp`: el estilo pictórico de la serie (óleo empastado, muro blanco texturizado, pinceladas azul/cian/violeta).
 
 ## Formato
-- **Vertical 3:4, 1200 × 1600.** En tablet vertical llena el encuadre; en móvil (9:15.3) se recorta solo por los lados.
-- El chico va centrado y ocupa el 70 % central del ancho, para que el recorte móvil no lo toque.
+- **Vertical 2:3, 1200 × 1800** (un solo archivo para teléfono y tablet). En teléfono se recorta ~6 % de cada lado; en tablet, hasta 9 % arriba y abajo.
+- El chico va centrado, dentro del rectángulo central de 80 % × 80 %, para que ningún recorte lo toque.
 
 ## Prompt (en inglés, como los originales)
 
 ```
-Use case: illustration-story. Create ONE new vertical painted illustration, 3:4 portrait, 1200x1600.
+Use case: illustration-story. Create ONE new vertical painted illustration, 2:3 portrait, 1200x1800.
 Input image 1 is the identity, wardrobe and pose reference; input image 2 is the style reference.
 STYLE: match input image 2 exactly — expressive semi-realistic oil painting with visible impasto
 brushstrokes, off-white textured plaster wall background with loose abstract strokes of cobalt blue,

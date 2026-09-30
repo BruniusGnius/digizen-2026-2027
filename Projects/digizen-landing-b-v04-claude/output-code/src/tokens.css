@@ -1,0 +1,116 @@
+/* =====================================================================
+   Tokens — Digizen landing B v04
+   Fuente: 01-design-system.md (aprobado 2026-09-26) + ajustes aprobados en la Fase 2
+   y en el plan de la Fase 3 (03-build-plan.md, §4.1: anchos unificados).
+   Nada de valores sueltos en los componentes: todo sale de aquí.
+   ===================================================================== */
+
+@theme {
+  /* familias (Google Fonts) */
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* neutros del espécimen (§4.1) */
+  --color-bg: #F4F3F0;
+  --color-panel: #FFFFFF;
+  --color-panel-2: #FBFAF8;
+  --color-ink: #14120F;
+  --color-muted: #6D675F;
+  --color-line: #DFDAD2;
+  --color-line-strong: #807E7B;
+  /* escenario oscuro de las bisagras: navy = confianza (lógica de color de V05 «Misión Clara», el origen del sistema) */
+  --color-night: #111A34;
+  --color-night-panel: #18233F;
+  --color-night-ink: #F1EDE6;
+  --color-night-line: #2A3656;
+
+  /* paleta del logo con los roles de la psicología de color de V05 «Misión Clara» (decisión del usuario, 2026-09-29) */
+  --color-azul-900: #2C1DDB;   /* estructura: método, progreso, inscripción, enlaces, foco */
+  --color-azul-500: #1A75EA;   /* estructura sobre oscuro, solo ≥ 24 px */
+  --color-violeta: #7B27D6;    /* profundidad / IA, con moderación */
+  --color-coral: #E65C4D;      /* energía humana y conversación: voz citada, dilema; solo ≥ 24 px, nunca en botones */
+  --color-ambar: #EF9600;      /* logro y valor: solo relleno o banda, con ink */
+  --color-cian: #00C4F0;       /* ADA: solo relleno/tinte con ink */
+  --color-violeta-tinte: #E8DFED;
+  --color-cian-tinte: #CDEBF0;
+  --color-ambar-tinte: #F3E0C0;
+  --color-coral-tinte: #F8E1DD;  /* conversación: burbuja del hijo */
+
+  /* radios (§4.3, con el criterio de botones del 2026-09-29) */
+  --radius-card: 16px;
+  --radius-btn: 16px;
+  --radius-bubble: 18px;
+  --radius-round: 999px;
+
+  /* corte del espécimen */
+  --breakpoint-d: 860px;
+}
+
+:root {
+  color-scheme: light;
+
+  /* escala funcional de 8 pasos (§2.2): móvil · tablet < 860 px ≤ desktop. En rem, sin clamp. */
+  --t-micro: 0.6875rem;  /* 11 */
+  --t-small: 0.8125rem;  /* 13 */
+  --t-body: 1rem;        /* 16 */
+  --t-sub: 1.1875rem;    /* 19 */
+  --t-head: 1.5rem;      /* 24 */
+  --t-semi: 2.125rem;    /* 34 */
+  --t-mon: 3rem;         /* 48 */
+  --t-mxl: 4rem;         /* 64 */
+
+  /* retícula y escenario (§1.2, §6) */
+  --gap: 16px;
+  --pad-y: 28px;
+  --pad-x: 24px;
+  /* aire entre golpe (o puente) y lo que sigue: 32 px en móvil / 48 px en desktop, restando el stack de 10 px */
+  --air: 22px;
+  --stack: 10px;
+
+  /* anchos unificados (plan §4.1): tres de contenido y dos medidas para texto grande */
+  --w-read: 27rem;       /* lectura corta, ~38 caracteres */
+  --w-wide: 42rem;       /* lectura larga, ~60 caracteres */
+  --w-grid: 1180px;      /* retícula de 12 columnas */
+  --m-display: 18ch;     /* golpes en semimonumental y monumental */
+  --m-head: 22ch;        /* títulos en heading */
+
+  /* logos (pedido del usuario, 2026-09-29): grande en el Hero; flotante después, fijo y sin animación de escala */
+  --brand-hero-w: 160px;
+  --brand-w: 104px;
+  --brand-top: 14px;
+  --brand-left: 20px;
+
+  /* movimiento de interacción (apple-design §1–4): respuesta inmediata, sin rebote */
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+  --t-fast: 160ms;
+}
+
+/* tablet (600–859 px): márgenes más generosos (pedido del usuario, 2026-09-29); misma escala tipográfica móvil */
+@media (min-width: 600px) and (max-width: 859px) {
+  :root {
+    --pad-x: 48px;
+    --pad-y: 36px;
+    --brand-left: 48px;
+    --brand-top: 20px;
+  }
+}
+
+@media (min-width: 860px) {
+  :root {
+    --t-micro: 0.75rem;  /* 12 */
+    --t-small: 0.875rem; /* 14 */
+    --t-body: 1.125rem;  /* 18 */
+    --t-sub: 1.5rem;     /* 24 */
+    --t-head: 2rem;      /* 32 */
+    --t-semi: 3.5rem;    /* 56 */
+    --t-mon: 6rem;       /* 96 */
+    --t-mxl: 9rem;       /* 144 */
+    --gap: 24px;
+    --pad-y: 24px;
+    --air: 38px;
+    --brand-hero-w: 240px;
+    --brand-w: 150px;
+    --brand-top: 18px;
+    --brand-left: 24px;
+  }
+}

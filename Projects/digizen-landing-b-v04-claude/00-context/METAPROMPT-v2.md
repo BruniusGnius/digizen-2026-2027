@@ -23,7 +23,7 @@
    - Nunca toques tipografía (tamaño, peso, tracking, mayúsculas) sin permiso.
    - Para decisiones de gusto, ofrece opciones numeradas, con la opción por defecto marcada.
    - Imágenes: una por escena (no versiones distintas para móvil y desktop) y sin captions visibles.
-   - El Mac del usuario tiene activado **"reducir movimiento"**: en la landing real se degrada la animación, nunca se cancela.
+   - Con **"reducir movimiento"** (para quien lo tenga activado; el Mac del usuario no lo tiene, lo verificó el 2026-09-29), en la landing real se degrada la animación, nunca se cancela.
    - **Pide permiso antes de abrir cualquier navegador**, incluso uno aislado o headless, para tomar capturas.
 
 ## 1. Qué es esto
@@ -174,7 +174,7 @@ Las 3 fases y sus gates siguen, pero cambia qué se entrega en cada una:
   - `scrub` y `toggleActions` nunca juntos.
 - **Horizontal (`containerAnimation`):** `ease: "none"`, y el snap va en el trigger principal.
 - **`gsap.matchMedia()`** con el corte de 860 px del espécimen y `prefers-reduced-motion`.
-- **Movimiento reducido:** sin pin, flujo normal, fundidos cortos. Degradar, nunca cancelar. El prototipo de revisión trae un botón para verlo, porque el Mac del usuario lo tiene activado.
+- **Movimiento reducido:** sin pin, flujo normal, fundidos cortos. Degradar, nunca cancelar. El prototipo de revisión trae un botón para verlo.
 - **Visibilidad y accesibilidad:**
   - `autoAlpha` solo en capas decorativas. El texto de lectura usa `opacity` + `pointer-events`, para seguir en el árbol de accesibilidad.
   - SplitText por palabras, sin `text-wrap: balance`, con `autoSplit` + `onSplit`.

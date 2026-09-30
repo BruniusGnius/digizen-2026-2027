@@ -1,7 +1,7 @@
 ---
 project: digizen-landing-b-v04-claude
 created: 2026-09-26
-fase_actual: 2
+fase_actual: 3
 ---
 - contenido_fuente:
   - 00-context/COPY-PUBLICADO.md (copy literal, fuente de verdad)
@@ -10,6 +10,7 @@ fase_actual: 2
 - sistema_previo:
   - 00-context/Tipografía esencial.html
   - 00-context/Scroll Patterns — Especimen Completo.html
+  - 00-context/digizen-ada-proposal-v05-mision-clara-2026-08-25.html (V05 «Misión Clara»: origen del sistema y de la lógica de color por psicología; agregado por el usuario el 2026-09-29)
 - assets:
   - 00-context/scenes/ (14 .webp, copiadas de Projects/digizen-landing-b-v2/angular-build/public/assets/scenes/)
   - 00-context/logo/ (5 .svg, copiados de Projects/digizen-landing/angular-build/public/assets/digizen/logo-SVG/)
@@ -27,7 +28,8 @@ fase_actual: 2
   - Paleta completa del logo: degradado azul #1A75EA → #2C1DDB, cian #00C4F0, ámbar #EF9600, coral #E65C4D, violeta #7B27D6.
   - No modificar Projects/digizen-landing, Projects/digizen-landing-b ni Projects/digizen-landing-b-v3.
 - fase_1: aprobada 2026-09-26
-- fase_2: aprobada 2026-09-29 (wireframe de recorrido). Criterio para la Fase 3: refinar lo que está, sin cambios drásticos salvo errores. fase_actual pasa a 3 cuando el usuario dé la orden de empezar.
+- fase_2: aprobada 2026-09-29 (wireframe de recorrido). Criterio para la Fase 3: refinar lo que está, sin cambios drásticos salvo errores. Fase 3 iniciada el 2026-09-29.
+- stack (2026-09-29): prototipo HTML + Tailwind + GSAP, que es el producto final (no se lleva a Angular). Formulario y datos como en la propuesta A.
 - pendientes_conocidos (no bloquean Fase 1):
   - Destino de «Inscribir a mi hijo» (pago) y del formulario de «Conversar con ADA primero».
   - Destino del enlace «Conocer las reglas de ADA ↗».

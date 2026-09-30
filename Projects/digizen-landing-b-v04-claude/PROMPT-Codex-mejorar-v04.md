@@ -57,7 +57,7 @@ Revisé `Projects/digizen-landing-b-v04-codex/`: `01-design-system.md`, `02-wire
 
 Además:
 - **En móvil no hay nada:** `setupDesktopMotion()` solo corre desde 861 px, así que no se ejecuta ni el pin del Hero.
-- **Con "reducir movimiento" se cancela todo** (`clearProps` + `return`) en vez de degradarse. Tu Mac lo tiene activado.
+- **Con "reducir movimiento" se cancela todo** (`clearProps` + `return`) en vez de degradarse. Para quien lo tenga activado, eso deja la página sin su recorrido.
 
 ### Otros hallazgos
 

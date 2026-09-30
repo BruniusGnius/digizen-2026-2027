@@ -47,10 +47,12 @@ def l07(paras, wide=None):
     w = " wide" if wide else ""
     return f"<div class='c l07{w}'>\n<div class='essay'>\n{ps}\n</div>\n</div>"
 
-def seal(fn, zoom=None, direction="out", origin=None, fit=None):
+def seal(fn, zoom=None, direction="out", origin=None, fit=None, origin_m=None):
+    """origin_m: punto del zoom en la vertical (móvil/tablet), si el objeto está en otro lugar que en la horizontal."""
     z = f" data-zoom='{zoom}' data-zoom-dir='{direction}'" if zoom else ""
     z += f" data-fit='{fit}'" if fit else ""
     z += f" data-origin='{origin}'" if origin else ""
+    z += f" data-origin-m='{origin_m}'" if origin_m else ""
     return f"<figure class='c-seal'{z}><img src='{S}{fn}' alt=''><figcaption class='wf-file'>{fn}</figcaption></figure>"
 
 def seq(folder, n, poster, reverse=False):
@@ -92,6 +94,10 @@ CUE_PATH = "<div class='cue cue-path' aria-hidden='true'><span></span><span></sp
 
 def acc(w):
     return f"<em class='acc'>{w}</em>"
+
+def hl(w):
+    """Concepto fuerte resaltado SOLO con color (sin itálica ni cambio tipográfico); el color lo pone el build según su función."""
+    return f"<span class='hl'>{w}</span>"
 
 def st(id, comp, kind, E, html, note, night=False, scan=False, bp="all"):
     return dict(id=id, comp=comp, kind=kind, E=E, html=html, note=note, night=night, scan=scan, bp=bp)
@@ -154,7 +160,7 @@ pin("P-02b", "02 · Las cuatro falsas (horizontal)", "h", [
     st("02.2", "L05 (cita-eco + prosa)", "panel", 1,
        ("<div class='c l05'>\n<h3 class='pf w7 it t-semi bw w-q'>«El problema es el tiempo.»</h3>\n<div class='def'>\n"
         "<p class='in w5 t-body'>Eso ya lo intentaste medir. <b class='w7'>Negociaste «una hora y ya».</b> Y cuando por fin cumplía la hora, ¿se sentía resuelto? Una mamá nos lo dijo así, y no se nos ha borrado:</p>\n"
-        "<p class='pf it w4 t-sub q-in bw'>«Ni siquiera me mira a los ojos.»</p>\n"
+        "<p class='pf it w7 t-sub q-in bw'>«Ni siquiera me mira a los ojos.»</p>\n"
         "<p class='in w5 t-body'>Eso no se mide en minutos.</p>\n</div>\n</div>"),
        "Patrón 3+5: pin + desplazamiento horizontal. Cada panel llega y se estaciona el 70 % de su E; el paso al siguiente ocurre en el 30 % restante. Snap a la mitad de cada estacionamiento, sin inercia (corrección del usuario: antes cambiaba casi en automático). Panel 1/4. La cita-eco es micro-golpe de apertura del bloque.",
        scan=True),
@@ -173,19 +179,19 @@ pin("P-02b", "02 · Las cuatro falsas (horizontal)", "h", [
 ])
 # 03 · Ahora, un favor.
 pin("P-03a", "02 sello · 03 · Ahora, un favor.", "pin", [
-    st("02.6", "Sello (zoom-in largo)", "seal", 1.5, seal("02-facial-recognition.webp", zoom=1.5, direction="in", origin="57% 62%"),
+    st("02.6", "Sello (zoom-in largo)", "seal", 1.5, seal("02-facial-recognition.webp", zoom=1.5, direction="in", origin="57% 62%", origin_m="72% 50%"),
        "Sella el capítulo completo. Zoom-in largo con scroll (pedido del usuario): de 1× a 1.5× en 1.5 E, hacia el celular con el candado y el reloj; en el encuadre final siguen la cara del chico, el celular y parte de la laptop. El snap se detiene al terminar el zoom. La referencia usa «candados»; aquí la pantalla del celular muestra candado y reloj de arena (tiempo + contraseña). Alternativa: 02-facial-recognition-alt."),
     st("03.1", "L06", "read", 1,
        l06("Ahora, un favor.", ["Acuérdate de lo que acabas de leer sobre el candado."]),
        "Título-puente («Ahora…») + primera línea.", scan=True),
     st("03.2", "L06 (título en voz de puente)", "read", 1,
-       "<div class='c l06'>\n<p class='pf w5 t-sub bw lead-l'>¿Qué sentiste?</p>\n<div class='sup essay'>\n"
+       "<div class='c l06'>\n<p class='pf w7 t-sub bw lead-l'>¿Qué sentiste?</p>\n<div class='sup essay'>\n"
        "<p class='in w5 t-body'>No fue enojo. Apuesto a que fue otra cosa: esa angustia de <b class='w7'>«ya lo sé… ¿y entonces qué hago?»</b>. Ver a tu hijo ahí, con el celular, y no saber qué más hacer.</p>\n"
        "<p class='in w5 t-body'>Quédate con eso un segundo. <b class='w7'>Porque te acabo de hacer exactamente lo que tú le haces a él.</b></p>\n</div>\n</div>",
        "Gramática «puente + lectura»: el encabezado en el subhead del espécimen (Playfair 500 romana, 24/19; corrección del usuario); los párrafos en body (Inter), con negritas según el criterio editorial: la voz citada «ya lo sé… ¿y entonces qué hago?» y el remate que gira el argumento."),
     st("03.3", "B03 (cierre secundario)", "two", 1.5,
        b03("Ahora acuérdate de la cara de tu hijo la quinta vez que le dijiste <b class='w7'>«ya deja el cel»</b>.",
-           "Los ojos al techo. En señal de fastidio.", size="semi"),
+           "<span class='hl'>Los ojos al techo. En señal de fastidio.</span>", size="semi"),
        "Puente → golpe secundario (semimonumental). La escena lo sella en la siguiente parada.", scan=True),
     st("03.4", "Secuencia con scrub (desktop)", "seq", 1.5, seq("assets/seq/03-fastidio", 49, "fastidio-f064.webp"),
        "Desktop: video con scrub (decisión del usuario). 49 cuadros WebP de 1280 px (3.0 MB) sacados de «initial_image»; el scroll recorre el gesto completo (mira el celular → ojos al techo → cabeza atrás) en 1.5 E y se estaciona al final. Póster = cuadro 64 (modo reducido y mientras carga).", bp="d"),
@@ -196,17 +202,17 @@ pin("P-03a", "02 sello · 03 · Ahora, un favor.", "pin", [
 pin("P-03b", "03 · Ahora, un favor. (cont.)", "pin", [
     st("03.5", "B03", "two", 1.5,
        b03("No siente lo mismo que tú. <b class='w7'>Tú sientes angustia. Él ya está harto de oírlo.</b> Pero los dos están parados en el mismo lugar:",
-           f"Alguien les dijo «no», y nadie les dijo «{acc('cómo')}»."),
-       "Bisagra 2 (oscuro). Lapidario del capítulo (confirmado). El lead termina en dos puntos: anuncia el corte.",
+           f"Alguien les dijo {hl('«no»')}, y nadie les dijo {acc('«cómo»')}."),
+       "Bisagra 2 (oscuro). Lapidario del capítulo (confirmado). El lead termina en dos puntos: anuncia el corte. «no» y «cómo» en acento como antítesis (pedido del usuario, 2026-09-29): en el build, «no» en coral (la prohibición) y «cómo» en azul (el método).",
        night=True, scan=True),
     st("03.6", "L07", "read", 1,
        l07(["Yo te dije <b class='w7'>«el candado no sirve»</b> y no te di nada a cambio. Tú le dices <b class='w7'>«deja el cel»</b> y tampoco. Y con un <b class='w7'>«no» no se construye nada</b>. Ni criterio, ni conversación. <b class='w7'>Solo un hijo que busca el «cómo»</b> por su cuenta. Y lo encuentra: en dos días. Solo que fue el cómo saltárselo."]),
        "Vuelve la luz. Lectura."),
     st("03.7", "B01 (golpe dentro de párrafo)", "golpe", 1.25,
-       "<div class='c left stack b01 b01-l'>\n<p class='pf w8 t-semi bw'>Por eso «no me escucha» era la única verdadera.</p>\n<p class='in w5 t-body'>Pero la razón no es que sea rebelde. Es que <b class='w7'>un «no» sin «cómo» no le deja nada que hacer</b>. Y a un «no» sin «cómo» nadie responde con criterio. Se responde con <b class='w7'>un candado abierto en dos días</b>.</p>\n</div>",
+       "<div class='c left stack b01 b01-l'>\n<p class='pf w8 t-semi bw'>Por eso <span class='hl'>«no me escucha»</span> era la única verdadera.</p>\n<p class='in w5 t-body'>Pero la razón no es que sea rebelde. Es que <b class='w7'>un «no» sin «cómo» no le deja nada que hacer</b>. Y a un «no» sin «cómo» nadie responde con criterio. Se responde con <b class='w7'>un candado abierto en dos días</b>.</p>\n</div>",
        "Gramática «golpe dentro de párrafo» (layout de 03.7, 08.4 y 12.4): la primera frase paga la revelación del cap. 01 y va en grande y centrada (ajuste del usuario); el resto del párrafo sigue en la columna de lectura, 32/48 px debajo, en el mismo encuadre.", scan=True),
-    st("03.8", "Sello", "seal", 1, seal("04-shield.webp", zoom=1, fit="contain"),
-       "Sella el capítulo: mamá e hija, cada una con su escudo, separadas. Se muestra COMPLETA (ajuste por altura, sin recortar cabezas ni pies; pedido del usuario): en desktop quedan franjas angostas a los lados, del color del fondo. Movimiento: solo disolvencia de entrada, sin zoom (pedido del usuario)."),
+    st("03.8", "Sello", "seal", 1, seal("04-shield.webp", zoom=1),
+       "Sella el capítulo: mamá e hija, cada una con su escudo, separadas. Cubre todo el contenedor en desktop, como las demás escenas (pedido del usuario, 2026-09-29; antes se mostraba completa con franjas). Movimiento: solo disolvencia de entrada, sin zoom (pedido del usuario)."),
 ])
 
 # 04 · respiro
@@ -235,11 +241,11 @@ pin("P-05a", "05 · Ahora sí: el «cómo»", "pin", [
             "Al principio le das la mano. Te detienes con él. <b class='w7'>Miras a los dos lados.</b> Le explicas por qué ese coche, aunque esté lejos, importa. No lo haces para llevarlo de la mano hasta los cuarenta. <b class='w7'>Lo haces para que un día cruce sin ti.</b>"]),
        "Lectura: la metáfora de cruzar la calle."),
     st("05.3", "B01 (golpe dentro de párrafo)", "golpe", 1.25,
-       "<div class='c left stack b01 b01-l'>\n<p class='pf w8 t-semi bw'>Ahora imagina que la única lección hubiera sido: «No cruces.»</p>\n"
+       "<div class='c left stack b01 b01-l'>\n<p class='pf w8 t-semi bw'>Ahora imagina que la única lección hubiera sido: <span class='hl'>«No cruces.»</span></p>\n"
        "<p class='in w5 t-body'>Funciona mientras estás en la esquina. Y el día que tiene que cruzar solo, <b class='w7'>se para en la banqueta sin saber mirar</b>. Nadie le enseñó. <b class='w7'>Solo le dijeron que no.</b></p>\n</div>",
        "Mismo layout que 03.7 (pedido del usuario): la frase en semimonumental y centrada; el párrafo en la columna de lectura, 32/48 px debajo, en el mismo encuadre.", scan=True),
     st("05.4", "B01 (golpe en dos alturas)", "reveal", 1.5,
-       "<div class='c ctr stack b01'>\n<p class='pf w8 t-semi bw' data-step='1'>Bloquearle el celular es</p>\n<p class='pf w8 t-mon bw' data-step='2'>«no cruces».</p>\n</div>",
+       "<div class='c ctr stack b01'>\n<p class='pf w8 t-semi bw' data-step='1'>Bloquearle el celular es</p>\n<p class='pf w8 t-mon bw' data-step='2'><span class='hl'>«no cruces»</span>.</p>\n</div>",
        "Golpe en dos alturas (pedido del usuario, mismo patrón que 01.3): «Bloquearle el celular es» señala → semimonumental; «no cruces». revela → monumental. Dos tiempos: primero lo que señala, al seguir scrolleando lo que revela.", scan=True),
     st("05.5", "Secuencia con scrub (desktop)", "seq", 1.5, seq("assets/seq/05-crossing", 49, "05-crossing-poster.webp", reverse=True),
        "Desktop: video con scrub (pedido del usuario), REPRODUCIDO AL REVÉS (pedido del usuario, 2026-09-29; se estaciona en el cuadro inicial del video, que es la escena fija): el feed de la calle fluye mientras la mamá señala. 49 cuadros WebP de 1280 px, calidad 50 (4.5 MB; el detalle de las fichas pesa más que en fastidio), sacados del video «Style_Hybrid…» (1908×1084, 5 s). Se estaciona al final. Sella la metáfora a mitad del capítulo; el lapidario viene después, sin imagen propia.", bp="d"),
@@ -255,7 +261,7 @@ pin("P-05b", "05 · el «cómo» (cont.)", "pin", [
        "Bisagra 3 (oscuro). Tesis de la pieza. Gramática «antítesis»: la misma forma que el cierre de marca (12.7), dos líneas iguales con acento en la segunda, para que al final el lector reconozca la tesis en «Presencia, no vigilancia. / Criterio, no candado.».",
        night=True, scan=True),
     st("05.8", "B03 (entrada → revelación)", "two", 1.5,
-       b03("Ese día, lo único que va a cruzar la calle con él es", "lo que le hayas enseñado antes.", size="semi"),
+       b03("Ese día, lo único que va a cruzar la calle con él es", "<span class='hl'>lo que le hayas enseñado antes.</span>", size="semi"),
        "Vuelve la luz. La frase se parte en entrada y revelación (pedido del usuario): «lo que le hayas enseñado antes.» en semimonumental, un paso abajo de la tesis (05.7, monumental) para no competir con ella.", scan=True),
 ])
 
@@ -311,9 +317,9 @@ pin("P-07c", "07 · cierre", "pin", [
        "Lapidario del capítulo (ajuste del usuario): «Una pausa.» y «Una consecuencia.» en semimonumental, una por línea; «Una idea propia.» completa en monumental, con el acento subrayado en «idea propia.». Patrón «golpe en dos alturas» en tres tiempos: cada frase aparece al seguir scrolleando y «idea propia.» cae al final.", scan=True),
     st("07.6", "Evolución (de → a, dos columnas)", "reveal", 1.5,
        "<div class='c evo'>\n<p class='in w5 t-body evo-pre' data-step='1'>Lo que construye ahí adentro se lo lleva puesto a sus juegos, a sus chats, a su vida. Y empieza a cruzar de</p>\n<div class='evo-cols'>\n"
-       "<div class='evo-col a' data-step='2'><p class='pf w4 t-head bw'>«lo que veo en redes me dice quién soy»</p></div>\n"
+       "<div class='evo-col a' data-step='2'><p class='pf w5 t-head bw'><span class='hl'>«lo que veo en redes me dice quién soy»</span></p></div>\n"
        "<div class='evo-conn' data-step='3'><span class='in w6 t-micro'>a</span><span class='evo-arrow' aria-hidden='true'></span></div>\n"
-       "<div class='evo-col b' data-step='4'><p class='pf w8 t-head bw'>«yo decido qué me sirve y qué quiero compartir».</p></div>\n</div>\n</div>",
+       "<div class='evo-col b' data-step='4'><p class='pf w8 t-head bw'><span class='hl'>«yo decido qué me sirve y qué quiero compartir»</span>.</p></div>\n</div>\n</div>",
        "Evolución en dos columnas (pedido del usuario): el antes en Playfair 400 y el después en Playfair 800; en medio, el «a» del copy con una flecha que se dibuja (→ en desktop, ↓ en móvil). Entra en tiempos: frase → antes → flecha → después. Mismas palabras, mismo orden.", scan=True),
     st("07.7", "L07", "read", 1,
        l07(["Te lo digo derecho: <b class='w7'>ADA está viva y está creciendo.</b> Tu hijo empieza con ella el día que lo inscribas, y las familias que entran ahora la moldean: lo que tu familia necesite se construye primero. No te pido que confíes en una promesa bonita. Más abajo te explico <b class='w7'>cómo hablar tú con ADA antes de pagar un peso</b>."]),
@@ -336,7 +342,7 @@ pin("P-08a", "08 · «Espera. ¿Una IA hablando con mi hijo?»", "pin", [
        "Dato = Registro B (confirmado). B09: el numeral en su lugar dentro de la frase, sin duplicarlo ni reordenar. Lapidario del capítulo. Candidato a patrón 10 (contador).",
        scan=True),
     st("08.4", "B01 (golpe dentro de párrafo)", "golpe", 1.25,
-       "<div class='c left stack b01 b01-l'>\n<p class='pf w8 t-semi bw'>No es que vaya a pasar. Ya está pasando.</p>\n<p class='in w5 t-body'>Lo único que queda por decidir es cuál: una IA hecha para adultos, o <b class='w7'>una hecha para tu hijo, con reglas y con tu participación</b>.</p>\n</div>",
+       "<div class='c left stack b01 b01-l'>\n<p class='pf w8 t-semi bw'>No es que vaya a pasar. <span class='hl'>Ya está pasando.</span></p>\n<p class='in w5 t-body'>Lo único que queda por decidir es cuál: una IA hecha para adultos, o <b class='w7'>una hecha para tu hijo, con reglas y con tu participación</b>.</p>\n</div>",
        "Gramática «golpe dentro de párrafo» (layout de 12.4): «No es que vaya a pasar. Ya está pasando.» en grande; el resto del párrafo en lectura, mismo encuadre.", scan=True),
 ])
 _b1 = card("Cero rol romántico.", "Cero secretos peligrosos. Sus reglas están escritas y las vas a poder leer antes de empezar: qué hace ADA y qué no.",
@@ -348,16 +354,16 @@ pin("P-08b", "08 · reglas", "pin", [
        "Tres tarjetas separadas (pedido del usuario): subtítulo (subhead Playfair) + párrafo; «Conocer las reglas de ADA ↗» como botón secundario; la tercera lleva el título «Práctica y breve», adición de copy aprobada por el usuario. Desktop: tres columnas.", scan=True, bp="d"),
     st("08.5m", "L08 (mazo apilado)", "deck", 1.75, l08("ADA es lo segundo, por diseño:", [_b1, _b2, _b3], deck=True),
        "Móvil y tablet: las tres tarjetas en la MISMA parada (pedido del usuario). Tablet (600–859 px): caben juntas; aparecen una debajo de otra con el scroll. Móvil (< 600 px): no caben (~150 % a 360 px), así que van en mazo apilado (decisión del usuario; patrón 3 + 8 del catálogo): el título se queda, cada tarjeta sube desde abajo y se apila sobre la anterior, que queda asomada por su subtítulo. Snap por tarjeta. Al volver hacia arriba reaparece el botón «Conocer las reglas de ADA ↗» de la primera tarjeta.", scan=True, bp="m"),
-    st("08.6", "Sello", "seal", 1, seal("06-rules.webp", zoom=1),
-       "Sella la tranquilización: papá revisando las reglas. Sin zoom, solo disolvencia de entrada (pedido del usuario). Alternativa: 06-rules-alt."),
 ])
 
 # 09 · respiro / instruccional
 pin("P-09", "09 · Y la prueba no te la pido por fe.", "pin", [
     st("09.1", "B01 (golpe en dos alturas)", "reveal", 1.5,
-       "<div class='c ctr stack b01'>\n<h2 class='pf w8 t-semi bw' data-step='1'>Y la prueba no te la pido por fe.</h2>\n<p class='pf w8 t-mon bw' data-step='2'>Habla tú con ADA primero.</p>\n</div>",
+       "<div class='c ctr stack b01'>\n<h2 class='pf w8 t-semi bw' data-step='1'>Y la prueba no te la pido por fe.</h2>\n<p class='pf w8 t-mon bw' data-step='2'><span class='hl'>Habla tú con ADA primero.</span></p>\n</div>",
        "Golpe en dos alturas (pedido del usuario, mismo patrón que 01.3 y 05.4): «Y la prueba no te la pido por fe.» señala → semimonumental; «Habla tú con ADA primero.» revela → monumental. Dos tiempos.", scan=True),
-    st("09.2", "L07 + botón + puente", "read", 1.25,
+    st("09.2", "Sello", "seal", 1, seal("06-rules.webp", zoom=1),
+       "El papá con la tableta, después de «Habla tú con ADA primero.» (pedido del usuario, 2026-09-29; antes sellaba las reglas en 08.6). Sin zoom, solo disolvencia de entrada (pedido del usuario). Alternativa: 06-rules-alt."),
+    st("09.3", "L07 + botón + puente", "read", 1.25,
        "<div class='c l07 wide'>\n<div class='essay'>\n"
        "<p class='in w5 t-body'>Pide tu acceso al final de esta página para <b class='w7'>conversar tú con ADA antes de inscribir a tu hijo</b>. Interrógala. Trata de sacarla de sus reglas. Pregúntale lo que un niño le preguntaría. Pregúntale qué no va a hacer nunca con tu hijo. <b class='w7'>Te va a contestar sin rodeos.</b></p>\n"
        "<p class='in w5 t-body'>Queremos que conozcas a la inteligencia artificial con la que hablará tu hijo <b class='w7'>antes de pagar</b>. Por eso la ponemos por delante.</p>\n"
@@ -370,7 +376,7 @@ pin("P-09", "09 · Y la prueba no te la pido por fe.", "pin", [
 # 10 · Lo más importante no es ADA.
 pin("P-10a", "10 · Lo más importante no es ADA.", "pin", [
     st("10.1", "B03", "two", 1.5,
-       b03("Lo más importante no es ADA.", "Eres tú.", size="mxl", lead_tag="h2"),
+       b03("Lo más importante no es ADA.", "Eres <span class='hl'>tú.</span>", size="mxl", lead_tag="h2"),
        "Título + primera línea = un solo golpe (confirmado). Rima con «Ya lo tienes.» (12.2): los dos momentos en que la pieza le devuelve el protagonismo al papá van en monumental-xl.",
        scan=True),
     st("10.2", "L07", "read", 1,
@@ -382,14 +388,14 @@ pin("P-10a", "10 · Lo más importante no es ADA.", "pin", [
        "<p class='in w5 t-body'>Quizá te cuenta. Quizá hoy no. Pero <b class='w7'>la puerta queda abierta</b>, y no es un interrogatorio.</p>\n</div>",
        "L04: la cita en voz citada a semimonumental (Playfair 700 itálica, como las citas-eco del cap. 02; pedido del usuario); el remate debajo en lectura, con aire amplio de 32/48 px (pedido del usuario). No se inventa fuente.", scan=True),
     st("10.4", "B03 (puente → golpe)", "two", 1.5,
-       b03("Y aquí pasa algo que no te esperas. Cuando dejas de ser tú-contra-la-pantalla, <b class='w7'>se vuelven ustedes dos, del mismo lado</b>.", "El criterio que lo cuida es el mismo puente que te lo regresa.", size="semi"),
+       b03("Y aquí pasa algo que no te esperas. Cuando dejas de ser tú-contra-la-pantalla, <b class='w7'>se vuelven ustedes dos, del mismo lado</b>.", "<span class='hl'>El criterio</span> que lo cuida es el mismo <span class='hl'>puente que te lo regresa.</span>", size="semi"),
        "Puente → golpe (pedido del usuario, mismo layout que 05.8): el puente en voz lead; «El criterio que lo cuida es el mismo puente que te lo regresa.» cae después en semimonumental."),
 ])
 pin("P-10b", "10 · (cont.)", "pin", [
     st("10.5", "B03", "two", 1.5,
        ("<div class='c ctr stack b03'>\n<p class='in w5 t-sub lead-l bw' data-beat='lead'>Un niño, en otra parte, dijo esto. Léelo despacio:</p>\n"
         "<p class='pf w8 it t-semi bw' data-beat='close'>«Mi mamá se ríe más cuando ve el celular que cuando está conmigo.»</p>\n</div>"),
-       "Bisagra 4 (oscuro). Lapidario (confirmado). Semimonumental porque en monumental serían 6 líneas en móvil 360. Habla el niño: voz citada (itálica). Sin acento: la cita ya pesa sola.",
+       "Bisagra 4 (oscuro). Lapidario (confirmado). Semimonumental porque en monumental serían 6 líneas en móvil 360. Habla el niño: voz citada (itálica). En el build va en coral, «para que se sienta» (pedido del usuario, 2026-09-29; antes: sin acento).",
        night=True, scan=True),
     st("10.6", "L07", "read", 1,
        l07(["Esa pausa antes de decidir no es solo para él. Con lo que te comparte, y con SAFE, los cursos breves para mamás y papás que van incluidos, <b class='w7'>tú también vas entrenando el tuyo</b>: qué preguntar, cuándo escuchar, cómo acompañar sin interrogar. <b class='w7'>Él aprende a mirar a los dos lados. Tú aprendes a caminar a su lado.</b>"], wide=True),
@@ -426,19 +432,19 @@ pin("P-11a", "11 · Inscríbelo hoy. Generación Fundadora.", "pin", [
 ])
 pin("P-11b", "11 · precio y garantía", "pin", [
     st("11.4", "L07 + título + bloque de precio", "read", 1.25,
-       "<div class='c l07 wide'>\n<div class='essay'>\n<p class='in w5 t-body'>El programa va <b class='w7'>de tercero de primaria a tercero de prepa</b>. Tu hijo arranca en el primer nivel de su sección y cada año sube uno.</p>\n<h3 class='pf w7 t-head bw'>¿Cuánto cuesta y cómo se paga?</h3>\n<p class='in w5 t-body'>El ciclo completo de 12 meses cuesta $5,990. <b class='w7'>Es un solo precio.</b> No hay cuota de inscripción aparte ni cargos escondidos. Tú eliges cómo pagarlo:</p>\n"
+       "<div class='c l07 wide'>\n<div class='essay'>\n<p class='in w5 t-body'>El programa va <b class='w7'>de tercero de primaria a tercero de prepa</b>. Tu hijo arranca en el primer nivel de su sección y cada año sube uno.</p>\n<h3 class='pf w8 t-head bw'>¿Cuánto cuesta y cómo se paga?</h3>\n<p class='in w5 t-body'>El ciclo completo de 12 meses cuesta $5,990. <b class='w7'>Es un solo precio.</b> No hay cuota de inscripción aparte ni cargos escondidos. Tú eliges cómo pagarlo:</p>\n"
        "<div class='price'>\n"
-       "<div class='piece'><p class='in w8 t-head amt'>Todo hoy, de una vez: $4,990.</p>\n<p class='in w5 t-body'><mark class='val'>Te ahorras $1,000 por pagarlo completo.</mark> Es el precio fundador y vale hasta el 31 de octubre.</p></div>\n"
-       "<div class='piece'><p class='in w8 t-head amt'>En 10 pagos mensuales de $599.</p>\n<p class='in w5 t-body'>Son los mismos $5,990, divididos en diez. Terminas de pagar en el mes diez; ADA sigue con tu hijo hasta el doce.</p></div>\n"
+       "<div class='piece'><p class='in w8 t-head amt'>Todo hoy, de una vez: $4,990.</p>\n<p class='in w5 t-body'><mark class='val'>Te ahorras $1,000 por pagarlo completo.</mark> Es el precio fundador y vale hasta el 31 de octubre.</p><a class='btn' data-new='aprobado' data-plan='contado' data-role='azul · pago de contado (texto de la propuesta A)'>Pagar de contado<span class='arr' data-dir='ne' data-icon='↗' aria-hidden='true'></span></a></div>\n"
+       "<div class='piece'><p class='in w8 t-head amt'>En 10 pagos mensuales de $599.</p>\n<p class='in w5 t-body'>Son los mismos $5,990, divididos en diez. Terminas de pagar en el mes diez; ADA sigue con tu hijo hasta el doce.</p><a class='btn' data-new='aprobado' data-plan='diferido' data-role='azul · pagos diferidos (texto de la propuesta A)'>Elegir pagos diferidos<span class='arr' data-dir='ne' data-icon='↗' aria-hidden='true'></span></a></div>\n"
        "</div>\n</div>\n</div>",
        "UNA lámina (pedido del usuario): lectura con subtítulo del copy en la columna ancha y, debajo, las dos piezas de precio al ancho de esa columna. Monto en su lugar (Inter 800), nunca duplicado. El marcador gris = ámbar de valor en el build.", scan=True, bp="d"),
     st("11.4m", "L07 + título", "read", 1,
-       "<div class='c l07 wide'>\n<div class='essay'>\n<p class='in w5 t-body'>El programa va <b class='w7'>de tercero de primaria a tercero de prepa</b>. Tu hijo arranca en el primer nivel de su sección y cada año sube uno.</p>\n<h3 class='pf w7 t-head bw'>¿Cuánto cuesta y cómo se paga?</h3>\n<p class='in w5 t-body'>El ciclo completo de 12 meses cuesta $5,990. <b class='w7'>Es un solo precio.</b> No hay cuota de inscripción aparte ni cargos escondidos. Tú eliges cómo pagarlo:</p>\n</div>\n</div>",
+       "<div class='c l07 wide'>\n<div class='essay'>\n<p class='in w5 t-body'>El programa va <b class='w7'>de tercero de primaria a tercero de prepa</b>. Tu hijo arranca en el primer nivel de su sección y cada año sube uno.</p>\n<h3 class='pf w8 t-head bw'>¿Cuánto cuesta y cómo se paga?</h3>\n<p class='in w5 t-body'>El ciclo completo de 12 meses cuesta $5,990. <b class='w7'>Es un solo precio.</b> No hay cuota de inscripción aparte ni cargos escondidos. Tú eliges cómo pagarlo:</p>\n</div>\n</div>",
        "Móvil y tablet: juntas no caben en el teléfono (~125 % a 360 px), así que la lectura y el precio van en paradas seguidas.", scan=True, bp="m"),
     st("11.5m", "Bloque de precio", "read", 1,
        "<div class='c price-wrap'>\n<div class='price'>\n"
-       "<div class='piece'><p class='in w8 t-head amt'>Todo hoy, de una vez: $4,990.</p>\n<p class='in w5 t-body'><mark class='val'>Te ahorras $1,000 por pagarlo completo.</mark> Es el precio fundador y vale hasta el 31 de octubre.</p></div>\n"
-       "<div class='piece'><p class='in w8 t-head amt'>En 10 pagos mensuales de $599.</p>\n<p class='in w5 t-body'>Son los mismos $5,990, divididos en diez. Terminas de pagar en el mes diez; ADA sigue con tu hijo hasta el doce.</p></div>\n"
+       "<div class='piece'><p class='in w8 t-head amt'>Todo hoy, de una vez: $4,990.</p>\n<p class='in w5 t-body'><mark class='val'>Te ahorras $1,000 por pagarlo completo.</mark> Es el precio fundador y vale hasta el 31 de octubre.</p><a class='btn' data-new='aprobado' data-plan='contado' data-role='azul · pago de contado (texto de la propuesta A)'>Pagar de contado<span class='arr' data-dir='ne' data-icon='↗' aria-hidden='true'></span></a></div>\n"
+       "<div class='piece'><p class='in w8 t-head amt'>En 10 pagos mensuales de $599.</p>\n<p class='in w5 t-body'>Son los mismos $5,990, divididos en diez. Terminas de pagar en el mes diez; ADA sigue con tu hijo hasta el doce.</p><a class='btn' data-new='aprobado' data-plan='diferido' data-role='azul · pagos diferidos (texto de la propuesta A)'>Elegir pagos diferidos<span class='arr' data-dir='ne' data-icon='↗' aria-hidden='true'></span></a></div>\n"
        "</div>\n</div>",
        "Móvil y tablet: las dos piezas apiladas.", scan=True, bp="m"),
     st("11.6", "Cierre de pago + garantía + par de CTA", "cta", 1,
@@ -460,7 +466,7 @@ pin("P-12a", "12 · Una última cosa, y ya te dejo.", "pin", [
        lead("<b class='w7'>Ahora te toca dárselo a él.</b> Ésa es la lección completa. Lo demás son detalles."),
        "Puente («Ahora…»)."),
     st("12.4", "B01 (golpe dentro de párrafo)", "golpe", 1.25,
-       "<div class='c left stack b01 b01-l'>\n<p class='pf w8 t-semi bw'>No inscribirlo también es una decisión. La diferencia es que ésa no tiene botón de cancelar.</p>\n"
+       "<div class='c left stack b01 b01-l'>\n<p class='pf w8 t-semi bw'>No inscribirlo también es una decisión. La diferencia es que <span class='hl'>ésa no tiene botón de cancelar.</span></p>\n"
        "<p class='in w5 t-body'>No te lo digo para asustarte; te la digo porque <b class='w7'>el día en que cruce solo va a llegar</b> de todos modos, y lo único que cambia es <b class='w7'>si llega sabiendo mirar</b>.</p>\n" + CTA_INNER + "\n</div>",
        "El golpe son las dos primeras frases del párrafo; la tercera sigue en lectura dentro del MISMO encuadre (el párrafo no se parte entre paradas). Debajo, el par de CTA al ancho de la columna (pedido del usuario; antes era la parada 12.5). Semimonumental: 6 líneas en móvil 360 (excepción a la regla de ≤5, anotada).",
        scan=True),

@@ -40,7 +40,7 @@ El breakpoint de 860 px del espécimen reparte así: **por debajo de 860** (tel�
 **Implementación:** el escenario de cada parada mide `100svh`. Es justo el alto del encuadre, porque el espécimen ya descuenta la barra del navegador, y no salta cuando esa barra se esconde.
 
 ### 1.2 El escenario
-- **Escenario = encuadre − padding del espécimen:** 24 px en desktop; 28 px arriba y abajo × 24 px a los lados en móvil.
+- **Escenario = encuadre − padding del espécimen:** 24 px en desktop; 28 px arriba y abajo × 24 px a los lados en móvil. En tablet (600–859 px), márgenes más generosos: 36 px arriba y abajo × 48 px a los lados (pedido del usuario, 2026-09-29).
 - Contenedor máximo de 1180 px (el `.wrap` del espécimen).
 - Nada persistente le quita alto al escenario (ver §8, decisión 6).
 
@@ -223,6 +223,16 @@ Cada una es un tipo de parada. La estructura es la del espécimen. La columna "S
 | `line-strong` | `#807E7B` | — | Bordes de controles de formulario (agregado) | 3.65 |
 
 ### 4.2 Acento: la paleta del logo (restricción fija)
+
+> **Lógica de color (decisión del usuario, 2026-09-29; sustituye a la decisión 5 de §8):** la paleta sigue la psicología de color de `00-context/digizen-ada-proposal-v05-mision-clara-2026-08-25.html` («Misión Clara», el origen del sistema), con los colores exactos del logo:
+> - **Coral = energía humana y conversación** (atención, dilema, calidez; microalerta no punitiva, nunca alarma): la voz citada en tamaños ≥ 24 px (creencias del cap. 02, objeción de 08.1, pregunta de 10.3) y los acentos del problema («falsas», «escucha»). La burbuja del hijo en `coral-tinte` `#F8E1DD`.
+> - **Azul = estructura** (orden, progreso, tecnología): acentos del método y la salida («cómo», «El criterio no.», «Criterio, no candado.»), menú de recorrido, enlaces, «Inscribir a mi hijo ↗», foco.
+> - **Cian = ADA** (presencia, guía): «Conversar con ADA primero», tarjetas de sus reglas, su burbuja y el formulario; siempre como relleno o tinte con texto `ink`.
+> - **Violeta = profundidad / IA**, con moderación: el dato «7 de cada 10».
+> - **Navy `#111A34` = confianza**: el escenario de las bisagras (sustituye al negro cálido `#100F0D`). Es el único color que no viene del logo: lo aporta V05.
+> - **Ámbar = valor**: piezas de precio y marcador de valor (como relleno, porque no alcanza contraste como texto). En texto, el logro va en coral.
+> - **Conceptos fuertes resaltados solo con color** (pedido del usuario, 2026-09-29): además del acento en itálica de los lapidarios, un concepto fuerte puede llevar color sin cambiar su tipografía, según su función: coral para el problema y la prohibición («no me escucha», «no cruces», «Ya está pasando.», «ésa no tiene botón de cancelar.», el «no» de 03.5), azul para el método y el vínculo («lo que le hayas enseñado antes.», «El criterio» y «puente que te lo regresa.» en 10.4), azul también para lo positivo y el logro («Eres tú.» y «Ya lo tienes.», que riman; la pregunta de 10.3) y violeta para ADA escrita (toda la frase «Habla tú con ADA primero.»; el cian de ADA no se lee como texto y V05 reserva el violeta para la IA). **Coral solo para lo que alerta o es negativo** (aclaración del usuario, 2026-09-29): el problema, la prohibición, las creencias falsas, la urgencia. **Siempre color en la tipografía, nunca bandas ni subrayados de color** (pedido del usuario). En la evolución de 07.6, el antes («lo que veo en redes me dice quién soy») en coral y el después («yo decido qué me sirve y qué quiero compartir») en azul. «idea propia.» (07.5) va en azul, el color del criterio. En el cuerpo de lectura no se colorea: ahí el énfasis sigue siendo la negrita.
+> - Sigue valiendo **un solo acento por pieza**, con una excepción pedida por el usuario: en 03.5 «Alguien les dijo «no», y nadie les dijo «cómo».» la antítesis va en dos colores, «no» en coral (la prohibición) y «cómo» en azul (el método). 10.5, la cita del niño, va en coral (pedido del usuario, 2026-09-29; antes sin acento).
 El espécimen usa un solo acento, `#2F4DFF`. La restricción fija lo sustituye por la paleta del logo. El acento por defecto es **`azul-900` #2C1DDB**: el más cercano a `#2F4DFF` en tono y rol, y con más contraste (8.21 contra 5.22). Los otros colores tienen un rol funcional; la regla del espécimen ("un solo acento por pieza") sigue gobernando.
 
 | Token | Valor | Rol | Texto sobre `bg` | Texto sobre oscuro | Relleno con texto |
@@ -257,9 +267,9 @@ El espécimen usa un solo acento, `#2F4DFF`. La restricción fija lo sustituye p
   - Al ancho de la columna de su lámina, 56 px de alto mínimo, esquinas de **16 px** (amable, sin ser píldora), texto Inter 600 `body` alineado a la izquierda; si el texto es largo, se acomoda en varias líneas sin deformar la forma.
   - La flecha va a la derecha dentro de un círculo suave de 36 px y dice adónde lleva: ↗ sale del sitio, → hace una acción aquí, ↓ baja en la página. Si el copy trae la flecha, es ese mismo carácter; si no la trae («Conversar con ADA primero»), el ícono va por CSS, sin agregar texto.
   - **Par de CTA, mismo peso:** dos filas rellenas del mismo tamaño, apiladas en el orden del copy, en desktop y en móvil: «Inscribir a mi hijo ↗» en `azul-900` y «Conversar con ADA primero» en `violeta`.
-  - **Secundario** («Conocer las reglas de ADA ↗», «Si ya viste suficiente, la inscripción está al final de esta página ↓»): superficie clara (`panel`) con borde de 1 px (`line`) y el mismo alto, texto y flecha.
+  - **Secundario** («Conocer las reglas de ADA ↗», «Si ya viste suficiente, la inscripción está al final de esta página ↓»): superficie clara (`panel`) con **borde de 2 px en el color de su rol** (cian para ADA, azul para la inscripción; pedido del usuario, 2026-09-29), el círculo de la flecha en el tinte de ese color y el mismo alto y texto. Al pasar el cursor, el fondo toma el tinte.
   - Estados:
-    - Hover: la fila sube 2 px y la flecha se mueve 2–3 px hacia donde lleva; en el secundario, el borde se oscurece.
+    - Hover: la fila sube 2 px y la flecha se mueve 2–3 px hacia donde lleva; el secundario toma el tinte de su color.
     - `pointerdown`: `scale(0.98)` inmediato.
     - Foco: anillo de 2 px separado 3 px.
     - Movimiento reducido: se degrada (1 px y más rápido; la flecha no se mueve), no se cancela.
@@ -280,6 +290,7 @@ El espécimen usa un solo acento, `#2F4DFF`. La restricción fija lo sustituye p
   - Cada viñeta completa y literal; el monto se enfatiza en su lugar (Inter 800), nunca duplicado.
   - `ambar-tinte` marca el valor.
   - La garantía va pegada al par de CTA.
+  - **Refinamiento de la Fase 3 (pedido del usuario, 2026-09-29):** misma familia que las tarjetas (panel, borde, esquinas de 16 px, barra ámbar de valor arriba); el monto es protagonista: la etiqueta («Todo hoy, de una vez:» / «En 10 pagos mensuales de») en body 600 y el monto («$4,990.» / «$599.») en semimonumental Inter 800, sin cambiar el texto ni su orden. En desktop son verticales y con aire (~324 × 400 px, altura limitada a 52svh para que la lámina quepa en 1280 × 688). Cada tarjeta lleva su botón al pie, con los textos de la propuesta A (copy agregado aprobado): «Pagar de contado» y «Elegir pagos diferidos», los dos en azul y con el mismo peso.
 - **Viñetas.**
   - Siempre completas.
   - Marcador: barra de 8 × 2 px `ink`.
@@ -289,8 +300,8 @@ El espécimen usa un solo acento, `#2F4DFF`. La restricción fija lo sustituye p
   - Indicador: círculo de 32 px con contorno `azul-900` y chevron que gira 180°.
   - Respuesta Inter `body`.
   - Apertura con resorte crítico, que se puede interrumpir.
-- **Escenas completas en desktop (decisión del usuario, 2026-09-28).** Cada escena se muestra entera, tal como es el archivo, sin recortes ni reencuadres (`object-fit: contain`; en las secuencias, cuadro completo en el canvas). Si la ventana no tiene la proporción de la imagen, lo que sobra queda como banda del color del fondo. El único recorte es el que produce un zoom pedido para esa escena (02.6), y el Hero, que es de pantalla completa con el texto encima.
-- **Escenas: dos versiones (decisión del usuario, 2026-09-28).** Horizontal para desktop y tablet horizontal (≥ 860 px); **vertical 3:4** para móvil y tablet vertical (< 860 px). Las verticales las hace el usuario en Photoshop a partir de la misma imagen base (especificación en `00-context/scenes/vertical/LEEME.md`). Cada escena define en su estación su encuadre (llenar o completa sin recortar) y su movimiento (zoom-in, zoom-out o solo disolvencia). En 03.4: scrub de video en desktop e imagen fija en móvil.
+- **Escenas y videos cubren su contenedor (decisión del usuario, 2026-09-29; sustituye a «completas con bandas» del 2026-09-28).** La imagen o la secuencia llena todo el escenario conservando su proporción (`object-fit: cover`; en las secuencias, cuadro que cubre el canvas): sin bandas ni deformación; lo que sobra se recorta por el lado que no cabe. Excepción: la figura de ADA, que es un personaje con transparencia. (03.8, los escudos, también cubre desde el 2026-09-29: pedido del usuario.) En móvil, mientras falte la vertical, la horizontal se ve completa; con la vertical 2:3, cubre.
+- **Escenas: dos versiones (decisión del usuario, 2026-09-28).** Horizontal para desktop y tablet horizontal (≥ 860 px); **vertical 2:3** para móvil y tablet vertical (< 860 px): un solo archivo para los dos, que llena la pantalla; lo importante va en el rectángulo central de 80 % × 80 % (ajuste del usuario, 2026-09-29; antes 3:4). Las verticales las hace el usuario en Photoshop a partir de la misma imagen base (especificación en `00-context/scenes/vertical/LEEME.md`). Cada escena define en su estación su encuadre (llenar o completa sin recortar) y su movimiento (zoom-in, zoom-out o solo disolvencia). En 03.4: scrub de video en desktop e imagen fija en móvil.
 - **Sello (escena).**
   - Radio 0, sin caption, **sin viñeta ni bordes fundidos**: la escena va con sus bordes limpios (ajuste del usuario, 2026-09-28; antes llevaba una máscara en degradado).
   - `alt=""` (decorativa: el significado lo lleva el texto).
@@ -298,6 +309,8 @@ El espécimen usa un solo acento, `#2F4DFF`. La restricción fija lo sustituye p
 - **Hero.**
   - Única imagen antes del texto.
   - Zoom-out extremo de `01-dinner.webp` → pausa → disolvencia → texto.
+- **Logo flotante (pedido del usuario, 2026-09-29; ajusta la decisión 6).** Dos logos, cada uno en su momento y ninguno animado con el scroll: **en el Hero**, grande (160 px de ancho en móvil, 240 px en desktop), arriba a la izquierda y visible desde el primer cuadro; **flotante**, fijo arriba a la izquierda (104 px en móvil, 150 px en desktop), que aparece con un fundido cuando el Hero termina de salir, para que nunca haya dos logos a la vez (decisiones del usuario). Sin animación de escala con el scroll (se probó y se descartó: repetía el menú de la propuesta A). No es una barra: no le quita alto al encuadre. Sobre la escena o una bisagra oscura usa la versión para fondo oscuro; sobre el fondo claro, la clara. Lleva de vuelta al inicio.
+- **Tarjetas (L08: 08.5 y 11.3).** Superficie `panel`, borde `line`, esquinas de 16 px (misma familia que los botones) y una barra de 24 × 3 px en el color del rol arriba (violeta en ADA, azul en inscripción). **Títulos en sans** (pedido del usuario, 2026-09-29): Inter 700 en el paso `subhead`.
 - **Footer.**
   - Logo + «Presencia, no vigilancia. / Criterio, no candado.» + enlaces, en `small` y color `ink`.
 - **Etiquetas.**
@@ -385,7 +398,7 @@ Por defecto manda el espécimen. Las decisiones 1 y 2 aplican reglas que tú esc
 3. **Índices que no están en el copy** (número fantasma y «sección 05» de L06, «§1» de L07, badge y etiquetas de L08): se omiten y la composición se usa sin ellos. Además, en v2 quitaste los numerales de capítulo. *Por defecto: se omiten.*
 4. **Escenario oscuro:** los tokens oscuros del espécimen se usan como pantalla completa **solo en las bisagras** (máximo 5 lapidarios en toda la landing). El modo oscuro del sistema operativo no se sigue. *Por defecto: sí a las bisagras, no al modo del sistema.* La alternativa es no usar oscuro en ningún momento.
 5. **Color del acento en los golpes:** siempre `azul-900`, fiel al acento único del espécimen. *Por defecto: azul único.* La alternativa es mi propuesta de la revisión 1: coral en el problema, azul en la solución, violeta en ADA.
-6. **Barra superior:** sin barra fija durante los pines, para que el encuadre quede completo. El logo va en el Hero y en el footer, y solo hay una línea de progreso de 3 px encima, sin ocupar alto. *Por defecto: así.* Con una barra fija habría que restar su alto a cada encuadre.
+6. **Barra superior:** sin barra fija durante los pines, para que el encuadre quede completo. El logo va en el Hero y en el footer, y solo hay una línea de progreso de 3 px encima, sin ocupar alto. *Por defecto: así.* Con una barra fija habría que restar su alto a cada encuadre. *(2026-09-29: se agrega el logo flotante, que sigue sin ser barra; ver §5.)*
 7. **Interpretaciones de maquetación:**
    - El «·» entre los CTA es la separación entre los dos botones.
    - «ADA:» y «HIJO:» son las etiquetas de las burbujas.
