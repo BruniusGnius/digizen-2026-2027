@@ -507,6 +507,8 @@
 .flowmode .stop.k-hero { transition-duration: .3s; }
 /* prueba 3 · una estación por gesto: cada estación llega compuesta, sin fundido; sin rebote ni "jalar para recargar" */
 .paged .stop { transition: none; }
+/* sin animación, la fila 05 de la lista no lleva la banda del acento (pedido del usuario; en la versión animada aparece al salir de la parada) */
+.flowmode .l03 .acc-copy { display: none; }
 /* cada escena ocupa exactamente una pantalla, con la composición de la versión animada; la imagen (y su zoom) no se sale de su estación */
 .paged .stop.k-seal, .paged .stop.k-seq { height: 100svh; min-height: 0; overflow: hidden; }
 .paged .c-seal { position: absolute; inset: 0; min-height: 0; }
