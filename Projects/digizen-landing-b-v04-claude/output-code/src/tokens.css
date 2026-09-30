@@ -6,8 +6,8 @@
    ===================================================================== */
 
 @theme {
-  /* familias (Google Fonts) */
-  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  /* familias (Google Fonts). Todo en sans: Inter también en golpes, títulos y citas (decisión del usuario, 2026-09-29; antes Playfair) */
+  --font-display: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* neutros del espécimen (§4.1) */

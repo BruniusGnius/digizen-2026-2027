@@ -21,7 +21,7 @@ TEMPLATE = r"""<!doctype html>
 <title>Wireframe de recorrido — Digizen B v04</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <style>
 /* ===== Escala del espécimen (Tipografía esencial): móvil·tablet < 860px ≤ desktop ===== */
 :root{
@@ -41,17 +41,17 @@ TEMPLATE = r"""<!doctype html>
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-weight:500;overflow-x:hidden}
 p,h1,h2,h3,figure{margin:0}
-.pf{font-family:"Playfair Display",Georgia,serif} .in{font-family:Inter,system-ui,sans-serif}
+.pf{font-family:Inter,system-ui,sans-serif} /* todo en sans (decisión del usuario, 2026-09-29) */ .in{font-family:Inter,system-ui,sans-serif}
 .w1{font-weight:100}.w3{font-weight:300}.w4{font-weight:400}.w5{font-weight:500}.w6{font-weight:600}.w7{font-weight:700}.w8{font-weight:800}.w9{font-weight:900}
 .it{font-style:italic}
 .t-micro{font-size:var(--micro);line-height:1.3;letter-spacing:.04em}
 .t-small{font-size:var(--small);line-height:1.5}
 .t-body{font-size:var(--body);line-height:1.5}
-.t-sub{font-size:var(--sub);line-height:1.3}
-.t-head{font-size:var(--head);line-height:1.1}
-.t-semi{font-size:var(--semi);line-height:1.02;letter-spacing:-.01em}
-.t-mon{font-size:var(--mon);line-height:1.02;letter-spacing:-.01em}
-.t-mxl{font-size:var(--mxl);line-height:.95;letter-spacing:-.02em}
+.t-sub{font-size:var(--sub);line-height:1.3;letter-spacing:-.01em}
+.t-head{font-size:var(--head);line-height:1.12;letter-spacing:-.015em}
+.t-semi{font-size:var(--semi);line-height:1.04;letter-spacing:-.03em}
+.t-mon{font-size:var(--mon);line-height:1.02;letter-spacing:-.04em}
+.t-mxl{font-size:var(--mxl);line-height:.96;letter-spacing:-.045em}
 .bw{text-wrap:balance} .essay p, .sup p{text-wrap:pretty}
 .acc{font-style:italic;text-decoration:underline dotted;text-decoration-thickness:.05em;text-underline-offset:.12em}
 .hl{text-decoration:underline dotted;text-decoration-thickness:.05em;text-underline-offset:.12em} /* concepto con color en el build (sin itálica) */
@@ -845,14 +845,15 @@ _fc = {}
 def font(fam, px, w, ital=False):
     k = (fam, px, w, ital)
     if k in _fc: return _fc[k]
-    f = 'PlayfairDisplay-Italic-VariableFont_wght.ttf' if (fam == 'pf' and ital) else ('PlayfairDisplay-VariableFont_wght.ttf' if fam == 'pf' else 'Inter-VariableFont_slnt,wght.ttf')
+    f = 'Inter-VariableFont_slnt,wght.ttf'  # todo en sans (2026-09-29): Playfair ya no se usa
     F = ImageFont.truetype(FD + f, px); vals = []
     for a in F.get_variation_axes():
         n = a.get('name', b''); n = n.decode() if isinstance(n, bytes) else str(n)
         vals.append(w if 'eight' in n.lower() else a.get('default', 0))
     F.set_variation_by_axes(vals); _fc[k] = F; return F
 MOB = dict(micro=11, small=13, body=16, sub=19, head=24, semi=34, mon=48, mxl=64)
-LH = dict(micro=1.3, small=1.5, body=1.5, sub=1.3, head=1.1, semi=1.02, mon=1.02, mxl=.95)
+LH = dict(micro=1.3, small=1.5, body=1.5, sub=1.3, head=1.12, semi=1.04, mon=1.02, mxl=.96)
+TRACK = dict(micro=.04, small=0, body=0, sub=-.01, head=-.015, semi=-.03, mon=-.04, mxl=-.045)  # em
 def lines(F, text, width):
     n, cur = 0, ''
     for wd in text.split(' '):

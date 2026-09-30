@@ -8,8 +8,6 @@
   'use strict';
 
   var DZ = window.DZ = {};
-  /* PRUEBA de tipografía: ?sans pone Inter en monumentales, semimonumentales y títulos (ver components.css) */
-  if (/[?&]sans\b/.test(location.search)) document.documentElement.classList.add('t-sans');
   var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
   DZ.each = each;
 

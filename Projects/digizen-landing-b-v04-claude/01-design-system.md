@@ -116,6 +116,9 @@ La escala del espécimen resuelve todos los golpes del copy sin ajustes.
 ## 2. Tipografía (del espécimen)
 
 ### 2.1 Familias
+
+> **Todo en sans (decisión del usuario, 2026-09-29):** Inter reemplaza a Playfair Display en golpes (semimonumental, monumental, monumental-xl), títulos, subtítulos y citas. Se conservan la escala, los pesos y el color de cada composición. Espaciado por tamaño (apple-design §9): subhead −0.01em, heading −0.015em / 1.12, semimonumental −0.03em / 1.04, monumental −0.04em / 1.02, monumental-xl −0.045em / 0.96. Las itálicas (acentos, voz citada) usan Inter itálica. El estado anterior, en Playfair, está en el commit a514245. Lo que sigue en esta sección describe el sistema original.
+
 - **Display:** Playfair Display (400–900, roman + itálica). Todos los títulos (`h1`–`h4`) y el grupo B.
 - **Cuerpo:** Inter (100–900). Lectura, etiquetas e interfaz.
 

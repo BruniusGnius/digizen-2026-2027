@@ -24,7 +24,7 @@ fase_actual: 3
   - GSAP + ScrollTrigger; recorrido continuo con Pin + Scrub como patrón dominante.
   - Texto protagonista; imágenes como sello de concepto (excepción: Hero).
   - Las 14 escenas de 00-context/scenes/ se usan tal cual.
-  - Tipografías: Playfair Display + Inter.
+  - Tipografía: **Inter en todo** (decisión del usuario, 2026-09-29: «todo en SANS»; antes Playfair Display + Inter).
   - Paleta completa del logo: degradado azul #1A75EA → #2C1DDB, cian #00C4F0, ámbar #EF9600, coral #E65C4D, violeta #7B27D6.
   - No modificar Projects/digizen-landing, Projects/digizen-landing-b ni Projects/digizen-landing-b-v3.
 - fase_1: aprobada 2026-09-26

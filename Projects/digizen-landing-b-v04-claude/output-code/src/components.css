@@ -32,11 +32,12 @@
   .t-micro { font-size: var(--t-micro); line-height: 1.3; letter-spacing: .04em; }
   .t-small { font-size: var(--t-small); line-height: 1.5; }
   .t-body  { font-size: var(--t-body);  line-height: 1.5; }
-  .t-sub   { font-size: var(--t-sub);   line-height: 1.3; }
-  .t-head  { font-size: var(--t-head);  line-height: 1.1; }
-  .t-semi  { font-size: var(--t-semi);  line-height: 1.02; letter-spacing: -.01em; }
-  .t-mon   { font-size: var(--t-mon);   line-height: 1.02; letter-spacing: -.01em; }
-  .t-mxl   { font-size: var(--t-mxl);   line-height: .95;  letter-spacing: -.02em; }
+  /* todo en Inter: a más tamaño, espaciado más cerrado (apple-design §9) */
+  .t-sub   { font-size: var(--t-sub);   line-height: 1.3;  letter-spacing: -.01em; }
+  .t-head  { font-size: var(--t-head);  line-height: 1.12; letter-spacing: -.015em; }
+  .t-semi  { font-size: var(--t-semi);  line-height: 1.04; letter-spacing: -.03em; }
+  .t-mon   { font-size: var(--t-mon);   line-height: 1.02; letter-spacing: -.04em; }
+  .t-mxl   { font-size: var(--t-mxl);   line-height: .96;  letter-spacing: -.045em; }
   .bw { text-wrap: balance; }
   .essay p, .sup p { text-wrap: pretty; }
   b, strong { font-weight: 700; }
@@ -418,14 +419,6 @@
   .stop .hero-text h1 { max-width: calc(var(--w-grid) * 7 / 12); }
   .stop .scrim { background: linear-gradient(to top, rgb(16 15 13 / .72) 0%, rgb(16 15 13 / .45) 30%, rgb(16 15 13 / 0) 60%); }
 }
-
-/* ---------- PRUEBA (pedido del usuario, 2026-09-29): sans en monumentales, semimonumentales y títulos ----------
-   Solo se activa abriendo la página con ?sans; sin el parámetro, el diseño aprobado no cambia. */
-.t-sans .pf.t-semi, .t-sans .pf.t-mon, .t-sans .pf.t-mxl, .t-sans .pf.t-head { font-family: var(--font-body); }
-.t-sans .pf.t-head { letter-spacing: -.015em; line-height: 1.12; }
-.t-sans .pf.t-semi { letter-spacing: -.03em; line-height: 1.04; }
-.t-sans .pf.t-mon  { letter-spacing: -.04em; line-height: 1.02; }
-.t-sans .pf.t-mxl  { letter-spacing: -.045em; line-height: .96; }
 
 @keyframes cueBlink { 0%, 100% { opacity: .35; transform: translateY(0); } 40% { opacity: 1; transform: translateY(4px); } }
 
