@@ -500,7 +500,7 @@
 .flowmode .reveal { display: flex; flex-direction: column; gap: 10px; }
 .flowmode .t-h .track { display: block; width: auto; }
 .flowmode .t-h .stop.panel { flex: none; height: auto; min-height: 100svh; }
-.flowmode .c-seal { position: relative; inset: auto; min-height: 100svh; }
+.flowmode .c-seal { position: relative; inset: auto; width: 100%; min-height: 100svh; }  /* ancho completo: la secuencia (póster y canvas absolutos) no tiene ancho propio */
 .flowmode .c-seq canvas, .flowmode .ada-fig canvas { display: none; }
 @media (min-width: 860px) { .flow-video .c-seq canvas, .flow-video .ada-fig canvas { display: block; } }  /* prueba 3: los videos con scrub sí corren */
 .flowmode .cue span { animation: none; opacity: .6; }

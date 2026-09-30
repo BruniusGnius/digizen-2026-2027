@@ -5,6 +5,17 @@
   'use strict';
   var DZ = window.DZ;
 
+  /* zoom de una escena con el scroll; data-zoom = escala inicial (por defecto 1.06). Lo usan el motor de pines y la prueba 3 */
+  DZ.sealZoom = function (el, tl, t, span) {
+    var img = el.querySelector('img'), fig = el.querySelector('[data-zoom]');
+    var z = fig ? parseFloat(fig.getAttribute('data-zoom')) : 1.06;
+    var zin = fig && fig.getAttribute('data-zoom-dir') === 'in';
+    if (!img) return;
+    var org = fig && ((!DZ.isD && img.hasAttribute('data-v') && fig.getAttribute('data-origin-m')) || fig.getAttribute('data-origin'));
+    if (org) gsap.set(img, { transformOrigin: org });
+    tl.fromTo(img, { scale: (zin ? 1 : z) }, { scale: (zin ? z : 1), duration: span * 0.7, ease: (z > 1.2 ? (zin ? 'power1.in' : 'power1.out') : 'none') }, t);
+  };
+
   DZ.buildPin = function (sec, vis, pin) {
     var total = vis.reduce(function (a, x) { return a + x.s.E; }, 0);
     var night = sec.querySelector('.night');
@@ -88,17 +99,7 @@
           tl.addLabel(s.id + '·' + (k + 1), lm); labels.push([s.id + ' · mensaje ' + (k + 1), lm, x]);
         });
       }
-      if (s.kind === 'seal') { /* zoom con scroll; data-zoom = escala inicial (por defecto 1.06) */
-        var img = el.querySelector('img'), fig = el.querySelector('[data-zoom]');
-        var z = fig ? parseFloat(fig.getAttribute('data-zoom')) : 1.06;
-        var zin = fig && fig.getAttribute('data-zoom-dir') === 'in';
-        if (img) {
-          /* en móvil/tablet con vertical, el punto del zoom puede ser otro (data-origin-m): mismo objeto, otra posición en la imagen */
-          var org = fig && ((!DZ.isD && img.hasAttribute('data-v') && fig.getAttribute('data-origin-m')) || fig.getAttribute('data-origin'));
-          if (org) gsap.set(img, { transformOrigin: org });
-          tl.fromTo(img, { scale: (zin ? 1 : z) }, { scale: (zin ? z : 1), duration: span * 0.7, ease: (z > 1.2 ? (zin ? 'power1.in' : 'power1.out') : 'none') }, t);
-        }
-      }
+      if (s.kind === 'seal') DZ.sealZoom(el, tl, t, span);
       DZ.each(el.querySelectorAll('[data-at=exit]'), function (m) { gsap.set(m, { opacity: 0 }); tl.to(m, { opacity: 1, duration: span * 0.08 }, t + span * 0.78); });
       if (s.kind !== 'dialog') {
         lt = (s.kind === 'seal' || s.kind === 'seq') ? t + span * 0.78 : ((first && s.kind !== 'two' && s.kind !== 'reveal' && s.kind !== 'deck') ? t : (holdStart + holdEnd) / 2);
