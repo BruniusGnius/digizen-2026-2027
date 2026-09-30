@@ -205,6 +205,7 @@ picture{display:contents}
   .dlg{gap:8px} .msg{padding:8px 12px} .dlg-k{margin-bottom:2px}
   .c-seal img{height:auto;max-height:100%}
   .c-seal img[data-v]{height:100%;max-height:none;object-fit:cover} /* vertical 2:3: llena la pantalla; el recorte cae fuera de la zona segura */
+  .stop.k-hero{align-items:flex-end} .stop.k-hero .hero-text{padding-bottom:calc(var(--padY) + 64px)} /* Hero móvil: frase abajo, no tapa la cara (pedido del usuario) */
 }
 
 /* ===== Hero: configuración propia de desktop (no es la de móvil escalada) ===== */

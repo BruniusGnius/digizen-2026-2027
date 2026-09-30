@@ -323,6 +323,9 @@
   .brand .brand-light { position: absolute; inset: 0; opacity: 0; }
   .brand.on-light .brand-light { opacity: 1; }
   .brand.on-light .brand-dark { opacity: 0; }
+  /* sobre escenas claras, sombra suave solo en el logo para que la versión dark se lea (la imagen no se toca) */
+  .brand img { transition: opacity 200ms var(--ease-out), filter 200ms var(--ease-out); }
+  .brand.on-image img { filter: drop-shadow(0 1px 10px rgb(16 15 13 / .55)); }
   .brand:focus-visible { outline-offset: 6px; border-radius: 6px; }
   /* velo arriba del Hero para que el logo se lea sobre la escena desde el primer cuadro */
   .stop.k-hero::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 30%; z-index: 1; pointer-events: none;
@@ -396,6 +399,9 @@
   .msg-row { max-width: 100%; gap: 8px; } .avatar { width: 34px; height: 34px; border-radius: 10px; }
   .c-seal img { height: auto; max-height: 100%; }
   .c-seal img[data-v] { height: 100%; max-height: none; object-fit: cover; } /* vertical 2:3: llena la pantalla */
+  /* Hero en móvil/tablet: la frase va abajo, sobre las flechas, para no taparle la cara al chico (pedido del usuario) */
+  .stop.k-hero { align-items: flex-end; }
+  .stop.k-hero .hero-text { padding-bottom: calc(var(--pad-y) + 64px); }
   .ada-text, .ada-fig { grid-column: 1 / -1; }
   .ada-text { justify-self: stretch; max-width: none; }
   .ada-fig { height: 28svh; }
@@ -408,6 +414,8 @@
 }
 @media (min-width: 600px) and (max-width: 859px) {
   .ada-text { max-width: var(--w-read); justify-self: center; }
+  /* Hero en tablet: la frase usa todo el ancho entre márgenes (pedido del usuario); en teléfono sigue en 24ch */
+  .hero-text { max-width: none; width: 100%; }
 }
 
 /* ---------- desktop (≥ 860 px) ---------- */

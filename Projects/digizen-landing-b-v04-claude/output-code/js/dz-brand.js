@@ -18,8 +18,11 @@
   DZ.hooks.frame.push(function (y, hit) {
     /* el Hero deja de estar debajo del logo cuando su escenario termina de salir por arriba */
     var clear = DZ.mode === 'full' ? heroEnd + window.innerHeight - 60 : heroEnd - 60;
+    /* sobre una escena (sello o secuencia) va la versión dark, como sobre una bisagra oscura (pedido del usuario) */
+    var onImage = !!(hit && (hit.kind === 'seal' || hit.kind === 'seq'));
     brand.classList.toggle('is-on', y >= clear);
-    brand.classList.toggle('on-light', y >= clear && !(hit && hit.night));
+    brand.classList.toggle('on-image', onImage);
+    brand.classList.toggle('on-light', y >= clear && !(hit && hit.night) && !onImage);
   });
   brand.addEventListener('click', function (e) { e.preventDefault(); DZ.scrollToY(0); });
 })();
