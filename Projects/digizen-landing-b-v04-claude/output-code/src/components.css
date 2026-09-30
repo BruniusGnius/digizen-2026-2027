@@ -485,6 +485,9 @@
   .stop .scrim { background: linear-gradient(to top, rgb(16 15 13 / .72) 0%, rgb(16 15 13 / .45) 30%, rgb(16 15 13 / 0) 60%); }
 }
 
+/* etiqueta de las páginas de prueba (no existe en la versión real) */
+.test-tag { position: fixed; left: 12px; bottom: 12px; z-index: 70; padding: 6px 10px; border-radius: 8px; background: rgb(17 26 52 / .85); color: #fff; font: 600 12px/1.2 var(--font-body); pointer-events: none; }
+
 @keyframes dzFade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes cueBlink { 0%, 100% { opacity: .35; transform: translateY(0); } 40% { opacity: 1; transform: translateY(4px); } }
 
@@ -499,5 +502,6 @@
 .flowmode .t-h .stop.panel { flex: none; height: auto; min-height: 100svh; }
 .flowmode .c-seal { position: relative; inset: auto; min-height: 100svh; }
 .flowmode .c-seq canvas, .flowmode .ada-fig canvas { display: none; }
+@media (min-width: 860px) { .flow-video .c-seq canvas, .flow-video .ada-fig canvas { display: block; } }  /* prueba 3: los videos con scrub sí corren */
 .flowmode .cue span { animation: none; opacity: .6; }
 .flowmode .stop.k-hero { transition-duration: .3s; }

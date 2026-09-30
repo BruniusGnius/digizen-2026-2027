@@ -12,7 +12,7 @@
     gsap.set(night, { opacity: 0 });
     var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
       id: pin.id, trigger: sec, pin: true, start: 'top top',
-      end: function () { return '+=' + (total * window.innerHeight); },
+      end: function () { return '+=' + (total * DZ.unit()); },
       scrub: 0.4, invalidateOnRefresh: true,
       onToggle: function (self) { sec.classList.toggle('is-pinned', self.isActive); }, /* B7: will-change solo mientras está activo */
       snap: { snapTo: 'labels', duration: { min: 0.2, max: 0.5 }, delay: 0.08, ease: 'power1.inOut' }
@@ -35,7 +35,7 @@
       if (s.kind === 'two') {
         var cl = el.querySelector('[data-beat=close]');
         gsap.set(cl, { opacity: 0 });
-        tl.to(cl, { opacity: 1, duration: span * 0.10 }, t + span * 0.30);
+        tl.to(cl, { opacity: 1, duration: span * DZ.cfg.closeFade }, t + span * 0.30);
         var la = first ? t : t + span * 0.20;
         tl.addLabel(s.id + '·a', la); labels.push([s.id + ' (puente)', la, x]);
         holdStart = t + span * 0.40;
@@ -48,8 +48,9 @@
           var la1 = first ? t : t + span * 0.18;
           tl.addLabel(s.id + '·a', la1); labels.push([s.id + ' (puente)', la1, x]);
           tl.to(rl, { opacity: 0, duration: span * 0.08 }, t + span * 0.26);
-          if (steps[0]) { tl.to(steps[0], { opacity: 1, duration: span * 0.05 }, t + span * 0.36); tl.addLabel(s.id + '·b', t + span * 0.46); labels.push([s.id + ' (paso 1)', t + span * 0.46, x]); }
-          if (steps[1]) { tl.to(steps[1], { opacity: 1, duration: span * 0.05 }, t + span * 0.54); }
+          var sf = DZ.cfg.stepFade, lb1 = t + span * Math.max(0.46, 0.36 + sf + 0.01); /* la etiqueta cae cuando la línea ya apareció */
+          if (steps[0]) { tl.to(steps[0], { opacity: 1, duration: span * sf }, t + span * 0.36); tl.addLabel(s.id + '·b', lb1); labels.push([s.id + ' (paso 1)', lb1, x]); }
+          if (steps[1]) { tl.to(steps[1], { opacity: 1, duration: span * sf }, t + span * 0.54); }
           holdStart = t + span * 0.60;
         } else { /* golpe en dos alturas sin puente (05.4) */
           var lb = first ? t : t + span * 0.2, lastAt = 0;
@@ -57,12 +58,13 @@
           var b0 = steps.length > 3 ? 0.30 : 0.36, gp = steps.length > 3 ? 0.14 : 0.18;
           for (var k = 1; k < steps.length; k++) {
             var at = t + span * (b0 + (k - 1) * gp); lastAt = at;
-            gsap.set(steps[k], { opacity: 0 }); tl.to(steps[k], { opacity: 1, duration: span * 0.05 }, at);
+            gsap.set(steps[k], { opacity: 0 }); tl.to(steps[k], { opacity: 1, duration: span * DZ.cfg.stepFade }, at);
             var ar = steps[k].querySelector('.evo-arrow'); /* la flecha se dibuja */
             if (ar) tl.fromTo(ar, DZ.isD ? { scaleX: 0 } : { scaleY: 0 }, DZ.isD ? { scaleX: 1, duration: span * 0.08, transformOrigin: 'left center' } : { scaleY: 1, duration: span * 0.08, transformOrigin: 'center top' }, at);
-            if (k < steps.length - 1) { tl.addLabel(s.id + '·p' + (k + 1), at + span * 0.08); labels.push([s.id + ' (paso ' + (k + 1) + ')', at + span * 0.08, x]); }
+            var lk = at + span * Math.max(0.08, DZ.cfg.stepFade + 0.01);
+            if (k < steps.length - 1) { tl.addLabel(s.id + '·p' + (k + 1), lk); labels.push([s.id + ' (paso ' + (k + 1) + ')', lk, x]); }
           }
-          holdStart = lastAt ? lastAt + span * 0.09 : t + span * 0.45;
+          holdStart = lastAt ? lastAt + span * Math.max(0.09, DZ.cfg.stepFade + 0.02) : t + span * 0.45;
         }
       }
       if (s.kind === 'deck') { /* móvil < 600: cada tarjeta sube y se apila sobre la anterior; tablet: aparece debajo */
@@ -81,8 +83,9 @@
         var msgs = el.querySelectorAll('.msg-row'); if (!msgs.length) msgs = el.querySelectorAll('.msg'); /* el avatar entra con su burbuja */
         DZ.each(msgs, function (m, k) {
           var at = t + span * (0.12 + k * 0.18);
-          tl.fromTo(m, { opacity: 0, x: (m.classList.contains('hijo') ? 16 : -16) }, { opacity: 1, x: 0, duration: span * 0.08, ease: 'power2.out' }, at);
-          tl.addLabel(s.id + '·' + (k + 1), at + span * 0.09); labels.push([s.id + ' · mensaje ' + (k + 1), at + span * 0.09, x]);
+          var mf = DZ.cfg.msgFade, lm = at + span * Math.max(0.09, mf + 0.01);
+          tl.fromTo(m, { opacity: 0, x: (m.classList.contains('hijo') ? 16 : -16) }, { opacity: 1, x: 0, duration: span * mf, ease: 'power2.out' }, at);
+          tl.addLabel(s.id + '·' + (k + 1), lm); labels.push([s.id + ' · mensaje ' + (k + 1), lm, x]);
         });
       }
       if (s.kind === 'seal') { /* zoom con scroll; data-zoom = escala inicial (por defecto 1.06) */

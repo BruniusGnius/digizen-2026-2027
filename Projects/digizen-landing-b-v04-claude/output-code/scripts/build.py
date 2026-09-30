@@ -167,7 +167,7 @@ def stop_html(pin, s):
     if s['bp'] == 'd': cls.append('only-d')
     if s['bp'] == 'm': cls.append('only-m')
     if pin['type'] == 'h': cls.append('panel')
-    e = ('%g' % s['E'])
+    e = ('%g' % CURRENT['E'].get(s['id'], s['E']))
     return (f"<div class='{' '.join(cls)}' data-id='{s['id']}' data-kind='{s['kind']}' data-e='{e}' "
             f"data-bp='{s['bp']}' data-night='{1 if s.get('night') else 0}'>\n{prod(s['html'], s['id'])}\n</div>")
 
@@ -221,6 +221,17 @@ DIALOG = """<dialog class='ada-dialog' id='ada-dialog' aria-labelledby='ada-dial
   <p class='in w5 t-small note'>Se manda la liga de acceso; no abre WhatsApp directo.</p>
 </form>
 </dialog>"""
+
+# ------------------------------------------------------------------ pruebas de scroll (03-auditoria-scroll.md, 2026-09-30)
+# Más rango en las paradas con varios tiempos (sin agregar paradas): E por prueba, sin tocar la fuente del wireframe.
+E_MAS_RANGO = {'07.6': 3.0, '01.3': 2.25, '07.5': 2.25, '09.1': 2.25, '11.3m': 2.25, '11.3bm': 2.0, '08.5m': 2.25}
+BASE_CFG = {'stepFade': 0.07, 'closeFade': 0.12, 'msgFade': 0.10, 'minUnit': 900}
+VARIANTS = [
+    ('prueba-scroll-1.html', 'Prueba 1 · más rango y recorrido mínimo', E_MAS_RANGO, dict(BASE_CFG)),
+    ('prueba-scroll-2.html', 'Prueba 2 · + inercia del dedo limitada', E_MAS_RANGO, dict(BASE_CFG, touchMomentum=True)),
+    ('prueba-scroll-3.html', 'Prueba 3 · sin scroll animado (solo videos)', {}, {'flow': True}),
+]
+CURRENT = {'E': {}, 'cfg': None, 'tag': None}   # variante que se está generando (ninguna = la versión actual)
 
 # ------------------------------------------------------------------ SEO y búsqueda generativa (03-seo-geo-plan.md)
 # PREVIEW = True mientras la A esté en producción: la B no se indexa y declara a la A como página oficial,
@@ -293,6 +304,12 @@ SCRIPTS = ['assets/vendor/gsap.min.js', 'assets/vendor/ScrollTrigger.min.js', 'a
            'js/dz-core.js', 'js/dz-spring.js', 'js/dz-seq.js', 'js/dz-pins.js', 'js/dz-carousel.js', 'js/dz-hero.js',
            'js/dz-rail.js', 'js/dz-brand.js', 'js/dz-menu.js', 'js/dz-faq.js', 'js/dz-actions.js', 'js/dz-main.js']
 
+def cfg_script():
+    return f"<script>window.DZ_CFG = {json.dumps(CURRENT['cfg'])};</script>" if CURRENT['cfg'] else ''
+
+def test_tag():
+    return f"<div class='test-tag' aria-hidden='true'>{CURRENT['tag']}</div>\n" if CURRENT['tag'] else ''
+
 def page(pins, title, indexable=True):
     main = '\n'.join(pin_html(p) for p in pins if p['id'] != 'FOOT')
     foot = '\n'.join(pin_html(p) for p in pins if p['id'] == 'FOOT')
@@ -313,6 +330,7 @@ def page(pins, title, indexable=True):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{title}</title>
 {seo_head(indexable)}
+{cfg_script()}
 <meta name="theme-color" content="#F4F3F0">
 <link rel="icon" type="image/svg+xml" href="assets/logo/Favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -322,7 +340,7 @@ def page(pins, title, indexable=True):
 <link rel="stylesheet" href="dist/styles.css?v={ver}">
 </head>
 <body>
-{BRAND}
+{test_tag()}{BRAND}
 {menu_html(pins)}
 {rail_html(pins)}
 <main id="recorrido">
@@ -386,7 +404,7 @@ def audit_file(path):
     return res, p.stops
 
 def expected_stops(pins):
-    return [(p['id'], s['id'], s['kind'], '%g' % s['E'], s['bp'], '1' if s.get('night') else '0')
+    return [(p['id'], s['id'], s['kind'], '%g' % CURRENT['E'].get(s['id'], s['E']), s['bp'], '1' if s.get('night') else '0')
             for p in pins if p['type'] != 'flow' for s in p['stops']]
 
 # ------------------------------------------------------------------ main
@@ -420,6 +438,11 @@ def main():
     render(test, 'prueba.html', 'Digizen · estación de prueba', full=False)
     if '--prueba' not in sys.argv:
         render(C.PINS, 'index.html', SEO['title'], full=True)
+        for name, tag, emap, cfg in VARIANTS:   # pruebas de scroll: mismas paradas y copy; cambian E de algunas y el motor
+            CURRENT.update(E=emap, cfg=cfg, tag=tag)
+            render(C.PINS, name, SEO['title'] + ' · ' + tag, full=True)
+            print('  config:', cfg, '· E cambiadas:', emap or 'ninguna')
+        CURRENT.update(E={}, cfg=None, tag=None)
     print(f"\n== SEO ==\n  {'PREVIEW: noindex, canonical a la A (' + OFFICIAL_URL + ')' if PREVIEW else 'PRODUCCIÓN: index, canonical ' + PUBLIC_URL}")
     print('  JSON-LD: Organization, WebSite, WebPage, Course (2 ofertas), FAQPage (' + str(len(C.FAQ)) + ' preguntas literales)')
     print('\n== adiciones de copy aprobadas por el usuario (no están en COPY-PUBLICADO.md) ==')

@@ -7,8 +7,8 @@
   'use strict';
   var DZ = window.DZ;
 
-  DZ.buildHero = function (sec, vis, pin) {
-    var x = vis[0], el = x.el; gsap.set(el, { opacity: 1 });
+  /* la animación de entrada del Hero (zoom-out + velo + frase), reutilizable sin pin en la prueba 3 */
+  DZ.heroIntro = function (el) {
     var img = el.querySelector('.hero-img'), scrim = el.querySelector('.scrim'), txt = el.querySelector('.hero-text');
     var tl = gsap.timeline({ paused: true });
     tl.fromTo(img, { scale: 2.6 }, { scale: 1, duration: 3.7, ease: 'power2.inOut' })
@@ -19,8 +19,14 @@
     var logo = el.querySelector('.hero-logo'); if (logo) tl.fromTo(logo, { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
     var told = false;
     tl.call(function () { if (!told && DZ.afterHero) { told = true; DZ.afterHero(); } });
+    return tl;
+  };
+
+  DZ.buildHero = function (sec, vis, pin) {
+    var x = vis[0], el = x.el; gsap.set(el, { opacity: 1 });
+    var tl = DZ.heroIntro(el);
     ScrollTrigger.create({ id: pin.id, trigger: sec, pin: true, start: 'top top',
-      end: function () { return '+=' + (x.s.E * window.innerHeight); },
+      end: function () { return '+=' + (x.s.E * DZ.unit()); },
       onEnterBack: function () { tl.restart(); },
       onToggle: function (self) { sec.classList.toggle('is-pinned', self.isActive); } });
     tl.restart();
