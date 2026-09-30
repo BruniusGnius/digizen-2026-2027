@@ -35,53 +35,24 @@
     window.addEventListener('load', function () { ScrollTrigger.refresh(); });
   } else {
     document.body.classList.add('flowmode');
-    /* prueba 3: sin scroll animado para el texto (flujo normal); las escenas (imágenes y videos con scrub) conservan su animación,
-       fijadas mientras corre, en desktop y móvil. La entrada del Hero va por tiempo. */
+    /* prueba 3 (pedido del usuario y de su jefe, 2026-09-30): una estación por gesto (dz-pager.js). Las estaciones llegan
+       compuestas, sin animaciones internas ni la entrada del Hero; las escenas (imágenes y videos con scrub) conservan su
+       animación, fijadas, en desktop y móvil. El saludo de ADA sigue corriendo por tiempo al llegar. */
     if (DZ.cfg.flow && DZ.hasGsap && !DZ.reduce) {
       document.body.classList.add('flow-video');
       gsap.registerPlugin(ScrollTrigger);
       if (window.ScrollToPlugin) gsap.registerPlugin(ScrollToPlugin);
-      /* anclas por pantalla (pedido del usuario): al soltar el scroll, avanza a la siguiente pantalla en la dirección del gesto
-         (inicio de cada composición; en las escenas fijadas, su inicio y su final). Dentro de una escena fijada el scroll es libre
-         para que el scrub siga al dedo, y en una composición más alta que la pantalla también, para no saltarse su parte de abajo.
-         Desde el FAQ hacia abajo, scroll libre. */
-      var snapPts = [], snapFree = [], snapStop = Infinity, snapMax = 1;
-      var buildSnap = function () {
-        snapMax = Math.max(1, ScrollTrigger.maxScroll(window)); snapStop = Infinity; var pts = [], free = [], vh = window.innerHeight;
-        DZ.STOPS.forEach(function (x) {
-          var top = x.el.getBoundingClientRect().top + window.scrollY, h = x.el.offsetHeight;
-          if (x.flow) { snapStop = Math.min(snapStop, top); pts.push(top); return; }
-          if (!DZ.visible(x.s) || !h) return;
-          if (x._st) { pts.push(x._st.start, x._st.end); free.push([x._st.start, x._st.end]); }
-          else if (h > vh + 40) { pts.push(top, top + h - vh); free.push([top, top + h - vh]); }
-          else pts.push(top);
-        });
-        snapPts = pts.filter(function (p) { return p >= 0 && p <= snapMax; }).sort(function (a, b) { return a - b; });
-        snapFree = free;
-      };
-      /* dirección del último gesto, leída del scroll real; los ajustes internos de ScrollTrigger al recalcular no cuentan */
-      var snapDir = 1, dirY = window.scrollY, dirHold = false;
-      ScrollTrigger.addEventListener('refreshInit', function () { dirHold = true; });
-      ScrollTrigger.addEventListener('refresh', function () { dirHold = false; dirY = window.scrollY; });
-      window.addEventListener('scroll', function () {
-        var y = window.scrollY; if (dirHold || y === dirY) return; snapDir = y > dirY ? 1 : -1; dirY = y;
-      }, { passive: true });
-      ScrollTrigger.addEventListener('refresh', buildSnap);
-      ScrollTrigger.create({ start: 0, end: 'max', snap: {
-        snapTo: function (p) {
-          var y = p * snapMax, i; if (y >= snapStop - 4 || !snapPts.length) return p;
-          for (i = 0; i < snapFree.length; i++) if (y > snapFree[i][0] + 2 && y < snapFree[i][1] - 2) return p;
-          if (snapDir >= 0) { for (i = 0; i < snapPts.length; i++) if (snapPts[i] >= y - 2) return snapPts[i] / snapMax; return p; }
-          for (i = snapPts.length - 1; i >= 0; i--) if (snapPts[i] <= y + 2) return snapPts[i] / snapMax;
-          return p;
-        }, duration: { min: 0.25, max: 0.6 }, delay: 0.12, ease: 'power1.inOut' } });
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
-      window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+      var paged = !!(DZ.cfg.pager && DZ.pager);
       var hero = DZ.STOPS.filter(function (x) { return x.s.kind === 'hero'; })[0];
-      if (hero && DZ.heroIntro) DZ.heroIntro(hero.el).restart();   /* la entrada del Hero es de tiempo, no de scroll */
+      if (paged) {
+        document.body.classList.add('paged'); document.documentElement.classList.add('dz-paged');
+        DZ.STOPS.forEach(function (x) { if (!x.flow) x.el.classList.add('inview'); });
+        window.addEventListener('load', function () { if (DZ.afterHero) DZ.afterHero(); });   /* el Hero ya está compuesto: se adelanta la precarga */
+      } else if (hero && DZ.heroIntro) DZ.heroIntro(hero.el).restart();   /* la entrada del Hero es de tiempo, no de scroll */
       gsap.matchMedia().add({ isD: '(min-width: 860px)', isM: '(max-width: 859px)' }, function (ctx) {
         DZ.isD = !!ctx.conditions.isD;
         DZ.STOPS.forEach(function (x) {
+          x._st = null;
           if (x.flow || !DZ.visible(x.s)) return;
           var fig = x.el.querySelector('[data-seq]');
           if (fig && fig.getAttribute('data-play') === 'time') { DZ.buildSeq(x.el, null, 0, x.s.E); return; }  /* saludo de ADA: por tiempo */
@@ -96,6 +67,9 @@
         ScrollTrigger.refresh();
       });
       ScrollTrigger.addEventListener('refresh', function () { DZ.computeFlowPositions(); });
+      if (paged) DZ.pager();
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+      window.addEventListener('load', function () { ScrollTrigger.refresh(); });
     }
     var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('inview'); });
