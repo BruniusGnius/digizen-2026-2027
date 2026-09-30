@@ -7,7 +7,7 @@
   'use strict';
   var DZ = window.DZ;
   var brand = document.querySelector('.brand'); if (!brand) return;
-  var heroEnd = 0;
+  var heroEnd = 0, menuBtn = document.querySelector('.menu-btn');
 
   DZ.hooks.positions.push(function () {
     heroEnd = 0;
@@ -22,7 +22,9 @@
     var onImage = !!(hit && (hit.kind === 'seal' || hit.kind === 'seq'));
     brand.classList.toggle('is-on', y >= clear);
     brand.classList.toggle('on-image', onImage);
-    brand.classList.toggle('on-light', y >= clear && !(hit && hit.night) && !onImage);
+    var light = y >= clear && !(hit && hit.night) && !onImage;
+    brand.classList.toggle('on-light', light);
+    if (menuBtn) { menuBtn.classList.toggle('on-light', light); menuBtn.classList.toggle('on-image', onImage || y < clear); }
   });
   brand.addEventListener('click', function (e) { e.preventDefault(); DZ.scrollToY(0); });
 })();

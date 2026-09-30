@@ -331,6 +331,49 @@
   .stop.k-hero::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 30%; z-index: 1; pointer-events: none;
                          background: linear-gradient(to bottom, rgb(16 15 13 / .45), rgb(16 15 13 / 0)); }
 
+  /* ---------- menú de hamburguesa (pedido del usuario, 2026-09-29: en todos los dispositivos) ---------- */
+  .menu-btn { position: fixed; z-index: 60; top: calc(var(--brand-top) - 6px); right: calc(var(--brand-left) - 10px);
+              width: 48px; height: 48px; border: 0; border-radius: var(--radius-round); background: transparent;
+              color: var(--color-night-ink); cursor: pointer; display: grid; place-items: center;
+              -webkit-tap-highlight-color: transparent; transition: color 200ms var(--ease-out), filter 200ms var(--ease-out), transform 60ms; }
+  .menu-btn.on-light { color: var(--color-ink); }
+  .menu-btn.on-image { filter: drop-shadow(0 1px 8px rgb(16 15 13 / .55)); }
+  .menu-btn:active { transform: scale(.92); }
+  .menu-btn span { position: absolute; width: 22px; height: 2px; border-radius: 2px; background: currentColor;
+                   transition: transform 240ms var(--ease-out), opacity 160ms var(--ease-out); }
+  .menu-btn span:nth-child(1) { transform: translateY(-7px); }
+  .menu-btn span:nth-child(3) { transform: translateY(7px); }
+  .menu-open .menu-btn { color: var(--color-ink); filter: none; }
+  .menu-open .menu-btn span:nth-child(1) { transform: rotate(45deg); }
+  .menu-open .menu-btn span:nth-child(2) { opacity: 0; }
+  .menu-open .menu-btn span:nth-child(3) { transform: rotate(-45deg); }
+  .menu { position: fixed; inset: 0; z-index: 58; }
+  .menu[hidden] { display: none; }
+  .menu-backdrop { position: absolute; inset: 0; background: rgb(17 26 52 / .5); opacity: 0; transition: opacity 240ms var(--ease-out); }
+  .menu-panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(100%, 26rem); background: var(--color-panel);
+                display: flex; flex-direction: column; gap: 28px; padding: calc(var(--brand-top) + 72px) 28px 28px;
+                overflow-y: auto; overscroll-behavior: contain; transform: translateX(100%);
+                transition: transform 320ms var(--ease-out); }
+  .menu.is-open .menu-backdrop { opacity: 1; }
+  .menu.is-open .menu-panel { transform: none; }
+  .menu-logo { position: absolute; top: var(--brand-top); left: 28px; width: 110px; height: auto; }
+  .menu-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .menu-item { width: 100%; display: flex; align-items: center; gap: 14px; min-height: 52px; padding: 10px 0;
+               border: 0; border-bottom: 1px solid var(--color-line); background: none; color: var(--color-ink);
+               font: 700 var(--t-sub)/1.2 var(--font-body); letter-spacing: -.01em; text-align: left; cursor: pointer;
+               -webkit-tap-highlight-color: transparent; }
+  .menu-item::before { content: ""; flex: none; width: 9px; height: 9px; border-radius: var(--radius-round); border: 1.5px solid var(--color-line-strong); }
+  .menu-item[aria-current="step"]::before { background: var(--color-azul-900); border-color: var(--color-azul-900); }
+  .menu-item.faq { font-weight: 600; font-size: var(--t-body); }
+  .menu-item.faq::before { border-radius: 2px; }
+  .menu-item:hover, .menu-item:focus-visible { color: var(--color-azul-900); }
+  .menu-item:active { opacity: .7; }
+  .menu-panel .cta { margin-top: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    .menu-panel { transition: transform 1ms, opacity 160ms; opacity: 0; transform: none; }
+    .menu.is-open .menu-panel { opacity: 1; }
+  }
+
   /* ---------- menú de recorrido (plan §4.5) ---------- */
   .rail { position: fixed; right: 18px; top: 50%; transform: translateY(-50%); z-index: 50; display: none;
           flex-direction: column; align-items: flex-end; gap: 0; opacity: 0; pointer-events: none;

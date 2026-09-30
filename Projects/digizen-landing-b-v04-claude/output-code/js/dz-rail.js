@@ -51,6 +51,12 @@
     });
   });
 
+  DZ.tramoStart = function (n) { return starts[n] != null ? starts[n] : null; };
+  DZ.currentTramo = function () {
+    var cur = 0, probe = window.scrollY + window.innerHeight * 0.4;
+    Object.keys(starts).forEach(function (n) { if (starts[n] <= probe) cur = Math.max(cur, +n); });
+    return cur;
+  };
   DZ.hooks.positions.push(computeStarts);
   DZ.hooks.frame.push(update);
 })();

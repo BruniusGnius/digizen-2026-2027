@@ -184,6 +184,22 @@ BRAND = ("<a class='brand' href='#P-H0' aria-label='Digizen'>"
          "<img class='brand-dark' src='assets/logo/digizen-logo-dark.svg' alt='' width='275' height='116'>"
          "<img class='brand-light' src='assets/logo/digizen-logo-light.svg' alt='' width='275' height='116'></a>")
 
+MENU_A11Y = ['Abrir menú / Cerrar menú (nombre accesible del botón)', 'Menú (nombre del panel)']
+
+def menu_html(pins):
+    """Menú de hamburguesa (pedido del usuario, 2026-09-29): tramos + FAQ + los dos CTA. Solo textos existentes o aprobados."""
+    present = {PIN_TRAMO.get(p['id'], 0) for p in pins}
+    items = '\n'.join(f"    <li><button type='button' class='menu-item' data-tramo='{n}'>{t}</button></li>" for n, t in TRAMOS if n in present)
+    if any(p['id'] == 'FAQ' for p in pins):
+        items += "\n    <li><button type='button' class='menu-item faq' data-menu-goto='FAQ'>Por si te quedó una duda.</button></li>"
+    cta = re.sub(r"<a( class='btn[^']*'[^>]*)>(.*?)</a>", button, C.CTA_INNER, flags=re.S)
+    return ("<button class='menu-btn' type='button' aria-expanded='false' aria-controls='menu' aria-label='Abrir menú'>"
+            "<span></span><span></span><span></span></button>\n"
+            "<div class='menu' id='menu' hidden>\n  <div class='menu-backdrop'></div>\n"
+            "  <nav class='menu-panel' aria-label='Menú'>\n"
+            "    <img class='menu-logo' src='assets/logo/digizen-logo-light.svg' alt='' width='275' height='116'>\n"
+            f"    <ul class='menu-list'>\n{items}\n    </ul>\n    {cta}\n  </nav>\n</div>")
+
 def rail_html(pins):
     present = {PIN_TRAMO.get(p['id'], 0) for p in pins}
     items = '\n'.join(f"  <button class='rail-item' type='button' data-tramo='{n}'><span class='rail-label'>{t}</span>"
@@ -207,7 +223,7 @@ DIALOG = """<dialog class='ada-dialog' id='ada-dialog' aria-labelledby='ada-dial
 
 SCRIPTS = ['assets/vendor/gsap.min.js', 'assets/vendor/ScrollTrigger.min.js', 'assets/vendor/ScrollToPlugin.min.js',
            'js/dz-core.js', 'js/dz-seq.js', 'js/dz-pins.js', 'js/dz-carousel.js', 'js/dz-hero.js',
-           'js/dz-rail.js', 'js/dz-brand.js', 'js/dz-actions.js', 'js/dz-main.js']
+           'js/dz-rail.js', 'js/dz-brand.js', 'js/dz-menu.js', 'js/dz-actions.js', 'js/dz-main.js']
 
 def page(pins, title):
     main = '\n'.join(pin_html(p) for p in pins if p['id'] != 'FOOT')
@@ -238,6 +254,7 @@ def page(pins, title):
 </head>
 <body>
 {BRAND}
+{menu_html(pins)}
 {rail_html(pins)}
 <main id="recorrido">
 {main}
@@ -337,7 +354,8 @@ def main():
     print('\n== adiciones de copy aprobadas por el usuario (no están en COPY-PUBLICADO.md) ==')
     print('  «Práctica y breve» (08.5)')
     print('  botones de las tarjetas de precio (tomados de la propuesta A): Pagar de contado · Elegir pagos diferidos')
-    print('  menú de recorrido: ' + ' · '.join(t for _, t in TRAMOS))
+    print('  menú de recorrido y menú de hamburguesa: ' + ' · '.join(t for _, t in TRAMOS))
+    print('  menú de hamburguesa: reusa «Por si te quedó una duda.» y los dos CTA; nombres accesibles: ' + ' · '.join(MENU_A11Y))
     print('  formulario (tomado de la propuesta A): ' + ' · '.join(DIALOG_TEXTS))
 
 if __name__ == '__main__':

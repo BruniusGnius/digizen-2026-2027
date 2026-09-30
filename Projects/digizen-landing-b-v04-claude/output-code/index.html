@@ -11,10 +11,31 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400..800;1,400..800&display=swap">
 <link rel='preload' as='image' media='(max-width: 859px)' imagesrcset='assets/scenes/01-dinner-v-800.webp 800w, assets/scenes/01-dinner-v-1163.webp 1163w' imagesizes='100vw' fetchpriority='high'>
 <link rel='preload' as='image' media='(min-width: 860px)' imagesrcset='assets/scenes/01-dinner-1280.webp 1280w, assets/scenes/01-dinner-1920.webp 1920w, assets/scenes/01-dinner-2560.webp 2560w' imagesizes='100vw' fetchpriority='high'>
-<link rel="stylesheet" href="dist/styles.css?v=20260929204028">
+<link rel="stylesheet" href="dist/styles.css?v=20260929204434">
 </head>
 <body>
 <a class='brand' href='#P-H0' aria-label='Digizen'><img class='brand-dark' src='assets/logo/digizen-logo-dark.svg' alt='' width='275' height='116'><img class='brand-light' src='assets/logo/digizen-logo-light.svg' alt='' width='275' height='116'></a>
+<button class='menu-btn' type='button' aria-expanded='false' aria-controls='menu' aria-label='Abrir menú'><span></span><span></span><span></span></button>
+<div class='menu' id='menu' hidden>
+  <div class='menu-backdrop'></div>
+  <nav class='menu-panel' aria-label='Menú'>
+    <img class='menu-logo' src='assets/logo/digizen-logo-light.svg' alt='' width='275' height='116'>
+    <ul class='menu-list'>
+    <li><button type='button' class='menu-item' data-tramo='1'>Lo que creemos</button></li>
+    <li><button type='button' class='menu-item' data-tramo='2'>Por qué no escucha</button></li>
+    <li><button type='button' class='menu-item' data-tramo='3'>El cómo</button></li>
+    <li><button type='button' class='menu-item' data-tramo='4'>ADA</button></li>
+    <li><button type='button' class='menu-item' data-tramo='5'>Tú</button></li>
+    <li><button type='button' class='menu-item' data-tramo='6'>Inscripción</button></li>
+    <li><button type='button' class='menu-item' data-tramo='7'>Tu decisión</button></li>
+    <li><button type='button' class='menu-item faq' data-menu-goto='FAQ'>Por si te quedó una duda.</button></li>
+    </ul>
+    <div class='cta'>
+<button type='button' class='btn' data-action='checkout'>Inscribir a mi hijo <span class='arr' data-dir='ne'>↗</span></button>
+<button type='button' class='btn alt' data-action='ada' aria-haspopup='dialog'>Conversar con ADA primero<span class='arr' data-dir='e' data-icon='→' aria-hidden='true'></span></button>
+</div>
+  </nav>
+</div>
 <div class='progress' aria-hidden='true'></div>
 <nav class='rail' aria-label='Recorrido'>
   <span class='rail-line' aria-hidden='true'></span><span class='rail-fill' aria-hidden='true'></span>
@@ -775,17 +796,18 @@
   <p class='in w5 t-small note'>Se manda la liga de acceso; no abre WhatsApp directo.</p>
 </form>
 </dialog>
-<script defer src='assets/vendor/gsap.min.js?v=20260929204028'></script>
-<script defer src='assets/vendor/ScrollTrigger.min.js?v=20260929204028'></script>
-<script defer src='assets/vendor/ScrollToPlugin.min.js?v=20260929204028'></script>
-<script defer src='js/dz-core.js?v=20260929204028'></script>
-<script defer src='js/dz-seq.js?v=20260929204028'></script>
-<script defer src='js/dz-pins.js?v=20260929204028'></script>
-<script defer src='js/dz-carousel.js?v=20260929204028'></script>
-<script defer src='js/dz-hero.js?v=20260929204028'></script>
-<script defer src='js/dz-rail.js?v=20260929204028'></script>
-<script defer src='js/dz-brand.js?v=20260929204028'></script>
-<script defer src='js/dz-actions.js?v=20260929204028'></script>
-<script defer src='js/dz-main.js?v=20260929204028'></script>
+<script defer src='assets/vendor/gsap.min.js?v=20260929204434'></script>
+<script defer src='assets/vendor/ScrollTrigger.min.js?v=20260929204434'></script>
+<script defer src='assets/vendor/ScrollToPlugin.min.js?v=20260929204434'></script>
+<script defer src='js/dz-core.js?v=20260929204434'></script>
+<script defer src='js/dz-seq.js?v=20260929204434'></script>
+<script defer src='js/dz-pins.js?v=20260929204434'></script>
+<script defer src='js/dz-carousel.js?v=20260929204434'></script>
+<script defer src='js/dz-hero.js?v=20260929204434'></script>
+<script defer src='js/dz-rail.js?v=20260929204434'></script>
+<script defer src='js/dz-brand.js?v=20260929204434'></script>
+<script defer src='js/dz-menu.js?v=20260929204434'></script>
+<script defer src='js/dz-actions.js?v=20260929204434'></script>
+<script defer src='js/dz-main.js?v=20260929204434'></script>
 </body>
 </html>

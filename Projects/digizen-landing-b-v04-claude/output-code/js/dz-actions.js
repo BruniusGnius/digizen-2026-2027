@@ -6,6 +6,7 @@
    - Botones con destino pendiente (data-pending) no hacen nada todavía. */
 (function () {
   'use strict';
+  var DZ = window.DZ;
   var dlg = document.getElementById('ada-dialog');
 
   // ---------- respuesta inmediata en pointerdown (apple-design §1) ----------
@@ -19,6 +20,7 @@
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-action], [data-pending]'); if (!b) return;
     var act = b.getAttribute('data-action');
+    if (b.closest('#menu') && DZ.closeMenu) DZ.closeMenu(true);
     if (act === 'ada' && dlg) { openAda(b); return; }
     if (act === 'checkout') { /* como en A: el plan viaja en el evento (contado / diferido); sin plan = CTA general */
       window.dispatchEvent(new CustomEvent('digizen:checkout', { detail: { plan: b.getAttribute('data-plan') || null } })); return; }
