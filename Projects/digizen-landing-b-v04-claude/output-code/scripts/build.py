@@ -233,7 +233,7 @@ SEO = {  # textos de SEO aprobados en la propuesta A (reutilizados por pedido de
     'description': 'Tu hijo no necesita más vigilancia. Necesita criterio. DIGIZEN lo acompaña con ADA para pensar, decidir y construir una relación más sana con el mundo digital.',
     'og_title': 'El control caduca. El criterio no.',
     'og_description': 'DIGIZEN ayuda a tu hijo a construir criterio digital con ADA, sin convertirte en policía de su celular.',
-    'og_image': 'assets/og/digizen-og-control-caduca-criterio-no.jpg',
+    'og_image': 'assets/og/digizen-ogp-1200x630.jpg',  # la imagen para compartir vigente (elegida por el usuario, 2026-09-30)
     'og_image_alt': 'DIGIZEN: ciudadanía digital para hijos con criterio, voz propia y acompañamiento familiar.',
     'webpage_description': 'DIGIZEN es un programa de ciudadanía digital que acompaña a niños, niñas y jóvenes a construir criterio, identidad y responsabilidad digital con ADA.',
     'course_description': 'Programa de cultura y ciudadanía digital para la era de la inteligencia artificial. Acompaña a estudiantes a trabajar privacidad, identidad, pensamiento crítico, convivencia, bienestar, autoría, derechos y responsabilidad digital.',
