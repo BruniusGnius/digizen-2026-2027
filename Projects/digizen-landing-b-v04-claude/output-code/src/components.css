@@ -184,6 +184,8 @@
   .colbox .guar { max-width: none; }
   .cta { display: flex; flex-direction: column; gap: 10px; width: 100%; }
   .go-stack { gap: 22px; }
+  /* un botón bajo un golpe (09.1): al ancho de la columna de lectura, con el aire de 32/48 px */
+  .b01 > .cta-one { width: min(100%, var(--w-read)); margin-top: var(--air); }
   .l07 .essay .go-in { margin-top: 48px; }
   .l07 .essay .go-in p { line-height: 1.3; }
   .go-in .tc { text-align: center; }

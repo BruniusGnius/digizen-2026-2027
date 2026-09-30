@@ -14,7 +14,7 @@ Build de producción — Digizen landing B v04 (Fase 3).
    + lista de adiciones aprobadas.
 4. Verificación contra el wireframe: misma lista de paradas (pin, id, kind, E, bp, oscuro). Si difiere, falla.
 """
-import os, re, sys, shutil, html, time
+import os, re, sys, shutil, html, time, json
 from html.parser import HTMLParser
 from PIL import Image
 
@@ -222,11 +222,78 @@ DIALOG = """<dialog class='ada-dialog' id='ada-dialog' aria-labelledby='ada-dial
 </form>
 </dialog>"""
 
+# ------------------------------------------------------------------ SEO y búsqueda generativa (03-seo-geo-plan.md)
+# PREVIEW = True mientras la A esté en producción: la B no se indexa y declara a la A como página oficial,
+# para no competir con ella. Al pasar a producción: PREVIEW = False y PUBLIC_URL = su dirección final.
+PREVIEW = True
+PUBLIC_URL = 'https://bruniusgnius.github.io/digizen-2026-2027/b-v04-claude/'
+OFFICIAL_URL = 'https://digizen.gnius.club/'
+SEO = {  # textos de SEO aprobados en la propuesta A (reutilizados por pedido del usuario); og:title está en el copy de B (05.7)
+    'title': 'DIGIZEN | Ciudadanía digital para hijos: criterio, no control',
+    'description': 'Tu hijo no necesita más vigilancia. Necesita criterio. DIGIZEN lo acompaña con ADA para pensar, decidir y construir una relación más sana con el mundo digital.',
+    'og_title': 'El control caduca. El criterio no.',
+    'og_description': 'DIGIZEN ayuda a tu hijo a construir criterio digital con ADA, sin convertirte en policía de su celular.',
+    'og_image': 'assets/og/digizen-og-control-caduca-criterio-no.jpg',
+    'og_image_alt': 'DIGIZEN: ciudadanía digital para hijos con criterio, voz propia y acompañamiento familiar.',
+    'webpage_description': 'DIGIZEN es un programa de ciudadanía digital que acompaña a niños, niñas y jóvenes a construir criterio, identidad y responsabilidad digital con ADA.',
+    'course_description': 'Programa de cultura y ciudadanía digital para la era de la inteligencia artificial. Acompaña a estudiantes a trabajar privacidad, identidad, pensamiento crítico, convivencia, bienestar, autoría, derechos y responsabilidad digital.',
+}
+
+def seo_head(indexable):
+    """Metadatos, tarjetas para compartir y JSON-LD. Con PREVIEW (o en prueba.html) la página no se indexa."""
+    canon = OFFICIAL_URL if (PREVIEW or not indexable) else PUBLIC_URL
+    robots = 'index,follow,max-image-preview:large' if (indexable and not PREVIEW) else 'noindex,nofollow'
+    img = PUBLIC_URL + SEO['og_image']
+    org = OFFICIAL_URL + '#organization'
+    graph = [
+        {'@type': 'Organization', '@id': org, 'name': 'DIGIZEN', 'url': OFFICIAL_URL,
+         'logo': OFFICIAL_URL + 'assets/digizen/logo-SVG/digizen-logo-dark.svg',
+         'parentOrganization': {'@type': 'Organization', 'name': 'Gnius Club', 'url': 'https://gnius.club/'}},
+        {'@type': 'WebSite', '@id': OFFICIAL_URL + '#website', 'url': OFFICIAL_URL, 'name': 'DIGIZEN', 'inLanguage': 'es-MX', 'publisher': {'@id': org}},
+        {'@type': 'WebPage', '@id': PUBLIC_URL + '#webpage', 'url': PUBLIC_URL, 'name': SEO['title'], 'description': SEO['webpage_description'],
+         'inLanguage': 'es-MX', 'isPartOf': {'@id': OFFICIAL_URL + '#website'},
+         'audience': {'@type': 'Audience', 'audienceType': 'Madres, padres y cuidadores de niños, niñas y jóvenes'}},
+        {'@type': 'Course', '@id': PUBLIC_URL + '#course', 'name': 'DIGIZEN', 'description': SEO['course_description'],
+         'provider': {'@id': org}, 'inLanguage': 'es-MX', 'courseMode': 'online', 'url': PUBLIC_URL,
+         'educationalLevel': 'De tercero de primaria a tercero de prepa',            # copy de B
+         'offers': [                                                                 # montos literales del copy de B
+             {'@type': 'Offer', 'name': 'El ciclo completo de 12 meses', 'price': '5990', 'priceCurrency': 'MXN', 'url': PUBLIC_URL},
+             {'@type': 'Offer', 'name': 'Todo hoy, de una vez', 'price': '4990', 'priceCurrency': 'MXN', 'priceValidUntil': '2026-10-31', 'url': PUBLIC_URL}]},
+        {'@type': 'FAQPage', '@id': PUBLIC_URL + '#faq',                            # las 7 preguntas literales del FAQ de B
+         'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in C.FAQ]},
+    ]
+    ld = json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False, indent=1).replace('</', '<\\/')
+    e = lambda t: html.escape(t, quote=True)
+    return f"""<meta name="description" content="{e(SEO['description'])}">
+<meta name="robots" content="{robots}">
+<link rel="canonical" href="{canon}">
+<link rel="alternate" type="text/plain" href="{OFFICIAL_URL}llms.txt" title="DIGIZEN">
+<link rel="alternate" type="text/html" href="{OFFICIAL_URL}ai-context" title="DIGIZEN AI context">
+<meta property="og:site_name" content="DIGIZEN">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<meta property="og:url" content="{PUBLIC_URL}">
+<meta property="og:title" content="{e(SEO['og_title'])}">
+<meta property="og:description" content="{e(SEO['og_description'])}">
+<meta property="og:image" content="{img}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{e(SEO['og_image_alt'])}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{e(SEO['og_title'])}">
+<meta name="twitter:description" content="{e(SEO['og_description'])}">
+<meta name="twitter:image" content="{img}">
+<meta name="twitter:image:alt" content="{e(SEO['og_image_alt'])}">
+<script type="application/ld+json">
+{ld}
+</script>"""
+
 SCRIPTS = ['assets/vendor/gsap.min.js', 'assets/vendor/ScrollTrigger.min.js', 'assets/vendor/ScrollToPlugin.min.js',
            'js/dz-core.js', 'js/dz-spring.js', 'js/dz-seq.js', 'js/dz-pins.js', 'js/dz-carousel.js', 'js/dz-hero.js',
            'js/dz-rail.js', 'js/dz-brand.js', 'js/dz-menu.js', 'js/dz-faq.js', 'js/dz-actions.js', 'js/dz-main.js']
 
-def page(pins, title):
+def page(pins, title, indexable=True):
     main = '\n'.join(pin_html(p) for p in pins if p['id'] != 'FOOT')
     foot = '\n'.join(pin_html(p) for p in pins if p['id'] == 'FOOT')
     hero = SCENES.get('01-dinner')
@@ -245,6 +312,7 @@ def page(pins, title):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{title}</title>
+{seo_head(indexable)}
 <meta name="theme-color" content="#F4F3F0">
 <link rel="icon" type="image/svg+xml" href="assets/logo/Favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -324,7 +392,7 @@ def expected_stops(pins):
 # ------------------------------------------------------------------ main
 def render(pins, name, title, full):
     path = os.path.join(OUT, name)
-    open(path, 'w', encoding='utf-8').write(page(pins, title))
+    open(path, 'w', encoding='utf-8').write(page(pins, title, indexable=full))
     res, stops = audit_file(path)
     print(f'\n== {name} ==')
     if full:
@@ -351,10 +419,13 @@ def main():
     test = [p for p in C.PINS if p['id'] in TEST_PINS]
     render(test, 'prueba.html', 'Digizen · estación de prueba', full=False)
     if '--prueba' not in sys.argv:
-        render(C.PINS, 'index.html', 'Digizen', full=True)
+        render(C.PINS, 'index.html', SEO['title'], full=True)
+    print(f"\n== SEO ==\n  {'PREVIEW: noindex, canonical a la A (' + OFFICIAL_URL + ')' if PREVIEW else 'PRODUCCIÓN: index, canonical ' + PUBLIC_URL}")
+    print('  JSON-LD: Organization, WebSite, WebPage, Course (2 ofertas), FAQPage (' + str(len(C.FAQ)) + ' preguntas literales)')
     print('\n== adiciones de copy aprobadas por el usuario (no están en COPY-PUBLICADO.md) ==')
     print('  «Práctica y breve» (08.5)')
     print('  botones de las tarjetas de precio (tomados de la propuesta A): Pagar de contado · Elegir pagos diferidos')
+    print('  09.1: «Conversar con ADA primero» (texto del CTA, repetido bajo «Habla tú con ADA primero.» para abrir el formulario)')
     print('  menú de recorrido y menú de hamburguesa: ' + ' · '.join(t for _, t in TRAMOS))
     print('  menú de hamburguesa: reusa «Por si te quedó una duda.» y los dos CTA; nombres accesibles: ' + ' · '.join(MENU_A11Y))
     print('  formulario (tomado de la propuesta A): ' + ' · '.join(DIALOG_TEXTS))

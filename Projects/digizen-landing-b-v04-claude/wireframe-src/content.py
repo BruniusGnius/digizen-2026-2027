@@ -358,9 +358,9 @@ pin("P-08b", "08 · reglas", "pin", [
 
 # 09 · respiro / instruccional
 pin("P-09", "09 · Y la prueba no te la pido por fe.", "pin", [
-    st("09.1", "B01 (golpe en dos alturas)", "reveal", 1.5,
-       "<div class='c ctr stack b01'>\n<h2 class='pf w8 t-semi bw' data-step='1'>Y la prueba no te la pido por fe.</h2>\n<p class='pf w8 t-mon bw' data-step='2'><span class='hl'>Habla tú con ADA primero.</span></p>\n</div>",
-       "Golpe en dos alturas (pedido del usuario, mismo patrón que 01.3 y 05.4): «Y la prueba no te la pido por fe.» señala → semimonumental; «Habla tú con ADA primero.» revela → monumental. Dos tiempos.", scan=True),
+    st("09.1", "B01 (golpe en dos alturas + botón)", "reveal", 1.75,
+       "<div class='c ctr stack b01'>\n<h2 class='pf w8 t-semi bw' data-step='1'>Y la prueba no te la pido por fe.</h2>\n<p class='pf w8 t-mon bw' data-step='2'><span class='hl'>Habla tú con ADA primero.</span></p>\n<div class='cta-one' data-step='3'><a class='btn alt' data-new='aprobado' data-role='cian · ADA · abre el formulario (texto del CTA, repetido por pedido del usuario)'>Conversar con ADA primero<span class='arr' data-dir='e' data-icon='→' aria-hidden='true'></span></a></div>\n</div>",
+       "Golpe en dos alturas (pedido del usuario, mismo patrón que 01.3 y 05.4): «Y la prueba no te la pido por fe.» señala → semimonumental; «Habla tú con ADA primero.» revela → monumental; tercer tiempo: el botón «Conversar con ADA primero», que abre el formulario de ADA (texto del CTA repetido aquí por pedido del usuario, 2026-09-30). 1.75 E, como 07.5 (tres tiempos).", scan=True),
     st("09.2", "Sello", "seal", 1, seal("06-rules.webp", zoom=1),
        "El papá con la tableta, después de «Habla tú con ADA primero.» (pedido del usuario, 2026-09-29; antes sellaba las reglas en 08.6). Sin zoom, solo disolvencia de entrada (pedido del usuario). Alternativa: 06-rules-alt."),
     st("09.3", "L07 + botón + puente", "read", 1.25,

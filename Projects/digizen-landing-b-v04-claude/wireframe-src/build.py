@@ -115,6 +115,7 @@ mark.val{background:#d9d9d9;color:inherit;padding:0 .15em}
 /* tarjetas de L08 (08.5): superficie, separadas, con subtítulo */
 .entry.card{background:var(--panel);border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:10px}
 .go-stack{gap:22px}
+.b01 > .cta-one{width:min(100%, var(--col-read));margin-top:22px} @media (min-width:860px){ .b01 > .cta-one{margin-top:38px} } /* botón bajo un golpe (09.1) */
 .l07 .essay .go-in{margin-top:48px} .l07 .essay .go-in p{line-height:1.3} .go-in .tc{text-align:center}
 @media (max-width:859px){ .l07 .essay .go-in{margin-top:32px} }
 /* mazo apilado (08.5m): solo móvil < 600 px y fuera del modo reducido; en tablet, flujo normal */
