@@ -507,4 +507,7 @@
 .flowmode .stop.k-hero { transition-duration: .3s; }
 /* prueba 3 · una estación por gesto: cada estación llega compuesta, sin fundido; sin rebote ni "jalar para recargar" */
 .paged .stop { transition: none; }
+/* cada escena ocupa exactamente una pantalla, con la composición de la versión animada; la imagen (y su zoom) no se sale de su estación */
+.paged .stop.k-seal, .paged .stop.k-seq { height: 100svh; min-height: 0; overflow: hidden; }
+.paged .c-seal { position: absolute; inset: 0; min-height: 0; }
 html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }

@@ -36,8 +36,9 @@
   } else {
     document.body.classList.add('flowmode');
     /* prueba 3 (pedido del usuario y de su jefe, 2026-09-30): una estación por gesto (dz-pager.js). Las estaciones llegan
-       compuestas, sin animaciones internas ni la entrada del Hero; las escenas (imágenes y videos con scrub) conservan su
-       animación, fijadas, en desktop y móvil. El saludo de ADA sigue corriendo por tiempo al llegar. */
+       compuestas, sin animaciones internas ni la entrada del Hero. En desktop, las escenas con efecto (zoom o video con scrub)
+       conservan su animación, fijadas; en teléfono y tablet todas las imágenes son estaciones ancladas, sin animación.
+       El saludo de ADA sigue corriendo por tiempo al llegar (solo desktop). */
     if (DZ.cfg.flow && DZ.hasGsap && !DZ.reduce) {
       document.body.classList.add('flow-video');
       gsap.registerPlugin(ScrollTrigger);
@@ -57,6 +58,11 @@
           var fig = x.el.querySelector('[data-seq]');
           if (fig && fig.getAttribute('data-play') === 'time') { DZ.buildSeq(x.el, null, 0, x.s.E); return; }  /* saludo de ADA: por tiempo */
           if (x.s.kind !== 'seal' && x.s.kind !== 'seq') return;   /* solo las escenas conservan su animación con scroll */
+          if (!DZ.isD) return;   /* teléfono y tablet: todas las imágenes son estaciones ancladas, sin animación (pedido del usuario) */
+          /* desktop: una escena sin efecto visible (zoom 1 o casi, o video que no se descarga) es una estación normal: una sola
+             parada, sin fijarla, para que no pida un gesto de más sin que pase nada (pedido del usuario) */
+          var zf = x.el.querySelector('[data-zoom]'), z = zf ? parseFloat(zf.getAttribute('data-zoom')) : 1.06;
+          if (fig ? DZ.lite : Math.abs(z - 1) < 0.1) return;
           x.el.classList.add('inview');
           var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: x.el, pin: true, start: 'top top',
             end: function () { return '+=' + (x.s.E * DZ.unit()); }, scrub: 0.4, invalidateOnRefresh: true } });
