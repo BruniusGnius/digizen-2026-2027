@@ -3,7 +3,7 @@
      (nombre, canal Correo / WhatsApp, correo o número). Como en A, todavía no se envía
      a ningún servicio: se emite `digizen:ada-request` para conectarlo después (pendiente).
    - «Inscribir a mi hijo ↗» emite `digizen:checkout`, como en A (destino del pago pendiente).
-     En el menú, ese botón lleva a las tarjetas de precio para elegir la forma de pago (pedido del usuario, 2026-09-30).
+     En el menú y al final (12.4), ese botón lleva a las tarjetas de precio para elegir la forma de pago (decisión del usuario, 2026-09-30).
    - Botones con destino pendiente (data-pending) no hacen nada todavía. */
 (function () {
   'use strict';
@@ -25,7 +25,7 @@
     var act = b.getAttribute('data-action');
     if (b.closest('#menu') && DZ.closeMenu) DZ.closeMenu(true);
     if (act === 'ada' && dlg) { openAda(b); return; }
-    if (act === 'pricing') { DZ.goTo(DZ.isD ? '11.4' : '11.5m'); return; }   /* menú: a las tarjetas de precio (desktop 11.4, móvil 11.5m) */
+    if (act === 'pricing') { DZ.goTo(DZ.isD ? '11.4' : '11.5m'); return; }   /* menú y 12.4: a las tarjetas de precio (desktop 11.4, móvil 11.5m) */
     if (act === 'checkout') { /* como en A: el plan viaja en el evento (contado / diferido); sin plan = CTA general */
       window.dispatchEvent(new CustomEvent('digizen:checkout', { detail: { plan: b.getAttribute('data-plan') || null } })); return; }
     if (b.hasAttribute('data-pending')) { e.preventDefault(); if (window.console) console.info('[digizen] destino pendiente:', b.getAttribute('data-pending')); }
