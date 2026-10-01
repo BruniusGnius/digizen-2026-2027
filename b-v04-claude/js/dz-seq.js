@@ -70,14 +70,14 @@
     return out;
   }
 
-  DZ.buildSeq = function (el, tl, t, span) {
+  DZ.buildSeq = function (el, tl, t, span, full) {   /* full: el video ocupa todo el tramo (prueba 3) */
     var fig = el.querySelector('[data-seq]'); if (!fig) return;
     if (!DZ.isD && fig.getAttribute('data-mobile') === 'still') return; /* móvil/tablet: cuadro fijo, sin descargar la secuencia */
     if (DZ.lite) return;                                                /* ahorro de datos / conexión lenta: cuadro fijo */
     var cv = fig.querySelector('canvas'), ctx = cv.getContext('2d');
     var n = +fig.getAttribute('data-n'), base = fig.getAttribute('data-seq');
     var start = +(fig.getAttribute('data-start') || 1), contain = fig.getAttribute('data-fit') === 'contain'; /* cubre su contenedor (decisión del usuario, 2026-09-29) */
-    var dur = parseFloat(fig.getAttribute('data-span') || 0.7);
+    var dur = full ? 1 : parseFloat(fig.getAttribute('data-span') || 0.7);
     var rev = fig.getAttribute('data-reverse') === '1';
     var imgs = new Array(n), state = { f: (rev ? n - 1 : 0) };
     var url = function (k) { return base + '/f' + ('00' + (start + k)).slice(-3) + '.webp'; };

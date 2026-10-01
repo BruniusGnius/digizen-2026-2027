@@ -6,14 +6,14 @@
   var DZ = window.DZ;
 
   /* zoom de una escena con el scroll; data-zoom = escala inicial (por defecto 1.06). Lo usan el motor de pines y la prueba 3 */
-  DZ.sealZoom = function (el, tl, t, span) {
+  DZ.sealZoom = function (el, tl, t, span, full) {   /* full: el zoom ocupa todo el tramo (prueba 3) */
     var img = el.querySelector('img'), fig = el.querySelector('[data-zoom]');
     var z = fig ? parseFloat(fig.getAttribute('data-zoom')) : 1.06;
     var zin = fig && fig.getAttribute('data-zoom-dir') === 'in';
     if (!img) return;
     var org = fig && ((!DZ.isD && img.hasAttribute('data-v') && fig.getAttribute('data-origin-m')) || fig.getAttribute('data-origin'));
     if (org) gsap.set(img, { transformOrigin: org });
-    tl.fromTo(img, { scale: (zin ? 1 : z) }, { scale: (zin ? z : 1), duration: span * 0.7, ease: (z > 1.2 ? (zin ? 'power1.in' : 'power1.out') : 'none') }, t);
+    tl.fromTo(img, { scale: (zin ? 1 : z) }, { scale: (zin ? z : 1), duration: span * (full ? 1 : 0.7), ease: (z > 1.2 ? (zin ? 'power1.in' : 'power1.out') : 'none') }, t);
   };
 
   DZ.buildPin = function (sec, vis, pin) {
