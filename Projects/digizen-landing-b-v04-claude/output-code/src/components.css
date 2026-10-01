@@ -430,14 +430,15 @@
 .pin.is-pinned .stop { will-change: opacity; }
 .pin.is-pinned .stop > .c, .pin.is-pinned .c-seal img, .pin.is-pinned .card, .pin.is-pinned .track { will-change: transform; }
 
-/* ---------- mazo apilado: móvil < 600 px y fuera del modo reducido ---------- */
+/* ---------- mazo apilado: móvil < 600 px, fuera del modo reducido y en la prueba 3 (una tarjeta por gesto) ---------- */
 @media (max-width: 599px) {
-  body:not(.flowmode) .l08 .entries.deck { grid-template-columns: 1fr; gap: 0; }
-  body:not(.flowmode) .entries.deck > .card { grid-area: 1 / 1; box-shadow: 0 -6px 16px rgb(20 18 15 / .07); }
-  body:not(.flowmode) .entries.deck > .card:nth-child(1) { align-self: start; }
-  body:not(.flowmode) .entries.deck > .card:nth-child(2) { margin-top: var(--peek); }
-  body:not(.flowmode) .entries.deck > .card:nth-child(3) { margin-top: calc(var(--peek) * 2); }
-  body:not(.flowmode) .entries.deck > .card:nth-child(4) { margin-top: calc(var(--peek) * 3); }
+  :is(body:not(.flowmode), body.paged) .l08 .entries.deck { grid-template-columns: 1fr; gap: 0; }
+  :is(body:not(.flowmode), body.paged) .entries.deck > .card { grid-area: 1 / 1; box-shadow: 0 -6px 16px rgb(20 18 15 / .07); }
+  :is(body:not(.flowmode), body.paged) .entries.deck > .card:nth-child(1) { align-self: start; }
+  :is(body:not(.flowmode), body.paged) .entries.deck > .card:nth-child(2) { margin-top: var(--peek); }
+  :is(body:not(.flowmode), body.paged) .entries.deck > .card:nth-child(3) { margin-top: calc(var(--peek) * 2); }
+  :is(body:not(.flowmode), body.paged) .entries.deck > .card:nth-child(4) { margin-top: calc(var(--peek) * 3); }
+  .paged .stop.k-deck { height: 100svh; min-height: 0; overflow: hidden; }   /* prueba 3: el mazo ocupa una pantalla, fijado */
 }
 
 /* ---------- móvil y tablet (< 860 px) ---------- */
@@ -511,9 +512,4 @@
 .flowmode .l03 .acc-copy { display: none; }
 /* cada escena ocupa exactamente una pantalla, con la composición de la versión animada; la imagen (y su zoom) no se sale de su estación */
 .paged .stop.k-seal, .paged .stop.k-seq { height: 100svh; min-height: 0; overflow: hidden; }
-.paged .c-seal { position: absolute; inset: 0; min-height: 0; }
-/* teléfono: el mazo que la versión animada reparte en dos estaciones (11.3m + 11.3bm) se lee como una sola lista, sin hueco entre las dos */
-.paged .stop.k-deck:has(+ .stop.k-deck) { min-height: 0; padding-bottom: 0; }
-.paged .stop.k-deck + .stop.k-deck { min-height: 0; padding-top: 0; }
-.paged .stop.k-deck + .stop.k-deck .entries { margin-top: 14px; }   /* el mismo espacio que entre tarjetas */
-html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
+.paged .c-seal { position: absolute; inset: 0; min-height: 0; }html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }

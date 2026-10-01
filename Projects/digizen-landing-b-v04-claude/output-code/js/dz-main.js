@@ -50,13 +50,28 @@
         DZ.STOPS.forEach(function (x) { if (!x.flow) x.el.classList.add('inview'); });
         window.addEventListener('load', function () { if (DZ.afterHero) DZ.afterHero(); });   /* el Hero ya está compuesto: se adelanta la precarga */
       } else if (hero && DZ.heroIntro) DZ.heroIntro(hero.el).restart();   /* la entrada del Hero es de tiempo, no de scroll */
-      gsap.matchMedia().add({ isD: '(min-width: 860px)', isM: '(max-width: 859px)' }, function (ctx) {
+      gsap.matchMedia().add({ isD: '(min-width: 860px)', isM: '(max-width: 859px)', isS: '(max-width: 599px)' }, function (ctx) {
         DZ.isD = !!ctx.conditions.isD;
         DZ.STOPS.forEach(function (x) {
-          x._st = null;
+          x._st = null; x._steps = 0;
           if (x.flow || !DZ.visible(x.s)) return;
           var fig = x.el.querySelector('[data-seq]');
           if (fig && fig.getAttribute('data-play') === 'time') { DZ.buildSeq(x.el, null, 0, x.s.E); return; }  /* saludo de ADA: por tiempo */
+          /* teléfono: las tarjetas apiladas (08.5m, 11.3m, 11.3bm) como en la versión animada; cada gesto sube una tarjeta
+             sobre la anterior y, con la última en su lugar, el siguiente pasa de estación (pedido del usuario) */
+          var cards = x.el.querySelectorAll('.entries.deck > .card');
+          if (paged && ctx.conditions.isS && x.s.kind === 'deck' && cards.length > 1) {
+            var n = cards.length - 1;
+            var dt = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: x.el, pin: true, start: 'top top',
+              end: function () { return '+=' + (n * 0.6 * DZ.unit()); }, scrub: 0.4, invalidateOnRefresh: true } });
+            dt.to({}, { duration: n }, 0);
+            for (var q = 1; q <= n; q++) {
+              dt.fromTo(cards[q], { opacity: 0, y: function () { return window.innerHeight * 0.6; } },
+                { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', immediateRender: true }, q - 1 + 0.1);
+            }
+            x._st = dt.scrollTrigger; x._steps = n;
+            return;
+          }
           if (x.s.kind !== 'seal' && x.s.kind !== 'seq') return;   /* solo las escenas conservan su animación con scroll */
           if (!DZ.isD) return;   /* teléfono y tablet: todas las imágenes son estaciones ancladas, sin animación (pedido del usuario) */
           /* desktop: una escena sin efecto visible (zoom 1 o casi, o video que no se descarga) es una estación normal: una sola

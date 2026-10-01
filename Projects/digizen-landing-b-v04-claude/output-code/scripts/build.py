@@ -26,10 +26,13 @@ import content as C          # fuente única del copy y de las paradas (la del w
 import build as WF           # find_vertical, source_segments (auditoría del wireframe)
 
 # ------------------------------------------------------------------ configuración
-TRAMOS = [(1, 'Lo que creemos'), (2, 'Por qué no escucha'), (3, 'El cómo'), (4, 'ADA'),
-          (5, 'Tú'), (6, 'Inscripción'), (7, 'Tu decisión')]          # copy nuevo aprobado (plan §4.5)
+# menú «qué vas a encontrar» (opción A elegida por el usuario, 2026-09-30): cada nombre dice qué hay en la sección;
+# «Qué es ADA» incluye probarla (cap. 09), así ningún nombre repite el botón «Conversar con ADA primero»
+TRAMOS = [(1, 'Lo que casi todos creemos'), (2, 'Por qué no te escucha'), (3, 'Lo que sí funciona'), (4, 'Qué es ADA'),
+          (5, 'Tu papel'), (6, 'Precio e inscripción'), (7, 'Antes de decidir')]
+MENU_FAQ = 'Preguntas frecuentes'
 PIN_TRAMO = {'P-01': 1, 'P-02b': 1, 'P-03a': 2, 'P-03b': 2, 'P-04': 2, 'P-05a': 3, 'P-05b': 3, 'P-06': 3,
-             'P-07a': 4, 'P-07c': 4, 'P-08a': 4, 'P-08b': 4, 'P-09': 5, 'P-10a': 5, 'P-10b': 5,
+             'P-07a': 4, 'P-07c': 4, 'P-08a': 4, 'P-08b': 4, 'P-09': 4, 'P-10a': 5, 'P-10b': 5,
              'P-11a': 6, 'P-11b': 6, 'P-12a': 7, 'P-12b': 7, 'FAQ': 7, 'FOOT': 7}
 TEST_PINS = ['P-H0', 'P-H', 'P-01', 'P-08b', 'P-11b', 'FOOT']        # estación de prueba (plan §6)
 ADA_CARD_STOPS = {'08.5', '08.5m'}                                     # tarjetas en el color de ADA (cian)
@@ -192,7 +195,7 @@ def menu_html(pins):
     present = {PIN_TRAMO.get(p['id'], 0) for p in pins}
     items = '\n'.join(f"    <li><button type='button' class='menu-item' data-tramo='{n}'>{t}</button></li>" for n, t in TRAMOS if n in present)
     if any(p['id'] == 'FAQ' for p in pins):
-        items += "\n    <li><button type='button' class='menu-item faq' data-menu-goto='FAQ'>Por si te quedó una duda.</button></li>"
+        items += f"\n    <li><button type='button' class='menu-item faq' data-menu-goto='FAQ'>{MENU_FAQ}</button></li>"
     cta = re.sub(r"<a( class='btn[^']*'[^>]*)>(.*?)</a>", button, C.CTA_INNER, flags=re.S)
     return ("<button class='menu-btn' type='button' aria-expanded='false' aria-controls='menu' aria-label='Abrir menú'>"
             "<span></span><span></span><span></span></button>\n"
@@ -451,7 +454,7 @@ def main():
     print('  botones de las tarjetas de precio (tomados de la propuesta A): Pagar de contado · Elegir pagos diferidos')
     print('  09.1: «Conversar con ADA primero» (texto del CTA, repetido bajo «Habla tú con ADA primero.» para abrir el formulario)')
     print('  menú de recorrido y menú de hamburguesa: ' + ' · '.join(t for _, t in TRAMOS))
-    print('  menú de hamburguesa: reusa «Por si te quedó una duda.» y los dos CTA; nombres accesibles: ' + ' · '.join(MENU_A11Y))
+    print(f'  menú de hamburguesa: «{MENU_FAQ}» y los dos CTA; nombres accesibles: ' + ' · '.join(MENU_A11Y))
     print('  formulario (tomado de la propuesta A): ' + ' · '.join(DIALOG_TEXTS))
 
 if __name__ == '__main__':

@@ -145,6 +145,19 @@ Parto de la fila de acción aprobada y la llevo a color:
 | 6 | 11 | Inscripción |
 | 7 | 12 | Tu decisión |
 
+**Vigente (2026-09-30), opción A «qué vas a encontrar», elegida por el usuario** (el menú debe tener una lógica clara y enfocarse en la experiencia de usuario): cada nombre dice qué hay en la sección, en el orden de la historia; las acciones se quedan como botones.
+
+| # | Capítulos | Nombre |
+|---|---|---|
+| 1 | 01–02 | Lo que casi todos creemos |
+| 2 | 03–04 | Por qué no te escucha |
+| 3 | 05–06 | Lo que sí funciona |
+| 4 | 07–09 | Qué es ADA (incluye probarla, para no repetir el botón «Conversar con ADA primero») |
+| 5 | 10 | Tu papel |
+| 6 | 11 | Precio e inscripción |
+| 7 | 12 | Antes de decidir |
+| — | FAQ | Preguntas frecuentes (antes «Por si te quedó una duda.») |
+
 ### 4.6 Formulario y datos (como en la propuesta A)
 
 - «Conversar con ADA primero» abre un `<dialog>` con los mismos datos que A: **Nombre del papá o mamá**, **Canal de entrega** (Correo / WhatsApp) y **Correo electrónico** o **Número de WhatsApp**, según el canal; botón de envío y la nota «Se manda la liga de acceso; no abre WhatsApp directo.».
