@@ -197,6 +197,7 @@ def menu_html(pins):
     if any(p['id'] == 'FAQ' for p in pins):
         items += f"\n    <li><button type='button' class='menu-item faq' data-menu-goto='FAQ'>{MENU_FAQ}</button></li>"
     cta = re.sub(r"<a( class='btn[^']*'[^>]*)>(.*?)</a>", button, C.CTA_INNER, flags=re.S)
+    cta = cta.replace("data-action='checkout'", "data-action='pricing'")  # en el menú, «Inscribir a mi hijo» lleva a las tarjetas de precio (pedido del usuario)
     return ("<button class='menu-btn' type='button' aria-expanded='false' aria-controls='menu' aria-label='Abrir menú'>"
             "<span></span><span></span><span></span></button>\n"
             "<div class='menu' id='menu' hidden>\n  <div class='menu-backdrop'></div>\n"
