@@ -512,4 +512,8 @@
 /* cada escena ocupa exactamente una pantalla, con la composición de la versión animada; la imagen (y su zoom) no se sale de su estación */
 .paged .stop.k-seal, .paged .stop.k-seq { height: 100svh; min-height: 0; overflow: hidden; }
 .paged .c-seal { position: absolute; inset: 0; min-height: 0; }
+/* teléfono: el mazo que la versión animada reparte en dos estaciones (11.3m + 11.3bm) se lee como una sola lista, sin hueco entre las dos */
+.paged .stop.k-deck:has(+ .stop.k-deck) { min-height: 0; padding-bottom: 0; }
+.paged .stop.k-deck + .stop.k-deck { min-height: 0; padding-top: 0; }
+.paged .stop.k-deck + .stop.k-deck .entries { margin-top: 14px; }   /* el mismo espacio que entre tarjetas */
 html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
