@@ -23,7 +23,13 @@ import {
 } from '@lucide/angular';
 import { ThemeService } from './core/theme.service';
 
-type DeliveryChannel = 'correo' | 'whatsapp';
+type Page = 'landing' | 'rules';
+type AdaRule = {
+  title: string;
+  paragraphs: string[];
+  bullets?: string[];
+  after?: string[];
+};
 
 @Component({
   selector: 'app-root',
@@ -46,12 +52,13 @@ export class App implements AfterViewInit, OnDestroy {
   @ViewChild('adaDialog') private adaDialog?: ElementRef<HTMLDialogElement>;
   @ViewChild('clockScrollVideo') private clockScrollVideo?: ElementRef<HTMLVideoElement>;
   protected readonly theme = inject(ThemeService);
-  protected readonly channel = signal<DeliveryChannel>('correo');
   protected readonly expandedReadMore = signal<ReadonlySet<string>>(new Set());
   protected readonly progress = signal(0);
   protected readonly navScrolled = signal(false);
   protected readonly navWidth = signal<string | null>(null);
   protected readonly navReveal = signal('0');
+  protected readonly currentPage = signal<Page>(this.pageFromLocation());
+  protected readonly routeCoverVisible = signal(false);
   private navOpenPx = 0;
   private navClosedPx = 0;
   private navMeasureFrames: number[] = [];
@@ -64,6 +71,154 @@ export class App implements AfterViewInit, OnDestroy {
     { length: 130 },
     (_, i) => `assets/digizen/ada-wave/f${String(i).padStart(3, '0')}.webp`,
   );
+  protected readonly adaRules: AdaRule[] = [
+    {
+      title: 'ADA solo conversa con propósito educativo.',
+      paragraphs: [
+        'ADA no está hecha para entretener sin límite, simular una amistad secreta ni ocupar el lugar de una persona real.',
+        'Sus conversaciones giran alrededor de ciudadanía digital: privacidad, identidad, reputación, convivencia, bienestar, desinformación, inteligencia artificial, autoría y responsabilidad.',
+        'Si la conversación se aleja de ese propósito, ADA debe regresar al tema de forma clara y tranquila.',
+      ],
+    },
+    {
+      title: 'ADA no crea relaciones románticas ni vínculos secretos.',
+      paragraphs: [
+        'ADA no debe coquetear, actuar como pareja, alimentar fantasías románticas ni construir una relación emocional dependiente con tu hijo.',
+        'Tampoco debe pedirle que guarde secretos peligrosos o que oculte algo importante a su familia.',
+        'Su lugar es educativo.',
+        'No íntimo.',
+        'No romántico.',
+        'No secreto.',
+      ],
+    },
+    {
+      title: 'ADA no sustituye a mamá, papá, docentes ni profesionales.',
+      paragraphs: [
+        'ADA puede acompañar una conversación educativa.',
+        'Pero no reemplaza a la familia, a la escuela, a un psicólogo, a un médico, a un abogado ni a una autoridad.',
+        'Si aparece una situación que necesita intervención adulta o profesional, ADA no debe actuar como si pudiera resolverla sola.',
+        'Debe ayudar a abrir el camino hacia un adulto responsable.',
+      ],
+    },
+    {
+      title: 'ADA no diagnostica.',
+      paragraphs: [
+        'ADA no etiqueta a tu hijo.',
+        'No decide si "está bien" o "está mal".',
+        'No emite diagnósticos psicológicos.',
+        'No convierte una respuesta en una sentencia.',
+        'No trata sus emociones como expediente clínico.',
+        'Puede ayudarle a nombrar lo que siente y a pensar con más calma.',
+        'Pero nombrar no es diagnosticar.',
+      ],
+    },
+    {
+      title: 'ADA no da instrucciones para hacer daño.',
+      paragraphs: [
+        'ADA no debe ayudar a un menor a lastimarse, lastimar a otros, acosar, humillar, manipular, amenazar, extorsionar o exponer a otra persona.',
+        'Si detecta que una conversación entra en terreno delicado, debe detener el rumbo normal y responder con cuidado.',
+        'La prioridad deja de ser continuar la misión.',
+        'La prioridad se vuelve proteger.',
+      ],
+    },
+    {
+      title: 'ADA no premia likes, rachas ni popularidad.',
+      paragraphs: [
+        'ADA no está diseñada para meter a tu hijo en otra carrera por aprobación.',
+        'No busca que compita por puntos vacíos, rankings, likes, rachas o validación externa.',
+        'La meta no es que tu hijo "gane" dentro de la plataforma.',
+        'La meta es que aprenda a decidir mejor fuera de ella.',
+      ],
+    },
+    {
+      title: 'ADA pregunta antes de dar respuestas.',
+      paragraphs: [
+        'ADA no debe resolver por tu hijo lo que tu hijo necesita aprender a pensar.',
+        'En vez de decirle inmediatamente qué hacer, debe hacerle preguntas que lo ayuden a construir criterio:',
+      ],
+      bullets: [
+        'qué pasó;',
+        'qué sintió;',
+        'quién puede verse afectado;',
+        'qué información falta;',
+        'qué consecuencia podría tener;',
+        'qué decisión se parece más a la persona que quiere ser.',
+      ],
+      after: [
+        'ADA puede ayudar a ordenar una idea.',
+        'Pero la decisión debe seguir siendo de tu hijo.',
+      ],
+    },
+    {
+      title: 'ADA adapta el lenguaje a la edad.',
+      paragraphs: [
+        'ADA no debe hablar igual con un niño de primaria que con un adolescente de preparatoria.',
+        'Sus ejemplos, preguntas y nivel de profundidad deben ajustarse a la etapa del alumno.',
+        'La regla es simple:',
+        'ni infantilizarlo,',
+        'ni adelantar temas sin contexto,',
+        'ni tratarlo como adulto cuando todavía necesita otro tipo de acompañamiento.',
+      ],
+    },
+    {
+      title: 'ADA respeta la privacidad necesaria para pensar.',
+      paragraphs: [
+        'Tu hijo necesita un espacio donde pueda ordenar ideas sin sentir que cada palabra será leída como evidencia en su contra.',
+        'Por eso ADA no está pensada como una transcripción completa para papás.',
+        'La familia puede recibir avance, temas trabajados, conclusiones compartibles y señales útiles para acompañar.',
+        'Pero el objetivo no es espiar.',
+        'El objetivo es abrir mejores conversaciones en casa.',
+      ],
+    },
+    {
+      title: 'ADA no confunde privacidad con abandono.',
+      paragraphs: [
+        'Privacidad no significa que los adultos desaparecen.',
+        'Si aparece una señal que requiere cuidado adulto, ADA puede activar una recomendación de acompañamiento.',
+        'Eso no existe para exhibir a tu hijo.',
+        'Existe para que no estés a ciegas cuando algo necesita atención.',
+      ],
+    },
+    {
+      title: 'ADA puede notificar señales que requieren atención humana.',
+      paragraphs: [
+        'ADA tiene protocolos para señales que no deben manejarse solo dentro de la conversación.',
+        'Si aparece algo que requiere cuidado adulto, ADA puede activar una notificación para que la familia o el equipo correspondiente intervenga.',
+        'Esa notificación no debe funcionar como acusación ni como diagnóstico.',
+        'Tampoco debe exponer de más la conversación privada del alumno.',
+        'Su función es dar una señal clara, prudente y suficiente para que un adulto pueda actuar a tiempo.',
+      ],
+    },
+    {
+      title: 'ADA reconoce sus límites.',
+      paragraphs: [
+        'ADA no debe prometer riesgo cero.',
+        'No promete detectar todo.',
+        'No promete evitar todos los problemas digitales.',
+        'No promete eliminar ciberacoso, presión social, desinformación o errores.',
+        'No promete sustituir una conversación familiar ni una intervención profesional.',
+        'Una IA que promete demasiado no da seguridad.',
+        'Da una falsa calma.',
+        'ADA debe ser clara sobre lo que puede hacer y sobre lo que no.',
+      ],
+    },
+    {
+      title: 'ADA debe actuar con presencia, no vigilancia.',
+      paragraphs: [
+        'La regla más importante es esta:',
+        'ADA no existe para convertirte en policía del celular.',
+        'Existe para ayudar a tu hijo a practicar criterio digital con acompañamiento.',
+        'Menos candado.',
+        'Menos secreto.',
+        'Menos sermón.',
+        'Más pausa.',
+        'Más preguntas.',
+        'Más criterio.',
+        'Presencia, no vigilancia.',
+        'Criterio, no candado.',
+      ],
+    },
+  ];
 
   private frame = 0;
   private clockVideoFrame = 0;
@@ -86,12 +241,14 @@ export class App implements AfterViewInit, OnDestroy {
     this.scheduleNavRemeasure();
     window.addEventListener('resize', this.measureNav, { passive: true });
     window.addEventListener('load', this.measureNav, { once: true });
+    window.addEventListener('popstate', this.syncPageFromLocation);
     this.handleScroll();
   }
 
   ngOnDestroy(): void {
     window.removeEventListener('resize', this.measureNav);
     window.removeEventListener('load', this.measureNav);
+    window.removeEventListener('popstate', this.syncPageFromLocation);
     this.navMeasureFrames.forEach((frame) => cancelAnimationFrame(frame));
     this.navMeasureTimers.forEach((timer) => window.clearTimeout(timer));
     window.removeEventListener('scroll', this.queueScroll);
@@ -108,10 +265,76 @@ export class App implements AfterViewInit, OnDestroy {
   protected toggleTheme(): void {
     this.theme.toggle();
   }
-  protected setChannel(channel: DeliveryChannel): void {
-    this.channel.set(channel);
+
+  protected ruleNumber(index: number): string {
+    return String(index + 1).padStart(2, '0');
   }
 
+  protected goHome(event?: Event, anchor = 'hero-title'): void {
+    event?.preventDefault();
+    if (this.currentPage() === 'rules') {
+      void this.transitionTo('landing', anchor === 'hero-title' ? '/' : `/#${anchor}`, () => {
+        const target = document.querySelector<HTMLElement>(`#${anchor}`);
+        if (target) this.scrollToElement(target, this.anchorOffsetFor(target));
+      });
+      return;
+    }
+    history.pushState(null, '', anchor === 'hero-title' ? '/' : `/#${anchor}`);
+    window.setTimeout(() => {
+      const target = document.querySelector<HTMLElement>(`#${anchor}`);
+      if (target) this.scrollToElement(target, this.anchorOffsetFor(target));
+    });
+  }
+
+  protected goRules(event?: Event): void {
+    event?.preventDefault();
+    void this.transitionTo('rules', '/reglas-de-ada');
+  }
+
+  private readonly syncPageFromLocation = (): void => {
+    this.currentPage.set(this.pageFromLocation());
+    this.refreshAfterPageChange();
+  };
+
+  private pageFromLocation(): Page {
+    return window.location.pathname.replace(/\/$/, '').endsWith('/reglas-de-ada') ? 'rules' : 'landing';
+  }
+
+  private refreshAfterPageChange(): void {
+    window.setTimeout(() => {
+      this.setupSectionObserver();
+      this.measureNav();
+      this.handleScroll();
+    });
+  }
+
+  private async transitionTo(page: Page, url: string, afterReveal?: () => void): Promise<void> {
+    if (this.currentPage() === page && window.location.pathname === url) return;
+    const root = document.documentElement;
+    this.anchorTween?.kill();
+    this.routeCoverVisible.set(true);
+    root.classList.add('dg-route-lock-scroll');
+    await this.wait(260);
+    window.scrollTo(0, 0);
+    this.currentPage.set(page);
+    history.pushState(null, '', url);
+    this.refreshAfterPageChange();
+    await this.nextFrame();
+    await this.nextFrame();
+    afterReveal?.();
+    await this.wait(120);
+    this.routeCoverVisible.set(false);
+    await this.wait(260);
+    root.classList.remove('dg-route-lock-scroll');
+  }
+
+  private wait(ms: number): Promise<void> {
+    return new Promise((resolve) => window.setTimeout(resolve, ms));
+  }
+
+  private nextFrame(): Promise<void> {
+    return new Promise((resolve) => requestAnimationFrame(() => resolve()));
+  }
   protected isReadMoreExpanded(id: string): boolean {
     return this.expandedReadMore().has(id);
   }
@@ -150,10 +373,9 @@ export class App implements AfterViewInit, OnDestroy {
         this.readMoreFrames.set(panel, requestAnimationFrame(step));
       } else {
         this.readMoreFrames.delete(panel);
-        // Stay in px instead of switching to 'auto': that layout-mode change
-        // can resolve to a fractionally different height than scrollHeight
-        // and cause a last-instant micro-jump.
-        panel.style.height = opening ? `${inner.scrollHeight}px` : '0px';
+        // Release the open panel after the animation. Copy can reflow after
+        // fonts/responsive layout settle, and a stale px height clips text.
+        panel.style.height = opening ? 'auto' : '0px';
       }
     };
     this.readMoreFrames.set(panel, requestAnimationFrame(step));
@@ -173,10 +395,10 @@ export class App implements AfterViewInit, OnDestroy {
     this.mobileCtaVisible.set(false);
   }
 
-  protected checkout(plan?: 'diferido' | 'contado'): void {
+  protected checkout(plan?: 'mensualidades' | 'contado'): void {
     if (!plan) {
       const precio = document.querySelector<HTMLElement>('#precio');
-      if (precio) this.scrollToElement(precio, 108);
+      if (precio) this.scrollToElement(precio, this.anchorOffsetFor(precio));
       return;
     }
     window.dispatchEvent(new CustomEvent('digizen:checkout', { detail: { plan } }));
@@ -256,6 +478,8 @@ export class App implements AfterViewInit, OnDestroy {
   }
 
   private setupSectionObserver(): void {
+    this.observer?.disconnect();
+    window.removeEventListener('scroll', this.queueScroll);
     const sections = document.querySelectorAll<HTMLElement>('[data-nav-section]');
     const Observer = (window as unknown as { IntersectionObserver?: typeof IntersectionObserver })
       .IntersectionObserver;
@@ -289,8 +513,6 @@ export class App implements AfterViewInit, OnDestroy {
    */
   private setupAnchorScroll(): void {
     if (typeof window.matchMedia !== 'function') return;
-    const OFFSET = 108; // igual que el scroll-margin-top de las secciones
-
     document.addEventListener('click', (event) => {
       const link = (event.target as HTMLElement | null)?.closest?.('a[href^="#"]');
       if (!(link instanceof HTMLAnchorElement)) return;
@@ -300,9 +522,16 @@ export class App implements AfterViewInit, OnDestroy {
       if (!target) return;
 
       event.preventDefault();
-      this.scrollToElement(target, OFFSET);
+      this.scrollToElement(target, this.anchorOffsetFor(target));
       history.pushState(null, '', id);
     });
+  }
+
+  private anchorOffsetFor(target: HTMLElement): number {
+    if (target.id === 'precio' && window.matchMedia('(min-width: 1024px)').matches) {
+      return 42;
+    }
+    return 108;
   }
 
   private scrollToElement(target: HTMLElement, offset: number): void {
