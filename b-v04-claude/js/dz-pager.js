@@ -30,27 +30,37 @@
 
     /* las paradas del recorrido, en px; se recalculan con cada refresh (fuentes, carga, cambio de tamaño) */
     function measure() {
-      var vh = window.innerHeight, sy = window.scrollY, max = ScrollTrigger.maxScroll(window), list = [], zs = [];
+      var vh = window.innerHeight, sy = window.scrollY, max = ScrollTrigger.maxScroll(window), list = [], zs = [], cards = null;
+      /* un bloque más alto que la pantalla se ancla al inicio y al final; entre los dos, fluido */
+      var block = function (top, h, key) {
+        if (h <= vh + 8) { list.push({ y: top, key: key }); return; }
+        var end = Math.round(top + h - vh);
+        list.push({ y: top, key: key }); list.push({ y: end, key: key + '·fin' });
+        zs.push({ top: top, end: end });
+      };
+      /* tarjetas del teléfono (mazos): las que la versión animada reparte en estaciones seguidas (11.3m + 11.3bm)
+         se leen como un solo tramo fluido (pedido del usuario) */
+      var flushCards = function () { if (cards) block(cards.top, cards.bottom - cards.top, cards.key); cards = null; };
       freeFrom = Infinity;
       DZ.STOPS.forEach(function (x) {
         if (freeFrom !== Infinity) return;
         var top = Math.round(x.el.getBoundingClientRect().top + sy);
-        if (x.flow) { freeFrom = Math.min(top, max); list.push({ y: freeFrom, key: x.id }); return; }  /* si el FAQ y el pie caben en una pantalla, la última parada es el final de la página */
+        if (x.flow) { flushCards(); freeFrom = Math.min(top, max); list.push({ y: freeFrom, key: x.id }); return; }  /* si el FAQ y el pie caben en una pantalla, la última parada es el final de la página */
         if (!DZ.visible(x.s) || !x.el.offsetHeight) return;
+        var h = x.el.offsetHeight;
+        if (x.s.kind === 'deck' && !x._st) {
+          if (cards && Math.abs(top - cards.bottom) < 4) { cards.bottom = top + h; return; }   /* sigue el mismo mazo */
+          flushCards(); cards = { top: top, bottom: top + h, key: x.id }; return;
+        }
+        flushCards();
         if (x._st) {   /* escena fijada: inicio (primer cuadro) y final (la escena ya corrió) */
           list.push({ y: Math.round(x._st.start), key: x.id });
           list.push({ y: Math.round(x._st.end), key: x.id + '·fin', scene: true });
           return;
         }
-        var h = x.el.offsetHeight;
-        if (h > vh + 8) {   /* más alta que la pantalla: se ancla al inicio y al final; entre los dos, fluido */
-          var end = Math.round(top + h - vh);
-          list.push({ y: top, key: x.id }); list.push({ y: end, key: x.id + '·fin' });
-          zs.push({ top: top, end: end });
-          return;
-        }
-        list.push({ y: top, key: x.id });
+        block(top, h, x.id);
       });
+      flushCards();
       pages = list.filter(function (p, i) { return p.y <= max + 1 && (i === 0 || p.y - list[i - 1].y > 3); });
       zones = zs;
       var y = window.scrollY;
