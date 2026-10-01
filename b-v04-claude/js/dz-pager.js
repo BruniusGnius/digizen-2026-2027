@@ -3,8 +3,9 @@
    - Cada gesto (rueda, trackpad, dedo o teclado) mueve exactamente una estación, siempre con el mismo movimiento;
      la inercia del gesto se ignora. Cuenta un gesto nuevo cuando el anterior terminó (pausa) o cuando se vuelve a empujar.
    - Las estaciones llegan compuestas: sin animaciones internas.
-   - Escenas con video o zoom: una parada al inicio (primer cuadro) y otra al final; el gesto entre las dos corre la escena.
-   - Estaciones más altas que la pantalla (teléfono): se recorren de pantalla en pantalla, sin saltarse nada.
+   - Escenas con video o zoom (desktop): una parada al inicio (primer cuadro) y otra al final; el gesto entre las dos corre la escena.
+   - Estaciones más altas que la pantalla (tarjetas en el teléfono): se llega anclado a su inicio, adentro el scroll es fluido
+     y se detiene en su final; el gesto siguiente ancla en la estación que sigue (pedido del usuario).
    - Del FAQ hacia abajo, scroll libre; al volver a subir se detiene en el FAQ y de ahí sigue por estaciones.
    Los saltos del menú, el riel, el logo y los botones también pasan por aquí (DZ.scrollToY). */
 (function () {
@@ -12,19 +13,24 @@
   var DZ = window.DZ;
 
   DZ.pager = function () {
-    var pages = [], freeFrom = Infinity, busy = false, curKey = null, skipY = null;
+    var pages = [], zones = [], freeFrom = Infinity, busy = false, dragging = false, curKey = null, skipY = null;
     var blocked = function () { return document.documentElement.classList.contains('menu-open') || !!document.querySelector('dialog[open]'); };
     var done = function () { busy = false; };
+    var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
 
     function nearest(y) {
       var best = null; pages.forEach(function (p) { if (!best || Math.abs(p.y - y) < Math.abs(best.y - y)) best = p; });
       return best;
     }
     function jump(y) { skipY = y; window.scrollTo(0, y); }
+    /* tramo fluido (estación más alta que la pantalla) que contiene y */
+    function zoneAt(y) { for (var i = 0; i < zones.length; i++) if (y >= zones[i].top - 2 && y <= zones[i].end + 2) return zones[i]; return null; }
+    /* dentro del tramo fluido, este gesto se desplaza libre (no ancla): todo menos salir por sus bordes */
+    function inside(z, y, dir) { return z && !((dir > 0 && y >= z.end - 2) || (dir < 0 && y <= z.top + 2)); }
 
     /* las paradas del recorrido, en px; se recalculan con cada refresh (fuentes, carga, cambio de tamaño) */
     function measure() {
-      var vh = window.innerHeight, sy = window.scrollY, max = ScrollTrigger.maxScroll(window), list = [];
+      var vh = window.innerHeight, sy = window.scrollY, max = ScrollTrigger.maxScroll(window), list = [], zs = [];
       freeFrom = Infinity;
       DZ.STOPS.forEach(function (x) {
         if (freeFrom !== Infinity) return;
@@ -37,18 +43,21 @@
           return;
         }
         var h = x.el.offsetHeight;
-        if (h > vh + 8) {   /* más alta que la pantalla: de pantalla en pantalla, repitiendo un poco de la anterior */
-          var n = Math.ceil((h - vh) / (vh * 0.8));
-          for (var k = 0; k <= n; k++) list.push({ y: Math.round(top + (h - vh) * k / n), key: x.id + '·' + k });
+        if (h > vh + 8) {   /* más alta que la pantalla: se ancla al inicio y al final; entre los dos, fluido */
+          var end = Math.round(top + h - vh);
+          list.push({ y: top, key: x.id }); list.push({ y: end, key: x.id + '·fin' });
+          zs.push({ top: top, end: end });
           return;
         }
         list.push({ y: top, key: x.id });
       });
       pages = list.filter(function (p, i) { return p.y <= max + 1 && (i === 0 || p.y - list[i - 1].y > 3); });
-      if (busy || window.scrollY > freeFrom + 2) return;
+      zones = zs;
+      var y = window.scrollY;
+      if (busy || dragging || y > freeFrom + 2 || zoneAt(y)) return;
       var p = null; pages.forEach(function (q) { if (q.key === curKey) p = q; });
-      p = p || nearest(window.scrollY);
-      if (p) { curKey = p.key; if (Math.abs(p.y - window.scrollY) > 1) jump(p.y); }  /* sigue en la misma estación */
+      p = p || nearest(y);
+      if (p) { curKey = p.key; if (Math.abs(p.y - y) > 1) jump(p.y); }  /* sigue en la misma estación */
     }
 
     function go(i, far) {
@@ -87,6 +96,14 @@
         return;
       }
       if (y >= freeFrom - 2 && d > 0 && !(wDone && same)) return;
+      var z = zoneAt(y);
+      if (inside(z, y, d > 0 ? 1 : -1)) {   /* tramo fluido: se desplaza libre y se detiene en su borde */
+        if (busy || (wDone && same)) { e.preventDefault(); wLast = now; return; }   /* la inercia del gesto que llegó aquí no desplaza */
+        if (!same) { wAcc = 0; wDone = false; hist = []; }
+        wLast = now;
+        if (y + d > z.end || y + d < z.top) { e.preventDefault(); jump(d > 0 ? z.end : z.top); wDone = true; }
+        return;
+      }
       e.preventDefault();
       if (!same) { wAcc = 0; wDone = false; hist = []; }   /* pausa = gesto nuevo */
       wLast = now; hist.push(Math.abs(d)); if (hist.length > 24) hist.shift();
@@ -99,19 +116,45 @@
     }, { passive: false });
 
     // ---------- dedo ----------
-    var ty = null, tDone = false, tPage = null;
+    /* por estaciones: un deslizamiento = una estación. En un tramo fluido el desplazamiento lo hace la página
+       (sigue al dedo 1:1 y, al soltar, se desliza con su impulso), siempre dentro del tramo: no se sale por inercia. */
+    var ty = null, tMode = null, tDone = false, tS0 = 0, tZone = null, samples = [], glide = null;
     document.addEventListener('touchstart', function (e) {
-      ty = e.touches.length === 1 ? e.touches[0].clientY : null; tDone = false; tPage = null;
+      if (glide) { glide.kill(); glide = null; busy = false; }   /* tocar detiene el deslizamiento */
+      ty = e.touches.length === 1 ? e.touches[0].clientY : null; tMode = null; tDone = false;
+      tS0 = window.scrollY; samples = ty == null ? [] : [[performance.now(), ty]];
     }, { passive: true });
     document.addEventListener('touchmove', function (e) {
       if (ty == null || blocked()) return;
-      var dy = ty - e.touches[0].clientY;   /* > 0: el dedo sube = avanzar */
-      if (tPage === null) tPage = paging(dy < 0 ? -1 : 1);   /* se decide en el primer movimiento */
-      if (!tPage) return;
+      var cy = e.touches[0].clientY, dy = ty - cy;   /* > 0: el dedo sube = avanzar */
+      if (tMode === null) {   /* se decide en el primer movimiento */
+        var y = window.scrollY, dir = dy < 0 ? -1 : 1, z = zoneAt(y);
+        if (!busy && inside(z, y, dir)) { tMode = 'drag'; tZone = z; }
+        else tMode = paging(dir) ? 'page' : 'native';
+      }
+      if (tMode === 'native') return;
       if (e.cancelable) e.preventDefault();
+      if (tMode === 'drag') {
+        dragging = true; window.scrollTo(0, clamp(tS0 + dy, tZone.top, tZone.end));
+        samples.push([performance.now(), cy]); if (samples.length > 6) samples.shift();
+        return;
+      }
       if (!tDone && !busy && Math.abs(dy) > 28) { tDone = true; step(dy > 0 ? 1 : -1); }
     }, { passive: false });
-    document.addEventListener('touchend', function () { ty = null; }, { passive: true });
+    document.addEventListener('touchend', function () {
+      if (tMode === 'drag') {
+        dragging = false;
+        var a = samples[0], b = samples[samples.length - 1], dt = b[0] - a[0];
+        var v = (dt > 0 && performance.now() - b[0] < 80) ? (a[1] - b[1]) / dt : 0;   /* px/ms; > 0 = hacia abajo */
+        var y = window.scrollY, target = clamp(y + v * 400, tZone.top, tZone.end);
+        if (Math.abs(target - y) > 2) {
+          busy = true;
+          glide = gsap.to(window, { scrollTo: { y: target, autoKill: false }, overwrite: true, ease: 'power3.out',
+            duration: Math.min(0.9, 0.3 + Math.abs(v) * 0.25), onComplete: function () { busy = false; glide = null; var q = nearest(window.scrollY); if (q) curKey = q.key; } });
+        }
+      }
+      ty = null; tMode = null;
+    }, { passive: true });
 
     // ---------- teclado ----------
     document.addEventListener('keydown', function (e) {
@@ -122,23 +165,26 @@
       if (k === 'ArrowDown' || k === 'PageDown' || (k === ' ' && !e.shiftKey)) dir = 1;
       else if (k === 'ArrowUp' || k === 'PageUp' || (k === ' ' && e.shiftKey)) dir = -1;
       else if (k === 'Home') { e.preventDefault(); go(0, true); return; }
-      if (!dir || !paging(dir)) return;
+      if (!dir || !paging(dir) || inside(zoneAt(window.scrollY), window.scrollY, dir)) return;   /* en un tramo fluido, las teclas desplazan normal */
       e.preventDefault();
       if (!e.repeat) step(dir);
     });
 
-    // ---------- scroll que no viene de un gesto (barra, foco, buscar en la página) ----------
+    // ---------- scroll que no viene de un gesto (barra, foco, buscar en la página, teclas en un tramo fluido) ----------
     var lastY = window.scrollY, alignT = null;
     function align() {
-      if (busy || window.scrollY > freeFrom + 2) return;
-      var p = nearest(window.scrollY); if (!p) return;
-      if (Math.abs(p.y - window.scrollY) > 2) go(pages.indexOf(p)); else curKey = p.key;
+      var y = window.scrollY;
+      if (busy || dragging || y > freeFrom + 2 || zoneAt(y)) return;
+      var p = nearest(y); if (!p) return;
+      if (Math.abs(p.y - y) > 2) go(pages.indexOf(p)); else curKey = p.key;
     }
     window.addEventListener('scroll', function () {
       var y = window.scrollY;
       if (skipY !== null && Math.abs(y - skipY) < 2) { skipY = null; lastY = y; return; }
-      if (!busy) {
-        if (lastY > freeFrom + 2 && y < freeFrom - 2) jump(freeFrom);   /* subía desde el FAQ: se detiene ahí */
+      if (!busy && !dragging) {
+        var z = zoneAt(lastY);
+        if (lastY > freeFrom + 2 && y < freeFrom - 2) jump(freeFrom);                         /* subía desde el FAQ: se detiene ahí */
+        else if (z && (y > z.end + 2 || y < z.top - 2)) jump(y > z.end ? z.end : z.top);    /* salía de un tramo fluido: se detiene en su borde */
         else if (y <= freeFrom + 2) { clearTimeout(alignT); alignT = setTimeout(align, 180); }
       }
       lastY = window.scrollY;
@@ -150,7 +196,7 @@
       var best = 0; pages.forEach(function (p, i) { if (p.y <= y + 4) best = i; });
       go(best, true);
     };
-    DZ.pagerState = function () { return { pages: pages, freeFrom: freeFrom, busy: busy, curKey: curKey }; };  /* para revisar */
+    DZ.pagerState = function () { return { pages: pages, zones: zones, freeFrom: freeFrom, busy: busy, curKey: curKey }; };  /* para revisar */
 
     ScrollTrigger.addEventListener('refresh', measure);
     measure();
