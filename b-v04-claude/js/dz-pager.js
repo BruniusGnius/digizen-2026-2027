@@ -4,8 +4,9 @@
      la inercia del gesto se ignora. Cuenta un gesto nuevo cuando el anterior terminó (pausa) o cuando se vuelve a empujar.
    - Las estaciones llegan compuestas: sin animaciones internas.
    - Escenas con video o zoom (desktop): una parada al inicio (primer cuadro) y otra al final; el gesto entre las dos corre la escena.
-   - Estaciones más altas que la pantalla (tarjetas en el teléfono): se llega anclado a su inicio, adentro el scroll es fluido
-     y se detiene en su final; el gesto siguiente ancla en la estación que sigue (pedido del usuario).
+   - Tarjetas apiladas en el teléfono (08.5m, 11.3m, 11.3bm): cada gesto sube una tarjeta sobre la anterior (pedido del usuario).
+   - Otras estaciones más altas que la pantalla: se llega anclado a su inicio, adentro el scroll es fluido y se detiene en su
+     final; el gesto siguiente ancla en la estación que sigue.
    - Del FAQ hacia abajo, scroll libre; al volver a subir se detiene en el FAQ y de ahí sigue por estaciones.
    Los saltos del menú, el riel, el logo y los botones también pasan por aquí (DZ.scrollToY). */
 (function () {
@@ -30,37 +31,32 @@
 
     /* las paradas del recorrido, en px; se recalculan con cada refresh (fuentes, carga, cambio de tamaño) */
     function measure() {
-      var vh = window.innerHeight, sy = window.scrollY, max = ScrollTrigger.maxScroll(window), list = [], zs = [], cards = null;
-      /* un bloque más alto que la pantalla se ancla al inicio y al final; entre los dos, fluido */
-      var block = function (top, h, key) {
-        if (h <= vh + 8) { list.push({ y: top, key: key }); return; }
-        var end = Math.round(top + h - vh);
-        list.push({ y: top, key: key }); list.push({ y: end, key: key + '·fin' });
-        zs.push({ top: top, end: end });
-      };
-      /* tarjetas del teléfono (mazos): las que la versión animada reparte en estaciones seguidas (11.3m + 11.3bm)
-         se leen como un solo tramo fluido (pedido del usuario) */
-      var flushCards = function () { if (cards) block(cards.top, cards.bottom - cards.top, cards.key); cards = null; };
+      var vh = window.innerHeight, sy = window.scrollY, max = ScrollTrigger.maxScroll(window), list = [], zs = [];
       freeFrom = Infinity;
       DZ.STOPS.forEach(function (x) {
         if (freeFrom !== Infinity) return;
         var top = Math.round(x.el.getBoundingClientRect().top + sy);
-        if (x.flow) { flushCards(); freeFrom = Math.min(top, max); list.push({ y: freeFrom, key: x.id }); return; }  /* si el FAQ y el pie caben en una pantalla, la última parada es el final de la página */
+        if (x.flow) { freeFrom = Math.min(top, max); list.push({ y: freeFrom, key: x.id }); return; }  /* si el FAQ y el pie caben en una pantalla, la última parada es el final de la página */
         if (!DZ.visible(x.s) || !x.el.offsetHeight) return;
-        var h = x.el.offsetHeight;
-        if (x.s.kind === 'deck' && !x._st) {
-          if (cards && Math.abs(top - cards.bottom) < 4) { cards.bottom = top + h; return; }   /* sigue el mismo mazo */
-          flushCards(); cards = { top: top, bottom: top + h, key: x.id }; return;
+        if (x._st && x._steps) {   /* tarjetas apiladas (teléfono): una parada por tarjeta */
+          var len = x._st.end - x._st.start;
+          for (var k = 0; k <= x._steps; k++) list.push({ y: Math.round(x._st.start + len * k / x._steps), key: x.id + (k ? '·' + k : '') });
+          return;
         }
-        flushCards();
         if (x._st) {   /* escena fijada: inicio (primer cuadro) y final (la escena ya corrió) */
           list.push({ y: Math.round(x._st.start), key: x.id });
           list.push({ y: Math.round(x._st.end), key: x.id + '·fin', scene: true });
           return;
         }
-        block(top, h, x.id);
+        var h = x.el.offsetHeight;
+        if (h > vh + 8) {   /* más alta que la pantalla: se ancla al inicio y al final; entre los dos, fluido */
+          var end = Math.round(top + h - vh);
+          list.push({ y: top, key: x.id }); list.push({ y: end, key: x.id + '·fin' });
+          zs.push({ top: top, end: end });
+          return;
+        }
+        list.push({ y: top, key: x.id });
       });
-      flushCards();
       pages = list.filter(function (p, i) { return p.y <= max + 1 && (i === 0 || p.y - list[i - 1].y > 3); });
       zones = zs;
       var y = window.scrollY;
