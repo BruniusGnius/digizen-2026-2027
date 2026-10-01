@@ -47,6 +47,7 @@ HL_ROLE = {'12.7': ['azul', 'coral', 'plain', 'coral'],  # Presencia, / vigilanc
 # voz citada en color: coral cuando es alerta o negativa (creencias falsas, objeción); azul cuando es positiva (la pregunta de 10.3)
 VOICE_STOPS = {'02.2': 'coral', '02.3': 'coral', '02.4': 'coral', '02.5': 'coral', '08.1': 'coral', '10.3': 'azul'}  # 10.5: solo «cuando ve el celular» en coral (HL_ROLE)
 IA_STOPS = {'08.3'}                                                     # dato sobre IA en violeta
+PRICING_CTA_STOPS = {'12.4'}                                            # su «Inscribir a mi hijo» lleva a las tarjetas de precio
 SCENE_W, VERT_W, QUALITY = (1280, 1920, 2560), (800, 1200), 72
 FOOT_LINKS = {'Gnius Club ↗': 'https://gnius.club/', 'Aviso de privacidad': 'https://gnius.club/aviso-de-privacidad.html'}
 DIALOG_TEXTS = ['Conversar con ADA primero (título del diálogo, copy existente)', 'Nombre del papá o mamá', 'Tu nombre',
@@ -156,6 +157,8 @@ def prod(h, sid=None):
         h = re.sub(r"class='(pf [^']*\bit\b[^']*)'", lambda m: f"class='{m.group(1)} voz{' r-azul' if VOICE_STOPS[sid] == 'azul' else ''}'" if re.search(r'\bt-(semi|mon|mxl)\b', m.group(1)) else m.group(0), h)  # coral solo ≥ 24 px
     if sid in IA_STOPS:
         h = h.replace("<p class='pf w8 t-mxl'", "<p class='pf w8 t-mxl c-ia'", 1)
+    if sid in PRICING_CTA_STOPS:  # «Inscribir a mi hijo» final: lleva a las tarjetas de precio, como en el menú (decisión del usuario)
+        h = h.replace("data-action='checkout'", "data-action='pricing'")
     return h
 
 def pin_of(stop_id):
