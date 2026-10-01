@@ -53,7 +53,7 @@
       gsap.matchMedia().add({ isD: '(min-width: 860px)', isM: '(max-width: 859px)', isS: '(max-width: 599px)' }, function (ctx) {
         DZ.isD = !!ctx.conditions.isD;
         DZ.STOPS.forEach(function (x) {
-          x._st = null; x._steps = 0;
+          x._st = null; x._steps = 0; x._play = null;
           if (x.flow || !DZ.visible(x.s)) return;
           var fig = x.el.querySelector('[data-seq]');
           if (fig && fig.getAttribute('data-play') === 'time') { DZ.buildSeq(x.el, null, 0, x.s.E); return; }  /* saludo de ADA: por tiempo */
@@ -83,7 +83,10 @@
             end: function () { return '+=' + (x.s.E * DZ.unit()); }, scrub: 0.4, invalidateOnRefresh: true } });
           tl.to({}, { duration: x.s.E }, 0);
           x._st = tl.scrollTrigger;
-          if (fig) DZ.buildSeq(x.el, tl, 0, x.s.E); else DZ.sealZoom(x.el, tl, 0, x.s.E);
+          /* el efecto ocupa todo el tramo de la escena; el video corre a velocidad constante, como video (~20 cuadros por
+             segundo), y no comprimido en un tiempo fijo, que lo aceleraba (corrección del usuario) */
+          if (fig) DZ.buildSeq(x.el, tl, 0, x.s.E, true); else DZ.sealZoom(x.el, tl, 0, x.s.E, true);
+          x._play = fig ? { dur: Math.max(1.6, (+fig.getAttribute('data-n') || 49) / 20), ease: 'none' } : { dur: 1.6, ease: 'power1.inOut' };
         });
         ScrollTrigger.refresh();
       });

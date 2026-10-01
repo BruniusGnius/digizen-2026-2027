@@ -45,7 +45,7 @@
         }
         if (x._st) {   /* escena fijada: inicio (primer cuadro) y final (la escena ya corrió) */
           list.push({ y: Math.round(x._st.start), key: x.id });
-          list.push({ y: Math.round(x._st.end), key: x.id + '·fin', scene: true });
+          list.push({ y: Math.round(x._st.end), key: x.id + '·fin', scene: x._play || { dur: 1.6, ease: 'power1.inOut' } });
           return;
         }
         var h = x.el.offsetHeight;
@@ -72,11 +72,12 @@
       curKey = p.key;
       if (dist < 2) return;
       var from = function (q) { return q && Math.abs(q.y - y0) < 4; };
-      var scene = !far && ((p.scene && from(pages[i - 1])) || (pages[i + 1] && pages[i + 1].scene && from(pages[i + 1])));
+      /* la escena que corre (hacia adelante) o se rebobina (hacia atrás): su duración y su curva */
+      var scene = far ? null : ((p.scene && from(pages[i - 1])) ? p.scene : ((pages[i + 1] && pages[i + 1].scene && from(pages[i + 1])) ? pages[i + 1].scene : null));
       busy = true;
       gsap.to(window, { scrollTo: { y: p.y, autoKill: false }, overwrite: true,
-        duration: scene ? 1.6 : Math.min(1.1, 0.6 + 0.05 * dist / vh),   /* una estación ≈ 0.65 s; la escena, 1.6 s */
-        ease: scene ? 'power1.inOut' : 'power2.inOut', onComplete: done });
+        duration: scene ? scene.dur : Math.min(1.1, 0.6 + 0.05 * dist / vh),   /* una estación ≈ 0.65 s; video ≈ 20 cuadros/s; zoom 1.6 s */
+        ease: scene ? scene.ease : 'power2.inOut', onComplete: done });
     }
 
     function step(dir) {
