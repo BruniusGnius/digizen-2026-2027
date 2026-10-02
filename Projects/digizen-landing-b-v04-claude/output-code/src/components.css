@@ -527,7 +527,7 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
 .rg-page .stop { padding-top: 68px; padding-bottom: 52px; }   /* arriba: el logo y el menú; abajo: la flecha de scroll */
 @media (min-width: 600px) { .rg-page .stop { padding-top: 84px; padding-bottom: 76px; } }
 .rg-page .stop.k-deck { align-items: center; align-items: safe center; }   /* centrado; si no cabe, empieza arriba para no cortarse */
-.rg-first .rg-rule-fig img { max-height: 30svh; object-fit: contain; object-position: left; }
+.rg-first .rg-rule-fig img { max-height: 30svh; object-fit: cover; object-position: center; }   /* llena su caja, centrada */
 .rg-page a.menu-item { text-decoration: none; }
 /* entrada */
 .rg-intro-grid { display: grid; gap: 24px; }
@@ -566,19 +566,43 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
 .rg-rule-fig { margin-top: 12px; }
 .rg-rule-fig img { width: 100%; height: auto; }
 .rg-deck { --peek: 92px; }   /* mazo del teléfono: la tarjeta anterior asoma con su rótulo y su título */
-/* cierre */
-.rg-close-grid { display: grid; gap: 24px; align-items: center; }
-.rg-por { justify-self: center; width: min(100%, 220px); }
+/* cierre: una sola estación con el pie incluido. Arriba, el retrato y el texto; después, los botones en un bloque propio
+   (las dos acciones principales juntas, con el mismo peso; «Regresar a Digizen», secundario, aparte); abajo, el pie. */
+.rg-page .stop.rg-end { flex-direction: column; justify-content: flex-start; padding-bottom: 20px; }
+.rg-end > .rg-close { flex: 1 1 auto; display: flex; align-items: center; }
+.rg-close-grid { width: 100%; display: grid; gap: 16px; grid-template-areas: "por" "copy" "acts"; }
+.rg-por { grid-area: por; justify-self: center; width: min(46%, 190px); }
 .rg-por img { width: 100%; height: auto; }
+.rg-close-copy { grid-area: copy; }
 .rg-close-copy > .t-semi { margin-top: 8px; }
 .rg-close-copy > .t-body { margin-top: 14px; max-width: var(--w-wide); }
-.rg-close-copy .cta { margin-top: var(--air); max-width: var(--w-read); }
+.rg-close-acts { grid-area: acts; display: grid; gap: 10px; margin-top: 16px; }   /* teléfono: apilados, separados del texto (pedido del usuario) */
+/* el pie de la landing, dentro de la estación del cierre */
+.rg-foot { flex: none; width: 100%; max-width: var(--w-grid); margin: 20px auto 0; padding-top: 16px; border-top: 1px solid var(--color-line); }
+.rg-foot .foot { gap: 2px; }
+.rg-foot .foot-logo { height: 36px; margin-bottom: 6px; }
+.rg-foot .foot-links { margin-top: 6px; }
 /* tablet (600–859): texto y lista a la izquierda, ADA a la derecha; los dos botones en una sola fila a todo el ancho,
    fuera de la columna del texto: uno queda debajo de ADA (pedido del usuario) */
 @media (min-width: 600px) and (max-width: 859px) {
   .rg-intro-grid { grid-template-columns: 1.15fr .85fr; grid-template-areas: "head fig" "lead fig" "list fig" "acts acts"; column-gap: var(--gap); }
   .rg-fig { align-self: center; justify-self: center; width: min(100%, 300px); }
   .rg-acts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  /* la imagen de la regla más importante cubre su caja, centrada (pedido del usuario): se reencuadra a 16:9 */
+  .rg-first .rg-rule-fig img { aspect-ratio: 16 / 9; max-height: none; }
+}
+/* tablet (600–1099): las dos acciones principales lado a lado, con el mismo tamaño; la secundaria debajo, a todo el ancho */
+@media (min-width: 600px) and (max-width: 1179px) {
+  .rg-close-acts { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .rg-close-acts .btn.sec { grid-column: 1 / -1; }
+}
+@media (min-width: 600px) {
+  .rg-close-grid { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "por copy" "acts acts"; column-gap: var(--gap); row-gap: 28px; align-items: center; }
+  .rg-por { width: 200px; justify-self: start; }
+  .rg-close-acts { margin-top: 0; }
+  .rg-foot .foot { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 20px; }
+  .rg-foot .foot-logo { margin: 0 8px 0 0; align-self: center; }
+  .rg-foot .foot-links { margin: 0 0 0 auto; }
 }
 @media (min-width: 860px) {
   /* la entrada es una pantalla: ADA grande a la izquierda; título en una línea; texto y botones en su columna; lista al lado */
@@ -597,8 +621,18 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
   .rg-wide { display: grid; grid-template-columns: 7fr 5fr; column-gap: var(--gap); align-items: center; }
   .rg-wide::before { grid-column: 1 / -1; }
   .rg-wide .rg-rule-fig { margin-top: 0; }
-  .rg-close-grid { grid-template-columns: 4fr 8fr; column-gap: var(--gap); }
-  .rg-por { width: 100%; max-width: 340px; }
+  .rg-por { width: clamp(200px, 26svh, 280px); }
+}
+/* tablet horizontal (860–1099): la imagen de la regla más importante llena el alto de su columna, centrada */
+@media (min-width: 860px) and (max-width: 1099px) {
+  .rg-wide { align-items: stretch; }
+  .rg-wide .rg-rule-txt { align-self: center; }
+  .rg-first .rg-rule-fig img { height: 100%; max-height: none; min-height: 200px; }
+}
+/* desktop ancho: las tres acciones en una sola fila, a la misma altura; la secundaria, al ancho de su texto */
+@media (min-width: 1180px) {
+  .rg-close-acts { grid-template-columns: 1fr 1fr auto; gap: 12px; }
+  .rg-close-acts .btn { white-space: nowrap; }
 }
 @media (min-width: 1100px) {
   /* la lista ocupa el alto del texto más los botones, como en la A; los botones quedan bajo el texto */
@@ -608,3 +642,16 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
   .rg-full { grid-template-columns: 1fr; gap: 9px; }
 }
 @media (min-width: 1100px) and (max-height: 779px) { .rg-full { gap: 6px; } }   /* laptop de pantalla baja */
+/* la flecha de scroll se ancla al borde de la primera pantalla, no al final de la estación: si la entrada llegara a medir
+   más que la pantalla, la flecha no se sale (corrección del usuario: en iPad se cortaba) */
+.rg-page .stop .cue { bottom: auto; top: calc(100svh - 78px); }
+/* tablet horizontal de pantalla baja (iPad con las barras del navegador): la entrada se compacta para caber */
+@media (min-width: 860px) and (max-width: 1099px) and (max-height: 780px) {
+  .rg-page .stop { padding-top: 76px; }
+  .rg-intro-grid { row-gap: 16px; }
+  .rg-head::before { margin-bottom: 10px; }
+  .rg-lead p { line-height: 1.5; }
+  .rg-lead p + p { margin-top: .7em; }
+  .rg-full { gap: 6px 32px; }
+  .rg-fig img { max-height: 50svh; }
+}

@@ -99,3 +99,15 @@ Además, adición de copy aprobada por el usuario: botón secundario **«Regresa
 - **Verificado en el navegador:** 1380 × 865, 1280 × 720, 1024 × 768, 768 × 1024 y 390 × 844: todas las estaciones miden una pantalla y ninguna necesita scroll interno; gestos de rueda, teclado y dedo avanzan una estación (o una tarjeta en el mazo). Sin errores de consola. La landing sigue igual.
 - **Sigue sin publicarse en GitHub Pages**, a la espera de la revisión del usuario. La entrada en dos estaciones del teléfono es una prueba: falta su decisión.
 
+## Cierre, pie y ajustes de tablet (correcciones del usuario, 2026-10-02)
+
+- **El pie va dentro de la estación del cierre.** Antes quedaba como una mini estación extra al final. Ahora el cierre es la última estación: el contenido arriba y el pie de la landing abajo, con una línea fina de separación. En desktop y tablet el pie va en una fila; en teléfono, compacto en columna.
+- **Botones del cierre, reordenados por jerarquía.** Dejan de ir apilados junto al texto y pasan a un bloque propio debajo del retrato y el texto:
+  - Desktop ancho (≥ 1180 px): los tres en una sola fila, a la misma altura; las dos acciones principales con el mismo ancho y «Regresar a Digizen», secundario, al ancho de su texto.
+  - Tablet y desktop angosto (600–1179 px): las dos principales lado a lado, del mismo tamaño; la secundaria debajo, a todo el ancho.
+  - Teléfono: apilados, separados 32 px del texto «… primer chat.».
+- **Flecha de scroll en iPad:** en horizontal (≈ 1024 × 698 visibles) la entrada medía 746 px y la flecha se salía. La entrada se compacta en ese tamaño y la flecha se ancla al borde de la primera pantalla, no al final de la estación.
+- **Imagen de la regla más importante, en tablet:** cubre toda su caja, centrada. En vertical se reencuadra a 16:9 a todo el ancho de la tarjeta; en horizontal llena el alto de su columna. No hace falta una imagen nueva: con la actual se ven completos ADA, el adolescente y el camino.
+- **Verificado:** 1380 × 865, 1280 × 720, 1024 × 698, 768 × 954 y 390 × 844: ninguna estación mide más que la pantalla; la última estación es el cierre con su pie. Sin errores de consola. Auditoría del copy: sin cambios (el pie no cuenta como copy de esta página).
+- **Sigue sin publicarse en GitHub Pages.**
+

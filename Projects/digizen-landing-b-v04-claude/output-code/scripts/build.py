@@ -533,17 +533,24 @@ def rules_page(pins, imgs):
             else: inner = f"<div class='c'>\n<div class='rg-grid rg-g{per}'>\n{cards}\n</div>\n</div>"
             stops.append((bp, kind, f'rg.{bp}{g + 1}', inner))
 
-    # ---- cierre
+    # ---- cierre: retrato y texto · los botones en un bloque propio (las dos acciones principales juntas y con el mismo peso;
+    #      «Regresar a Digizen», secundario, aparte) · y el pie de la landing DENTRO de esta estación, para que no sea una
+    #      mini estación extra al final (pedidos del usuario, 2026-10-02)
+    foot_pin = [p for p in pins if p['id'] == 'FOOT'][0]
     stops.append(('all', 'read', 'rg.9',
-        f"<div class='c rg-close-grid'>\n<figure class='rg-por' aria-hidden='true'>{pic(CL['image']['file'], None, '', '(min-width: 860px) 340px, 260px', '')}</figure>\n"
+        f"<div class='c rg-close'>\n<div class='rg-close-grid'>\n"
+        f"<figure class='rg-por' aria-hidden='true'>{pic(CL['image']['file'], None, '', '(min-width: 860px) 260px, 200px', '')}</figure>\n"
         f"<div class='rg-close-copy'>\n  <p class='in w7 t-small'>{e(CL['kicker'])}</p>\n  <p class='pf w8 t-semi bw'>{e(CL['title'])}</p>\n"
-        f"  <p class='in w5 t-body'>{e(CL['support'])}</p>\n  <div class='cta'>\n"
-        f"    <a class='btn' href='{price}'>{e(CL['buttons'][0][0])}{arr('→', 'e')}</a>\n"
-        f"    <button type='button' class='btn alt' data-action='ada' aria-haspopup='dialog'>{e(CL['buttons'][1][0])}{arr('→', 'e')}</button>\n"
-        f"    <a class='btn sec r-ins' href='{back}' data-rules='back' data-add='1'>{e(CL['added_button'][0])}{arr('←', 'w')}</a>\n  </div>\n</div>\n</div>"))
+        f"  <p class='in w5 t-body'>{e(CL['support'])}</p>\n</div>\n"
+        f"<div class='rg-close-acts'>\n"
+        f"  <a class='btn' href='{price}'>{e(CL['buttons'][0][0])}{arr('→', 'e')}</a>\n"
+        f"  <button type='button' class='btn alt' data-action='ada' aria-haspopup='dialog'>{e(CL['buttons'][1][0])}{arr('→', 'e')}</button>\n"
+        f"  <a class='btn sec r-ins' href='{back}' data-rules='back' data-add='1'>{e(CL['added_button'][0])}{arr('←', 'w')}</a>\n</div>\n"
+        f"</div>\n</div>\n<footer class='rg-foot'>\n{prod(foot_pin['html'])}\n</footer>"))
 
     def stop_div(bp, kind, sid, body):
-        return (f"<div class='stop k-{kind}{VIS[bp]}' data-id='{sid}' data-kind='{kind}' data-e='1' data-bp='{bp}' data-night='0'>\n{body}\n</div>")
+        end = ' rg-end' if sid == 'rg.9' else ''
+        return (f"<div class='stop k-{kind}{VIS[bp]}{end}' data-id='{sid}' data-kind='{kind}' data-e='1' data-bp='{bp}' data-night='0'>\n{body}\n</div>")
     def pin(pid, ids):
         inner = '\n'.join(stop_div(*st) for st in stops if st[2].split('.')[1][0] in ids)
         return (f"<section class='pin t-pin' id='{pid}' data-pin data-type='pin' data-tramo='0'>\n<div class='stage'>\n<div class='night'></div>\n{inner}\n</div>\n</section>")
@@ -563,7 +570,6 @@ def rules_page(pins, imgs):
             "    <img class='menu-logo' src='assets/logo/digizen-logo-light.svg' alt='' width='275' height='116'>\n"
             f"    <ul class='menu-list'>\n{items}\n    </ul>\n    {cta}\n  </nav>\n</div>")
     brand = BRAND.replace("class='brand' href='#P-H0'", f"class='brand is-on on-light' href='{back}' data-rules='back'")   # el logo regresa a la landing
-    foot = '\n'.join(pin_html(p) for p in pins if p['id'] == 'FOOT')
     desc = re.sub(r'<[^>]+>', '', I['paras'][0])   # descripción: el primer párrafo de la página, literal
     ver = time.strftime('%Y%m%d%H%M%S')
     scripts = '\n'.join(f"<script defer src='{s}?v={ver}'></script>" for s in RULES_SCRIPTS)
@@ -599,7 +605,6 @@ def rules_page(pins, imgs):
 <main id='reglas' class='rg'>
 {main}
 </main>
-{foot}
 {DIALOG}
 {scripts}
 </body>
@@ -621,6 +626,7 @@ def rules_audit(stops):
     ok, added = True, set()
     for label, allowed in (('desktop (≥ 1100 px)', {'all', 'n', 'w'}), ('tablet (600–1099 px)', {'all', 'n', 't'}), ('teléfono (< 600 px)', {'all', 's'})):
         body = '\n'.join(st[3] for st in stops if st[0] in allowed)
+        body = re.sub(r"<footer.*?</footer>", '', body, flags=re.S)   # el pie es el de la landing: no es copy de esta página
         added |= {re.sub(r'<[^>]+>', '', t).strip() for t in re.findall(r"<a[^>]*\bdata-add='1'[^>]*>(.*?)</a>", body, flags=re.S)}
         body = re.sub(r"<a[^>]*\bdata-add='1'[^>]*>.*?</a>", '', body, flags=re.S)   # adiciones aprobadas: no están en la fuente
         pw = glue(words(body))
