@@ -1,4 +1,5 @@
-/* Digizen · prueba 3: una estación por gesto (pedido del usuario y de su jefe, 2026-09-30).
+/* Digizen · una estación por gesto: la VERSIÓN VIGENTE (decisión del usuario, 2026-10-02).
+   Nació como la prueba de scroll 3 (pedido del usuario y de su jefe, 2026-09-30).
    Lo que resuelve: con el scroll normal, un gesto se saltaba varias estaciones y el lector no sabía que había texto antes.
    - Cada gesto (rueda, trackpad, dedo o teclado) mueve exactamente una estación, siempre con el mismo movimiento;
      la inercia del gesto se ignora. Cuenta un gesto nuevo cuando el anterior terminó (pausa) o cuando se vuelve a empujar.

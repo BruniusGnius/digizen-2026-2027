@@ -14,7 +14,8 @@
   /* Configuración por página (pruebas de scroll, 2026-09-30). Los valores por defecto son los del wireframe aprobado:
      stepFade/closeFade/msgFade = en cuánto de la parada aparece cada línea; minUnit = recorrido mínimo por encuadre (px);
      touchMomentum = limitar la inercia del dedo; flow = sin scroll animado (solo los videos con scrub);
-     pager = una estación por gesto (prueba 3, dz-pager.js). */
+     pager = una estación por gesto (dz-pager.js). La versión vigente es flow + pager (decisión del usuario, 2026-10-02);
+     el motor por defecto (scroll animado) queda para las páginas archivadas. */
   DZ.cfg = Object.assign({ stepFade: 0.05, closeFade: 0.10, msgFade: 0.08, minUnit: 0, touchMomentum: false, flow: false, pager: false }, window.DZ_CFG || {});
   DZ.unit = function () { return Math.max(window.innerHeight, DZ.cfg.minUnit || 0); }; /* 1 E en px */
   DZ.hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';

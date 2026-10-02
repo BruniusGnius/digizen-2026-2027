@@ -30,6 +30,8 @@ fase_actual: 3
 - fase_1: aprobada 2026-09-26
 - fase_2: aprobada 2026-09-29 (wireframe de recorrido). Criterio para la Fase 3: refinar lo que está, sin cambios drásticos salvo errores. Fase 3 iniciada el 2026-09-29.
 - stack (2026-09-29): prototipo HTML + Tailwind + GSAP, que es el producto final (no se lleva a Angular). Formulario y datos como en la propuesta A.
+- version_vigente (decisión del usuario, 2026-10-02): **una estación por gesto** (la que fue la prueba de scroll 3; `output-code/js/dz-pager.js`). Es `output-code/index.html`. Mismas 78 estaciones y mismo copy del wireframe; cada gesto mueve una estación y las estaciones llegan compuestas.
+- archivo (no vigente por ahora; se conserva, rotulado, sin enlazar ni indexar): `archivo-scroll-animado.html` (el scroll animado del wireframe aprobado), `archivo-prueba-scroll-1.html` y `archivo-prueba-scroll-2.html`. Los enlaces viejos `prueba-scroll-1/2/3.html` redirigen. Detalle en `03-auditoria-scroll.md`.
 - pendientes_conocidos (no bloquean Fase 1):
   - Destino de «Inscribir a mi hijo» (pago) y del formulario de «Conversar con ADA primero».
   - Destino del enlace «Conocer las reglas de ADA ↗».

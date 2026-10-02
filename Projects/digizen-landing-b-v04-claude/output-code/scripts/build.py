@@ -229,16 +229,22 @@ DIALOG = """<dialog class='ada-dialog' id='ada-dialog' aria-labelledby='ada-dial
 </form>
 </dialog>"""
 
-# ------------------------------------------------------------------ pruebas de scroll (03-auditoria-scroll.md, 2026-09-30)
+# ------------------------------------------------------------------ versión vigente y archivo (03-auditoria-scroll.md)
+# Decisión del usuario (2026-10-02): la versión final es «una estación por gesto» (la que fue la prueba de scroll 3,
+# js/dz-pager.js). El scroll animado y las pruebas 1 y 2 se conservan ARCHIVADAS y rotuladas como no vigentes:
+# no se enlazan desde la página ni se indexan. Los enlaces viejos de las pruebas redirigen para no romperse.
+FINAL_CFG = {'flow': True, 'pager': True}
 # Más rango en las paradas con varios tiempos (sin agregar paradas): E por prueba, sin tocar la fuente del wireframe.
 E_MAS_RANGO = {'07.6': 3.0, '01.3': 2.25, '07.5': 2.25, '09.1': 2.25, '11.3m': 2.25, '11.3bm': 2.0, '08.5m': 2.25}
 BASE_CFG = {'stepFade': 0.07, 'closeFade': 0.12, 'msgFade': 0.10, 'minUnit': 900}
-VARIANTS = [
-    ('prueba-scroll-1.html', 'Prueba 1 · más rango y recorrido mínimo', E_MAS_RANGO, dict(BASE_CFG)),
-    ('prueba-scroll-2.html', 'Prueba 2 · + inercia del dedo limitada', E_MAS_RANGO, dict(BASE_CFG, touchMomentum=True)),
-    ('prueba-scroll-3.html', 'Prueba 3 · una estación por gesto', {}, {'flow': True, 'pager': True}),
+ARCHIVE = [   # cfg vacío = el motor del wireframe aprobado (scroll animado), que es el valor por defecto de js/dz-core.js
+    ('archivo-scroll-animado.html', 'Archivada · no vigente por ahora · scroll animado', {}, {}),
+    ('archivo-prueba-scroll-1.html', 'Archivada · no vigente por ahora · prueba 1: más rango y recorrido mínimo', E_MAS_RANGO, dict(BASE_CFG)),
+    ('archivo-prueba-scroll-2.html', 'Archivada · no vigente por ahora · prueba 2: inercia del dedo limitada', E_MAS_RANGO, dict(BASE_CFG, touchMomentum=True)),
 ]
-CURRENT = {'E': {}, 'cfg': None, 'tag': None}   # variante que se está generando (ninguna = la versión actual)
+REDIRECTS = {'prueba-scroll-1.html': 'archivo-prueba-scroll-1.html', 'prueba-scroll-2.html': 'archivo-prueba-scroll-2.html',
+             'prueba-scroll-3.html': './'}   # la prueba 3 es ahora la página principal
+CURRENT = {'E': {}, 'cfg': FINAL_CFG, 'tag': None}   # lo que se está generando (por defecto, la versión vigente)
 
 # ------------------------------------------------------------------ SEO y búsqueda generativa (03-seo-geo-plan.md)
 # PREVIEW = True mientras la A esté en producción: la B no se indexa y declara a la A como página oficial,
@@ -329,7 +335,7 @@ def page(pins, title, indexable=True):
         else:
             pre = f"<link rel='preload' as='image' imagesrcset='{srcset('01-dinner', hero)}' imagesizes='100vw' fetchpriority='high'>"
     ver = time.strftime('%Y%m%d%H%M%S')  # versión por build: el navegador no reutiliza CSS/JS viejos de la caché
-    used = SCRIPTS[:-1] + (['js/dz-pager.js'] if (CURRENT['cfg'] or {}).get('pager') else []) + SCRIPTS[-1:]  # el paginador solo en la prueba 3
+    used = SCRIPTS[:-1] + (['js/dz-pager.js'] if (CURRENT['cfg'] or {}).get('pager') else []) + SCRIPTS[-1:]  # el paginador, solo donde la página lo pide (la versión vigente)
     scripts = '\n'.join(f"<script defer src='{s}?v={ver}'></script>" for s in used)
     return f"""<!doctype html>
 <html lang="es-MX">
@@ -416,9 +422,9 @@ def expected_stops(pins):
             for p in pins if p['type'] != 'flow' for s in p['stops']]
 
 # ------------------------------------------------------------------ main
-def render(pins, name, title, full):
+def render(pins, name, title, full, indexable=None):
     path = os.path.join(OUT, name)
-    open(path, 'w', encoding='utf-8').write(page(pins, title, indexable=full))
+    open(path, 'w', encoding='utf-8').write(page(pins, title, indexable=full if indexable is None else indexable))
     res, stops = audit_file(path)
     print(f'\n== {name} ==')
     if full:
@@ -446,11 +452,18 @@ def main():
     render(test, 'prueba.html', 'Digizen · estación de prueba', full=False)
     if '--prueba' not in sys.argv:
         render(C.PINS, 'index.html', SEO['title'], full=True)
-        for name, tag, emap, cfg in VARIANTS:   # pruebas de scroll: mismas paradas y copy; cambian E de algunas y el motor
+        print('  config (versión vigente):', FINAL_CFG)
+        for name, tag, emap, cfg in ARCHIVE:   # archivo: mismas paradas y copy; cambian E de algunas y el motor; no se indexan
             CURRENT.update(E=emap, cfg=cfg, tag=tag)
-            render(C.PINS, name, SEO['title'] + ' · ' + tag, full=True)
-            print('  config:', cfg, '· E cambiadas:', emap or 'ninguna')
-        CURRENT.update(E={}, cfg=None, tag=None)
+            render(C.PINS, name, SEO['title'] + ' · ' + tag, full=True, indexable=False)
+            print('  config:', cfg or 'motor del wireframe (scroll animado)', '· E cambiadas:', emap or 'ninguna')
+        CURRENT.update(E={}, cfg=FINAL_CFG, tag=None)
+        for name, target in REDIRECTS.items():   # los enlaces viejos de las pruebas no se rompen
+            open(os.path.join(OUT, name), 'w', encoding='utf-8').write(
+                "<!doctype html>\n<html lang=\"es-MX\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"robots\" content=\"noindex,nofollow\">\n"
+                f"<title>DIGIZEN</title>\n<meta http-equiv=\"refresh\" content=\"0; url={target}\">\n</head>\n"
+                f"<body>\n<p><a href=\"{target}\">Esta página cambió de lugar. Continuar</a></p>\n</body>\n</html>\n")
+        print('\n== redirecciones ==\n  ' + ' · '.join(f'{a} → {b}' for a, b in REDIRECTS.items()))
     print(f"\n== SEO ==\n  {'PREVIEW: noindex, canonical a la A (' + OFFICIAL_URL + ')' if PREVIEW else 'PRODUCCIÓN: index, canonical ' + PUBLIC_URL}")
     print('  JSON-LD: Organization, WebSite, WebPage, Course (2 ofertas), FAQPage (' + str(len(C.FAQ)) + ' preguntas literales)')
     print('\n== adiciones de copy aprobadas por el usuario (no están en COPY-PUBLICADO.md) ==')

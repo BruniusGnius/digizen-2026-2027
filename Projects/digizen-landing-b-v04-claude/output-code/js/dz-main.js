@@ -35,7 +35,7 @@
     window.addEventListener('load', function () { ScrollTrigger.refresh(); });
   } else {
     document.body.classList.add('flowmode');
-    /* prueba 3 (pedido del usuario y de su jefe, 2026-09-30): una estación por gesto (dz-pager.js). Las estaciones llegan
+    /* versión vigente (decisión del usuario, 2026-10-02; antes «prueba 3»): una estación por gesto (dz-pager.js). Las estaciones llegan
        compuestas, sin animaciones internas ni la entrada del Hero. En desktop, las escenas con efecto (zoom o video con scrub)
        conservan su animación, fijadas; en teléfono y tablet todas las imágenes son estaciones ancladas, sin animación.
        El saludo de ADA sigue corriendo por tiempo al llegar (solo desktop). */

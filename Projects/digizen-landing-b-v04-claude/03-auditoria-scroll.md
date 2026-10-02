@@ -155,3 +155,20 @@ Se prueba primero en una carpeta aparte de GitHub Pages para comparar con la ver
   - Tarjetas del teléfono (08.5m «ADA es lo segundo, por diseño:», 11.3m y 11.3bm «Tu inscripción fundadora incluye:»): apiladas como en la versión animada; cada gesto sube una tarjeta sobre la anterior y, con la última en su lugar, el siguiente pasa de estación (pedido del usuario; se probó un tramo fluido y se veía raro).
   - Otras estaciones más altas que la pantalla: se llega anclado a su inicio, adentro el scroll es fluido y se detiene en su final; el gesto siguiente ancla en la estación que sigue.
   - Del FAQ hacia abajo, el scroll es libre; al subir, se detiene en el FAQ. El menú, el riel, el logo y los botones saltan a su estación.
+
+## Decisión (2026-10-02)
+
+**La versión final es la prueba 3, «una estación por gesto».** Pasa a ser la página principal (`index.html`), sin rótulo de prueba.
+
+Las otras no nos funcionan por ahora y quedan **archivadas**: se siguen generando con el mismo copy y las mismas 78 estaciones, llevan un rótulo visible «Archivada · no vigente por ahora», no se enlazan desde la página y no se indexan.
+
+| Archivo | Qué es | Por qué no es la vigente |
+|---|---|---|
+| `archivo-scroll-animado.html` | El scroll animado del wireframe aprobado (pines con scrub y anclas) | Un gesto se saltaba varias estaciones y el lector no sabía que había texto antes |
+| `archivo-prueba-scroll-1.html` | Scroll animado + más rango en las paradas con varios tiempos + recorrido mínimo de 900 px | Reduce la sensibilidad, pero un gesto fuerte todavía se salta estaciones |
+| `archivo-prueba-scroll-2.html` | Prueba 1 + inercia del dedo limitada en pantallas táctiles | Igual que la anterior en desktop; en el teléfono mejora, pero sin garantía de una estación por gesto |
+
+Los enlaces que ya se compartieron no se rompen: `prueba-scroll-1.html` y `prueba-scroll-2.html` redirigen a su archivo, y `prueba-scroll-3.html` redirige a la página principal.
+
+Para recuperar una versión archivada como vigente basta cambiar `FINAL_CFG` en `output-code/scripts/build.py`.
+
