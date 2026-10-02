@@ -5,8 +5,8 @@
      deja cerrarla, va a la landing en la estación del botón «Conocer las reglas de ADA».
    - Los enlaces a una sección de la landing (inscripción, menú) la mueven en SU pestaña y cierran ésta; si no hay
      landing abierta, navegan aquí mismo.
-   - El índice (lista completa, desktop) lleva a cada tarjeta; el desplazamiento es el del navegador, que se
-     interrumpe en cuanto el lector hace scroll. No cambia la dirección de la página.
+   - El índice (lista completa, desktop) lleva a la estación de cada tarjeta. No cambia la dirección de la página.
+   La página se recorre por estaciones con el motor de la landing (dz-pager.js): una estación por gesto.
    La respuesta al tocar, el menú y el formulario son los de la landing (dz-actions.js, dz-menu.js). */
 (function () {
   'use strict';
@@ -25,11 +25,14 @@
 
   document.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    var idx = e.target.closest('.rg-full a[href^="#regla-"]');
-    if (idx) {   /* índice → tarjeta */
-      var t = document.getElementById(idx.getAttribute('href').slice(1)); if (!t) return;
+    var idx = e.target.closest('[data-rule-link]');
+    if (idx) {   /* índice → la estación de esa tarjeta (la variante visible en este ancho) */
+      var n = idx.getAttribute('data-rule-link'), t = null;
+      Array.prototype.forEach.call(document.querySelectorAll('[data-rule="' + n + '"]'), function (c) { if (!t && c.offsetParent !== null) t = c; });
+      if (!t) return;
       e.preventDefault();
-      t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      var st = t.closest('.stop'), DZ = window.DZ;
+      if (!(st && DZ && DZ.goTo && DZ.goTo(st.getAttribute('data-id')))) t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
       t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true });
       return;
     }

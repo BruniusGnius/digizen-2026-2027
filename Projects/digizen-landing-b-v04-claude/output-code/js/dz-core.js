@@ -55,7 +55,19 @@
   });
 
   DZ.rec = function (s) { for (var i = 0; i < DZ.STOPS.length; i++) { if (DZ.STOPS[i].s === s) return DZ.STOPS[i]; } };
-  DZ.visible = function (s) { return !s.bp || s.bp === 'all' || (DZ.isD ? s.bp === 'd' : s.bp === 'm'); };
+  /* bp de una parada: all · d / m (corte en 860 px, landing) · y los de la página de reglas, por tarjetas por gesto:
+     w = ≥ 1100 px (3), t = 600–1099 px (2), s = < 600 px (1), n = ≥ 600 px */
+  DZ.visible = function (s) {
+    var b = s.bp, w = window.innerWidth;
+    if (!b || b === 'all') return true;
+    if (b === 'd') return DZ.isD;
+    if (b === 'm') return !DZ.isD;
+    if (b === 'w') return w >= 1100;
+    if (b === 't') return w >= 600 && w < 1100;
+    if (b === 's') return w < 600;
+    if (b === 'n') return w >= 600;
+    return false;
+  };
 
   // ---------- recorrido: posiciones ----------
   DZ.maxScroll = function () {

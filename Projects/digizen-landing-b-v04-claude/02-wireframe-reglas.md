@@ -107,3 +107,21 @@ Medidas del wireframe con el copy real: en desktop de 1280 × 800 la entrada mid
 ## Gate de salida
 
 ¿Apruebas este layout y arquitectura de información para construir la página, o ajustamos el orden o la estructura primero?
+
+## Cambio aprobado después del gate: de scroll libre a estaciones (usuario, 2026-10-02)
+
+El usuario pidió que la página se recorra por estaciones con GSAP, como la landing. Esto reemplaza la decisión 2 («scroll libre»). Aprobó el mapa con dos precisiones: las estaciones son distintas por tamaño (1 tarjeta por gesto en teléfono, 2 en tablet, 3 en desktop) y la entrada partida en dos en teléfono va **como prueba**.
+
+| Estación | Desktop (≥ 1100 px) | Tablet (600–1099 px) | Teléfono (< 600 px) |
+|---|---|---|---|
+| Entrada | 1 estación | 1 estación | 2 estaciones (prueba): título y texto · ADA, lista corta y botones |
+| Título de las reglas + la regla más importante, con su imagen | 1 | 1 | 1 |
+| Reglas 01 a 12 | 4 estaciones, de 3 tarjetas | 6 estaciones, de 2 tarjetas | 4 mazos de 3 tarjetas apiladas: una tarjeta por gesto (12 gestos) |
+| Cierre | 1 | 1 | 1 |
+| Pie | scroll libre | scroll libre | scroll libre |
+| **Total** | **7 estaciones** | **9 estaciones** | **8 estaciones, 16 gestos** |
+
+Cada variante lleva el copy completo y en el mismo orden; la auditoría lo comprueba en los tres tamaños.
+
+La entrada también se reconfiguró a pedido del usuario (ver `03-build-notes-reglas.md`): en desktop, título en una línea, texto en tamaño de cuerpo con los botones debajo y la lista al lado, a la altura de ese bloque; en tablet, los dos botones en una sola fila a todo el ancho, uno debajo de ADA.
+

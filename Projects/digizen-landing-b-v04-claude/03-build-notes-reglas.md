@@ -89,3 +89,13 @@ Además, adición de copy aprobada por el usuario: botón secundario **«Regresa
 
 **Pendiente de decisión:** el usuario quiere que la página tenga estaciones de scroll con GSAP, como la landing. Eso cambia el modo de lectura aprobado en el wireframe (scroll libre) y pide rearmar la página por estaciones; se propone el mapa de estaciones antes de construirlo.
 
+## Estaciones con el motor de la landing y ajustes de la entrada (usuario, 2026-10-02)
+
+- **Estaciones:** la página usa el mismo motor de la landing (`dz-core.js`, `dz-pager.js`, `dz-main.js`, GSAP): una estación por gesto. 7 estaciones en desktop (reglas de 3 en 3), 9 en tablet (de 2 en 2) y 8 en teléfono (tarjetas apiladas, una por gesto; la entrada en dos estaciones, como prueba). El motor reconoce tres cortes nuevos para esta página (`w`, `t`, `s`, `n` en `DZ.visible`); la landing no cambia.
+- **Entrada, desktop:** el texto vuelve al tamaño de cuerpo (el tamaño grande hacía la entrada muy alta; corrección del usuario). Los botones quedan bajo el texto y la lista, al lado, ocupa el alto del texto más los botones, como en la A.
+- **Entrada, tablet:** los dos botones en una sola fila a todo el ancho, fuera de la columna del texto; uno queda debajo de ADA (pedido del usuario).
+- **Teléfono:** en el mazo, la tarjeta anterior asoma con su rótulo y su título. El índice (desktop) lleva a la estación de la tarjeta.
+- **Auditoría:** por tamaño (desktop, tablet, teléfono): 798 palabras, las mismas y en el mismo orden, y los textos alternativos.
+- **Verificado en el navegador:** 1380 × 865, 1280 × 720, 1024 × 768, 768 × 1024 y 390 × 844: todas las estaciones miden una pantalla y ninguna necesita scroll interno; gestos de rueda, teclado y dedo avanzan una estación (o una tarjeta en el mazo). Sin errores de consola. La landing sigue igual.
+- **Sigue sin publicarse en GitHub Pages**, a la espera de la revisión del usuario. La entrada en dos estaciones del teléfono es una prueba: falta su decisión.
+

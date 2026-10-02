@@ -454,7 +454,8 @@ RULES_BACK = 'P-08b'                                    # la estación de «Cono
 RULES_W = {'ada-rule-desktop': (480, 853), 'dg-scene-a10-ada-rules-closing': (420, 720),
            'dg-scene-a09-rules-presence': (900, 1400), 'dg-scene-a09-rules-presence-mobile': (800, 1200),
            'dg-scene-cta-father-son-team-1-1': (480, 800)}
-RULES_SCRIPTS = ['js/dz-core.js', 'js/dz-spring.js', 'js/dz-menu.js', 'js/dz-actions.js', 'js/dz-rules.js']   # sin GSAP: no hay recorrido
+RULES_SCRIPTS = ['assets/vendor/gsap.min.js', 'assets/vendor/ScrollTrigger.min.js', 'assets/vendor/ScrollToPlugin.min.js',
+                 'js/dz-core.js', 'js/dz-spring.js', 'js/dz-menu.js', 'js/dz-actions.js', 'js/dz-pager.js', 'js/dz-rules.js', 'js/dz-main.js']   # el motor de estaciones de la landing
 
 def rules_assets():
     """Las 3 imágenes de la A (5 archivos), optimizadas en dos anchos; conservan su transparencia."""
@@ -471,6 +472,10 @@ def rules_assets():
     return out
 
 def rules_page(pins, imgs):
+    """Devuelve (html, estaciones). La página se recorre por estaciones, con el motor de la landing (una estación por gesto):
+    entrada · título + la regla más importante · las 12 reglas restantes · cierre. Las reglas van de 3 en 3 en desktop
+    (≥ 1100 px), de 2 en 2 en tablet (600–1099 px) y apiladas, una por gesto, en teléfono (decisión del usuario, 2026-10-02).
+    Cada variante lleva el copy completo; el CSS muestra solo la que corresponde al ancho."""
     e = lambda t: html.escape(t, quote=True)
     rich = lambda t: e(t).replace('&lt;b&gt;', "<b class='w7'>").replace('&lt;/b&gt;', '</b>')
     name = lambda spec: spec[0].rsplit('.', 1)[0]
@@ -486,18 +491,64 @@ def rules_page(pins, imgs):
     arr = lambda icon, d: f"<span class='arr' data-dir='{d}' data-icon='{icon}' aria-hidden='true'></span>"
     I, H, CL = RG.INTRO, RG.RULES_HEAD, RG.CLOSING
     back, price = f'./#{RULES_BACK}', './#precio'
-    paras = '\n'.join(f"      <p class='in w5 t-body'>{rich(p)}</p>" for p in I['paras'])
-    short = '\n'.join(f"      <li class='in w6 t-body'>{e(t)}</li>" for t in I['checks_short'])
-    full = '\n'.join(f"      <li class='in w7 t-small'><a href='#regla-{i}'>{e(t)}</a></li>" for i, t in enumerate(I['checks_full']))
-    cards = []
-    for i, (label, title, sub, body) in enumerate(RG.RULES):
-        fig = ''
+    stops = []   # (bp, kind, id, html): en orden; bp = all | n (≥ 600) | s (< 600) | w (≥ 1100) | t (600–1099)
+    VIS = {'all': '', 'n': ' rg-n', 's': ' rg-s', 'w': ' rg-w', 't': ' rg-t'}
+
+    # ---- entrada
+    def head(v): return (f"<div class='rg-head'>\n  <p class='in w7 t-small'>{e(I['kicker'])}</p>\n"
+                         f"  <h1 id='rg-title-{v}' class='pf w8 t-semi bw'>{e(I['title'][0])} <span class='hl r-ia'>{e(I['title'][1])}</span></h1>\n</div>")
+    lead = "<div class='rg-lead'>\n" + '\n'.join(f"  <p class='in w5 t-body'>{rich(p)}</p>" for p in I['paras']) + "\n</div>"
+    def fig(eager): return ("<figure class='rg-fig'>" + pic(I['image']['desktop'], I['image']['mobile'], I['image']['alt'],
+                                                             '(min-width: 1180px) 340px, 30vw', '(min-width: 600px) 300px, 220px', eager=eager) + "</figure>")
+    short = '\n'.join(f"    <li class='in w6 t-body'>{e(t)}</li>" for t in I['checks_short'])
+    def lists(v):   # la lista completa es el índice: cada punto lleva a la estación de su tarjeta
+        full = '\n'.join(f"    <li class='in w7 t-small'><a href='#regla-{i}' data-rule-link='{i}'>{e(t)}</a></li>" for i, t in enumerate(I['checks_full']))
+        return f"<div class='rg-list'>\n  <ul class='rg-checks rg-short'>\n{short}\n  </ul>\n  <ul class='rg-checks rg-full'>\n{full}\n  </ul>\n</div>"
+    acts = (f"<div class='cta rg-acts'>\n  <a class='btn' href='{price}'>{e(I['buttons'][0][0])}{arr('→', 'e')}</a>\n"
+            f"  <a class='btn sec r-ins' href='{back}' data-rules='back'>{e(I['buttons'][1][0])}{arr('←', 'w')}</a>\n</div>")
+    stops.append(('n', 'read', 'rg.1', f"<div class='c rg-intro-grid'>\n{head('n')}\n{lead}\n{fig(True)}\n{lists('n')}\n{acts}\n</div>\n{C.CUE}"))
+    # teléfono: la entrada en dos estaciones, COMO PRUEBA (decisión del usuario): título y texto; después ADA, la lista y los botones
+    stops.append(('s', 'read', 'rg.1a', f"<div class='c rg-intro-a'>\n{head('s')}\n{lead}\n</div>\n{C.CUE}"))
+    stops.append(('s', 'read', 'rg.1b', f"<div class='c rg-intro-b'>\n{fig(False)}\n{lists('s')}\n{acts}\n</div>"))
+
+    # ---- las reglas
+    def card(i, v):
+        label, title, sub, body = RG.RULES[i]
+        figure = ''
         if i == 0:
-            fig = ("\n    <figure class='rg-rule-fig'>" + pic(RG.RULE1_IMAGE['desktop'], RG.RULE1_IMAGE['mobile'], RG.RULE1_IMAGE['alt'],
-                                                             '(min-width: 1180px) 450px, 40vw', '(min-width: 600px) 60vw, 86vw') + "</figure>")
-        cards.append(f"  <article class='card r-ada rg-rule{' rg-wide' if i == 0 else ''}' id='regla-{i}'>\n    <div class='rg-rule-txt'>\n"
-                     f"      <p class='in w7 t-small'>{e(label)}</p>\n      <h3 class='pf w5 t-sub bw card-t'>{e(title)}</h3>\n"
-                     f"      <p class='in w7 t-body'>{e(sub)}</p>\n      <p class='in w5 t-body'>{e(body)}</p>\n    </div>{fig}\n  </article>")
+            figure = ("\n  <figure class='rg-rule-fig'>" + pic(RG.RULE1_IMAGE['desktop'], RG.RULE1_IMAGE['mobile'], RG.RULE1_IMAGE['alt'],
+                                                               '(min-width: 1180px) 450px, 40vw', '(min-width: 600px) 60vw, 86vw') + "</figure>")
+        cid = f'regla-{i}' if v in ('all', 'w') else f'regla-{v}-{i}'
+        return (f"<article class='card r-ada rg-rule{' rg-wide' if i == 0 else ''}' id='{cid}' data-rule='{i}'>\n  <div class='rg-rule-txt'>\n"
+                f"    <p class='in w7 t-small'>{e(label)}</p>\n    <h3 class='pf w5 t-sub bw card-t'>{e(title)}</h3>\n"
+                f"    <p class='in w7 t-body'>{e(sub)}</p>\n    <p class='in w5 t-body'>{e(body)}</p>\n  </div>{figure}\n</article>")
+    rules_head = (f"<div class='rg-rules-head'>\n  <p class='in w7 t-small'>{e(H['kicker'])}</p>\n"
+                  f"  <h2 class='pf w8 t-head bw'><span class='rg-l1'>{e(H['title'][0])}</span> {e(H['title'][1])} <span class='hl'>{e(H['title'][2])}</span></h2>\n</div>")
+    stops.append(('all', 'read', 'rg.2', f"<div class='c rg-first'>\n{rules_head}\n{card(0, 'all')}\n</div>"))
+    rest = list(range(1, len(RG.RULES)))
+    for bp, per, kind in (('w', 3, 'read'), ('t', 2, 'read'), ('s', 3, 'deck')):   # 3 por gesto · 2 por gesto · mazos de 3, una tarjeta por gesto
+        for g, k in enumerate(range(0, len(rest), per)):
+            cards = '\n'.join(card(i, bp) for i in rest[k:k + per])
+            if kind == 'deck': inner = f"<div class='c l08'>\n<div class='entries deck rg-deck'>\n{cards}\n</div>\n</div>"
+            else: inner = f"<div class='c'>\n<div class='rg-grid rg-g{per}'>\n{cards}\n</div>\n</div>"
+            stops.append((bp, kind, f'rg.{bp}{g + 1}', inner))
+
+    # ---- cierre
+    stops.append(('all', 'read', 'rg.9',
+        f"<div class='c rg-close-grid'>\n<figure class='rg-por' aria-hidden='true'>{pic(CL['image']['file'], None, '', '(min-width: 860px) 340px, 260px', '')}</figure>\n"
+        f"<div class='rg-close-copy'>\n  <p class='in w7 t-small'>{e(CL['kicker'])}</p>\n  <p class='pf w8 t-semi bw'>{e(CL['title'])}</p>\n"
+        f"  <p class='in w5 t-body'>{e(CL['support'])}</p>\n  <div class='cta'>\n"
+        f"    <a class='btn' href='{price}'>{e(CL['buttons'][0][0])}{arr('→', 'e')}</a>\n"
+        f"    <button type='button' class='btn alt' data-action='ada' aria-haspopup='dialog'>{e(CL['buttons'][1][0])}{arr('→', 'e')}</button>\n"
+        f"    <a class='btn sec r-ins' href='{back}' data-rules='back' data-add='1'>{e(CL['added_button'][0])}{arr('←', 'w')}</a>\n  </div>\n</div>\n</div>"))
+
+    def stop_div(bp, kind, sid, body):
+        return (f"<div class='stop k-{kind}{VIS[bp]}' data-id='{sid}' data-kind='{kind}' data-e='1' data-bp='{bp}' data-night='0'>\n{body}\n</div>")
+    def pin(pid, ids):
+        inner = '\n'.join(stop_div(*st) for st in stops if st[2].split('.')[1][0] in ids)
+        return (f"<section class='pin t-pin' id='{pid}' data-pin data-type='pin' data-tramo='0'>\n<div class='stage'>\n<div class='night'></div>\n{inner}\n</div>\n</section>")
+    main = '\n'.join([pin('RG-1', '1'), pin('RG-2', '2wts'), pin('RG-3', '9')])
+
     # el mismo menú de la landing; aquí cada opción lleva a su sección de la landing
     first_pin = {}
     for p in pins:
@@ -511,14 +562,13 @@ def rules_page(pins, imgs):
             "<div class='menu' id='menu' hidden>\n  <div class='menu-backdrop'></div>\n  <nav class='menu-panel' aria-label='Menú'>\n"
             "    <img class='menu-logo' src='assets/logo/digizen-logo-light.svg' alt='' width='275' height='116'>\n"
             f"    <ul class='menu-list'>\n{items}\n    </ul>\n    {cta}\n  </nav>\n</div>")
-    brand = BRAND.replace("class='brand' href='#P-H0'", "class='brand is-on on-light' href='./'")
+    brand = BRAND.replace("class='brand' href='#P-H0'", f"class='brand is-on on-light' href='{back}' data-rules='back'")   # el logo regresa a la landing
     foot = '\n'.join(pin_html(p) for p in pins if p['id'] == 'FOOT')
     desc = re.sub(r'<[^>]+>', '', I['paras'][0])   # descripción: el primer párrafo de la página, literal
     ver = time.strftime('%Y%m%d%H%M%S')
     scripts = '\n'.join(f"<script defer src='{s}?v={ver}'></script>" for s in RULES_SCRIPTS)
     d_intro, m_intro = name(I['image']['desktop']), name(I['image']['mobile'])
-    por = name(CL['image']['file'])
-    return f"""<!doctype html>
+    doc = f"""<!doctype html>
 <html lang="es-MX">
 <head>
 <meta charset="utf-8">
@@ -534,68 +584,20 @@ def rules_page(pins, imgs):
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:image" content="{PUBLIC_URL + SEO['og_image']}">
 <meta name="twitter:card" content="summary_large_image">
+<script>window.DZ_CFG = {json.dumps(FINAL_CFG)};</script>
 <meta name="theme-color" content="#F4F3F0">
 <link rel="icon" type="image/svg+xml" href="assets/logo/Favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..800;1,14..32,400..800&display=swap">
-<link rel='preload' as='image' media='(min-width: 860px)' imagesrcset='{sset(d_intro)}' imagesizes='300px' fetchpriority='high'>
-<link rel='preload' as='image' media='(max-width: 859px)' imagesrcset='{sset(m_intro)}' imagesizes='220px' fetchpriority='high'>
+<link rel='preload' as='image' media='(min-width: 860px)' imagesrcset='{sset(d_intro)}' imagesizes='340px' fetchpriority='high'>
 <link rel="stylesheet" href="dist/styles.css?v={ver}">
 </head>
 <body class='rg-page'>
 {brand}
 {menu}
 <main id='reglas' class='rg'>
-<section class='rg-sec rg-intro' aria-labelledby='rg-title'>
-  <div class='rg-wrap rg-intro-grid'>
-    <div class='rg-head'>
-      <p class='in w7 t-small'>{e(I['kicker'])}</p>
-      <h1 id='rg-title' class='pf w8 t-semi bw'>{e(I['title'][0])} <span class='hl r-ia'>{e(I['title'][1])}</span></h1>
-    </div>
-    <div class='rg-lead'>
-{paras}
-    </div>
-    <figure class='rg-fig'>{pic(I['image']['desktop'], I['image']['mobile'], I['image']['alt'], '(min-width: 1180px) 270px, 24vw', '220px', eager=True)}</figure>
-    <div class='rg-list'>
-      <ul class='rg-checks rg-short'>
-{short}
-      </ul>
-      <ul class='rg-checks rg-full'>
-{full}
-      </ul>
-    </div>
-    <div class='cta rg-acts'>
-      <a class='btn' href='{price}'>{e(I['buttons'][0][0])}{arr('→', 'e')}</a>
-      <a class='btn sec r-ins' href='{back}' data-rules='back'>{e(I['buttons'][1][0])}{arr('←', 'w')}</a>
-    </div>
-  </div>
-  {C.CUE}
-</section>
-<section class='rg-sec rg-rules' aria-labelledby='rg-list-title'>
-  <div class='rg-wrap'>
-    <p class='in w7 t-small'>{e(H['kicker'])}</p>
-    <h2 id='rg-list-title' class='pf w8 t-head bw'><span class='rg-l1'>{e(H['title'][0])}</span> {e(H['title'][1])} <span class='hl'>{e(H['title'][2])}</span></h2>
-    <div class='rg-grid'>
-{chr(10).join(cards)}
-    </div>
-  </div>
-</section>
-<section class='rg-sec rg-close' aria-label='Decisión después de leer las reglas'>
-  <div class='rg-wrap rg-close-grid'>
-    <figure class='rg-por' aria-hidden='true'>{pic(CL['image']['file'], None, '', '(min-width: 860px) 340px, 260px', '')}</figure>
-    <div class='rg-close-copy'>
-      <p class='in w7 t-small'>{e(CL['kicker'])}</p>
-      <p class='pf w8 t-semi bw'>{e(CL['title'])}</p>
-      <p class='in w5 t-body'>{e(CL['support'])}</p>
-      <div class='cta'>
-        <a class='btn' href='{price}'>{e(CL['buttons'][0][0])}{arr('→', 'e')}</a>
-        <button type='button' class='btn alt' data-action='ada' aria-haspopup='dialog'>{e(CL['buttons'][1][0])}{arr('→', 'e')}</button>
-        <a class='btn sec r-ins' href='{back}' data-rules='back' data-add='1'>{e(CL['added_button'][0])}{arr('←', 'w')}</a>
-      </div>
-    </div>
-  </div>
-</section>
+{main}
 </main>
 {foot}
 {DIALOG}
@@ -603,29 +605,35 @@ def rules_page(pins, imgs):
 </body>
 </html>
 """
+    return doc, stops
 
-def rules_audit(doc):
-    """Las palabras del copy de la fuente, las mismas y en el mismo orden, y los textos alternativos."""
+def rules_audit(stops):
+    """Por cada ancho (desktop, tablet, teléfono): las palabras del copy de la fuente, las mismas y en el mismo orden,
+    y los textos alternativos. Las adiciones aprobadas por el usuario se listan aparte."""
     def words(s):
         s = re.sub(r'<svg.*?</svg>', '', s, flags=re.S)
         return re.findall(r'\S+', html.unescape(re.sub(r'<[^>]+>', ' ', s)).replace(' ', ' '))
     glue = lambda ws: re.sub(r'improvisa:\s*responde', 'improvisa: responde', ' '.join(ws)).split()   # en la fuente es un salto de línea visual
     src = re.sub(r'<!--.*?-->', '', open(RULES_SRC, encoding='utf-8').read(), flags=re.S)
-    main = doc[doc.find("<main id='reglas'"):doc.find('</main>')]
-    added = [re.sub(r'<[^>]+>', '', t).strip() for t in re.findall(r"<a[^>]*\bdata-add='1'[^>]*>(.*?)</a>", main, flags=re.S)]
-    main = re.sub(r"<a[^>]*\bdata-add='1'[^>]*>.*?</a>", '', main, flags=re.S)   # adiciones aprobadas: no están en la fuente
-    sw, pw = glue(words(src)), glue(words(main))
+    sw = glue(words(src))
     salt = sorted({html.unescape(a) for a in re.findall(r'alt="([^"]*)"', src) if a})
-    palt = sorted({html.unescape(a) for a in re.findall(r"alt='([^']*)'", main) if a})
-    ok = sw == pw and salt == palt
     print(f'\n== {RULES_FILE} ==')
-    print(f'  copy de la fuente: {len(sw)} palabras · en la página: {len(pw)} · mismo texto y mismo orden: {"SÍ" if sw == pw else "NO"}')
-    if sw != pw:
-        for i, (a, b) in enumerate(zip(sw, pw)):
-            if a != b: print(f'     primera diferencia en la palabra {i}: «{" ".join(sw[max(0, i - 4):i + 5])}» ≠ «{" ".join(pw[max(0, i - 4):i + 5])}»'); break
-    print(f'  textos alternativos: {len(salt)} en la fuente · {len(palt)} en la página · {"IGUALES" if salt == palt else "DIFIEREN"}')
+    ok, added = True, set()
+    for label, allowed in (('desktop (≥ 1100 px)', {'all', 'n', 'w'}), ('tablet (600–1099 px)', {'all', 'n', 't'}), ('teléfono (< 600 px)', {'all', 's'})):
+        body = '\n'.join(st[3] for st in stops if st[0] in allowed)
+        added |= {re.sub(r'<[^>]+>', '', t).strip() for t in re.findall(r"<a[^>]*\bdata-add='1'[^>]*>(.*?)</a>", body, flags=re.S)}
+        body = re.sub(r"<a[^>]*\bdata-add='1'[^>]*>.*?</a>", '', body, flags=re.S)   # adiciones aprobadas: no están en la fuente
+        pw = glue(words(body))
+        palt = sorted({html.unescape(a) for a in re.findall(r"alt='([^']*)'", body) if a})
+        n = sum(1 for st in stops if st[0] in allowed)
+        same = sw == pw
+        print(f'  {label}: {n} estaciones · {len(pw)} de {len(sw)} palabras · mismo texto y mismo orden: {"SÍ" if same else "NO"} · textos alternativos: {"IGUALES" if salt == palt else "DIFIEREN"}')
+        if not same:
+            for i, (a, b) in enumerate(zip(sw, pw)):
+                if a != b: print(f'     primera diferencia en la palabra {i}: «{" ".join(sw[max(0, i - 4):i + 5])}» ≠ «{" ".join(pw[max(0, i - 4):i + 5])}»'); break
+        ok = ok and same and salt == palt
     print(f'  tarjetas: {len(RG.RULES)} · título de la pestaña (aprobado): «{RULES_TITLE}»')
-    print('  adiciones de copy aprobadas por el usuario (no están en la fuente): ' + (' · '.join(f'«{a}»' for a in added) or 'ninguna'))
+    print('  adiciones de copy aprobadas por el usuario (no están en la fuente): ' + (' · '.join(f'«{a}»' for a in sorted(added)) or 'ninguna'))
     if not ok: sys.exit(1)
 
 def main():
@@ -651,9 +659,9 @@ def main():
                 f"<title>DIGIZEN</title>\n<meta http-equiv=\"refresh\" content=\"0; url={target}\">\n</head>\n"
                 f"<body>\n<p><a href=\"{target}\">Esta página cambió de lugar. Continuar</a></p>\n</body>\n</html>\n")
         print('\n== redirecciones ==\n  ' + ' · '.join(f'{a} → {b}' for a, b in REDIRECTS.items()))
-        rules_doc = rules_page(C.PINS, rules_assets())   # página «Las reglas de ADA»
+        rules_doc, rules_stops = rules_page(C.PINS, rules_assets())   # página «Las reglas de ADA»
         open(os.path.join(OUT, RULES_FILE), 'w', encoding='utf-8').write(rules_doc)
-        rules_audit(rules_doc)
+        rules_audit(rules_stops)
     print(f"\n== SEO ==\n  {'PREVIEW: noindex, canonical a la A (' + OFFICIAL_URL + ')' if PREVIEW else 'PRODUCCIÓN: index, canonical ' + PUBLIC_URL}")
     print('  JSON-LD: Organization, WebSite, WebPage, Course (2 ofertas), FAQPage (' + str(len(C.FAQ)) + ' preguntas literales)')
     print('\n== adiciones de copy aprobadas por el usuario (no están en COPY-PUBLICADO.md) ==')
