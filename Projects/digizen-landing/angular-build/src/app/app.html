@@ -1,7 +1,7 @@
 <div class="dg-shell">
   <div class="dg-route-cover" [class.is-visible]="routeCoverVisible()" aria-hidden="true"></div>
   <header class="dg-header">
-    <a class="dg-logo" href="/" (click)="goHome($event)" aria-label="DIGIZEN, volver al inicio">
+    <a class="dg-logo" href="./" (click)="goHome($event)" aria-label="DIGIZEN, volver al inicio">
       <img class="dg-logo-light" src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="DIGIZEN" width="520"
         height="200" />
       <img class="dg-logo-dark" src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520" height="200" />
@@ -11,22 +11,22 @@
   <nav class="dg-nav" [class.is-scrolled]="navScrolled()" [style.--nav-w]="navWidth()"
     [style.--nav-reveal]="navReveal()" [class.is-open]="menuOpen()" (keydown.escape)="closeMenu()"
     aria-label="Navegación principal de Digizen">
-    <a class="dg-logo dg-nav-logo" href="/" (click)="goHome($event)" aria-label="DIGIZEN, volver al inicio">
+    <a class="dg-logo dg-nav-logo" href="./" (click)="goHome($event)" aria-label="DIGIZEN, volver al inicio">
       <img class="dg-logo-light" src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="DIGIZEN" width="520"
         height="200" />
       <img class="dg-logo-dark" src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520" height="200" />
     </a>
     <div class="dg-nav-links" id="dg-nav-links" aria-label="Temas principales de la landing">
-      <a href="/#ada" (click)="goHome($event, 'ada')"
+      <a href="./#ada" (click)="goHome($event, 'ada')"
         [class.active]="currentPage() === 'landing' && activeSection() === 'ada'">ADA</a>
-      <a href="/#oferta" (click)="goHome($event, 'oferta')"
+      <a href="./#oferta" (click)="goHome($event, 'oferta')"
         [class.active]="currentPage() === 'landing' && activeSection() === 'oferta'">Oferta</a>
-      <a href="/#garantia" (click)="goHome($event, 'garantia')"
+      <a href="./#garantia" (click)="goHome($event, 'garantia')"
         [class.active]="currentPage() === 'landing' && activeSection() === 'garantia'">Garantía</a>
-      <a href="/reglas-de-ada" (click)="goRules($event)" [class.active]="currentPage() === 'rules'">Reglas de ADA</a>
-      <a href="/#faqs" (click)="goHome($event, 'faqs')"
+      <a href="reglas-de-ada" (click)="goRules($event)" [class.active]="currentPage() === 'rules'">Reglas de ADA</a>
+      <a href="./#faqs" (click)="goHome($event, 'faqs')"
         [class.active]="currentPage() === 'landing' && activeSection() === 'faqs'">FAQs</a>
-      <a class="dg-nav-links-cta" href="/#precio" (click)="goHome($event, 'precio')">Inscribir a mi hijo</a>
+      <a class="dg-nav-links-cta" href="./#precio" (click)="goHome($event, 'precio')">Inscribir a mi hijo</a>
     </div>
     <button class="dg-theme" type="button" (click)="toggleTheme()" [attr.aria-pressed]="theme.theme() === 'dark'"
       [attr.aria-label]="theme.theme() === 'dark' ? 'Activar tema claro' : 'Activar tema oscuro'">
@@ -52,7 +52,7 @@
         }
       </svg>
     </button>
-    <a class="dg-btn" href="/#precio" (click)="goHome($event, 'precio')">Inscribir<svg viewBox="0 0 24 24" aria-hidden="true">
+    <a class="dg-btn" href="./#precio" (click)="goHome($event, 'precio')">Inscribir<svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M5 12h14M13 6l6 6-6 6"></path>
       </svg></a>
     <div class="dg-nav-progress" aria-hidden="true">
@@ -705,7 +705,7 @@
             <p>
               <strong>Cero rol romántico. Cero secretos peligrosos.</strong>
               Sus reglas están escritas y las puedes leer: se llaman
-              <a class="dg-inline-link" href="/reglas-de-ada" (click)="goRules($event)">Las Reglas de ADA</a>, y son
+              <a class="dg-inline-link" href="reglas-de-ada" (click)="goRules($event)">Las Reglas de ADA</a>, y son
               públicas.
             </p>
           </article>
@@ -767,7 +767,7 @@
               con propósito educativo, respetar privacidad y activar acompañamiento adulto cuando hace falta.
             </p>
           </div>
-          <a class="dg-btn dg-btn--secondary" href="/reglas-de-ada" (click)="goRules($event)">
+          <a class="dg-btn dg-btn--secondary" href="reglas-de-ada" (click)="goRules($event)">
             Conocer las Reglas de ADA
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6"></path>
@@ -1340,13 +1340,13 @@
         </ul>
       </div>
       <div class="dg-actions dg-rules-summary-actions">
-        <a class="dg-btn" href="/#precio" (click)="goHome($event, 'precio')">
+        <a class="dg-btn" href="./#precio" (click)="goHome($event, 'precio')">
           Inscribir a mi hijo
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6"></path>
           </svg>
         </a>
-        <a class="dg-btn dg-btn--secondary" href="/" (click)="goHome($event)">
+        <a class="dg-btn dg-btn--secondary" href="./" (click)="goHome($event)">
           Volver a Digizen
         </a>
       </div>
@@ -1418,7 +1418,7 @@
   <footer class="dg-footer">
     <div class="dg-footer-inner">
       <div class="dg-footer-brand">
-        <a class="dg-logo" href="/" (click)="goHome($event)" aria-label="DIGIZEN, volver al inicio">
+        <a class="dg-logo" href="./" (click)="goHome($event)" aria-label="DIGIZEN, volver al inicio">
           <img class="dg-logo-light" src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="DIGIZEN" width="520"
             height="200" loading="lazy" />
           <img class="dg-logo-dark" src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520" height="200"

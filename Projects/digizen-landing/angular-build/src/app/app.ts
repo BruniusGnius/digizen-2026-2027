@@ -219,13 +219,13 @@ export class App implements AfterViewInit, OnDestroy {
     event?.preventDefault();
     this.closeMenu();
     if (this.currentPage() === 'rules') {
-      void this.transitionTo('landing', anchor === 'hero-title' ? '/' : `/#${anchor}`, () => {
+      void this.transitionTo('landing', this.appUrl(anchor === 'hero-title' ? '' : `#${anchor}`), () => {
         const target = document.querySelector<HTMLElement>(`#${anchor}`);
         if (target) this.scrollToElement(target, this.anchorOffsetFor(target));
       });
       return;
     }
-    history.pushState(null, '', anchor === 'hero-title' ? '/' : `/#${anchor}`);
+    history.pushState(null, '', this.appUrl(anchor === 'hero-title' ? '' : `#${anchor}`));
     window.setTimeout(() => {
       const target = document.querySelector<HTMLElement>(`#${anchor}`);
       if (target) this.scrollToElement(target, this.anchorOffsetFor(target));
@@ -235,13 +235,18 @@ export class App implements AfterViewInit, OnDestroy {
   protected goRules(event?: Event): void {
     event?.preventDefault();
     this.closeMenu();
-    void this.transitionTo('rules', '/reglas-de-ada');
+    void this.transitionTo('rules', this.appUrl('reglas-de-ada'));
   }
 
   private readonly syncPageFromLocation = (): void => {
     this.currentPage.set(this.pageFromLocation());
     this.refreshAfterPageChange();
   };
+
+  /** Construye la URL respetando el <base href> (raíz en local, subcarpeta en GitHub Pages). */
+  private appUrl(path: string): string {
+    return new URL(path, document.baseURI).href;
+  }
 
   private pageFromLocation(): Page {
     return window.location.pathname.replace(/\/$/, '').endsWith('/reglas-de-ada') ? 'rules' : 'landing';
@@ -256,7 +261,7 @@ export class App implements AfterViewInit, OnDestroy {
   }
 
   private async transitionTo(page: Page, url: string, afterReveal?: () => void): Promise<void> {
-    if (this.currentPage() === page && window.location.pathname === url) return;
+    if (this.currentPage() === page && window.location.pathname === new URL(url, document.baseURI).pathname) return;
     const root = document.documentElement;
     this.anchorTween?.kill();
     this.routeCoverVisible.set(true);
