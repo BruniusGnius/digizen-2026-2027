@@ -2806,6 +2806,9 @@ details[open] .dg-chevron {
 .dg-rules-summary-copy .dg-lead {
   max-width: 46ch;
 }
+.dg-rules-title-inline .dg-h2-muted {
+  display: inline;
+}
 .dg-rules-checks {
   margin: 0;
   padding: 0;
@@ -2849,23 +2852,34 @@ details[open] .dg-chevron {
     grid-template-areas:
       "figure copy details"
       "figure actions details";
-    grid-template-columns: minmax(250px, 0.66fr) minmax(320px, 0.9fr) minmax(300px, 0.78fr);
-    column-gap: clamp(18px, 2.6vw, 42px);
+    grid-template-columns: minmax(260px, 0.72fr) minmax(360px, 0.95fr) minmax(320px, 0.82fr);
+    column-gap: clamp(44px, 4.8vw, 86px);
     min-height: 540px;
+    overflow: visible;
   }
   .dg-rules-summary-figure {
     align-self: end;
-    justify-self: end;
-    margin: 0 clamp(-28px, -2vw, -12px) -28px 0;
+    justify-self: start;
+    margin: 0 0 -28px;
+    overflow: visible;
   }
   .dg-rules-summary-figure img {
-    width: min(116%, 410px);
+    width: auto;
+    max-width: none;
+    height: 475px;
   }
   .dg-rules-summary-copy .dg-lead {
     max-width: 42ch;
   }
+  .dg-rules-title-inline {
+    max-width: none;
+    white-space: nowrap;
+  }
   .dg-rules-summary-actions {
     margin-top: 8px;
+  }
+  .dg-rules-summary-details {
+    padding-left: clamp(40px, 4vw, 64px);
   }
   .dg-rules-checks {
     gap: 9px;
@@ -2900,12 +2914,14 @@ details[open] .dg-chevron {
     column-gap: 14px;
     row-gap: 22px;
     align-items: end;
+    overflow: visible;
   }
   .dg-rules-summary-figure {
     align-self: end;
     justify-self: start;
-    margin-left: -34px;
+    margin-left: -12px;
     margin-bottom: -30px;
+    overflow: visible;
   }
   .dg-rules-summary-figure img {
     width: min(118%, 430px);
@@ -3238,7 +3254,12 @@ details[open] .dg-chevron {
     gap: 32px;
   }
   .dg-rules-summary-figure {
-    margin: 8px 0 6px;
+    justify-self: center;
+    width: 100%;
+    margin: 8px auto 6px;
+  }
+  .dg-rules-summary-figure img {
+    margin: 0 auto;
   }
   .dg-rules-summary-actions,
   .dg-rules-summary-actions .dg-btn,
