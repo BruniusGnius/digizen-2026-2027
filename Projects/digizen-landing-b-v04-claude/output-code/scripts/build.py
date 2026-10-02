@@ -516,15 +516,22 @@ def rules_page(pins, imgs):
 
     # ---- las reglas
     def card(i, v):
+        """Tarjeta de regla con el sistema tipográfico de la landing: rótulo pequeño en el color de ADA (violeta en texto),
+        título pesado (Inter 800), la regla en negritas con el color del criterio (azul) y el cuerpo en lectura.
+        La primera («La regla más importante») es un golpe: título semimonumental con el acento de la landing
+        («Presencia,» en azul y «vigilancia» en coral, como en su cierre de marca) y la regla en el paso lead."""
         label, title, sub, body = RG.RULES[i]
-        figure = ''
+        cid = f'regla-{i}' if v in ('all', 'w') else f'regla-{v}-{i}'
         if i == 0:
+            t = e(title).replace('Presencia,', "<span class='hl'>Presencia,</span>").replace('vigilancia', "<span class='hl r-coral'>vigilancia</span>")
             figure = ("\n  <figure class='rg-rule-fig'>" + pic(RG.RULE1_IMAGE['desktop'], RG.RULE1_IMAGE['mobile'], RG.RULE1_IMAGE['alt'],
                                                                '(min-width: 1180px) 450px, 40vw', '(min-width: 600px) 60vw, 86vw') + "</figure>")
-        cid = f'regla-{i}' if v in ('all', 'w') else f'regla-{v}-{i}'
-        return (f"<article class='card r-ada rg-rule{' rg-wide' if i == 0 else ''}' id='{cid}' data-rule='{i}'>\n  <div class='rg-rule-txt'>\n"
-                f"    <p class='in w7 t-small'>{e(label)}</p>\n    <h3 class='pf w5 t-sub bw card-t'>{e(title)}</h3>\n"
-                f"    <p class='in w7 t-body'>{e(sub)}</p>\n    <p class='in w5 t-body'>{e(body)}</p>\n  </div>{figure}\n</article>")
+            return (f"<article class='card r-ada rg-rule rg-wide' id='{cid}' data-rule='{i}'>\n  <div class='rg-rule-txt'>\n"
+                    f"    <p class='in w7 t-small c-ia'>{e(label)}</p>\n    <h3 class='pf w8 t-semi bw rg-top-t'>{t}</h3>\n"
+                    f"    <p class='in w7 t-sub rg-top-s'>{e(sub)}</p>\n    <p class='in w5 t-body'>{e(body)}</p>\n  </div>{figure}\n</article>")
+        return (f"<article class='card r-ada rg-rule' id='{cid}' data-rule='{i}'>\n  <div class='rg-rule-txt'>\n"
+                f"    <p class='in w7 t-small c-ia'>{e(label)}</p>\n    <h3 class='pf w8 t-head bw rg-rule-t'>{e(title)}</h3>\n"
+                f"    <p class='in w7 t-body hl rg-rule-s'>{e(sub)}</p>\n    <p class='in w5 t-body'>{e(body)}</p>\n  </div>\n</article>")
     rules_head = (f"<div class='rg-rules-head'>\n  <p class='in w7 t-small'>{e(H['kicker'])}</p>\n"
                   f"  <h2 class='pf w8 t-head bw'><span class='rg-l1'>{e(H['title'][0])}</span> {e(H['title'][1])} <span class='hl'>{e(H['title'][2])}</span></h2>\n</div>")
     stops.append(('all', 'read', 'rg.2', f"<div class='c rg-first'>\n{rules_head}\n{card(0, 'all')}\n</div>"))

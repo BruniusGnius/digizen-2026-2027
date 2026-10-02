@@ -525,10 +525,14 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
 @media (max-width: 599px), (min-width: 1100px) { .rg-t { display: none !important; } }
 @media (min-width: 600px) { .rg-s { display: none !important; } }
 @media (max-width: 599px) { .rg-n { display: none !important; } }
-.rg-page .stop { padding-top: 68px; padding-bottom: 52px; }   /* arriba: el logo y el menú; abajo: la flecha de scroll */
-@media (min-width: 600px) { .rg-page .stop { padding-top: 84px; padding-bottom: 76px; } }
+.rg-page .stop { padding-top: 68px; padding-bottom: 28px; }   /* arriba: el logo y el menú */
+.rg-page .stop:has(> .cue) { padding-bottom: 52px; }           /* la entrada: abajo va la flecha de scroll */
+@media (min-width: 600px) {
+  .rg-page .stop { padding-top: 84px; padding-bottom: 40px; }
+  .rg-page .stop:has(> .cue) { padding-bottom: 76px; }
+}
 .rg-page .stop.k-deck { align-items: center; align-items: safe center; }   /* centrado; si no cabe, empieza arriba para no cortarse */
-.rg-first .rg-rule-fig img { max-height: 30svh; object-fit: cover; object-position: center; }   /* llena su caja, centrada */
+.rg-first .rg-rule-fig img { max-height: 24svh; object-fit: cover; object-position: center; }   /* llena su caja, centrada */
 /* entrada */
 .rg-intro-grid { display: grid; gap: 24px; }
 .rg-head { grid-area: head; } .rg-lead { grid-area: lead; } .rg-fig { grid-area: fig; } .rg-list { grid-area: list; } .rg-acts { grid-area: acts; }
@@ -562,7 +566,16 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
 .rg-g2 { grid-template-columns: 1fr 1fr; }
 .rg-g3 { grid-template-columns: repeat(3, 1fr); }
 .rg-rule:focus { outline: none; }
-.rg-rule-txt { display: flex; flex-direction: column; gap: var(--stack); }
+/* jerarquía con el sistema tipográfico de la landing (pedido del usuario): rótulo pequeño en violeta (ADA en texto),
+   título pesado, la regla en negritas y en azul (criterio), cuerpo en lectura */
+.rg-rule-txt { display: flex; flex-direction: column; gap: 6px; }
+.rg-rule-t { margin-top: 2px; text-wrap: balance; }
+.rg-rule-s { margin-top: 10px; line-height: 1.35; }
+.rg-rule-s + p { margin-top: 4px; }
+/* la regla más importante: un golpe, con el acento de la landing en el título */
+.rg-top-t { margin-top: 4px; }
+.rg-top-s { margin-top: 14px; }
+.rg-top-s + p { margin-top: 8px; max-width: var(--w-wide); }
 .rg-rule-fig { margin-top: 12px; }
 .rg-rule-fig img { width: 100%; height: auto; }
 .rg-deck { --peek: 92px; }   /* mazo del teléfono: la tarjeta anterior asoma con su rótulo y su título */
@@ -570,13 +583,14 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
    (las dos acciones principales juntas, con el mismo peso; «Regresar a Digizen», secundario, aparte); abajo, el pie. */
 .rg-page .stop.rg-end { flex-direction: column; justify-content: flex-start; padding-bottom: 20px; }
 .rg-end > .rg-close { flex: 1 1 auto; display: flex; align-items: center; }
-.rg-close-grid { width: 100%; display: grid; gap: 16px; grid-template-areas: "por" "copy" "acts"; }
+.rg-close-grid { width: 100%; display: grid; gap: 16px; grid-template-areas: "copy" "por" "acts"; }   /* teléfono: el retrato va después del texto (pedido del usuario) */
 .rg-por { grid-area: por; justify-self: center; width: min(46%, 190px); }
 .rg-por img { width: 100%; height: auto; }
 .rg-close-copy { grid-area: copy; }
 .rg-close-copy > .t-semi { margin-top: 8px; }
 .rg-close-copy > .t-body { margin-top: 14px; max-width: var(--w-wide); }
-.rg-close-acts { grid-area: acts; display: grid; gap: 10px; margin-top: 16px; }   /* teléfono: apilados, separados del texto (pedido del usuario) */
+.rg-close-acts { grid-area: acts; display: grid; gap: 10px; margin-top: 8px; }   /* teléfono: apilados */
+.rg-close-acts .btn { min-height: 60px; }   /* los tres a la misma altura (el secundario lleva borde) */
 /* el pie de la landing, dentro de la estación del cierre */
 .rg-foot { flex: none; width: 100%; max-width: var(--w-grid); margin: 20px auto 0; padding-top: 16px; border-top: 1px solid var(--color-line); }
 .rg-foot .foot { gap: 2px; }
@@ -592,7 +606,7 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
   .rg-first .rg-rule-fig img { aspect-ratio: 16 / 9; max-height: none; }
 }
 /* tablet (600–1099): las dos acciones principales lado a lado, con el mismo tamaño; la secundaria debajo, a todo el ancho */
-@media (min-width: 600px) and (max-width: 1179px) {
+@media (min-width: 600px) and (max-width: 1099px) {
   .rg-close-acts { grid-template-columns: 1fr 1fr; gap: 12px; }
   .rg-close-acts .btn.sec { grid-column: 1 / -1; }
 }
@@ -629,10 +643,12 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
   .rg-wide .rg-rule-txt { align-self: center; }
   .rg-first .rg-rule-fig img { height: 100%; max-height: none; min-height: 200px; }
 }
-/* desktop ancho: las tres acciones en una sola fila, a la misma altura; la secundaria, al ancho de su texto */
-@media (min-width: 1180px) {
-  .rg-close-acts { grid-template-columns: 1fr 1fr auto; gap: 12px; }
-  .rg-close-acts .btn { white-space: nowrap; }
+/* desktop: los botones van en la columna del texto, entre el retrato y el borde del contenedor, y los tres miden lo mismo
+   (pedido del usuario): las dos acciones principales en una fila y «Regresar a Digizen» debajo, al mismo ancho */
+@media (min-width: 1100px) {
+  .rg-close-grid { grid-template-areas: "por copy" "por acts"; row-gap: 28px; align-items: start; }
+  .rg-por { align-self: center; width: clamp(220px, 32svh, 300px); }   /* el retrato mide lo que el bloque de texto y botones */
+  .rg-close-acts { grid-template-columns: 1fr 1fr; gap: 12px; }
 }
 @media (min-width: 1100px) {
   /* la lista ocupa el alto del texto más los botones, como en la A; los botones quedan bajo el texto */

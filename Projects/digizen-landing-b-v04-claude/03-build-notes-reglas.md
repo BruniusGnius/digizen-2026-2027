@@ -118,3 +118,14 @@ Además, adición de copy aprobada por el usuario: botón secundario **«Regresa
 - **En la página de reglas** aparece marcada como la página actual y lleva al inicio de la página.
 - Verificado en el navegador en las dos páginas. Sigue sin publicarse.
 
+## Tipografía de las tarjetas, golpe de la primera regla y cierre (correcciones del usuario, 2026-10-02)
+
+- **Tarjetas con el sistema tipográfico de la landing.** Antes el título (24 px / 700) casi no se separaba de la regla (18 / 700) ni del cuerpo (18 / 500). Ahora hay cuatro niveles claros: rótulo «Regla 01» pequeño y en violeta (ADA en texto); título en el paso de encabezado, Inter 800 (32 px en desktop, 24 en teléfono); la regla en negritas y en azul (el color del criterio); el cuerpo en lectura, en tinta.
+- **«La regla más importante» es un golpe.** Título en semimonumental (56 px en desktop, 34 en teléfono) con el acento de la landing: «Presencia,» en azul y «vigilancia» en coral, igual que en su cierre de marca («Presencia, no vigilancia. Criterio, no candado.»). La regla va en el paso lead (24 px). Sigue dentro de la tarjeta blanca porque la imagen tiene fondo blanco y así se funde.
+- **Cierre, desktop:** los botones van en la columna del texto, entre el retrato y el borde del contenedor, y los tres miden lo mismo (457 × 60 px a 1280 de ancho): las dos acciones principales en una fila y «Regresar a Digizen» debajo, con el mismo ancho. Se conservan los textos completos y las flechas. El retrato creció para medir lo que el bloque de texto y botones.
+- **Cierre, teléfono:** el retrato va después del texto «Con reglas claras, propósito educativo y garantía 30 días desde el primer chat.» y antes de los botones.
+- **Aire de las estaciones:** la flecha de scroll solo está en la entrada, así que las demás estaciones llevan menos aire abajo.
+- **Verificado:** 1380 × 865, 1280 × 720, 768 × 954 y 390 × 844: ninguna estación mide más que la pantalla; sin errores de consola. Auditoría del copy sin cambios (los acentos de color no cambian palabras).
+- **`index.html` desde que quedó como versión final:** solo dos cambios de contenido: el botón «Conocer las reglas de ADA ↗» (08.5 y 08.5m) pasó de pendiente a enlace, y el menú ganó la entrada «Reglas de ADA». El resto es el sello de versión de cada build. Mismas 78 estaciones y mismo copy (auditoría: 0 problemas).
+- **Sigue sin publicarse en GitHub Pages.**
+
