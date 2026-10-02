@@ -581,8 +581,8 @@ export class App implements AfterViewInit, OnDestroy {
       .timeline({
         onComplete: () => target.classList.remove('dg-rule-card--targeted'),
       })
-      .fromTo(target, { scale: 0.995 }, { scale: 1.024, duration: 0.24, ease: 'power2.out' })
-      .to(target, { scale: 1, duration: 0.46, ease: 'power3.out' })
+      .fromTo(target, { scale: 0.998 }, { scale: 1.01, duration: 0.26, ease: 'power2.out' })
+      .to(target, { scale: 1, duration: 0.5, ease: 'power3.out' })
       .to({}, { duration: 2.75 });
   }
 
