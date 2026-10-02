@@ -2,7 +2,7 @@
 fuente: landing A, página `/reglas-de-ada` (Projects/digizen-landing/angular-build/src/app/app.html y app.ts)
 version: rama `digizen-a-reglas-ada` = `origin/main`, commit d859d88 (2026-10-01)
 extraido: 2026-10-02, solo lectura; no se modificó nada en la A
-uso: copy literal, fuente de verdad para la página de reglas de la B. No se resume, parafrasea ni corrige.
+uso: transcripción legible de la fuente. La FUENTE REAL es `REGLAS-DE-ADA-fuente-A.html` (el HTML final de la A, pegado por el usuario el 2026-10-02); este archivo coincide con ella palabra por palabra (13 tarjetas, 0 diferencias de texto). Copy literal: no se resume, parafrasea ni corrige.
 ---
 
 # Las reglas de ADA · texto literal de la landing A

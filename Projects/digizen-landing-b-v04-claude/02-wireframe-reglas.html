@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Wireframe · Las reglas de ADA · Digizen B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&display=swap">
+<style>
+/* Grises a propósito: aquí no se decide color ni estética, solo orden, ocupación y jerarquía. */
+:root{--bg:#f1f1f1;--panel:#fff;--ink:#111;--muted:#666;--line:#c8c8c8;--fill:#dcdcdc;
+  --t-small:.8125rem;--t-body:1rem;--t-sub:1.1875rem;--t-head:1.5rem;--t-semi:2.125rem;
+  --gap:16px;--pad-x:24px;--w-grid:1180px;--w-wide:42rem}
+@media (min-width:860px){:root{--t-small:.875rem;--t-body:1.125rem;--t-sub:1.5rem;--t-head:2rem;--t-semi:3.5rem;--gap:24px;--pad-x:48px}}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:500 var(--t-body)/1.5 Inter,system-ui,sans-serif}
+p,h1,h2,h3,ul{margin:0;padding:0} ul{list-style:none}
+.wrap{max-width:var(--w-grid);margin:0 auto;padding:0 var(--pad-x)}
+.wf-top{background:#111;color:#fff;font:600 12px/1.4 ui-monospace,Menlo,monospace;padding:10px var(--pad-x)}
+.wf-top span{opacity:.7}
+.wf-note{display:block;font:500 12px/1.45 ui-monospace,Menlo,monospace;color:#333;border:1px dashed #555;background:#fafafa;padding:8px 10px;margin:14px 0}
+.wf-note b{background:#111;color:#fff;padding:1px 6px;margin-right:6px}
+.wf-act{display:block;font:500 11px/1.35 ui-monospace,Menlo,monospace;color:#444;margin-top:4px}
+.wf-alt{font:500 11px/1.4 ui-monospace,Menlo,monospace;color:#444;margin-top:6px}
+.scan{box-shadow:-6px 0 0 #111}   /* lo que se lee en un escaneo de 3 segundos */
+@media (min-width:860px){.only-m{display:none!important}} @media (max-width:859px){.only-d{display:none!important}}
+.ph{background:repeating-linear-gradient(45deg,var(--fill),var(--fill) 10px,#cfcfcf 10px,#cfcfcf 20px);border:1px solid #999;display:flex;align-items:center;justify-content:center;width:100%}
+.ph span{background:#fff;border:1px solid #999;font:600 11px/1.4 ui-monospace,Menlo,monospace;padding:4px 8px;text-align:center}
+/* R0 encabezado */
+.hdr{display:flex;justify-content:space-between;align-items:center;padding:20px var(--pad-x)}
+.hdr .logo{width:120px;height:44px;border:1px solid #999;background:var(--fill);font:600 11px/44px ui-monospace,monospace;text-align:center}
+.hdr .menu{width:44px;height:44px;border:1px solid #999;background:var(--panel);font:600 18px/42px ui-monospace,monospace;text-align:center}
+section{padding:28px 0 56px;border-top:1px solid var(--line)}
+.kick{font-size:var(--t-small);font-weight:700;color:var(--muted)}
+h1{font-size:var(--t-semi);font-weight:800;line-height:1.05;letter-spacing:-.02em;margin-top:8px}
+h2{font-size:var(--t-head);font-weight:800;line-height:1.15;letter-spacing:-.015em;margin-top:8px;max-width:26ch}
+h2 span{display:block;color:var(--muted)}
+/* R1 entrada: el orden del HTML es el del teléfono (texto, imagen, lista, botones) */
+.intro{display:grid;gap:24px;grid-template-areas:"copy" "fig" "list" "acts"}
+.intro .copy{grid-area:copy} .intro .fig{grid-area:fig;justify-self:center;width:min(100%,300px)}
+.intro .list{grid-area:list} .intro .acts{grid-area:acts}
+.intro .copy p{max-width:var(--w-wide);margin-top:1em;line-height:1.6}
+.checks{display:grid;gap:10px} .checks li{display:flex;align-items:center;gap:10px;font-weight:600}
+.chk{flex:none;width:22px;height:22px;border:1px solid #777;background:var(--fill)}
+.checks.full{display:none} .checks a{color:inherit;text-underline-offset:3px}
+@media (max-width:599px){.intro .fig{width:auto} .intro .fig .ph{height:40svh;width:auto}}   /* teléfono: la imagen no pasa de 40 % del alto de la pantalla */
+.acts{display:grid;gap:12px} .wf-b{max-width:27rem}
+.wf-btn{display:flex;align-items:center;min-height:56px;padding:12px 20px;border:2px solid #111;font-weight:700;border-radius:16px}
+.wf-btn.pri{background:#111;color:#fff} .wf-btn.alt{background:var(--fill)} .wf-btn.sec{background:var(--panel)}
+@media (min-width:600px) and (max-width:859px){
+  .intro{grid-template-columns:1.1fr .8fr;grid-template-areas:"copy fig" "list fig" "acts fig";column-gap:24px}
+  .intro .fig{align-self:center}
+}
+@media (min-width:860px){
+  .intro{grid-template-columns:3fr 5fr 4fr;grid-template-areas:"fig copy list" "fig acts list";column-gap:var(--gap);align-items:center}
+  .intro .fig{width:100%;align-self:end} .checks.short{display:none} .checks.full{display:grid}
+  .acts{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));align-items:start}
+}
+/* R2 reglas */
+.grid{display:grid;gap:var(--gap);grid-template-columns:1fr;margin-top:32px}
+.rule{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.rule::before{content:"";display:block;width:24px;height:3px;background:#111}
+.rule .rule-txt{display:flex;flex-direction:column;gap:8px}
+.rule .lab{font-size:var(--t-small);font-weight:700;color:var(--muted)}
+.rule h3{font-size:var(--t-sub);font-weight:700;line-height:1.25;letter-spacing:-.01em}
+.rule .sub{font-weight:700} .rule .body{color:#333}
+.rule-fig{margin-top:10px}
+@media (min-width:600px){.grid{grid-template-columns:1fr 1fr} .rule.wide{grid-column:1/-1}}
+@media (min-width:860px){
+  .rule.wide{display:grid;grid-template-columns:7fr 5fr;column-gap:var(--gap);align-items:start}
+  .rule.wide::before{grid-column:1/-1} .rule.wide .rule-fig{margin-top:0}
+}
+@media (min-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}   /* 3 columnas solo cuando el renglón no queda angosto */
+/* R3 cierre */
+.close{display:grid;gap:24px;align-items:center}
+.close .por{width:min(100%,260px);justify-self:center}
+.close .t{font-size:var(--t-semi);font-weight:800;line-height:1.05;letter-spacing:-.02em;margin-top:8px}
+.close .s{margin-top:14px;max-width:var(--w-wide)}
+@media (min-width:860px){.close{grid-template-columns:4fr 8fr;column-gap:var(--gap)} .close .por{width:100%;max-width:340px} .close .acts{margin-top:8px}}
+.foot{border:1px solid #999;background:var(--fill);padding:28px;text-align:center;font:600 12px/1.5 ui-monospace,monospace;margin:0 0 40px}
+.ledger{font:500 12px/1.5 ui-monospace,Menlo,monospace;border:1px dashed #555;background:#fafafa;padding:12px 14px 12px 30px;margin:0 0 40px}
+.ledger li{list-style:disc;margin:6px 0}
+</style>
+</head>
+<body>
+<div class='wf-top'>WIREFRAME · página «Las reglas de ADA» · Digizen B <span>· en grises a propósito · copy literal de la landing A · scroll libre · la barra negra a la izquierda marca lo que se lee en 3 segundos · ábrelo en desktop, tablet y teléfono</span></div>
+
+<div class='wrap'>
+<aside class='wf-note'><b>R0</b> Encabezado, igual que en la landing: logo flotante arriba a la izquierda (lleva a la landing) y botón de menú a la derecha, con el mismo menú; sus opciones llevan a las secciones de la landing. Sin riel lateral ni barra de progreso: aquí no hay recorrido por estaciones.</aside>
+</div>
+<div class='hdr'><div class='logo'>LOGO</div><div class='menu'>≡</div></div>
+
+<section><div class='wrap'>
+<aside class='wf-note'><b>R1</b> Entrada. Dice qué es esta página y por qué importa antes de pedir que se lea la lista. Desktop (≥ 860 px): imagen · texto y botones · lista completa de 13 puntos, en una sola pantalla. Tablet: texto, lista corta y botones a la izquierda, imagen a la derecha. Teléfono: texto → imagen → lista corta de 3 puntos → botones. La lista corta y la completa son las de la A: corta en teléfono y tablet, completa en desktop. En desktop la lista completa sirve de índice: cada punto lleva a su tarjeta. En teléfono la imagen se limita al 40 % del alto de la pantalla para que la lista y los botones queden cerca.</aside>
+<div class='intro'>
+  <div class='copy'>
+    <p class='kick' data-copy>Marco de seguridad</p>
+    <h1 class='scan' data-copy>Las reglas de ADA</h1>
+    <p data-copy>Antes de que tu hijo converse con ADA, queremos que sepas algo con claridad: <b>no es una inteligencia artificial abierta hablando sin rumbo con un menor.</b></p><p data-copy>Existe para que practique criterio digital en un espacio guiado, con límites, privacidad y acompañamiento adulto cuando hace falta.</p><p data-copy><b>Presencia, no vigilancia. Criterio, no candado.</b></p>
+  </div>
+  <div class='fig'>
+    <div class='ph only-d' style='aspect-ratio:853/1137'><span>IMAGEN · desktop<br>ada-rule-desktop.webp · 853 × 1137</span></div>
+    <div class='ph only-m' style='aspect-ratio:1022/1790'><span>IMAGEN · tablet y teléfono<br>dg-scene-a10-ada-rules-closing.webp · 1022 × 1790</span></div>
+    <p class='wf-alt'>texto alternativo: «<span data-alt>ADA sosteniendo una tableta con reglas públicas</span>»</p>
+  </div>
+  <div class='list'>
+    <ul class='checks short'><li><i class='chk'></i><span data-copy>Respetar la privacidad de tu hijo</span></li><li><i class='chk'></i><span data-copy>Evitar vínculos peligrosos</span></li><li><i class='chk'></i><span data-copy>Reconocer señales que requieren ayuda adulta</span></li></ul>
+    <ul class='checks full'><li><i class='chk'></i><a href='#regla-0' data-copy>Presencia, no vigilancia</a></li><li><i class='chk'></i><a href='#regla-1' data-copy>Propósito educativo</a></li><li><i class='chk'></i><a href='#regla-2' data-copy>Sin vínculos secretos</a></li><li><i class='chk'></i><a href='#regla-3' data-copy>Adultos presentes</a></li><li><i class='chk'></i><a href='#regla-4' data-copy>Sin diagnósticos</a></li><li><i class='chk'></i><a href='#regla-5' data-copy>Cuidado ante el riesgo</a></li><li><i class='chk'></i><a href='#regla-6' data-copy>Sin carrera por likes</a></li><li><i class='chk'></i><a href='#regla-7' data-copy>Preguntas primero</a></li><li><i class='chk'></i><a href='#regla-8' data-copy>Lenguaje por edad</a></li><li><i class='chk'></i><a href='#regla-9' data-copy>Espacio para pensar</a></li><li><i class='chk'></i><a href='#regla-10' data-copy>Privacidad con cuidado</a></li><li><i class='chk'></i><a href='#regla-11' data-copy>Aviso a la familia</a></li><li><i class='chk'></i><a href='#regla-12' data-copy>Límites claros</a></li></ul>
+  </div>
+  <div class='acts'><div class='wf-b'><span class='wf-btn pri' data-copy>Inscribir a mi hijo</span><span class='wf-act'>→ va a las tarjetas de precio de la landing (11.4 en desktop, 11.5m en teléfono)</span></div><div class='wf-b'><span class='wf-btn sec' data-copy>Volver a Digizen</span><span class='wf-act'>→ regresa a la landing, a la estación de donde se salió (08.5)</span></div></div>
+</div>
+<aside class='wf-note'><b>R1 · interacción</b> Los dos botones responden al instante al tocarlos (se hunden, como todos los de la landing). «Volver a Digizen» sale por donde se entró: regresa a la estación 08.5, donde está el botón «Conocer las reglas de ADA», no al inicio.</aside>
+</div></section>
+
+<section><div class='wrap'>
+<aside class='wf-note'><b>R2</b> Las 13 reglas, abiertas y completas: es contenido de consulta, así que nada va en acordeón. Cada tarjeta se entiende con su rótulo y su título; el subtítulo y el cuerpo son la profundidad. La primera ocupa todo el ancho y lleva la imagen. Desde 1100 px: 3 columnas (4 filas de 3). De 600 a 1099 px: 2 columnas, para que el renglón no quede angosto. Teléfono: 1 columna. Tarjeta de la landing: superficie blanca, radio 16, barra corta de acento arriba.</aside>
+<p class='kick' data-copy>Seguridad por diseño</p>
+<h2 class='scan'><span data-copy>ADA no improvisa:</span><em style='font-style:normal' data-copy>responde dentro de estas reglas</em></h2>
+<div class='grid'><article class='rule wide' id='regla-0'><div class='rule-txt'><p class='lab' data-copy>La regla más importante</p><h3 class='scan' data-copy>Presencia, no vigilancia</h3><p class='sub' data-copy>ADA debe actuar con presencia, no vigilancia.</p><p class='body' data-copy>ADA no existe para convertirte en policía del celular. Existe para ayudar a tu hijo a practicar criterio digital con acompañamiento: menos candado, secreto y sermón; más pausa, preguntas y criterio.</p></div><div class='rule-fig'><div class='ph only-d' style='aspect-ratio:2048/1366'><span>IMAGEN · desktop<br>dg-scene-a09-rules-presence.webp · 2048 × 1366</span></div><div class='ph only-m' style='aspect-ratio:2048/1536'><span>IMAGEN · tablet y teléfono<br>dg-scene-a09-rules-presence-mobile.webp · 2048 × 1536</span></div><p class='wf-alt'>texto alternativo: «<span data-alt>ADA y un adolescente de pie en una plataforma virtual, frente a dos caminos de tarjetas de redes sociales: él se lleva la mano a la barbilla para pensar y ADA, a su lado, abre las manos para acompañarlo sin elegir por él</span>»</p></div></article><article class='rule' id='regla-1'><div class='rule-txt'><p class='lab' data-copy>Regla 01</p><h3 class='scan' data-copy>Propósito educativo</h3><p class='sub' data-copy>ADA solo conversa con propósito educativo.</p><p class='body' data-copy>ADA no está hecha para entretener sin límite, simular una amistad secreta ni ocupar el lugar de una persona real. Sus conversaciones giran en torno a la ciudadanía digital y, si se alejan, ADA debe regresar al tema de forma clara y tranquila.</p></div></article><article class='rule' id='regla-2'><div class='rule-txt'><p class='lab' data-copy>Regla 02</p><h3 class='scan' data-copy>Sin vínculos secretos</h3><p class='sub' data-copy>ADA no crea relaciones románticas ni vínculos secretos.</p><p class='body' data-copy>ADA no debe coquetear, actuar como pareja ni construir una relación emocional dependiente con tu hijo. Tampoco debe pedirle que guarde secretos peligrosos o que oculte algo importante a su familia.</p></div></article><article class='rule' id='regla-3'><div class='rule-txt'><p class='lab' data-copy>Regla 03</p><h3 class='scan' data-copy>Los adultos no se reemplazan</h3><p class='sub' data-copy>ADA no sustituye a mamá, papá, docentes ni profesionales.</p><p class='body' data-copy>ADA puede acompañar una conversación educativa, pero no reemplaza a la familia, a la escuela ni a un profesional. Si aparece una situación que necesita intervención adulta, debe ayudar a abrir el camino hacia un adulto responsable.</p></div></article><article class='rule' id='regla-4'><div class='rule-txt'><p class='lab' data-copy>Regla 04</p><h3 class='scan' data-copy>Sin etiquetas</h3><p class='sub' data-copy>ADA no diagnostica.</p><p class='body' data-copy>ADA no etiqueta a tu hijo ni emite diagnósticos psicológicos. Puede ayudarle a nombrar lo que siente y a pensar con más calma, pero nombrar no es diagnosticar.</p></div></article><article class='rule' id='regla-5'><div class='rule-txt'><p class='lab' data-copy>Regla 05</p><h3 class='scan' data-copy>Cuidado ante el riesgo</h3><p class='sub' data-copy>ADA no da instrucciones para hacer daño.</p><p class='body' data-copy>ADA no debe ayudar a un menor a lastimarse, lastimar a otros, acosar, humillar, manipular, amenazar, extorsionar o exponer a otra persona. Si la conversación entra en terreno delicado, la prioridad deja de ser la misión y se vuelve proteger.</p></div></article><article class='rule' id='regla-6'><div class='rule-txt'><p class='lab' data-copy>Regla 06</p><h3 class='scan' data-copy>Sin carrera por likes</h3><p class='sub' data-copy>ADA no premia likes, rachas ni popularidad.</p><p class='body' data-copy>ADA no busca que tu hijo compita por puntos vacíos, rankings, likes, rachas o validación externa. La meta no es que «gane» dentro de la plataforma, sino que aprenda a decidir mejor fuera de ella.</p></div></article><article class='rule' id='regla-7'><div class='rule-txt'><p class='lab' data-copy>Regla 07</p><h3 class='scan' data-copy>Preguntas primero</h3><p class='sub' data-copy>ADA pregunta antes de dar respuestas.</p><p class='body' data-copy>ADA no debe resolver por tu hijo lo que necesita aprender a pensar. Antes de dar una respuesta, le hace preguntas como qué pasó, qué sintió y quién puede verse afectado, porque la decisión debe seguir siendo suya.</p></div></article><article class='rule' id='regla-8'><div class='rule-txt'><p class='lab' data-copy>Regla 08</p><h3 class='scan' data-copy>Lenguaje por edad</h3><p class='sub' data-copy>ADA adapta el lenguaje a la edad.</p><p class='body' data-copy>ADA no debe hablar igual con un niño de primaria que con un adolescente de preparatoria. Ajusta sus ejemplos, preguntas y profundidad a la etapa del alumno, sin infantilizarlo ni tratarlo como adulto antes de tiempo.</p></div></article><article class='rule' id='regla-9'><div class='rule-txt'><p class='lab' data-copy>Regla 09</p><h3 class='scan' data-copy>Espacio para pensar</h3><p class='sub' data-copy>ADA respeta la privacidad necesaria para pensar.</p><p class='body' data-copy>Tu hijo necesita un espacio para ordenar ideas sin sentir que cada palabra será evidencia en su contra, por eso ADA no es una transcripción para papás. La familia recibe avance, temas trabajados y señales útiles; el objetivo no es espiar, es abrir mejores conversaciones en casa.</p></div></article><article class='rule' id='regla-10'><div class='rule-txt'><p class='lab' data-copy>Regla 10</p><h3 class='scan' data-copy>Privacidad, no abandono</h3><p class='sub' data-copy>ADA no confunde privacidad con abandono.</p><p class='body' data-copy>Privacidad no significa que los adultos desaparecen. Si aparece una señal que requiere cuidado adulto, ADA puede activar una recomendación de acompañamiento, no para exhibir a tu hijo, sino para que no estés a ciegas.</p></div></article><article class='rule' id='regla-11'><div class='rule-txt'><p class='lab' data-copy>Regla 11</p><h3 class='scan' data-copy>Aviso a la familia</h3><p class='sub' data-copy>ADA puede notificar señales que requieren atención humana.</p><p class='body' data-copy>Si aparece algo que requiere cuidado adulto, ADA puede notificar a la familia o al equipo correspondiente. Esa notificación no es una acusación ni un diagnóstico, y no debe exponer de más la conversación privada: es una señal clara, prudente y suficiente para actuar a tiempo.</p></div></article><article class='rule' id='regla-12'><div class='rule-txt'><p class='lab' data-copy>Regla 12</p><h3 class='scan' data-copy>Sin promesas vacías</h3><p class='sub' data-copy>ADA reconoce sus límites.</p><p class='body' data-copy>ADA no debe prometer riesgo cero: no promete detectar todo ni eliminar el ciberacoso, la presión social, la desinformación o los errores. Una IA que promete demasiado no da seguridad, da una falsa calma.</p></div></article></div>
+</div></section>
+
+<section><div class='wrap'>
+<aside class='wf-note'><b>R3</b> Cierre: después de leer las reglas, las dos acciones con el mismo peso. Desktop: retrato a la izquierda, texto y botones a la derecha. Teléfono: retrato, texto, botones. El retrato es decorativo (sin texto alternativo, como en la A).</aside>
+<div class='close'>
+  <div class='por'><div class='ph ' style='aspect-ratio:956/956'><span>IMAGEN · decorativa<br>dg-scene-cta-father-son-team-1-1.webp · 956 × 956</span></div></div>
+  <div>
+    <p class='kick' data-copy>¿Ya viste suficiente?</p>
+    <p class='t scan' data-copy>Tu hijo puede empezar hoy mismo.</p>
+    <p class='s' data-copy>Con reglas claras, propósito educativo y garantía 30 días desde el primer chat.</p>
+    <div class='acts' style='margin-top:24px'><div class='wf-b'><span class='wf-btn pri' data-copy>Inscribir a mi hijo · EMPIEZA HOY</span><span class='wf-act'>→ va a las tarjetas de precio de la landing (11.4 en desktop, 11.5m en teléfono)</span></div><div class='wf-b'><span class='wf-btn alt' data-copy>Tengo dudas · CONVERSAR CON ADA</span><span class='wf-act'>→ abre el formulario «Conversar con ADA primero», que nace del botón</span></div></div>
+  </div>
+</div>
+<aside class='wf-note'><b>R3 · interacción</b> «Tengo dudas · CONVERSAR CON ADA» abre el mismo formulario de la landing: nace del botón, se puede cerrar a medio camino y regresa al botón. «Inscribir a mi hijo · EMPIEZA HOY» lleva a las tarjetas de precio de la landing, como el botón del menú.</aside>
+</div></section>
+
+<div class='wrap'>
+<aside class='wf-note'><b>R4</b> Pie: el mismo de la landing, sin cambios.</aside>
+<div class='foot'>PIE DE LA LANDING B · componente compartido, sin cambios</div>
+<p class='wf-note' style='margin-bottom:6px'><b>NOTAS INTERNAS</b> No son UI. Se conservan completas.</p>
+<ul class='ledger'><li>En la lista completa, cuatro nombres no coinciden con el título de su tarjeta: «Adultos presentes» / «Los adultos no se reemplazan»; «Sin diagnósticos» / «Sin etiquetas»; «Privacidad con cuidado» / «Privacidad, no abandono»; «Límites claros» / «Sin promesas vacías». Así está en la fuente; no se corrige sin que lo decida el usuario.</li><li>En A cada tarjeta lleva un icono y un color de acento que rota (violeta, cian, verde, azul). No son copy. En la B las tarjetas no llevan iconos y el color va por función: ADA = cian. Pendiente de decisión en el gate.</li></ul>
+</div>
+</body>
+</html>
