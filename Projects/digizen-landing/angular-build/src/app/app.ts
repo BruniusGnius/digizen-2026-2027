@@ -26,9 +26,9 @@ import { ThemeService } from './core/theme.service';
 type Page = 'landing' | 'rules';
 type AdaRule = {
   title: string;
-  paragraphs: string[];
-  bullets?: string[];
-  after?: string[];
+  subtitle: string;
+  body: string;
+  icon: string[];
 };
 
 @Component({
@@ -59,6 +59,7 @@ export class App implements AfterViewInit, OnDestroy {
   protected readonly navReveal = signal('0');
   protected readonly currentPage = signal<Page>(this.pageFromLocation());
   protected readonly routeCoverVisible = signal(false);
+  protected readonly menuOpen = signal(false);
   private navOpenPx = 0;
   private navClosedPx = 0;
   private navMeasureFrames: number[] = [];
@@ -73,150 +74,82 @@ export class App implements AfterViewInit, OnDestroy {
   );
   protected readonly adaRules: AdaRule[] = [
     {
-      title: 'ADA solo conversa con propósito educativo.',
-      paragraphs: [
-        'ADA no está hecha para entretener sin límite, simular una amistad secreta ni ocupar el lugar de una persona real.',
-        'Sus conversaciones giran alrededor de ciudadanía digital: privacidad, identidad, reputación, convivencia, bienestar, desinformación, inteligencia artificial, autoría y responsabilidad.',
-        'Si la conversación se aleja de ese propósito, ADA debe regresar al tema de forma clara y tranquila.',
-      ],
+      title: 'Presencia, no vigilancia',
+      subtitle: 'ADA debe actuar con presencia, no vigilancia.',
+      body: 'ADA no existe para convertirte en policía del celular. Existe para ayudar a tu hijo a practicar criterio digital con acompañamiento: menos candado, secreto y sermón; más pausa, preguntas y criterio.',
+      icon: ['M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z', 'm9 12 2 2 4-4'],
     },
     {
-      title: 'ADA no crea relaciones románticas ni vínculos secretos.',
-      paragraphs: [
-        'ADA no debe coquetear, actuar como pareja, alimentar fantasías románticas ni construir una relación emocional dependiente con tu hijo.',
-        'Tampoco debe pedirle que guarde secretos peligrosos o que oculte algo importante a su familia.',
-        'Su lugar es educativo.',
-        'No íntimo.',
-        'No romántico.',
-        'No secreto.',
-      ],
+      title: 'Propósito educativo',
+      subtitle: 'ADA solo conversa con propósito educativo.',
+      body: 'ADA no está hecha para entretener sin límite, simular una amistad secreta ni ocupar el lugar de una persona real. Sus conversaciones giran en torno a la ciudadanía digital y, si se alejan, ADA debe regresar al tema de forma clara y tranquila.',
+      icon: ['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z', 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z', 'M12 12h.01'],
     },
     {
-      title: 'ADA no sustituye a mamá, papá, docentes ni profesionales.',
-      paragraphs: [
-        'ADA puede acompañar una conversación educativa.',
-        'Pero no reemplaza a la familia, a la escuela, a un psicólogo, a un médico, a un abogado ni a una autoridad.',
-        'Si aparece una situación que necesita intervención adulta o profesional, ADA no debe actuar como si pudiera resolverla sola.',
-        'Debe ayudar a abrir el camino hacia un adulto responsable.',
-      ],
+      title: 'Sin vínculos secretos',
+      subtitle: 'ADA no crea relaciones románticas ni vínculos secretos.',
+      body: 'ADA no debe coquetear, actuar como pareja ni construir una relación emocional dependiente con tu hijo. Tampoco debe pedirle que guarde secretos peligrosos o que oculte algo importante a su familia.',
+      icon: ['M7 10h10a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z', 'M8 10V7a4 4 0 0 1 8 0v3'],
     },
     {
-      title: 'ADA no diagnostica.',
-      paragraphs: [
-        'ADA no etiqueta a tu hijo.',
-        'No decide si "está bien" o "está mal".',
-        'No emite diagnósticos psicológicos.',
-        'No convierte una respuesta en una sentencia.',
-        'No trata sus emociones como expediente clínico.',
-        'Puede ayudarle a nombrar lo que siente y a pensar con más calma.',
-        'Pero nombrar no es diagnosticar.',
-      ],
+      title: 'Los adultos no se reemplazan',
+      subtitle: 'ADA no sustituye a mamá, papá, docentes ni profesionales.',
+      body: 'ADA puede acompañar una conversación educativa, pero no reemplaza a la familia, a la escuela ni a un profesional. Si aparece una situación que necesita intervención adulta, debe ayudar a abrir el camino hacia un adulto responsable.',
+      icon: ['M16 20v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1', 'M10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z', 'M20 20v-1a4 4 0 0 0-3-3.9', 'M16 5.1a3 3 0 0 1 0 5.8'],
     },
     {
-      title: 'ADA no da instrucciones para hacer daño.',
-      paragraphs: [
-        'ADA no debe ayudar a un menor a lastimarse, lastimar a otros, acosar, humillar, manipular, amenazar, extorsionar o exponer a otra persona.',
-        'Si detecta que una conversación entra en terreno delicado, debe detener el rumbo normal y responder con cuidado.',
-        'La prioridad deja de ser continuar la misión.',
-        'La prioridad se vuelve proteger.',
-      ],
+      title: 'Sin etiquetas',
+      subtitle: 'ADA no diagnostica.',
+      body: 'ADA no etiqueta a tu hijo ni emite diagnósticos psicológicos. Puede ayudarle a nombrar lo que siente y a pensar con más calma, pero nombrar no es diagnosticar.',
+      icon: ['M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42Z', 'M7.5 7.5h.01'],
     },
     {
-      title: 'ADA no premia likes, rachas ni popularidad.',
-      paragraphs: [
-        'ADA no está diseñada para meter a tu hijo en otra carrera por aprobación.',
-        'No busca que compita por puntos vacíos, rankings, likes, rachas o validación externa.',
-        'La meta no es que tu hijo "gane" dentro de la plataforma.',
-        'La meta es que aprenda a decidir mejor fuera de ella.',
-      ],
+      title: 'Cuidado ante el riesgo',
+      subtitle: 'ADA no da instrucciones para hacer daño.',
+      body: 'ADA no debe ayudar a un menor a lastimarse, lastimar a otros, acosar, humillar, manipular, amenazar, extorsionar o exponer a otra persona. Si la conversación entra en terreno delicado, la prioridad deja de ser la misión y se vuelve proteger.',
+      icon: ['M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z', 'M12 8v4', 'M12 16h.01'],
     },
     {
-      title: 'ADA pregunta antes de dar respuestas.',
-      paragraphs: [
-        'ADA no debe resolver por tu hijo lo que tu hijo necesita aprender a pensar.',
-        'En vez de decirle inmediatamente qué hacer, debe hacerle preguntas que lo ayuden a construir criterio:',
-      ],
-      bullets: [
-        'qué pasó;',
-        'qué sintió;',
-        'quién puede verse afectado;',
-        'qué información falta;',
-        'qué consecuencia podría tener;',
-        'qué decisión se parece más a la persona que quiere ser.',
-      ],
-      after: [
-        'ADA puede ayudar a ordenar una idea.',
-        'Pero la decisión debe seguir siendo de tu hijo.',
-      ],
+      title: 'Sin carrera por likes',
+      subtitle: 'ADA no premia likes, rachas ni popularidad.',
+      body: 'ADA no busca que tu hijo compita por puntos vacíos, rankings, likes, rachas o validación externa. La meta no es que «gane» dentro de la plataforma, sino que aprenda a decidir mejor fuera de ella.',
+      icon: ['M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z'],
     },
     {
-      title: 'ADA adapta el lenguaje a la edad.',
-      paragraphs: [
-        'ADA no debe hablar igual con un niño de primaria que con un adolescente de preparatoria.',
-        'Sus ejemplos, preguntas y nivel de profundidad deben ajustarse a la etapa del alumno.',
-        'La regla es simple:',
-        'ni infantilizarlo,',
-        'ni adelantar temas sin contexto,',
-        'ni tratarlo como adulto cuando todavía necesita otro tipo de acompañamiento.',
-      ],
+      title: 'Preguntas primero',
+      subtitle: 'ADA pregunta antes de dar respuestas.',
+      body: 'ADA no debe resolver por tu hijo lo que necesita aprender a pensar. Antes de dar una respuesta, le hace preguntas como qué pasó, qué sintió y quién puede verse afectado, porque la decisión debe seguir siendo suya.',
+      icon: ['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z', 'M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3', 'M12 17h.01'],
     },
     {
-      title: 'ADA respeta la privacidad necesaria para pensar.',
-      paragraphs: [
-        'Tu hijo necesita un espacio donde pueda ordenar ideas sin sentir que cada palabra será leída como evidencia en su contra.',
-        'Por eso ADA no está pensada como una transcripción completa para papás.',
-        'La familia puede recibir avance, temas trabajados, conclusiones compartibles y señales útiles para acompañar.',
-        'Pero el objetivo no es espiar.',
-        'El objetivo es abrir mejores conversaciones en casa.',
-      ],
+      title: 'Lenguaje por edad',
+      subtitle: 'ADA adapta el lenguaje a la edad.',
+      body: 'ADA no debe hablar igual con un niño de primaria que con un adolescente de preparatoria. Ajusta sus ejemplos, preguntas y profundidad a la etapa del alumno, sin infantilizarlo ni tratarlo como adulto antes de tiempo.',
+      icon: ['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z'],
     },
     {
-      title: 'ADA no confunde privacidad con abandono.',
-      paragraphs: [
-        'Privacidad no significa que los adultos desaparecen.',
-        'Si aparece una señal que requiere cuidado adulto, ADA puede activar una recomendación de acompañamiento.',
-        'Eso no existe para exhibir a tu hijo.',
-        'Existe para que no estés a ciegas cuando algo necesita atención.',
-      ],
+      title: 'Espacio para pensar',
+      subtitle: 'ADA respeta la privacidad necesaria para pensar.',
+      body: 'Tu hijo necesita un espacio para ordenar ideas sin sentir que cada palabra será evidencia en su contra, por eso ADA no es una transcripción para papás. La familia recibe avance, temas trabajados y señales útiles; el objetivo no es espiar, es abrir mejores conversaciones en casa.',
+      icon: ['M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z', 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z'],
     },
     {
-      title: 'ADA puede notificar señales que requieren atención humana.',
-      paragraphs: [
-        'ADA tiene protocolos para señales que no deben manejarse solo dentro de la conversación.',
-        'Si aparece algo que requiere cuidado adulto, ADA puede activar una notificación para que la familia o el equipo correspondiente intervenga.',
-        'Esa notificación no debe funcionar como acusación ni como diagnóstico.',
-        'Tampoco debe exponer de más la conversación privada del alumno.',
-        'Su función es dar una señal clara, prudente y suficiente para que un adulto pueda actuar a tiempo.',
-      ],
+      title: 'Privacidad, no abandono',
+      subtitle: 'ADA no confunde privacidad con abandono.',
+      body: 'Privacidad no significa que los adultos desaparecen. Si aparece una señal que requiere cuidado adulto, ADA puede activar una recomendación de acompañamiento, no para exhibir a tu hijo, sino para que no estés a ciegas.',
+      icon: ['M3 11l9-8 9 8', 'M5 10v10h14V10', 'M10 20v-6h4v6'],
     },
     {
-      title: 'ADA reconoce sus límites.',
-      paragraphs: [
-        'ADA no debe prometer riesgo cero.',
-        'No promete detectar todo.',
-        'No promete evitar todos los problemas digitales.',
-        'No promete eliminar ciberacoso, presión social, desinformación o errores.',
-        'No promete sustituir una conversación familiar ni una intervención profesional.',
-        'Una IA que promete demasiado no da seguridad.',
-        'Da una falsa calma.',
-        'ADA debe ser clara sobre lo que puede hacer y sobre lo que no.',
-      ],
+      title: 'Aviso a la familia',
+      subtitle: 'ADA puede notificar señales que requieren atención humana.',
+      body: 'Si aparece algo que requiere cuidado adulto, ADA puede notificar a la familia o al equipo correspondiente. Esa notificación no es una acusación ni un diagnóstico, y no debe exponer de más la conversación privada: es una señal clara, prudente y suficiente para actuar a tiempo.',
+      icon: ['M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9', 'M10.3 21a1.94 1.94 0 0 0 3.4 0'],
     },
     {
-      title: 'ADA debe actuar con presencia, no vigilancia.',
-      paragraphs: [
-        'La regla más importante es esta:',
-        'ADA no existe para convertirte en policía del celular.',
-        'Existe para ayudar a tu hijo a practicar criterio digital con acompañamiento.',
-        'Menos candado.',
-        'Menos secreto.',
-        'Menos sermón.',
-        'Más pausa.',
-        'Más preguntas.',
-        'Más criterio.',
-        'Presencia, no vigilancia.',
-        'Criterio, no candado.',
-      ],
+      title: 'Sin promesas vacías',
+      subtitle: 'ADA reconoce sus límites.',
+      body: 'ADA no debe prometer riesgo cero: no promete detectar todo ni eliminar el ciberacoso, la presión social, la desinformación o los errores. Una IA que promete demasiado no da seguridad, da una falsa calma.',
+      icon: ['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z', 'M12 16v-4', 'M12 8h.01'],
     },
   ];
 
@@ -262,6 +195,18 @@ export class App implements AfterViewInit, OnDestroy {
     this.anchorTween?.kill();
   }
 
+  protected toggleMenu(): void {
+    this.menuOpen.update((open) => !open);
+  }
+
+  protected closeMenu(): void {
+    this.menuOpen.set(false);
+  }
+
+  protected ruleAccent(index: number): string {
+    return ['violet', 'cyan', 'green', 'blue'][index % 4];
+  }
+
   protected toggleTheme(): void {
     this.theme.toggle();
   }
@@ -272,6 +217,7 @@ export class App implements AfterViewInit, OnDestroy {
 
   protected goHome(event?: Event, anchor = 'hero-title'): void {
     event?.preventDefault();
+    this.closeMenu();
     if (this.currentPage() === 'rules') {
       void this.transitionTo('landing', anchor === 'hero-title' ? '/' : `/#${anchor}`, () => {
         const target = document.querySelector<HTMLElement>(`#${anchor}`);
@@ -288,6 +234,7 @@ export class App implements AfterViewInit, OnDestroy {
 
   protected goRules(event?: Event): void {
     event?.preventDefault();
+    this.closeMenu();
     void this.transitionTo('rules', '/reglas-de-ada');
   }
 

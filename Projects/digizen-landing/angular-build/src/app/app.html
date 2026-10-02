@@ -9,13 +9,14 @@
   </header>
 
   <nav class="dg-nav" [class.is-scrolled]="navScrolled()" [style.--nav-w]="navWidth()"
-    [style.--nav-reveal]="navReveal()" aria-label="Navegación principal de Digizen">
+    [style.--nav-reveal]="navReveal()" [class.is-open]="menuOpen()" (keydown.escape)="closeMenu()"
+    aria-label="Navegación principal de Digizen">
     <a class="dg-logo dg-nav-logo" href="/" (click)="goHome($event)" aria-label="DIGIZEN, volver al inicio">
       <img class="dg-logo-light" src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="DIGIZEN" width="520"
         height="200" />
       <img class="dg-logo-dark" src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520" height="200" />
     </a>
-    <div class="dg-nav-links" aria-label="Temas principales de la landing">
+    <div class="dg-nav-links" id="dg-nav-links" aria-label="Temas principales de la landing">
       <a href="/#ada" (click)="goHome($event, 'ada')"
         [class.active]="currentPage() === 'landing' && activeSection() === 'ada'">ADA</a>
       <a href="/#oferta" (click)="goHome($event, 'oferta')"
@@ -25,6 +26,7 @@
       <a href="/reglas-de-ada" (click)="goRules($event)" [class.active]="currentPage() === 'rules'">Reglas de ADA</a>
       <a href="/#faqs" (click)="goHome($event, 'faqs')"
         [class.active]="currentPage() === 'landing' && activeSection() === 'faqs'">FAQs</a>
+      <a class="dg-nav-links-cta" href="/#precio" (click)="goHome($event, 'precio')">Inscribir a mi hijo</a>
     </div>
     <button class="dg-theme" type="button" (click)="toggleTheme()" [attr.aria-pressed]="theme.theme() === 'dark'"
       [attr.aria-label]="theme.theme() === 'dark' ? 'Activar tema claro' : 'Activar tema oscuro'">
@@ -39,6 +41,16 @@
         <path d="M20.2 15.2A8.4 8.4 0 0 1 8.8 3.8 8.4 8.4 0 1 0 20.2 15.2Z"></path>
       </svg>
       }
+    </button>
+    <button class="dg-menu-toggle" type="button" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()"
+      aria-controls="dg-nav-links" [attr.aria-label]="menuOpen() ? 'Cerrar menú' : 'Abrir menú'">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        @if (menuOpen()) {
+        <path d="M6 6l12 12M18 6 6 18"></path>
+        } @else {
+        <path d="M4 7h16M4 12h16M4 17h16"></path>
+        }
+      </svg>
     </button>
     <a class="dg-btn" href="/#precio" (click)="goHome($event, 'precio')">Inscribir<svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M5 12h14M13 6l6 6-6 6"></path>
@@ -1231,7 +1243,7 @@
     <section class="dg-section dg-section--cyan dg-rules-hero" aria-labelledby="rules-title">
       <div class="dg-rules-hero-copy">
         <p class="dg-kicker">Reglas de ADA</p>
-        <h1 id="rules-title" class="dg-display">Las reglas de ADA</h1>
+        <h1 id="rules-title" class="dg-display"><span class="dg-h2-muted">Las reglas de</span><span class="dg-emphasis--cyan">ADA</span></h1>
         <div class="dg-copy">
           <p>Antes de que tu hijo converse con ADA, queremos que sepas algo con claridad:</p>
           <p><strong>ADA no es una inteligencia artificial abierta hablando sin rumbo con un menor.</strong></p>
@@ -1254,41 +1266,63 @@
 
     <section class="dg-section dg-rules-section" aria-labelledby="rules-list-title">
       <p class="dg-kicker">Seguridad por diseño</p>
-      <h2 id="rules-list-title" class="dg-h2">Cómo conversa ADA con menores</h2>
+      <h2 id="rules-list-title" class="dg-h2"><span class="dg-h2-muted">ADA no improvisa:</span>responde dentro de <span class="dg-emphasis--blue">estas reglas</span></h2>
       <div class="dg-rules-grid">
-        @for (rule of adaRules; track rule.title; let i = $index) {
-        <article class="dg-card dg-rule-card">
-          <div class="dg-rule-index">{{ ruleNumber(i) }}</div>
-          <div class="dg-rule-copy">
-            <h3>{{ rule.title }}</h3>
-            @for (paragraph of rule.paragraphs; track paragraph) {
-            <p>{{ paragraph }}</p>
-            }
-            @if (rule.bullets) {
-            <ul>
-              @for (item of rule.bullets; track item) {
-              <li>{{ item }}</li>
-              }
-            </ul>
-            }
-            @if (rule.after) {
-            @for (paragraph of rule.after; track paragraph) {
-            <p>{{ paragraph }}</p>
-            }
-            }
+        @for (rule of adaRules; track rule.title; let i = $index; let first = $first) {
+        <article class="dg-card dg-rule-card" [class.dg-rule-card--wide]="first"
+          [style.--accent]="first ? 'var(--dg-blue)' : 'var(--dg-' + ruleAccent(i - 1) + ')'">
+          <div class="dg-rule-head">
+            <div class="dg-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                @for (d of rule.icon; track d) {
+                <path [attr.d]="d"></path>
+                }
+              </svg>
+            </div>
+            <div class="dg-rule-heading">
+              <span class="dg-rule-num">{{ first ? 'La regla más importante' : 'Regla ' + ruleNumber(i - 1) }}</span>
+              <h3>{{ rule.title }}</h3>
+            </div>
           </div>
+          <p class="dg-rule-subtitle">{{ rule.subtitle }}</p>
+          <p class="dg-rule-body">{{ rule.body }}</p>
+          @if (first) {
+          <figure class="dg-rule-figure">
+            <picture>
+              <source media="(max-width: 1023px)"
+                srcset="assets/digizen/generated/scenes/dg-scene-a09-rules-presence-mobile.webp" />
+              <img src="assets/digizen/generated/scenes/dg-scene-a09-rules-presence.webp"
+                alt="ADA y un adolescente de pie en una plataforma virtual, frente a dos caminos de tarjetas de redes sociales: él se lleva la mano a la barbilla para pensar y ADA, a su lado, abre las manos para acompañarlo sin elegir por él"
+                width="2048" height="1366" loading="lazy" />
+            </picture>
+          </figure>
+          }
         </article>
         }
       </div>
     </section>
 
     <section class="dg-section dg-rules-summary" aria-labelledby="rules-summary-title">
-      <p class="dg-kicker">En una frase</p>
-      <h2 id="rules-summary-title" class="dg-h3">
-        ADA sigue reglas para conversar con propósito educativo, respetar la privacidad de tu hijo,
-        evitar vínculos peligrosos, reconocer señales que requieren ayuda adulta y mantener siempre
-        el criterio humano al centro.
-      </h2>
+      <div class="dg-rules-summary-copy">
+      <p class="dg-kicker">En resumen</p>
+      <h2 id="rules-summary-title" class="dg-h2"><span class="dg-h2-muted">ADA sigue</span><span class="dg-emphasis--green">reglas.</span></h2>
+      <p class="dg-lead">
+        Para conversar con propósito educativo y mantener siempre el criterio humano al centro.
+      </p>
+      <ul class="dg-rules-checks">
+        <li>
+          <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
+          Respetar la privacidad de tu hijo
+        </li>
+        <li>
+          <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
+          Evitar vínculos peligrosos
+        </li>
+        <li>
+          <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
+          Reconocer señales que requieren ayuda adulta
+        </li>
+      </ul>
       <div class="dg-actions">
         <a class="dg-btn" href="/#precio" (click)="goHome($event, 'precio')">
           Inscribir a mi hijo
@@ -1300,6 +1334,10 @@
           Volver a Digizen
         </a>
       </div>
+      </div>
+      <figure class="dg-rules-summary-figure dg-image-slot" aria-label="Espacio para imagen de cierre">
+        <span>Imagen · 4:3</span>
+      </figure>
     </section>
   </main>
   }
