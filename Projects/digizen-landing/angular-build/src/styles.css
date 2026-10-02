@@ -2758,13 +2758,45 @@ details[open] .dg-chevron {
 }
 .dg-rules-summary {
   display: grid;
-  gap: 28px;
+  grid-template-areas:
+    "copy"
+    "figure"
+    "details"
+    "actions";
+  gap: 24px;
   align-items: center;
 }
+.dg-rules-summary-figure {
+  grid-area: figure;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+}
+.dg-rules-summary-figure picture,
+.dg-rules-summary-figure img {
+  display: block;
+}
+.dg-rules-summary-figure img {
+  width: min(100%, 340px);
+  height: auto;
+}
 .dg-rules-summary-copy {
+  grid-area: copy;
   display: grid;
   gap: 24px;
   justify-items: start;
+  align-content: center;
+}
+.dg-rules-summary-details {
+  grid-area: details;
+  display: grid;
+  gap: 24px;
+  justify-items: start;
+  align-content: center;
+}
+.dg-rules-summary-actions {
+  grid-area: actions;
 }
 .dg-rules-summary-copy .dg-kicker,
 .dg-rules-summary-copy .dg-h2,
@@ -2772,7 +2804,7 @@ details[open] .dg-chevron {
   margin: 0;
 }
 .dg-rules-summary-copy .dg-lead {
-  max-width: 34ch;
+  max-width: 46ch;
 }
 .dg-rules-checks {
   margin: 0;
@@ -2780,6 +2812,9 @@ details[open] .dg-chevron {
   display: grid;
   gap: 12px;
   list-style: none;
+}
+.dg-rules-checks--full {
+  display: none;
 }
 .dg-rules-checks li {
   display: flex;
@@ -2811,8 +2846,69 @@ details[open] .dg-chevron {
 }
 @media (min-width: 1024px) {
   .dg-rules-summary {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
-    gap: clamp(32px, 5vw, 72px);
+    grid-template-areas:
+      "figure copy details"
+      "figure actions details";
+    grid-template-columns: minmax(250px, 0.66fr) minmax(320px, 0.9fr) minmax(300px, 0.78fr);
+    column-gap: clamp(18px, 2.6vw, 42px);
+    min-height: 540px;
+  }
+  .dg-rules-summary-figure {
+    align-self: end;
+    justify-self: end;
+    margin: 0 clamp(-28px, -2vw, -12px) -28px 0;
+  }
+  .dg-rules-summary-figure img {
+    width: min(116%, 410px);
+  }
+  .dg-rules-summary-copy .dg-lead {
+    max-width: 42ch;
+  }
+  .dg-rules-summary-actions {
+    margin-top: 8px;
+  }
+  .dg-rules-checks {
+    gap: 9px;
+  }
+  .dg-rules-checks li {
+    gap: 10px;
+    font-size: 14px;
+  }
+  .dg-rules-check {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+  }
+  .dg-rules-check svg {
+    width: 14px;
+    height: 14px;
+  }
+  .dg-rules-checks--compact {
+    display: none;
+  }
+  .dg-rules-checks--full {
+    display: grid;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dg-rules-summary {
+    grid-template-areas:
+      "copy figure"
+      "details figure"
+      "actions figure";
+    grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.82fr);
+    column-gap: 14px;
+    row-gap: 22px;
+    align-items: end;
+  }
+  .dg-rules-summary-figure {
+    align-self: end;
+    justify-self: start;
+    margin-left: -34px;
+    margin-bottom: -30px;
+  }
+  .dg-rules-summary-figure img {
+    width: min(118%, 430px);
   }
 }
 .dg-rules-summary .dg-h3 {
@@ -3138,6 +3234,18 @@ details[open] .dg-chevron {
   }
 }
 @media (max-width: 767px) {
+  .dg-rules-summary {
+    gap: 32px;
+  }
+  .dg-rules-summary-figure {
+    margin: 8px 0 6px;
+  }
+  .dg-rules-summary-actions,
+  .dg-rules-summary-actions .dg-btn,
+  .dg-rules-summary-details,
+  .dg-rules-summary-details .dg-btn {
+    width: 100%;
+  }
   .dg-main {
     padding: 8px 10px 86px;
     gap: 28px;
