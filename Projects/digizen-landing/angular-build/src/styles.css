@@ -2629,9 +2629,62 @@ details[open] .dg-chevron {
   gap: 22px;
 }
 .dg-rule-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 22px 22px 26px;
+  scroll-margin-top: 108px;
+  transform-origin: center;
+  transition:
+    border-color 900ms var(--dg-ease),
+    box-shadow 1200ms var(--dg-ease);
+}
+.dg-rule-card::after {
+  display: block;
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 2px solid color-mix(in srgb, var(--accent, var(--dg-blue)) 82%, #ffffff);
+  border-radius: inherit;
+  background: transparent;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent, var(--dg-blue)) 8%, transparent),
+    inset 0 0 12px color-mix(in srgb, var(--accent, var(--dg-blue)) 8%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1200ms var(--dg-ease);
+}
+.dg-rule-card--targeted {
+  border-color: color-mix(in srgb, var(--accent, var(--dg-blue)) 78%, var(--dg-line));
+  box-shadow:
+    var(--dg-shadow-card),
+    0 10px 24px color-mix(in srgb, var(--accent, var(--dg-blue)) 8%, transparent);
+}
+.dg-rule-card--targeted::after {
+  opacity: 1;
+  animation: dg-rule-target-strobe 1900ms ease-in-out 1;
+  animation-delay: 160ms;
+}
+@keyframes dg-rule-target-strobe {
+  0%,
+  32%,
+  68%,
+  100% {
+    border-width: 2px;
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--accent, var(--dg-blue)) 8%, transparent),
+      inset 0 0 12px color-mix(in srgb, var(--accent, var(--dg-blue)) 8%, transparent);
+    opacity: 1;
+  }
+  16%,
+  50% {
+    border-width: 2px;
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--accent, var(--dg-blue)) 4%, transparent),
+      inset 0 0 8px color-mix(in srgb, var(--accent, var(--dg-blue)) 4%, transparent);
+    opacity: 0.34;
+  }
 }
 .dg-rule-card--wide {
   grid-column: 1 / -1;
@@ -2820,6 +2873,9 @@ details[open] .dg-chevron {
   display: none;
 }
 .dg-rules-checks li {
+  margin: 0;
+}
+.dg-rules-toc-link {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -2827,6 +2883,31 @@ details[open] .dg-chevron {
   font-size: 15px;
   font-weight: 760;
   line-height: 1.35;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+.dg-rules-toc-link::after {
+  content: "↓";
+  margin-left: auto;
+  color: var(--dg-blue);
+  font-size: 0.9em;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0.72;
+  transform: translateY(-1px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+.dg-rules-toc-link:hover {
+  color: var(--dg-blue);
+  transform: translateX(2px);
+}
+.dg-rules-toc-link:hover::after {
+  opacity: 1;
+  transform: translateY(2px);
 }
 .dg-rules-check {
   width: 28px;
@@ -2884,7 +2965,7 @@ details[open] .dg-chevron {
   .dg-rules-checks {
     gap: 9px;
   }
-  .dg-rules-checks li {
+  .dg-rules-toc-link {
     gap: 10px;
     font-size: 14px;
   }

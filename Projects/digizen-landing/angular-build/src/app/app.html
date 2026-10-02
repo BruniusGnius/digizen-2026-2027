@@ -1271,72 +1271,24 @@
       </figure>
       <div class="dg-rules-summary-details">
         <ul class="dg-rules-checks dg-rules-checks--compact">
+          @for (item of compactRuleTocItems; track item.anchor) {
           <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Respetar la privacidad de tu hijo
+            <a class="dg-rules-toc-link" [href]="'#' + item.anchor">
+              <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
+              {{ item.label }}
+            </a>
           </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Evitar vínculos peligrosos
-          </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Reconocer señales que requieren ayuda adulta
-          </li>
+          }
         </ul>
         <ul class="dg-rules-checks dg-rules-checks--full">
+          @for (item of fullRuleTocItems; track item.anchor) {
           <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Presencia, no vigilancia
+            <a class="dg-rules-toc-link" [href]="'#' + item.anchor">
+              <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
+              {{ item.label }}
+            </a>
           </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Propósito educativo
-          </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Sin vínculos secretos
-          </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Adultos presentes
-          </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Sin diagnósticos
-          </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Cuidado ante el riesgo
-          </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Sin carrera por likes
-          </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Preguntas primero
-          </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Lenguaje por edad
-          </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Espacio para pensar
-          </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Privacidad con cuidado
-          </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Aviso a la familia
-          </li>
-          <li>
-            <span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span>
-            Límites claros
-          </li>
+          }
         </ul>
       </div>
       <div class="dg-actions dg-rules-summary-actions">
@@ -1357,7 +1309,7 @@
       <h2 id="rules-list-title" class="dg-h2"><span class="dg-h2-muted">ADA no improvisa:</span>responde dentro de <span class="dg-emphasis--blue">estas reglas</span></h2>
       <div class="dg-rules-grid">
         @for (rule of adaRules; track rule.title; let i = $index; let first = $first) {
-        <article class="dg-card dg-rule-card" [class.dg-rule-card--wide]="first"
+        <article class="dg-card dg-rule-card" [attr.id]="ruleAnchor(i)" [class.dg-rule-card--wide]="first"
           [style.--accent]="first ? 'var(--dg-blue)' : 'var(--dg-' + ruleAccent(i - 1) + ')'">
           <div class="dg-rule-head">
             <div class="dg-icon">

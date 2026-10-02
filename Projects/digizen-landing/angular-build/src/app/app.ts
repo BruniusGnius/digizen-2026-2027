@@ -30,6 +30,10 @@ type AdaRule = {
   body: string;
   icon: string[];
 };
+type RuleTocItem = {
+  label: string;
+  anchor: string;
+};
 
 @Component({
   selector: 'app-root',
@@ -152,6 +156,41 @@ export class App implements AfterViewInit, OnDestroy {
       icon: ['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z', 'M12 16v-4', 'M12 8h.01'],
     },
   ];
+  protected readonly ruleAnchors = [
+    'regla-presencia-no-vigilancia',
+    'regla-proposito-educativo',
+    'regla-sin-vinculos-secretos',
+    'regla-adultos-presentes',
+    'regla-sin-diagnosticos',
+    'regla-cuidado-ante-el-riesgo',
+    'regla-sin-carrera-por-likes',
+    'regla-preguntas-primero',
+    'regla-lenguaje-por-edad',
+    'regla-espacio-para-pensar',
+    'regla-privacidad-con-cuidado',
+    'regla-aviso-a-la-familia',
+    'regla-limites-claros',
+  ];
+  protected readonly compactRuleTocItems: RuleTocItem[] = [
+    { label: 'Respetar la privacidad de tu hijo', anchor: 'regla-espacio-para-pensar' },
+    { label: 'Evitar vínculos peligrosos', anchor: 'regla-sin-vinculos-secretos' },
+    { label: 'Reconocer señales que requieren ayuda adulta', anchor: 'regla-aviso-a-la-familia' },
+  ];
+  protected readonly fullRuleTocItems: RuleTocItem[] = [
+    { label: 'Presencia, no vigilancia', anchor: 'regla-presencia-no-vigilancia' },
+    { label: 'Propósito educativo', anchor: 'regla-proposito-educativo' },
+    { label: 'Sin vínculos secretos', anchor: 'regla-sin-vinculos-secretos' },
+    { label: 'Adultos presentes', anchor: 'regla-adultos-presentes' },
+    { label: 'Sin diagnósticos', anchor: 'regla-sin-diagnosticos' },
+    { label: 'Cuidado ante el riesgo', anchor: 'regla-cuidado-ante-el-riesgo' },
+    { label: 'Sin carrera por likes', anchor: 'regla-sin-carrera-por-likes' },
+    { label: 'Preguntas primero', anchor: 'regla-preguntas-primero' },
+    { label: 'Lenguaje por edad', anchor: 'regla-lenguaje-por-edad' },
+    { label: 'Espacio para pensar', anchor: 'regla-espacio-para-pensar' },
+    { label: 'Privacidad con cuidado', anchor: 'regla-privacidad-con-cuidado' },
+    { label: 'Aviso a la familia', anchor: 'regla-aviso-a-la-familia' },
+    { label: 'Límites claros', anchor: 'regla-limites-claros' },
+  ];
 
   private frame = 0;
   private clockVideoFrame = 0;
@@ -162,6 +201,7 @@ export class App implements AfterViewInit, OnDestroy {
   private adaImages: HTMLImageElement[] = [];
   private adaWarmupObserver?: IntersectionObserver;
   private anchorTween?: gsap.core.Tween;
+  private ruleHighlightTween?: gsap.core.Tween | gsap.core.Timeline;
   private adaWaveTrigger?: ScrollTrigger;
 
   ngAfterViewInit(): void {
@@ -193,6 +233,7 @@ export class App implements AfterViewInit, OnDestroy {
     this.chatTrigger?.kill();
     this.adaWaveTrigger?.kill();
     this.anchorTween?.kill();
+    this.ruleHighlightTween?.kill();
   }
 
   protected toggleMenu(): void {
@@ -213,6 +254,10 @@ export class App implements AfterViewInit, OnDestroy {
 
   protected ruleNumber(index: number): string {
     return String(index + 1).padStart(2, '0');
+  }
+
+  protected ruleAnchor(index: number): string {
+    return this.ruleAnchors[index] ?? `regla-${index + 1}`;
   }
 
   protected goHome(event?: Event, anchor = 'hero-title'): void {
@@ -474,7 +519,7 @@ export class App implements AfterViewInit, OnDestroy {
       if (!target) return;
 
       event.preventDefault();
-      this.scrollToElement(target, this.anchorOffsetFor(target));
+      this.scrollToElement(target, this.anchorOffsetFor(target), () => this.highlightRuleTarget(target));
       history.pushState(null, '', id);
     });
   }
@@ -486,12 +531,15 @@ export class App implements AfterViewInit, OnDestroy {
     return 108;
   }
 
-  private scrollToElement(target: HTMLElement, offset: number): void {
+  private scrollToElement(target: HTMLElement, offset: number, onComplete?: () => void): void {
     const soft = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const to = Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset);
     const from = window.scrollY;
     const distance = Math.abs(to - from);
-    if (distance < 2) return;
+    if (distance < 2) {
+      onComplete?.();
+      return;
+    }
 
     // Duracion proporcional a la distancia pero con tope: sin el, saltar de una punta
     // a otra de la landing se vuelve un viaje largo que atraviesa las animaciones.
@@ -509,7 +557,33 @@ export class App implements AfterViewInit, OnDestroy {
       // que es lo que se siente como aterrizaje en vez de como frenazo.
       ease: 'power3.out',
       onUpdate: () => window.scrollTo(0, pos.y),
+      onComplete,
     });
+  }
+
+  private highlightRuleTarget(target: HTMLElement): void {
+    if (!target.classList.contains('dg-rule-card')) return;
+
+    const soft = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.ruleHighlightTween?.kill();
+    target.classList.remove('dg-rule-card--targeted');
+    void target.offsetWidth;
+    target.classList.add('dg-rule-card--targeted');
+
+    if (soft) {
+      this.ruleHighlightTween = gsap.delayedCall(3.8, () => {
+        target.classList.remove('dg-rule-card--targeted');
+      });
+      return;
+    }
+
+    this.ruleHighlightTween = gsap
+      .timeline({
+        onComplete: () => target.classList.remove('dg-rule-card--targeted'),
+      })
+      .fromTo(target, { scale: 0.995 }, { scale: 1.024, duration: 0.24, ease: 'power2.out' })
+      .to(target, { scale: 1, duration: 0.46, ease: 'power3.out' })
+      .to({}, { duration: 2.75 });
   }
 
   private setupChatSequence(): void {
