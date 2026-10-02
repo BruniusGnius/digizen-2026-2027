@@ -31,6 +31,7 @@ import build as WF           # find_vertical, source_segments (auditoría del wi
 TRAMOS = [(1, 'Lo que casi todos creemos'), (2, 'Por qué no te escucha'), (3, 'Lo que sí funciona'), (4, 'Qué es ADA'),
           (5, 'Tu papel'), (6, 'Precio e inscripción'), (7, 'Antes de decidir')]
 MENU_FAQ = 'Preguntas frecuentes'
+MENU_RULES = 'Reglas de ADA'   # entrada del menú a la página de reglas (pedido del usuario, 2026-10-02; el mismo nombre que usa la A)
 PIN_TRAMO = {'P-01': 1, 'P-02b': 1, 'P-03a': 2, 'P-03b': 2, 'P-04': 2, 'P-05a': 3, 'P-05b': 3, 'P-06': 3,
              'P-07a': 4, 'P-07c': 4, 'P-08a': 4, 'P-08b': 4, 'P-09': 4, 'P-10a': 5, 'P-10b': 5,
              'P-11a': 6, 'P-11b': 6, 'P-12a': 7, 'P-12b': 7, 'FAQ': 7, 'FOOT': 7}
@@ -200,6 +201,8 @@ def menu_html(pins):
     present = {PIN_TRAMO.get(p['id'], 0) for p in pins}
     items = '\n'.join(f"    <li><button type='button' class='menu-item' data-tramo='{n}'>{t}</button></li>" for n, t in TRAMOS if n in present)
     if any(p['id'] == 'FAQ' for p in pins):
+        # la página de reglas abre en una pestaña nueva, igual que el botón «Conocer las reglas de ADA ↗»: la landing no se mueve
+        items += f"\n    <li><a class='menu-item faq' href='{RULES_FILE}' target='_blank' rel='opener'>{MENU_RULES}</a></li>"
         items += f"\n    <li><button type='button' class='menu-item faq' data-menu-goto='FAQ'>{MENU_FAQ}</button></li>"
     cta = re.sub(r"<a( class='btn[^']*'[^>]*)>(.*?)</a>", button, C.CTA_INNER, flags=re.S)
     cta = cta.replace("data-action='checkout'", "data-action='pricing'")  # en el menú, «Inscribir a mi hijo» lleva a las tarjetas de precio (pedido del usuario)
@@ -562,6 +565,7 @@ def rules_page(pins, imgs):
         n = PIN_TRAMO.get(p['id'], 0)
         if n and n not in first_pin: first_pin[n] = p['id']
     items = '\n'.join(f"    <li><a class='menu-item' href='./#{first_pin[n]}'>{t}</a></li>" for n, t in TRAMOS if n in first_pin)
+    items += f"\n    <li><a class='menu-item faq' href='#reglas' data-rules='top' aria-current='page'>{MENU_RULES}</a></li>"   # la página actual
     items += f"\n    <li><a class='menu-item faq' href='./#FAQ'>{MENU_FAQ}</a></li>"
     cta = re.sub(r"<a( class='btn[^']*'[^>]*)>(.*?)</a>", button, C.CTA_INNER, flags=re.S).replace("data-action='checkout'", "data-action='pricing'")
     menu = ("<button class='menu-btn on-light' type='button' aria-expanded='false' aria-controls='menu' aria-label='Abrir menú'>"
@@ -675,7 +679,7 @@ def main():
     print('  botones de las tarjetas de precio (tomados de la propuesta A): Pagar de contado · Elegir pagos diferidos')
     print('  09.1: «Conversar con ADA primero» (texto del CTA, repetido bajo «Habla tú con ADA primero.» para abrir el formulario)')
     print('  menú de recorrido y menú de hamburguesa: ' + ' · '.join(t for _, t in TRAMOS))
-    print(f'  menú de hamburguesa: «{MENU_FAQ}» y los dos CTA; nombres accesibles: ' + ' · '.join(MENU_A11Y))
+    print(f'  menú de hamburguesa: «{MENU_RULES}», «{MENU_FAQ}» y los dos CTA; nombres accesibles: ' + ' · '.join(MENU_A11Y))
     print('  formulario (tomado de la propuesta A): ' + ' · '.join(DIALOG_TEXTS))
     print(f'  página de reglas: título de la pestaña «{RULES_TITLE}»; el resto de su copy es literal de la landing A (00-context/REGLAS-DE-ADA-fuente-A.html)')
 

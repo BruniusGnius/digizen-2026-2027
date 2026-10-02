@@ -111,3 +111,10 @@ Además, adición de copy aprobada por el usuario: botón secundario **«Regresa
 - **Verificado:** 1380 × 865, 1280 × 720, 1024 × 698, 768 × 954 y 390 × 844: ninguna estación mide más que la pantalla; la última estación es el cierre con su pie. Sin errores de consola. Auditoría del copy: sin cambios (el pie no cuenta como copy de esta página).
 - **Sigue sin publicarse en GitHub Pages.**
 
+## «Reglas de ADA» en el menú (pedido del usuario, 2026-10-02)
+
+- El menú de hamburguesa lleva una entrada nueva, **«Reglas de ADA»** (el mismo nombre que usa la A), junto a «Preguntas frecuentes» y con su mismo estilo, para llegar a la página sin tener que pasar por la estación 08.5.
+- **En la landing** abre la página de reglas en una pestaña nueva, igual que el botón «Conocer las reglas de ADA ↗»; el menú se cierra y la landing no se mueve.
+- **En la página de reglas** aparece marcada como la página actual y lleva al inicio de la página.
+- Verificado en el navegador en las dos páginas. Sigue sin publicarse.
+

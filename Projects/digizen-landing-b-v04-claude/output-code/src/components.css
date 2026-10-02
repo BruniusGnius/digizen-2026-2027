@@ -369,7 +369,8 @@
                font: 700 var(--t-sub)/1.2 var(--font-body); letter-spacing: -.01em; text-align: left; cursor: pointer;
                -webkit-tap-highlight-color: transparent; }
   .menu-item::before { content: ""; flex: none; width: 9px; height: 9px; border-radius: var(--radius-round); border: 1.5px solid var(--color-line-strong); }
-  .menu-item[aria-current="step"]::before { background: var(--color-azul-900); border-color: var(--color-azul-900); }
+  .menu-item[aria-current="step"]::before, .menu-item[aria-current="page"]::before { background: var(--color-azul-900); border-color: var(--color-azul-900); }
+  a.menu-item { text-decoration: none; }
   .menu-item.faq { font-weight: 600; font-size: var(--t-body); }
   .menu-item.faq::before { border-radius: 2px; }
   .menu-item:hover, .menu-item:focus-visible { color: var(--color-azul-900); }
@@ -528,7 +529,6 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
 @media (min-width: 600px) { .rg-page .stop { padding-top: 84px; padding-bottom: 76px; } }
 .rg-page .stop.k-deck { align-items: center; align-items: safe center; }   /* centrado; si no cabe, empieza arriba para no cortarse */
 .rg-first .rg-rule-fig img { max-height: 30svh; object-fit: cover; object-position: center; }   /* llena su caja, centrada */
-.rg-page a.menu-item { text-decoration: none; }
 /* entrada */
 .rg-intro-grid { display: grid; gap: 24px; }
 .rg-head { grid-area: head; } .rg-lead { grid-area: lead; } .rg-fig { grid-area: fig; } .rg-list { grid-area: list; } .rg-acts { grid-area: acts; }

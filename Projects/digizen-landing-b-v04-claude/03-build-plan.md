@@ -156,6 +156,7 @@ Parto de la fila de acción aprobada y la llevo a color:
 | 5 | 10 | Tu papel |
 | 6 | 11 | Precio e inscripción |
 | 7 | 12 | Antes de decidir |
+| — | página aparte | Reglas de ADA (agregada el 2026-10-02, pedido del usuario; abre `reglas-de-ada.html` en una pestaña nueva) |
 | — | FAQ | Preguntas frecuentes (antes «Por si te quedó una duda.») |
 
 ### 4.6 Formulario y datos (como en la propuesta A)

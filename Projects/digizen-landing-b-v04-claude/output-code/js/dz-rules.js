@@ -36,6 +36,11 @@
       t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true });
       return;
     }
+    if (e.target.closest('[data-rules=top]')) {   /* «Reglas de ADA» en el menú de esta página: al inicio */
+      e.preventDefault();
+      if (window.DZ && window.DZ.scrollToY) window.DZ.scrollToY(0); else window.scrollTo(0, 0);
+      return;
+    }
     var back = e.target.closest('[data-rules=back]');
     if (back) {   /* «Volver a Digizen» */
       var o = landing(), href = back.getAttribute('href');
