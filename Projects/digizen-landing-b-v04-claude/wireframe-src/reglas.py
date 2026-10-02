@@ -95,6 +95,8 @@ CLOSING = {
     'support': 'Con reglas claras, propósito educativo y garantía 30 días desde el primer chat.',
     'image': {'alt': '', 'file': ('dg-scene-cta-father-son-team-1-1.webp', 956, 956)},   # decorativa en A
     'buttons': [('Inscribir a mi hijo · EMPIEZA HOY', 'pricing'), ('Tengo dudas · CONVERSAR CON ADA', 'ada')],
+    # ADICIÓN aprobada por el usuario (2026-10-02; no está en la fuente de la A): botón secundario al final de la página
+    'added_button': ('Regresar a Digizen', 'back'),
 }
 
 # ---------------------------------------------------------------- notas internas (no son UI)

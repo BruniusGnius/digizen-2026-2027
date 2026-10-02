@@ -488,7 +488,7 @@ def rules_page(pins, imgs):
     back, price = f'./#{RULES_BACK}', './#precio'
     paras = '\n'.join(f"      <p class='in w5 t-body'>{rich(p)}</p>" for p in I['paras'])
     short = '\n'.join(f"      <li class='in w6 t-body'>{e(t)}</li>" for t in I['checks_short'])
-    full = '\n'.join(f"      <li class='in w6 t-body'><a href='#regla-{i}'>{e(t)}</a></li>" for i, t in enumerate(I['checks_full']))
+    full = '\n'.join(f"      <li class='in w7 t-small'><a href='#regla-{i}'>{e(t)}</a></li>" for i, t in enumerate(I['checks_full']))
     cards = []
     for i, (label, title, sub, body) in enumerate(RG.RULES):
         fig = ''
@@ -549,12 +549,12 @@ def rules_page(pins, imgs):
 <main id='reglas' class='rg'>
 <section class='rg-sec rg-intro' aria-labelledby='rg-title'>
   <div class='rg-wrap rg-intro-grid'>
-    <div class='rg-copy'>
+    <div class='rg-head'>
       <p class='in w7 t-small'>{e(I['kicker'])}</p>
       <h1 id='rg-title' class='pf w8 t-semi bw'>{e(I['title'][0])} <span class='hl r-ia'>{e(I['title'][1])}</span></h1>
-      <div class='rg-lead'>
+    </div>
+    <div class='rg-lead'>
 {paras}
-      </div>
     </div>
     <figure class='rg-fig'>{pic(I['image']['desktop'], I['image']['mobile'], I['image']['alt'], '(min-width: 1180px) 270px, 24vw', '220px', eager=True)}</figure>
     <div class='rg-list'>
@@ -570,6 +570,7 @@ def rules_page(pins, imgs):
       <a class='btn sec r-ins' href='{back}' data-rules='back'>{e(I['buttons'][1][0])}{arr('←', 'w')}</a>
     </div>
   </div>
+  {C.CUE}
 </section>
 <section class='rg-sec rg-rules' aria-labelledby='rg-list-title'>
   <div class='rg-wrap'>
@@ -590,6 +591,7 @@ def rules_page(pins, imgs):
       <div class='cta'>
         <a class='btn' href='{price}'>{e(CL['buttons'][0][0])}{arr('→', 'e')}</a>
         <button type='button' class='btn alt' data-action='ada' aria-haspopup='dialog'>{e(CL['buttons'][1][0])}{arr('→', 'e')}</button>
+        <a class='btn sec r-ins' href='{back}' data-rules='back' data-add='1'>{e(CL['added_button'][0])}{arr('←', 'w')}</a>
       </div>
     </div>
   </div>
@@ -610,6 +612,8 @@ def rules_audit(doc):
     glue = lambda ws: re.sub(r'improvisa:\s*responde', 'improvisa: responde', ' '.join(ws)).split()   # en la fuente es un salto de línea visual
     src = re.sub(r'<!--.*?-->', '', open(RULES_SRC, encoding='utf-8').read(), flags=re.S)
     main = doc[doc.find("<main id='reglas'"):doc.find('</main>')]
+    added = [re.sub(r'<[^>]+>', '', t).strip() for t in re.findall(r"<a[^>]*\bdata-add='1'[^>]*>(.*?)</a>", main, flags=re.S)]
+    main = re.sub(r"<a[^>]*\bdata-add='1'[^>]*>.*?</a>", '', main, flags=re.S)   # adiciones aprobadas: no están en la fuente
     sw, pw = glue(words(src)), glue(words(main))
     salt = sorted({html.unescape(a) for a in re.findall(r'alt="([^"]*)"', src) if a})
     palt = sorted({html.unescape(a) for a in re.findall(r"alt='([^']*)'", main) if a})
@@ -621,6 +625,7 @@ def rules_audit(doc):
             if a != b: print(f'     primera diferencia en la palabra {i}: «{" ".join(sw[max(0, i - 4):i + 5])}» ≠ «{" ".join(pw[max(0, i - 4):i + 5])}»'); break
     print(f'  textos alternativos: {len(salt)} en la fuente · {len(palt)} en la página · {"IGUALES" if salt == palt else "DIFIEREN"}')
     print(f'  tarjetas: {len(RG.RULES)} · título de la pestaña (aprobado): «{RULES_TITLE}»')
+    print('  adiciones de copy aprobadas por el usuario (no están en la fuente): ' + (' · '.join(f'«{a}»' for a in added) or 'ninguna'))
     if not ok: sys.exit(1)
 
 def main():

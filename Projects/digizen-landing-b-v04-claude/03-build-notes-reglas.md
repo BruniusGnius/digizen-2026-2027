@@ -69,3 +69,23 @@ Librerías: ninguna nueva. La página de reglas no carga GSAP (no hay recorrido)
 - Probar en Chrome y Safari, en computadora y en teléfono, que «Volver a Digizen» cierra la pestaña y deja la landing en su estación.
 - Destino del pago y envío del formulario de ADA: siguen pendientes, igual que en la landing.
 - Para producción: canonical e indexación de esta página junto con la landing (`PREVIEW = False`).
+
+## Refinamiento de la entrada (pedido del usuario, 2026-10-02)
+
+El usuario comparó la entrada con la de la A: la de la A se veía mejor distribuida. Se reconfiguró en desktop con las piezas de la B:
+
+- **Imagen de ADA más grande** (350 px de ancho en vez de 270), a la izquierda, centrada con el bloque.
+- **Título en una línea**, con la barra corta del sistema (la de las tarjetas, en cian) y el antetítulo arriba. Ocupa el ancho del texto y de la lista.
+- **Texto de entrada en el paso «lead»** de la landing (24 px) cuando la pantalla tiene 780 px de alto o más; en pantallas bajas se queda en cuerpo para que todo quepa.
+- **Lista de 13 puntos compacta** a la derecha: pequeña, en negritas, con la palomita sobre cian sólido y una flecha ↓ que indica que cada punto lleva a su tarjeta.
+- **Botones compactos en fila**, al ancho de su texto, en vez de dos bloques apilados a todo el ancho.
+- **Flecha de scroll** de la landing al pie de la entrada (pedido del usuario).
+- De 860 a 1099 px: imagen a la izquierda, título, texto y botones a la derecha, y la lista debajo en 3 columnas.
+- Teléfono y tablet: sin cambios de orden.
+
+Además, adición de copy aprobada por el usuario: botón secundario **«Regresar a Digizen»** al final de la página, bajo los dos botones del cierre; se comporta igual que «Volver a Digizen». La auditoría lo lista como adición (no está en la fuente de la A).
+
+**No se publicó en GitHub Pages:** el usuario pidió ver y refinar antes de publicar. La versión que está en línea es la anterior a este refinamiento.
+
+**Pendiente de decisión:** el usuario quiere que la página tenga estaciones de scroll con GSAP, como la landing. Eso cambia el modo de lectura aprobado en el wireframe (scroll libre) y pide rearmar la página por estaciones; se propone el mapa de estaciones antes de construirlo.
+
