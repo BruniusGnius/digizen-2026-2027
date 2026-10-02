@@ -2,7 +2,7 @@
 project: digizen-landing-b-v04-claude
 pieza: página «Las reglas de ADA»
 fase: 2 - wireframe
-estado: propuesto
+estado: aprobado (2026-10-02)
 fecha: 2026-10-02
 fuente: 00-context/REGLAS-DE-ADA-fuente-A.html (el `<main>` de /reglas-de-ada de la landing A, versión final, pegado por el usuario)
 artefacto: 02-wireframe-reglas.html (grises, copy literal; se genera con `python3 -B wireframe-src/build_reglas.py`)
@@ -55,7 +55,7 @@ Medidas del wireframe con el copy real: en desktop de 1280 × 800 la entrada mid
 | Componente | Respuesta al tocar | Interrumpible | De dónde entra y por dónde sale |
 |---|---|---|---|
 | Botones | Inmediata: se hunden, como todos los de la landing. | — | — |
-| «Volver a Digizen» | Inmediata. | — | Sale por donde se entró: regresa a la estación 08.5, donde está «Conocer las reglas de ADA», no al inicio. |
+| «Volver a Digizen» | Inmediata. | — | Sale por donde se entró: cierra la pestaña de reglas y deja al lector en la landing, en la estación 08.5 donde estaba. Si el navegador no permite cerrarla, lleva a la landing en esa estación. |
 | «Inscribir a mi hijo» y «… · EMPIEZA HOY» | Inmediata. | — | Llevan a las tarjetas de precio de la landing (11.4 en desktop, 11.5m en teléfono), como el botón del menú. |
 | «Tengo dudas · CONVERSAR CON ADA» | Inmediata. | Sí: el formulario se puede cerrar a medio camino. | Nace del botón y regresa al botón (el mismo formulario de la landing). |
 | Puntos de la lista completa (desktop) | Inmediata. | Sí: el desplazamiento se interrumpe si el lector hace scroll. | Llevan a su tarjeta dentro de la misma página. |
@@ -80,7 +80,14 @@ Medidas del wireframe con el copy real: en desktop de 1280 × 800 la entrada mid
 - **Título de la pestaña** de la página (`<title>`): en la A es el mismo de la landing porque es una sola aplicación. Para una página aparte hace falta uno; propuesta con palabras que ya existen: «Las reglas de ADA · DIGIZEN». Requiere aprobación.
 - **Destino del pago** y **envío del formulario de ADA:** siguen pendientes, igual que en la landing.
 
-## Puntos para decidir en el gate
+## Decisiones del gate (usuario, 2026-10-02)
+
+1. **Un solo color, lo más parecido a la landing B:** tarjetas sin iconos y con el acento de ADA (cian) en todas, como las de «ADA es lo segundo, por diseño:».
+2. **Pestaña nueva:** «Conocer las reglas de ADA ↗» abre la página en una pestaña nueva, para no romper la narrativa; la landing se queda en su pestaña, en la estación donde estaba. «Volver a Digizen» cierra la pestaña de reglas; si el navegador no permite cerrarla, lleva a la landing en esa misma estación (08.5).
+3. **Título de la pestaña:** «Las reglas de ADA · DIGIZEN» (aprobado).
+4. **Lo que más importa:** que la página se vea de la landing B; mismas constantes y mismo sistema de diseño.
+
+## Puntos que se llevaron al gate
 
 1. **Iconos y colores de las tarjetas:** en la B, sin iconos y con el acento de ADA (cian) en todas, como las tarjetas de «ADA es lo segundo, por diseño:»; o con los iconos de la A.
 2. **Cómo abre desde la landing:** el botón «Conocer las reglas de ADA ↗» abre la página en la misma pestaña y «Volver a Digizen» regresa a la estación 08.5; o en una pestaña nueva.
