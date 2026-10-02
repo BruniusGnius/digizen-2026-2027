@@ -118,7 +118,9 @@ def button(m):
         goto = re.search(r"data-goto='([^']+)'", attrs)
         if goto:  # salto dentro de la página: enlace con destino real (funciona también sin JS)
             return f"<a{attrs} href='#{pin_of(goto.group(1))}'>{inner}</a>"
-        return f"<button type='button'{attrs} data-pending='reglas-ada'>{inner}</button>"
+        # «Conocer las reglas de ADA ↗»: abre la página de reglas en una pestaña nueva, para no romper la narrativa;
+        # la landing se queda en su estación (decisión del usuario, 2026-10-02)
+        return f"<a{attrs} href='{RULES_FILE}' target='_blank' rel='opener'>{inner}</a>"   # rel=opener: la página de reglas sabe que vino de la landing (mismo sitio)
     if 'alt' in cls.split():
         return f"<button type='button'{attrs} data-action='ada' aria-haspopup='dialog'>{inner}</button>"
     return f"<button type='button'{attrs} data-action='checkout'>{inner}</button>"
@@ -441,6 +443,186 @@ def render(pins, name, title, full, indexable=None):
         sys.exit(1)
     if full and any(res[bp][1] for bp in res): sys.exit(1)
 
+# ------------------------------------------------------------------ 5. página «Las reglas de ADA» (03-build-plan-reglas.md)
+# Página aparte, de lectura con scroll libre, con las mismas piezas de la landing (tokens, logo, menú, tarjeta, botones,
+# formulario y pie). El contenido es literal de la landing A (wireframe-src/reglas.py) y se audita contra su fuente.
+import reglas as RG
+RULES_FILE = 'reglas-de-ada.html'
+RULES_TITLE = 'Las reglas de ADA · DIGIZEN'           # título de la pestaña, aprobado por el usuario (2026-10-02)
+RULES_SRC = os.path.join(PROJ, '00-context', 'REGLAS-DE-ADA-fuente-A.html')
+RULES_BACK = 'P-08b'                                    # la estación de «Conocer las reglas de ADA ↗» (08.5 / 08.5m)
+RULES_W = {'ada-rule-desktop': (480, 853), 'dg-scene-a10-ada-rules-closing': (420, 720),
+           'dg-scene-a09-rules-presence': (900, 1400), 'dg-scene-a09-rules-presence-mobile': (800, 1200),
+           'dg-scene-cta-father-son-team-1-1': (480, 800)}
+RULES_SCRIPTS = ['js/dz-core.js', 'js/dz-spring.js', 'js/dz-menu.js', 'js/dz-actions.js', 'js/dz-rules.js']   # sin GSAP: no hay recorrido
+
+def rules_assets():
+    """Las 3 imágenes de la A (5 archivos), optimizadas en dos anchos; conservan su transparencia."""
+    dst_dir = os.path.join(OUT, 'assets', 'reglas'); os.makedirs(dst_dir, exist_ok=True)
+    out = {}
+    for name, widths in RULES_W.items():
+        src = os.path.join(PROJ, '00-context', 'reglas', name + '.webp')
+        im = Image.open(src); im = im.convert('RGBA' if im.mode in ('RGBA', 'LA', 'P') else 'RGB')
+        ws = sorted({min(w, im.width) for w in widths})
+        for w in ws:
+            dst = os.path.join(dst_dir, f'{name}-{w}.webp')
+            if newer(src, dst): save_webp(im, w, dst)
+        out[name] = (ws, im.width, im.height)
+    return out
+
+def rules_page(pins, imgs):
+    e = lambda t: html.escape(t, quote=True)
+    rich = lambda t: e(t).replace('&lt;b&gt;', "<b class='w7'>").replace('&lt;/b&gt;', '</b>')
+    name = lambda spec: spec[0].rsplit('.', 1)[0]
+    def sset(n): return ', '.join(f'assets/reglas/{n}-{w}.webp {w}w' for w in imgs[n][0])
+    def pic(desktop, mobile, alt, sizes_d, sizes_m, eager=False):
+        d, m = name(desktop), (name(mobile) if mobile else None)
+        ws, w, h = imgs[d]
+        load = " fetchpriority='high' decoding='async'" if eager else " loading='lazy' decoding='async'"
+        img = f"<img src='assets/reglas/{d}-{ws[-1]}.webp' srcset='{sset(d)}' sizes='{sizes_d}' width='{w}' height='{h}' alt='{e(alt)}'{load}>"
+        if not m: return img
+        _, mw, mh = imgs[m]
+        return (f"<picture><source media='(max-width: 859px)' srcset='{sset(m)}' sizes='{sizes_m}' width='{mw}' height='{mh}'>{img}</picture>")
+    arr = lambda icon, d: f"<span class='arr' data-dir='{d}' data-icon='{icon}' aria-hidden='true'></span>"
+    I, H, CL = RG.INTRO, RG.RULES_HEAD, RG.CLOSING
+    back, price = f'./#{RULES_BACK}', './#precio'
+    paras = '\n'.join(f"      <p class='in w5 t-body'>{rich(p)}</p>" for p in I['paras'])
+    short = '\n'.join(f"      <li class='in w6 t-body'>{e(t)}</li>" for t in I['checks_short'])
+    full = '\n'.join(f"      <li class='in w6 t-body'><a href='#regla-{i}'>{e(t)}</a></li>" for i, t in enumerate(I['checks_full']))
+    cards = []
+    for i, (label, title, sub, body) in enumerate(RG.RULES):
+        fig = ''
+        if i == 0:
+            fig = ("\n    <figure class='rg-rule-fig'>" + pic(RG.RULE1_IMAGE['desktop'], RG.RULE1_IMAGE['mobile'], RG.RULE1_IMAGE['alt'],
+                                                             '(min-width: 1180px) 450px, 40vw', '(min-width: 600px) 60vw, 86vw') + "</figure>")
+        cards.append(f"  <article class='card r-ada rg-rule{' rg-wide' if i == 0 else ''}' id='regla-{i}'>\n    <div class='rg-rule-txt'>\n"
+                     f"      <p class='in w7 t-small'>{e(label)}</p>\n      <h3 class='pf w5 t-sub bw card-t'>{e(title)}</h3>\n"
+                     f"      <p class='in w7 t-body'>{e(sub)}</p>\n      <p class='in w5 t-body'>{e(body)}</p>\n    </div>{fig}\n  </article>")
+    # el mismo menú de la landing; aquí cada opción lleva a su sección de la landing
+    first_pin = {}
+    for p in pins:
+        n = PIN_TRAMO.get(p['id'], 0)
+        if n and n not in first_pin: first_pin[n] = p['id']
+    items = '\n'.join(f"    <li><a class='menu-item' href='./#{first_pin[n]}'>{t}</a></li>" for n, t in TRAMOS if n in first_pin)
+    items += f"\n    <li><a class='menu-item faq' href='./#FAQ'>{MENU_FAQ}</a></li>"
+    cta = re.sub(r"<a( class='btn[^']*'[^>]*)>(.*?)</a>", button, C.CTA_INNER, flags=re.S).replace("data-action='checkout'", "data-action='pricing'")
+    menu = ("<button class='menu-btn on-light' type='button' aria-expanded='false' aria-controls='menu' aria-label='Abrir menú'>"
+            "<span></span><span></span><span></span></button>\n"
+            "<div class='menu' id='menu' hidden>\n  <div class='menu-backdrop'></div>\n  <nav class='menu-panel' aria-label='Menú'>\n"
+            "    <img class='menu-logo' src='assets/logo/digizen-logo-light.svg' alt='' width='275' height='116'>\n"
+            f"    <ul class='menu-list'>\n{items}\n    </ul>\n    {cta}\n  </nav>\n</div>")
+    brand = BRAND.replace("class='brand' href='#P-H0'", "class='brand is-on on-light' href='./'")
+    foot = '\n'.join(pin_html(p) for p in pins if p['id'] == 'FOOT')
+    desc = re.sub(r'<[^>]+>', '', I['paras'][0])   # descripción: el primer párrafo de la página, literal
+    ver = time.strftime('%Y%m%d%H%M%S')
+    scripts = '\n'.join(f"<script defer src='{s}?v={ver}'></script>" for s in RULES_SCRIPTS)
+    d_intro, m_intro = name(I['image']['desktop']), name(I['image']['mobile'])
+    por = name(CL['image']['file'])
+    return f"""<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{RULES_TITLE}</title>
+<meta name="description" content="{e(desc)}">
+<meta name="robots" content="{'noindex,nofollow' if PREVIEW else 'index,follow,max-image-preview:large'}">
+<link rel="canonical" href="{OFFICIAL_URL if PREVIEW else PUBLIC_URL}reglas-de-ada">
+<meta property="og:site_name" content="DIGIZEN">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<meta property="og:title" content="{RULES_TITLE}">
+<meta property="og:description" content="{e(desc)}">
+<meta property="og:image" content="{PUBLIC_URL + SEO['og_image']}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F4F3F0">
+<link rel="icon" type="image/svg+xml" href="assets/logo/Favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..800;1,14..32,400..800&display=swap">
+<link rel='preload' as='image' media='(min-width: 860px)' imagesrcset='{sset(d_intro)}' imagesizes='300px' fetchpriority='high'>
+<link rel='preload' as='image' media='(max-width: 859px)' imagesrcset='{sset(m_intro)}' imagesizes='220px' fetchpriority='high'>
+<link rel="stylesheet" href="dist/styles.css?v={ver}">
+</head>
+<body class='rg-page'>
+{brand}
+{menu}
+<main id='reglas' class='rg'>
+<section class='rg-sec rg-intro' aria-labelledby='rg-title'>
+  <div class='rg-wrap rg-intro-grid'>
+    <div class='rg-copy'>
+      <p class='in w7 t-small'>{e(I['kicker'])}</p>
+      <h1 id='rg-title' class='pf w8 t-semi bw'>{e(I['title'][0])} <span class='hl r-ia'>{e(I['title'][1])}</span></h1>
+      <div class='rg-lead'>
+{paras}
+      </div>
+    </div>
+    <figure class='rg-fig'>{pic(I['image']['desktop'], I['image']['mobile'], I['image']['alt'], '(min-width: 1180px) 270px, 24vw', '220px', eager=True)}</figure>
+    <div class='rg-list'>
+      <ul class='rg-checks rg-short'>
+{short}
+      </ul>
+      <ul class='rg-checks rg-full'>
+{full}
+      </ul>
+    </div>
+    <div class='cta rg-acts'>
+      <a class='btn' href='{price}'>{e(I['buttons'][0][0])}{arr('→', 'e')}</a>
+      <a class='btn sec r-ins' href='{back}' data-rules='back'>{e(I['buttons'][1][0])}{arr('←', 'w')}</a>
+    </div>
+  </div>
+</section>
+<section class='rg-sec rg-rules' aria-labelledby='rg-list-title'>
+  <div class='rg-wrap'>
+    <p class='in w7 t-small'>{e(H['kicker'])}</p>
+    <h2 id='rg-list-title' class='pf w8 t-head bw'><span class='rg-l1'>{e(H['title'][0])}</span> {e(H['title'][1])} <span class='hl'>{e(H['title'][2])}</span></h2>
+    <div class='rg-grid'>
+{chr(10).join(cards)}
+    </div>
+  </div>
+</section>
+<section class='rg-sec rg-close' aria-label='Decisión después de leer las reglas'>
+  <div class='rg-wrap rg-close-grid'>
+    <figure class='rg-por' aria-hidden='true'>{pic(CL['image']['file'], None, '', '(min-width: 860px) 340px, 260px', '')}</figure>
+    <div class='rg-close-copy'>
+      <p class='in w7 t-small'>{e(CL['kicker'])}</p>
+      <p class='pf w8 t-semi bw'>{e(CL['title'])}</p>
+      <p class='in w5 t-body'>{e(CL['support'])}</p>
+      <div class='cta'>
+        <a class='btn' href='{price}'>{e(CL['buttons'][0][0])}{arr('→', 'e')}</a>
+        <button type='button' class='btn alt' data-action='ada' aria-haspopup='dialog'>{e(CL['buttons'][1][0])}{arr('→', 'e')}</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+{foot}
+{DIALOG}
+{scripts}
+</body>
+</html>
+"""
+
+def rules_audit(doc):
+    """Las palabras del copy de la fuente, las mismas y en el mismo orden, y los textos alternativos."""
+    def words(s):
+        s = re.sub(r'<svg.*?</svg>', '', s, flags=re.S)
+        return re.findall(r'\S+', html.unescape(re.sub(r'<[^>]+>', ' ', s)).replace(' ', ' '))
+    glue = lambda ws: re.sub(r'improvisa:\s*responde', 'improvisa: responde', ' '.join(ws)).split()   # en la fuente es un salto de línea visual
+    src = re.sub(r'<!--.*?-->', '', open(RULES_SRC, encoding='utf-8').read(), flags=re.S)
+    main = doc[doc.find("<main id='reglas'"):doc.find('</main>')]
+    sw, pw = glue(words(src)), glue(words(main))
+    salt = sorted({html.unescape(a) for a in re.findall(r'alt="([^"]*)"', src) if a})
+    palt = sorted({html.unescape(a) for a in re.findall(r"alt='([^']*)'", main) if a})
+    ok = sw == pw and salt == palt
+    print(f'\n== {RULES_FILE} ==')
+    print(f'  copy de la fuente: {len(sw)} palabras · en la página: {len(pw)} · mismo texto y mismo orden: {"SÍ" if sw == pw else "NO"}')
+    if sw != pw:
+        for i, (a, b) in enumerate(zip(sw, pw)):
+            if a != b: print(f'     primera diferencia en la palabra {i}: «{" ".join(sw[max(0, i - 4):i + 5])}» ≠ «{" ".join(pw[max(0, i - 4):i + 5])}»'); break
+    print(f'  textos alternativos: {len(salt)} en la fuente · {len(palt)} en la página · {"IGUALES" if salt == palt else "DIFIEREN"}')
+    print(f'  tarjetas: {len(RG.RULES)} · título de la pestaña (aprobado): «{RULES_TITLE}»')
+    if not ok: sys.exit(1)
+
 def main():
     names = sorted(set(re.findall(r"src='00-context/scenes/([^'/]+)\.webp'", repr([s['html'] for p in C.PINS for s in p.get('stops', [])]))))
     build_assets(names + ['03-fastidio'])
@@ -464,6 +646,9 @@ def main():
                 f"<title>DIGIZEN</title>\n<meta http-equiv=\"refresh\" content=\"0; url={target}\">\n</head>\n"
                 f"<body>\n<p><a href=\"{target}\">Esta página cambió de lugar. Continuar</a></p>\n</body>\n</html>\n")
         print('\n== redirecciones ==\n  ' + ' · '.join(f'{a} → {b}' for a, b in REDIRECTS.items()))
+        rules_doc = rules_page(C.PINS, rules_assets())   # página «Las reglas de ADA»
+        open(os.path.join(OUT, RULES_FILE), 'w', encoding='utf-8').write(rules_doc)
+        rules_audit(rules_doc)
     print(f"\n== SEO ==\n  {'PREVIEW: noindex, canonical a la A (' + OFFICIAL_URL + ')' if PREVIEW else 'PRODUCCIÓN: index, canonical ' + PUBLIC_URL}")
     print('  JSON-LD: Organization, WebSite, WebPage, Course (2 ofertas), FAQPage (' + str(len(C.FAQ)) + ' preguntas literales)')
     print('\n== adiciones de copy aprobadas por el usuario (no están en COPY-PUBLICADO.md) ==')
@@ -473,6 +658,7 @@ def main():
     print('  menú de recorrido y menú de hamburguesa: ' + ' · '.join(t for _, t in TRAMOS))
     print(f'  menú de hamburguesa: «{MENU_FAQ}» y los dos CTA; nombres accesibles: ' + ' · '.join(MENU_A11Y))
     print('  formulario (tomado de la propuesta A): ' + ' · '.join(DIALOG_TEXTS))
+    print(f'  página de reglas: título de la pestaña «{RULES_TITLE}»; el resto de su copy es literal de la landing A (00-context/REGLAS-DE-ADA-fuente-A.html)')
 
 if __name__ == '__main__':
     main()

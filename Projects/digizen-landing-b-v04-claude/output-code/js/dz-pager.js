@@ -204,6 +204,25 @@
       var best = 0; pages.forEach(function (p, i) { if (p.y <= y + 4) best = i; });
       go(best, true);
     };
+    /* llegar a una estación desde fuera (la página de reglas): …/#P-08b = la primera estación visible de esa sección,
+       …/#FAQ, o …/#precio = las tarjetas de precio (11.4 en desktop, 11.5m en teléfono) */
+    function keyFromHash() {
+      var h = ''; try { h = decodeURIComponent(window.location.hash.slice(1)); } catch (err) {}
+      if (!h) return null;
+      if (h === 'precio') return DZ.isD ? '11.4' : '11.5m';
+      var sec = document.getElementById(h); if (!sec) return null;
+      for (var i = 0; i < DZ.STOPS.length; i++) {
+        var x = DZ.STOPS[i];
+        if (x.flow ? x.el === sec : (sec.contains(x.el) && DZ.visible(x.s) && x.el.offsetHeight)) return x.id;
+      }
+      return null;
+    }
+    window.addEventListener('hashchange', function () {
+      var k = keyFromHash(); if (!k) return;
+      for (var i = 0; i < pages.length; i++) if (pages[i].key === k) { go(i, true); return; }
+    });
+    curKey = keyFromHash();   /* al cargar: measure() se coloca en esa estación y ahí se queda con cada refresh */
+
     DZ.pagerState = function () { return { pages: pages, zones: zones, freeFrom: freeFrom, busy: busy, curKey: curKey }; };  /* para revisar */
 
     ScrollTrigger.addEventListener('refresh', measure);

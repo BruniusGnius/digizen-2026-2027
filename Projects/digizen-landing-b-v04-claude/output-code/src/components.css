@@ -512,4 +512,74 @@
 .flowmode .l03 .acc-copy { display: none; }
 /* cada escena ocupa exactamente una pantalla, con la composición de la versión animada; la imagen (y su zoom) no se sale de su estación */
 .paged .stop.k-seal, .paged .stop.k-seq { height: 100svh; min-height: 0; overflow: hidden; }
-.paged .c-seal { position: absolute; inset: 0; min-height: 0; }html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
+.paged .c-seal { position: absolute; inset: 0; min-height: 0; }
+html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
+
+/* ---------- página «Las reglas de ADA» (03-build-plan-reglas.md) ----------
+   Página aparte, de lectura con scroll libre. Aquí va SOLO la maqueta de sus bloques; el color, la tipografía,
+   la tarjeta, los botones, el menú, el formulario y el pie son los de la landing (mismos tokens, mismas clases). */
+.rg-wrap { max-width: var(--w-grid); margin: 0 auto; padding: 0 var(--pad-x); }
+.rg-sec { padding: 64px 0; }
+.rg-intro { padding-top: 104px; }                       /* deja libres el logo y el botón de menú */
+.rg-page .brand { position: absolute; }                 /* lectura con scroll libre: el logo se queda arriba, no flota sobre el texto */
+.rg-page a.menu-item { text-decoration: none; }
+/* entrada: el orden del HTML es el del teléfono (texto, imagen, lista, botones) */
+.rg-intro-grid { display: grid; gap: 28px; grid-template-areas: "copy" "fig" "list" "acts"; }
+.rg-copy { grid-area: copy; } .rg-fig { grid-area: fig; } .rg-list { grid-area: list; } .rg-acts { grid-area: acts; }
+.rg-copy h1 { margin-top: 8px; }
+.rg-lead { margin-top: var(--air); max-width: var(--w-wide); }
+.rg-lead p { line-height: 1.6; text-wrap: pretty; }
+.rg-lead p + p { margin-top: 1em; }
+.rg-fig { justify-self: center; }
+.rg-fig img { height: 40svh; width: auto; }             /* teléfono: la imagen no pasa del 40 % del alto de la pantalla */
+.rg-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.rg-checks li { position: relative; padding-left: 36px; line-height: 1.35; }
+/* palomita: cuadro en tinte cian (ADA = cian, solo como relleno) con el trazo en tinta */
+.rg-checks li::before { content: ""; position: absolute; left: 0; top: 50%; width: 24px; height: 24px; margin-top: -12px; border-radius: 8px; background: var(--color-cian-tinte); }
+.rg-checks li::after { content: ""; position: absolute; left: 9px; top: 50%; width: 6px; height: 11px; margin-top: -8px; border-right: 2.4px solid var(--color-ink); border-bottom: 2.4px solid var(--color-ink); transform: rotate(45deg); }
+.rg-checks a { color: inherit; text-decoration: none; }
+.rg-checks a:hover, .rg-checks a:focus-visible { color: var(--color-azul-900); text-decoration: underline; text-underline-offset: 3px; }
+.rg-full { display: none; }
+.rg-acts { max-width: var(--w-read); }
+/* las reglas: la retícula de tarjetas de la landing (L08) */
+.rg-rules h2 { margin-top: 8px; max-width: 26ch; }
+.rg-l1 { display: block; }
+.rg-grid { display: grid; grid-template-columns: 1fr; gap: var(--gap); margin-top: 48px; }
+.rg-rule { scroll-margin-top: 24px; }
+.rg-rule:focus { outline: none; }
+.rg-rule-txt { display: flex; flex-direction: column; gap: var(--stack); }
+.rg-rule-fig { margin-top: 12px; }
+.rg-rule-fig img { width: 100%; height: auto; }
+/* cierre */
+.rg-close-grid { display: grid; gap: 28px; align-items: center; }
+.rg-por { justify-self: center; width: min(100%, 260px); }
+.rg-por img { width: 100%; height: auto; }
+.rg-close-copy > .t-semi { margin-top: 8px; }
+.rg-close-copy > .t-body { margin-top: 14px; max-width: var(--w-wide); }
+.rg-close-copy .cta { margin-top: var(--air); max-width: var(--w-read); }
+@media (min-width: 600px) {
+  .rg-grid { grid-template-columns: 1fr 1fr; }
+  .rg-wide { grid-column: 1 / -1; }
+}
+@media (min-width: 600px) and (max-width: 859px) {
+  .rg-intro-grid { grid-template-columns: 1.15fr .85fr; grid-template-areas: "copy fig" "list fig" "acts fig"; column-gap: var(--gap); }
+  .rg-fig { align-self: center; }
+  .rg-fig img { height: auto; width: min(100%, 300px); }
+}
+@media (min-width: 860px) {
+  .rg-sec { padding: 96px 0; }
+  .rg-intro { min-height: 100svh; display: flex; align-items: center; padding-top: 96px; }   /* la entrada es una pantalla, como una estación */
+  .rg-intro > .rg-wrap { width: 100%; }
+  .rg-intro-grid { grid-template-columns: 3fr 5fr 4fr; grid-template-areas: "fig copy list" "fig acts list"; column-gap: var(--gap); row-gap: var(--air); align-items: center; }
+  .rg-fig { justify-self: start; align-self: center; }
+  .rg-fig img { width: 100%; height: auto; max-height: 72svh; object-fit: contain; }
+  .rg-short { display: none; }
+  .rg-full { display: grid; gap: 10px; }
+  .rg-acts { max-width: none; }
+  .rg-wide { display: grid; grid-template-columns: 7fr 5fr; column-gap: var(--gap); align-items: center; }
+  .rg-wide::before { grid-column: 1 / -1; }
+  .rg-wide .rg-rule-fig { margin-top: 0; }
+  .rg-close-grid { grid-template-columns: 4fr 8fr; column-gap: var(--gap); }
+  .rg-por { width: 100%; max-width: 340px; }
+}
+@media (min-width: 1100px) { .rg-grid { grid-template-columns: repeat(3, 1fr); } }   /* 3 columnas solo cuando el renglón no queda angosto */

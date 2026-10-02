@@ -3,7 +3,7 @@ project: digizen-landing-b-v04-claude
 pieza: página «Las reglas de ADA»
 fase: 3 - build
 documento: plan de componentes y archivos (se entrega antes de escribir el código)
-estado: propuesto, en espera de aprobación
+estado: aprobado por el usuario (2026-10-02) y construido; ver 03-build-notes-reglas.md
 fecha: 2026-10-02
 wireframe: 02-wireframe-reglas.md (aprobado el 2026-10-02)
 ---
