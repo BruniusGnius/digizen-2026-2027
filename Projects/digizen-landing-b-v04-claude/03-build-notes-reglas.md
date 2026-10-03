@@ -152,3 +152,13 @@ Además, adición de copy aprobada por el usuario: botón secundario **«Regresa
 - **Botones del cierre en tablet y desktop:** la cuadrícula de 2 + 1 se salía del estilo de la landing. Ahora son filas de acción apiladas, como el par de CTA de la landing (11.6, 12.4): al ancho de la columna de lectura (432 px), en la columna del texto, entre el retrato y el borde del contenedor. Primero «Inscribir a mi hijo», después «Tengo dudas», y «Regresar a Digizen», secundario, al final y un poco aparte. El teléfono no cambia.
 - **Verificado:** 1380 × 865, 1280 × 720, 1024 × 698, 768 × 954 y 390 × 844: todas las estaciones miden una pantalla, sin zonas de scroll libre. El copy no cambia (798 palabras, mismo orden).
 - **Sigue sin publicarse en GitHub Pages.**
+
+## Botones del cierre en una sola fila, con textos cortos (pedido del usuario, 2026-10-02)
+
+- **Textos recortados en tablet y desktop** (el usuario ya había autorizado recortar sin perder la idea): «Inscribir a mi hijo · EMPIEZA HOY» → **«Inscribir a mi hijo»** y «Tengo dudas · CONVERSAR CON ADA» → **«Conversar con ADA»**. «Regresar a Digizen» no cambia. Registrados en `wireframe-src/reglas.py` (`CLOSING['short_buttons']`); el build los reporta como recortes aprobados y la auditoría compara contra el texto de la fuente, guardado en `data-orig`.
+- **Flecha solo en «Regresar a Digizen».** Los otros dos van sin flecha y con el texto centrado; el secundario también va centrado, con su flecha junto al texto.
+- **Bloque duplicado con display por ancho** (como lo sugirió el usuario): el bloque del teléfono (`.rg-close-acts.rg-s`, textos completos, apilados, con flecha) no cambia, porque «en móvil se ven perfectos». Tablet y desktop usan su propio bloque (`.rg-acts-row.rg-n`). La auditoría quita en cada ancho el bloque que no se ve.
+- **Tablet (600–1099):** la fila va debajo del retrato y del texto, a todo el ancho del contenedor. Los tres miden lo mismo desde 768 px (216 px cada uno a 768; 317 a 1024). En el iPad mini (744) el tercero mide 12 px más que los otros dos, porque con su flecha no cabe en menos. Por debajo de unos 700 px el tercero baja completo a su propia fila, sin cortarse.
+- **Desktop (≥1100):** la fila va en la columna del texto, entre el retrato y el borde derecho del contenedor; los tres miden lo mismo (285 px a 1380; 301 a 1280).
+- **Verificado:** 1380 × 865, 1280 × 720, 1024 × 698, 768 × 954, 744 × 1000, 600 × 960 y 390 × 844: todas las estaciones miden una pantalla, sin zonas de scroll libre. El copy, igual a la fuente en los tres anchos (798 palabras, mismo orden), con los dos recortes declarados. «Conversar con ADA» abre el formulario; los enlaces de inscripción y de regreso no cambian.
+- **Sigue sin publicarse en GitHub Pages.**

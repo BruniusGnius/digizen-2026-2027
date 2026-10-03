@@ -554,9 +554,16 @@ def rules_page(pins, imgs):
         f"<figure class='rg-por' aria-hidden='true'>{pic(CL['image']['file'], None, '', '(min-width: 860px) 260px, 200px', '')}</figure>\n"
         f"<div class='rg-close-copy'>\n  <p class='in w7 t-small'>{e(CL['kicker'])}</p>\n  <p class='pf w8 t-semi bw'>{e(CL['title'])}</p>\n"
         f"  <p class='in w5 t-body'>{e(CL['support'])}</p>\n</div>\n"
-        f"<div class='rg-close-acts'>\n"
+        # teléfono: los textos completos de la fuente, apilados, con flecha (el usuario los aprobó así)
+        f"<div class='rg-close-acts rg-s'>\n"
         f"  <a class='btn' href='{price}'>{e(CL['buttons'][0][0])}{arr('→', 'e')}</a>\n"
         f"  <button type='button' class='btn alt' data-action='ada' aria-haspopup='dialog'>{e(CL['buttons'][1][0])}{arr('→', 'e')}</button>\n"
+        f"  <a class='btn sec r-ins' href='{back}' data-rules='back' data-add='1'>{e(CL['added_button'][0])}{arr('←', 'w')}</a>\n</div>\n"
+        # tablet y desktop: el mismo bloque duplicado, con los textos recortados y en una sola fila; la flecha solo en
+        # «Regresar a Digizen» (pedido del usuario). data-orig guarda el texto de la fuente para la auditoría
+        f"<div class='rg-close-acts rg-acts-row rg-n'>\n"
+        f"  <a class='btn rg-btn-c' href='{price}' data-orig='{e(CL['buttons'][0][0])}'>{e(CL['short_buttons'][0])}</a>\n"
+        f"  <button type='button' class='btn alt rg-btn-c' data-action='ada' aria-haspopup='dialog' data-orig='{e(CL['buttons'][1][0])}'>{e(CL['short_buttons'][1])}</button>\n"
         f"  <a class='btn sec r-ins' href='{back}' data-rules='back' data-add='1'>{e(CL['added_button'][0])}{arr('←', 'w')}</a>\n</div>\n"
         f"</div>\n</div>\n<footer class='rg-foot'>\n{prod(foot_pin['html'])}\n</footer>"))
 
@@ -637,12 +644,18 @@ def rules_audit(stops):
     sw = glue(words(src))
     salt = sorted({html.unescape(a) for a in re.findall(r'alt="([^"]*)"', src) if a})
     print(f'\n== {RULES_FILE} ==')
-    ok, added = True, set()
-    for label, allowed in (('desktop (≥ 1100 px)', {'all', 'n', 'w'}), ('tablet (600–1099 px)', {'all', 'n', 't'}), ('teléfono (< 600 px)', {'all', 's'})):
+    ok, added, cut = True, set(), set()
+    for label, allowed, hide in (('desktop (≥ 1100 px)', {'all', 'n', 'w'}, 'rg-s'), ('tablet (600–1099 px)', {'all', 'n', 't'}, 'rg-s'),
+                                 ('teléfono (< 600 px)', {'all', 's'}, 'rg-n')):
         body = '\n'.join(st[3] for st in stops if st[0] in allowed)
+        body = re.sub(r"<div class='[^']*\b" + hide + r"\b[^']*'>.*?</div>", '', body, flags=re.S)   # bloques duplicados que no se ven en este ancho
         body = re.sub(r"<footer.*?</footer>", '', body, flags=re.S)   # el pie es el de la landing: no es copy de esta página
         added |= {re.sub(r'<[^>]+>', '', t).strip() for t in re.findall(r"<a[^>]*\bdata-add='1'[^>]*>(.*?)</a>", body, flags=re.S)}
         body = re.sub(r"<a[^>]*\bdata-add='1'[^>]*>.*?</a>", '', body, flags=re.S)   # adiciones aprobadas: no están en la fuente
+        def orig(m):   # recortes aprobados: se audita el texto de la fuente que guardan en data-orig
+            cut.add(f"{html.unescape(m.group(3))} → {re.sub(r'<[^>]+>', '', m.group(4)).strip()}")
+            return ' ' + m.group(3) + ' '
+        body = re.sub(r"<(a|button)\b([^>]*?)\bdata-orig='([^']*)'[^>]*>(.*?)</\1>", orig, body, flags=re.S)
         pw = glue(words(body))
         palt = sorted({html.unescape(a) for a in re.findall(r"alt='([^']*)'", body) if a})
         n = sum(1 for st in stops if st[0] in allowed)
@@ -654,6 +667,7 @@ def rules_audit(stops):
         ok = ok and same and salt == palt
     print(f'  tarjetas: {len(RG.RULES)} · título de la pestaña (aprobado): «{RULES_TITLE}»')
     print('  adiciones de copy aprobadas por el usuario (no están en la fuente): ' + (' · '.join(f'«{a}»' for a in sorted(added)) or 'ninguna'))
+    print('  recortes pedidos por el usuario (tablet y desktop; el teléfono conserva la fuente): ' + (' | '.join(f'«{c}»'.replace(' → ', '» → «') for c in sorted(cut)) or 'ninguno'))
     if not ok: sys.exit(1)
 
 def main():

@@ -97,6 +97,9 @@ CLOSING = {
     'buttons': [('Inscribir a mi hijo · EMPIEZA HOY', 'pricing'), ('Tengo dudas · CONVERSAR CON ADA', 'ada')],
     # ADICIÓN aprobada por el usuario (2026-10-02; no está en la fuente de la A): botón secundario al final de la página
     'added_button': ('Regresar a Digizen', 'back'),
+    # RECORTE pedido por el usuario (2026-10-02), solo en tablet y desktop, para que los tres botones vayan en una fila y
+    # sin flecha (la flecha solo queda en «Regresar a Digizen»). En teléfono se conservan los textos completos de la fuente.
+    'short_buttons': ['Inscribir a mi hijo', 'Conversar con ADA'],
 }
 
 # ---------------------------------------------------------------- notas internas (no son UI)

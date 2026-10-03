@@ -610,14 +610,18 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
   .rg-imp-grid { grid-template-rows: 50svh 1fr; }
   .rg-imp-txt { padding: 32px 48px 40px; }
 }
-/* tablet y desktop: los botones como en la landing (el par de CTA de 11.6 y 12.4): filas de acción apiladas, al ancho de la
-   columna de lectura, en la columna del texto, entre el retrato y el borde del contenedor (corrección del usuario: la
-   cuadrícula de 2 + 1 se salía del estilo de la landing). «Regresar a Digizen», secundario, al final, un poco aparte */
+/* tablet y desktop: un bloque de botones propio (duplicado del de teléfono, que se ve perfecto y no cambia), con los textos
+   recortados y los tres en una sola fila; la flecha solo en «Regresar a Digizen»; sin flecha, el texto va centrado
+   (pedido del usuario). Tablet: la fila va debajo del retrato y ocupa casi todo el ancho. Desktop: entre el retrato y el
+   borde derecho del contenedor. Si no cupieran en una fila (tablets angostas), el tercero baja completo, sin cortarse */
+.rg-btn-c { justify-content: center; text-align: center; padding-left: 22px; padding-right: 22px; }
 @media (min-width: 600px) {
-  .rg-close-grid { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "por copy" "por acts"; column-gap: var(--gap); row-gap: var(--air); align-items: start; }
-  .rg-por { width: 200px; justify-self: start; align-self: center; }
-  .rg-close-acts { display: flex; flex-direction: column; gap: 10px; width: min(100%, var(--w-read)); margin-top: 0; }
-  .rg-close-acts .btn.sec { margin-top: 6px; }
+  .rg-close-grid { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "por copy" "acts acts"; column-gap: var(--gap); row-gap: var(--air); align-items: center; }
+  .rg-por { width: 200px; justify-self: start; }
+  .rg-acts-row { display: flex; flex-flow: row wrap; gap: 12px; width: 100%; margin-top: 0; }
+  .rg-acts-row .btn { flex: 1 1 30%; width: auto; white-space: nowrap; }   /* misma base para los tres: miden lo mismo aunque el secundario lleve borde */
+  /* el secundario, también centrado; con menos aire interno cabe con su flecha en el mismo ancho que los otros dos (tablet de 768) */
+  .rg-acts-row .btn.sec { justify-content: center; gap: 8px; padding-left: 16px; padding-right: 8px; }
   .rg-foot .foot { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 20px; }
   .rg-foot .foot-logo { margin: 0 8px 0 0; align-self: center; }
   .rg-foot .foot-links { margin: 0 0 0 auto; }
@@ -644,9 +648,11 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
   .rg-imp-fig img { object-position: 17% 50%; }   /* ADA y el adolescente están en el tercio izquierdo de la escena: los dos quedan en cuadro */
 }
 @media (min-width: 860px) and (max-width: 1099px) { .rg-imp-t { font-size: var(--t-semi); } }   /* en media pantalla angosta, el monumental no cabe */
-/* desktop: el retrato mide lo que el bloque de texto y botones */
+/* desktop: los botones en la columna del texto, entre el retrato y el borde derecho; el retrato mide lo que el bloque de
+   texto y botones */
 @media (min-width: 1100px) {
-  .rg-por { width: clamp(220px, 32svh, 300px); }
+  .rg-close-grid { grid-template-areas: "por copy" "por acts"; align-items: start; }
+  .rg-por { align-self: center; width: clamp(220px, 32svh, 300px); }
 }
 @media (min-width: 1100px) {
   /* la lista ocupa el alto del texto más los botones, como en la A; los botones quedan bajo el texto */
