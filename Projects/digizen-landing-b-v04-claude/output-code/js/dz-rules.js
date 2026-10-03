@@ -23,6 +23,15 @@
     setTimeout(function () { if (!window.closed) window.location.href = href; }, 180);
   }
 
+  /* logo: versión clara (con sombra) sobre la lámina oscura, como sobre las bisagras de la landing; solo desde 860 px,
+     donde el panel oscuro queda detrás del logo (abajo de eso la imagen va arriba y es clara). El botón de menú se queda
+     oscuro: en esa lámina siempre cae sobre la parte clara de la imagen */
+  var DZh = window.DZ, brand = document.querySelector('.brand');
+  if (DZh && DZh.hooks && brand) DZh.hooks.frame.push(function (y, hit) {
+    var dark = !!(hit && hit.night) && window.innerWidth >= 860;
+    brand.classList.toggle('on-light', !dark); brand.classList.toggle('on-image', dark);
+  });
+
   document.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var idx = e.target.closest('[data-rule-link]');

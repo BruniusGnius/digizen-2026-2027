@@ -129,3 +129,19 @@ Además, adición de copy aprobada por el usuario: botón secundario **«Regresa
 - **`index.html` desde que quedó como versión final:** solo dos cambios de contenido: el botón «Conocer las reglas de ADA ↗» (08.5 y 08.5m) pasó de pendiente a enlace, y el menú ganó la entrada «Reglas de ADA». El resto es el sello de versión de cada build. Mismas 78 estaciones y mismo copy (auditoría: 0 problemas).
 - **Sigue sin publicarse en GitHub Pages.**
 
+## «La regla más importante» como lámina de impacto (pedido del usuario, 2026-10-02)
+
+- **Ya no es tarjeta.** Es una estación propia, de borde a borde, con el fondo navy de las bisagras de la landing (`nightc`): en el recorrido marca el momento de pausa, igual que las estaciones de noche de la landing.
+- **Composición.** En desktop (≥860), el texto ocupa 7/12 a la izquierda y la imagen 5/12 a la derecha, a sangre hasta el borde. El texto se alinea con la retícula de la página y la imagen se encuadra para que ADA y el adolescente salgan completos. En teléfono y tablet la imagen va arriba como banda a sangre (38 % de la pantalla en teléfono, 50 % en tablet) y el texto debajo.
+- **Tipografía.**
+  - El título va en monumental (96 px en desktop; 48 en teléfono y tablet; en desktop angosto, 860–1099, baja a semimonumental para que quepa).
+  - Siempre en dos líneas, «Presencia,» y «no vigilancia», con el acento de la landing: «Presencia,» en azul y «vigilancia» en coral.
+  - La regla va en el paso lead y el cuerpo en lectura. Arriba del rótulo va la barra corta cian de ADA.
+- **El antetítulo y el título de la sección** («Seguridad por diseño» / «ADA no improvisa: responde dentro de estas reglas») pasaron a su propia estación de golpe, antes de la lámina, para que la lámina no comparta pantalla. Cuesta un gesto más; si se prefiere, se puede volver a unir.
+- **Logo y menú sobre la lámina.** En desktop el logo cambia a su versión clara mientras se está en la lámina (el panel oscuro queda detrás); en teléfono y tablet se queda oscuro porque cae sobre la parte clara de la imagen. El botón de menú siempre se queda oscuro: en la lámina cae sobre la imagen.
+- **Verificado:**
+  - 1380 × 865, 1280 × 720, 1024 × 698, 768 × 954 y 390 × 844: todas las estaciones miden exactamente una pantalla, sin zonas de scroll libre.
+  - Estaciones por tamaño: desktop 8, tablet 10, teléfono 9.
+  - Auditoría del copy: 798 palabras, mismo orden (los acentos de color y el salto de línea no cambian palabras).
+- **Sigue sin publicarse en GitHub Pages.**
+

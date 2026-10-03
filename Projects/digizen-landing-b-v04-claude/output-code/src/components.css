@@ -532,7 +532,6 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
   .rg-page .stop:has(> .cue) { padding-bottom: 76px; }
 }
 .rg-page .stop.k-deck { align-items: center; align-items: safe center; }   /* centrado; si no cabe, empieza arriba para no cortarse */
-.rg-first .rg-rule-fig img { max-height: 24svh; object-fit: cover; object-position: center; }   /* llena su caja, centrada */
 /* entrada */
 .rg-intro-grid { display: grid; gap: 24px; }
 .rg-head { grid-area: head; } .rg-lead { grid-area: lead; } .rg-fig { grid-area: fig; } .rg-list { grid-area: list; } .rg-acts { grid-area: acts; }
@@ -559,9 +558,7 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
 .rg-intro-b .rg-fig { align-self: center; }
 .rg-intro-b .rg-fig img { height: 36svh; width: auto; }
 /* las reglas: la tarjeta de la landing (L08) */
-.rg-rules-head h2 { margin-top: 8px; max-width: 26ch; }
 .rg-l1 { display: block; }
-.rg-first { display: flex; flex-direction: column; gap: 28px; }
 .rg-grid { display: grid; gap: var(--gap); align-items: stretch; }
 .rg-g2 { grid-template-columns: 1fr 1fr; }
 .rg-g3 { grid-template-columns: repeat(3, 1fr); }
@@ -572,12 +569,21 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
 .rg-rule-t { margin-top: 2px; text-wrap: balance; }
 .rg-rule-s { margin-top: 10px; line-height: 1.35; }
 .rg-rule-s + p { margin-top: 4px; }
-/* la regla más importante: un golpe, con el acento de la landing en el título */
-.rg-top-t { margin-top: 4px; }
-.rg-top-s { margin-top: 14px; }
-.rg-top-s + p { margin-top: 8px; max-width: var(--w-wide); }
-.rg-rule-fig { margin-top: 12px; }
-.rg-rule-fig img { width: 100%; height: auto; }
+/* título de sección: un golpe, solo en su estación */
+.rg-sec-head { display: flex; flex-direction: column; gap: 10px; }
+.rg-sec-head h2 { max-width: 20ch; }
+/* «La regla más importante»: lámina de impacto (pedido del usuario). Bisagra oscura, título monumental con el acento
+   del cierre de marca de la landing e imagen a sangre: arriba en teléfono y tablet vertical, media pantalla en desktop */
+.rg-page .stop.rg-imp { padding: 0; align-items: stretch; }
+.rg-imp-grid { width: 100%; min-height: 100svh; display: grid; grid-template-rows: 38svh 1fr; grid-template-areas: "fig" "txt"; }
+.rg-imp-txt { grid-area: txt; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 22px var(--pad-x) 28px; }
+.rg-imp-txt::before { content: ""; display: block; width: 24px; height: 3px; border-radius: 2px; background: var(--color-cian); margin-bottom: 8px; }
+.rg-imp-t { margin-top: 4px; }
+.rg-imp-t > .hl:first-child { display: block; }   /* «Presencia,» / «no vigilancia» en dos líneas en todos los tamaños */
+.rg-imp-s { margin-top: 12px; line-height: 1.3; }
+.rg-imp-b { margin-top: 6px; max-width: var(--w-wide); line-height: 1.55; }
+.rg-imp-fig { grid-area: fig; position: relative; overflow: hidden; }
+.rg-imp-fig img, .rg-imp-fig picture { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; }
 .rg-deck { --peek: 92px; }   /* mazo del teléfono: la tarjeta anterior asoma con su rótulo y su título */
 /* cierre: una sola estación con el pie incluido. Arriba, el retrato y el texto; después, los botones en un bloque propio
    (las dos acciones principales juntas, con el mismo peso; «Regresar a Digizen», secundario, aparte); abajo, el pie. */
@@ -602,8 +608,8 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
   .rg-intro-grid { grid-template-columns: 1.15fr .85fr; grid-template-areas: "head fig" "lead fig" "list fig" "acts acts"; column-gap: var(--gap); }
   .rg-fig { align-self: center; justify-self: center; width: min(100%, 300px); }
   .rg-acts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  /* la imagen de la regla más importante cubre su caja, centrada (pedido del usuario): se reencuadra a 16:9 */
-  .rg-first .rg-rule-fig img { aspect-ratio: 16 / 9; max-height: none; }
+  .rg-imp-grid { grid-template-rows: 50svh 1fr; }
+  .rg-imp-txt { padding: 32px 48px 40px; }
 }
 /* tablet (600–1099): las dos acciones principales lado a lado, con el mismo tamaño; la secundaria debajo, a todo el ancho */
 @media (min-width: 600px) and (max-width: 1099px) {
@@ -631,18 +637,15 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
   .rg-checks li { padding-left: 34px; }
   .rg-acts { flex-direction: row; flex-wrap: wrap; gap: 12px; }
   .rg-acts .btn { width: auto; flex: 0 1 auto; white-space: nowrap; }
-  .rg-first { gap: 36px; }
-  .rg-wide { display: grid; grid-template-columns: 7fr 5fr; column-gap: var(--gap); align-items: center; }
-  .rg-wide::before { grid-column: 1 / -1; }
-  .rg-wide .rg-rule-fig { margin-top: 0; }
   .rg-por { width: clamp(200px, 26svh, 280px); }
 }
-/* tablet horizontal (860–1099): la imagen de la regla más importante llena el alto de su columna, centrada */
-@media (min-width: 860px) and (max-width: 1099px) {
-  .rg-wide { align-items: stretch; }
-  .rg-wide .rg-rule-txt { align-self: center; }
-  .rg-first .rg-rule-fig img { height: 100%; max-height: none; min-height: 200px; }
+/* desktop y tablet horizontal: el texto a la izquierda, alineado con el resto de la página; la imagen, media pantalla a sangre */
+@media (min-width: 860px) {
+  .rg-imp-grid { grid-template-columns: 7fr 5fr; grid-template-rows: none; grid-template-areas: "txt fig"; }
+  .rg-imp-txt { padding: 84px 56px 48px max(var(--pad-x), calc((100vw - var(--w-grid)) / 2 + var(--pad-x))); }
+  .rg-imp-fig img { object-position: 17% 50%; }   /* ADA y el adolescente están en el tercio izquierdo de la escena: los dos quedan en cuadro */
 }
+@media (min-width: 860px) and (max-width: 1099px) { .rg-imp-t { font-size: var(--t-semi); } }   /* en media pantalla angosta, el monumental no cabe */
 /* desktop: los botones van en la columna del texto, entre el retrato y el borde del contenedor, y los tres miden lo mismo
    (pedido del usuario): las dos acciones principales en una fila y «Regresar a Digizen» debajo, al mismo ancho */
 @media (min-width: 1100px) {

@@ -516,25 +516,26 @@ def rules_page(pins, imgs):
 
     # ---- las reglas
     def card(i, v):
-        """Tarjeta de regla con el sistema tipográfico de la landing: rótulo pequeño en el color de ADA (violeta en texto),
-        título pesado (Inter 800), la regla en negritas con el color del criterio (azul) y el cuerpo en lectura.
-        La primera («La regla más importante») es un golpe: título semimonumental con el acento de la landing
-        («Presencia,» en azul y «vigilancia» en coral, como en su cierre de marca) y la regla en el paso lead."""
+        """Tarjeta de regla (01 a 12) con el sistema tipográfico de la landing: rótulo pequeño en el color de ADA (violeta
+        en texto), título pesado (Inter 800), la regla en negritas con el color del criterio (azul) y el cuerpo en lectura."""
         label, title, sub, body = RG.RULES[i]
         cid = f'regla-{i}' if v in ('all', 'w') else f'regla-{v}-{i}'
-        if i == 0:
-            t = e(title).replace('Presencia,', "<span class='hl'>Presencia,</span>").replace('vigilancia', "<span class='hl r-coral'>vigilancia</span>")
-            figure = ("\n  <figure class='rg-rule-fig'>" + pic(RG.RULE1_IMAGE['desktop'], RG.RULE1_IMAGE['mobile'], RG.RULE1_IMAGE['alt'],
-                                                               '(min-width: 1180px) 450px, 40vw', '(min-width: 600px) 60vw, 86vw') + "</figure>")
-            return (f"<article class='card r-ada rg-rule rg-wide' id='{cid}' data-rule='{i}'>\n  <div class='rg-rule-txt'>\n"
-                    f"    <p class='in w7 t-small c-ia'>{e(label)}</p>\n    <h3 class='pf w8 t-semi bw rg-top-t'>{t}</h3>\n"
-                    f"    <p class='in w7 t-sub rg-top-s'>{e(sub)}</p>\n    <p class='in w5 t-body'>{e(body)}</p>\n  </div>{figure}\n</article>")
         return (f"<article class='card r-ada rg-rule' id='{cid}' data-rule='{i}'>\n  <div class='rg-rule-txt'>\n"
                 f"    <p class='in w7 t-small c-ia'>{e(label)}</p>\n    <h3 class='pf w8 t-head bw rg-rule-t'>{e(title)}</h3>\n"
                 f"    <p class='in w7 t-body hl rg-rule-s'>{e(sub)}</p>\n    <p class='in w5 t-body'>{e(body)}</p>\n  </div>\n</article>")
-    rules_head = (f"<div class='rg-rules-head'>\n  <p class='in w7 t-small'>{e(H['kicker'])}</p>\n"
-                  f"  <h2 class='pf w8 t-head bw'><span class='rg-l1'>{e(H['title'][0])}</span> {e(H['title'][1])} <span class='hl'>{e(H['title'][2])}</span></h2>\n</div>")
-    stops.append(('all', 'read', 'rg.2', f"<div class='c rg-first'>\n{rules_head}\n{card(0, 'all')}\n</div>"))
+    # título de sección: un golpe, solo en su estación, como los títulos de capítulo de la landing
+    stops.append(('all', 'read', 'rg.2', f"<div class='c rg-sec-head'>\n  <p class='in w7 t-small'>{e(H['kicker'])}</p>\n"
+                  f"  <h2 class='pf w8 t-semi bw'><span class='rg-l1'>{e(H['title'][0])}</span> {e(H['title'][1])} <span class='hl'>{e(H['title'][2])}</span></h2>\n</div>"))
+    # «La regla más importante»: lámina de impacto, no tarjeta (pedido del usuario). Bisagra oscura como las de la landing,
+    # título monumental con el acento de su cierre de marca («Presencia,» azul · «vigilancia» coral) e imagen a sangre
+    label, title, sub0, body0 = RG.RULES[0]
+    t0 = e(title).replace('Presencia,', "<span class='hl'>Presencia,</span>").replace('vigilancia', "<span class='hl r-coral'>vigilancia</span>")
+    stops.append(('all', 'read', 'rg.3',
+        f"<article class='rg-imp-grid' id='regla-0' data-rule='0'>\n  <div class='rg-imp-txt'>\n"
+        f"    <p class='in w7 t-small'>{e(label)}</p>\n    <h3 class='pf w8 t-mon bw rg-imp-t'>{t0}</h3>\n"
+        f"    <p class='in w7 t-sub bw rg-imp-s'>{e(sub0)}</p>\n    <p class='in w5 t-body rg-imp-b'>{e(body0)}</p>\n  </div>\n"
+        f"  <figure class='rg-imp-fig'>" + pic(RG.RULE1_IMAGE['desktop'], RG.RULE1_IMAGE['mobile'], RG.RULE1_IMAGE['alt'],
+                                               '(min-width: 860px) 42vw, 100vw', '100vw') + "</figure>\n</article>"))
     rest = list(range(1, len(RG.RULES)))
     for bp, per, kind in (('w', 3, 'read'), ('t', 2, 'read'), ('s', 3, 'deck')):   # 3 por gesto · 2 por gesto · mazos de 3, una tarjeta por gesto
         for g, k in enumerate(range(0, len(rest), per)):
@@ -559,12 +560,13 @@ def rules_page(pins, imgs):
         f"</div>\n</div>\n<footer class='rg-foot'>\n{prod(foot_pin['html'])}\n</footer>"))
 
     def stop_div(bp, kind, sid, body):
-        end = ' rg-end' if sid == 'rg.9' else ''
-        return (f"<div class='stop k-{kind}{VIS[bp]}{end}' data-id='{sid}' data-kind='{kind}' data-e='1' data-bp='{bp}' data-night='0'>\n{body}\n</div>")
+        extra = {'rg.9': ' rg-end', 'rg.3': ' nightc rg-imp'}.get(sid, '')
+        night = 1 if sid == 'rg.3' else 0
+        return (f"<div class='stop k-{kind}{VIS[bp]}{extra}' data-id='{sid}' data-kind='{kind}' data-e='1' data-bp='{bp}' data-night='{night}'>\n{body}\n</div>")
     def pin(pid, ids):
         inner = '\n'.join(stop_div(*st) for st in stops if st[2].split('.')[1][0] in ids)
         return (f"<section class='pin t-pin' id='{pid}' data-pin data-type='pin' data-tramo='0'>\n<div class='stage'>\n<div class='night'></div>\n{inner}\n</div>\n</section>")
-    main = '\n'.join([pin('RG-1', '1'), pin('RG-2', '2wts'), pin('RG-3', '9')])
+    main = '\n'.join([pin('RG-1', '1'), pin('RG-2', '23wts'), pin('RG-3', '9')])
 
     # el mismo menú de la landing; aquí cada opción lleva a su sección de la landing
     first_pin = {}
