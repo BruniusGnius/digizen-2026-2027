@@ -523,8 +523,9 @@ def rules_page(pins, imgs):
         return (f"<article class='card r-ada rg-rule' id='{cid}' data-rule='{i}'>\n  <div class='rg-rule-txt'>\n"
                 f"    <p class='in w7 t-small c-ia'>{e(label)}</p>\n    <h3 class='pf w8 t-head bw rg-rule-t'>{e(title)}</h3>\n"
                 f"    <p class='in w7 t-body hl rg-rule-s'>{e(sub)}</p>\n    <p class='in w5 t-body'>{e(body)}</p>\n  </div>\n</article>")
-    # título de sección: un golpe, solo en su estación, como los títulos de capítulo de la landing
-    stops.append(('all', 'read', 'rg.2', f"<div class='c rg-sec-head'>\n  <p class='in w7 t-small'>{e(H['kicker'])}</p>\n"
+    # título de sección: un golpe centrado, solo en su estación, con la composición de los títulos de capítulo de la landing
+    # (01.1 «Lo que casi todos creemos», 02.1): c ctr stack b01; el antetítulo pequeño arriba, como en 08.3
+    stops.append(('all', 'golpe', 'rg.2', f"<div class='c ctr stack b01 rg-sec-head'>\n  <p class='in w7 t-small'>{e(H['kicker'])}</p>\n"
                   f"  <h2 class='pf w8 t-semi bw'><span class='rg-l1'>{e(H['title'][0])}</span> {e(H['title'][1])} <span class='hl'>{e(H['title'][2])}</span></h2>\n</div>"))
     # «La regla más importante»: lámina de impacto, no tarjeta (pedido del usuario). Bisagra oscura como las de la landing,
     # título monumental con el acento de su cierre de marca («Presencia,» azul · «vigilancia» coral) e imagen a sangre

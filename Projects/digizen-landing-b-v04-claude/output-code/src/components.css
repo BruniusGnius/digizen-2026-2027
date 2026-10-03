@@ -569,9 +569,8 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
 .rg-rule-t { margin-top: 2px; text-wrap: balance; }
 .rg-rule-s { margin-top: 10px; line-height: 1.35; }
 .rg-rule-s + p { margin-top: 4px; }
-/* título de sección: un golpe, solo en su estación */
-.rg-sec-head { display: flex; flex-direction: column; gap: 10px; }
-.rg-sec-head h2 { max-width: 20ch; }
+/* título de sección: un golpe centrado, solo en su estación, como los títulos de capítulo de la landing (corrección del usuario) */
+.rg-sec-head h2 { text-wrap: balance; }   /* dos líneas: «ADA no improvisa:» / «responde dentro de estas reglas» */
 /* «La regla más importante»: lámina de impacto (pedido del usuario). Bisagra oscura, título monumental con el acento
    del cierre de marca de la landing e imagen a sangre: arriba en teléfono y tablet vertical, media pantalla en desktop */
 .rg-page .stop.rg-imp { padding: 0; align-items: stretch; }
@@ -611,15 +610,14 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
   .rg-imp-grid { grid-template-rows: 50svh 1fr; }
   .rg-imp-txt { padding: 32px 48px 40px; }
 }
-/* tablet (600–1099): las dos acciones principales lado a lado, con el mismo tamaño; la secundaria debajo, a todo el ancho */
-@media (min-width: 600px) and (max-width: 1099px) {
-  .rg-close-acts { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .rg-close-acts .btn.sec { grid-column: 1 / -1; }
-}
+/* tablet y desktop: los botones como en la landing (el par de CTA de 11.6 y 12.4): filas de acción apiladas, al ancho de la
+   columna de lectura, en la columna del texto, entre el retrato y el borde del contenedor (corrección del usuario: la
+   cuadrícula de 2 + 1 se salía del estilo de la landing). «Regresar a Digizen», secundario, al final, un poco aparte */
 @media (min-width: 600px) {
-  .rg-close-grid { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "por copy" "acts acts"; column-gap: var(--gap); row-gap: 28px; align-items: center; }
-  .rg-por { width: 200px; justify-self: start; }
-  .rg-close-acts { margin-top: 0; }
+  .rg-close-grid { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "por copy" "por acts"; column-gap: var(--gap); row-gap: var(--air); align-items: start; }
+  .rg-por { width: 200px; justify-self: start; align-self: center; }
+  .rg-close-acts { display: flex; flex-direction: column; gap: 10px; width: min(100%, var(--w-read)); margin-top: 0; }
+  .rg-close-acts .btn.sec { margin-top: 6px; }
   .rg-foot .foot { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 20px; }
   .rg-foot .foot-logo { margin: 0 8px 0 0; align-self: center; }
   .rg-foot .foot-links { margin: 0 0 0 auto; }
@@ -646,12 +644,9 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
   .rg-imp-fig img { object-position: 17% 50%; }   /* ADA y el adolescente están en el tercio izquierdo de la escena: los dos quedan en cuadro */
 }
 @media (min-width: 860px) and (max-width: 1099px) { .rg-imp-t { font-size: var(--t-semi); } }   /* en media pantalla angosta, el monumental no cabe */
-/* desktop: los botones van en la columna del texto, entre el retrato y el borde del contenedor, y los tres miden lo mismo
-   (pedido del usuario): las dos acciones principales en una fila y «Regresar a Digizen» debajo, al mismo ancho */
+/* desktop: el retrato mide lo que el bloque de texto y botones */
 @media (min-width: 1100px) {
-  .rg-close-grid { grid-template-areas: "por copy" "por acts"; row-gap: 28px; align-items: start; }
-  .rg-por { align-self: center; width: clamp(220px, 32svh, 300px); }   /* el retrato mide lo que el bloque de texto y botones */
-  .rg-close-acts { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .rg-por { width: clamp(220px, 32svh, 300px); }
 }
 @media (min-width: 1100px) {
   /* la lista ocupa el alto del texto más los botones, como en la A; los botones quedan bajo el texto */

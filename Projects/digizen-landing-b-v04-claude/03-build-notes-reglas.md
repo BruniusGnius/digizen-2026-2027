@@ -145,3 +145,10 @@ Además, adición de copy aprobada por el usuario: botón secundario **«Regresa
   - Auditoría del copy: 798 palabras, mismo orden (los acentos de color y el salto de línea no cambian palabras).
 - **Sigue sin publicarse en GitHub Pages.**
 
+
+## Título de sección centrado y botones del cierre como en la landing (correcciones del usuario, 2026-10-02)
+
+- **«Seguridad por diseño / ADA no improvisa: responde dentro de estas reglas»** se veía fuera del estilo de la landing (alineado a la izquierda, en tres líneas cortas, en una pantalla vacía). Ahora es un golpe centrado con la composición de los títulos de capítulo de la landing (01.1 «Lo que casi todos creemos», 02.1): mismas clases (`c ctr stack b01`), el antetítulo pequeño arriba, como en 08.3, y el título en dos líneas: «ADA no improvisa:» / «responde dentro de estas reglas». En teléfono el título ocupa tres líneas, centradas.
+- **Botones del cierre en tablet y desktop:** la cuadrícula de 2 + 1 se salía del estilo de la landing. Ahora son filas de acción apiladas, como el par de CTA de la landing (11.6, 12.4): al ancho de la columna de lectura (432 px), en la columna del texto, entre el retrato y el borde del contenedor. Primero «Inscribir a mi hijo», después «Tengo dudas», y «Regresar a Digizen», secundario, al final y un poco aparte. El teléfono no cambia.
+- **Verificado:** 1380 × 865, 1280 × 720, 1024 × 698, 768 × 954 y 390 × 844: todas las estaciones miden una pantalla, sin zonas de scroll libre. El copy no cambia (798 palabras, mismo orden).
+- **Sigue sin publicarse en GitHub Pages.**
