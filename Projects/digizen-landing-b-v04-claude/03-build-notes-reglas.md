@@ -190,4 +190,4 @@ Medido el 2026-10-02, después de que el usuario notara que GitHub Pages bajaba 
   3. Tope de 1920 px (o calidad menor en la de 2560) para pantallas retina.
   4. Quitar de la carpeta publicada los originales que no se usan (no afectan la carga, solo el peso del repositorio).
   5. En el hosting de producción: caché larga con nombres de archivo versionados. GitHub Pages fija la caché en 10 minutos y no se puede cambiar.
-- Se hace como una pasada propia antes de producción y se comparan antes y después: peso total, tiempo hasta la primera imagen y que la calidad visual no baje.
+- **Cuándo (decisión del usuario, 2026-10-02):** cerca de la versión final, cuando se monte en el servidor; todavía falta tramo por construir. Se hace como una pasada propia y se comparan antes y después: peso total, tiempo hasta la primera imagen y que la calidad visual no baje.
