@@ -70,6 +70,8 @@
       if (y != null) DZ.scrollToY(y + 1);
     });
   });
+  /* enlaces del menú (la página de reglas, que abre en otra pestaña): el menú se cierra al tocarlos */
+  menu.addEventListener('click', function (e) { if (e.target.closest('a.menu-item')) closeMenu(true); });
   var faq = menu.querySelector('[data-menu-goto]');
   if (faq) faq.addEventListener('click', function () { closeMenu(true); DZ.goTo(faq.getAttribute('data-menu-goto')); });
 
