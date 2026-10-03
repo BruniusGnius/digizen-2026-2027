@@ -169,3 +169,25 @@ Además, adición de copy aprobada por el usuario: botón secundario **«Regresa
 - Como ahora el panel oscuro queda a la derecha, sobre la lámina cambia de color el **botón de menú** (versión clara) y el logo se queda oscuro sobre la imagen. Teléfono y tablet vertical no cambian.
 - Verificado en 1380 × 865 y 1024 × 698: la lámina mide una pantalla, sin zonas de scroll libre; copy sin cambios.
 - **Aprobada por el usuario para publicarse en GitHub Pages** (2026-10-02).
+
+## Decisiones del usuario sobre el teléfono (2026-10-02)
+
+- **Botones del cierre en teléfono:** se quedan con los textos completos de la fuente, apilados y con flecha. Los textos cortos son solo para tablet y desktop.
+- **Entrada en teléfono:** se queda en dos estaciones (deja de ser prueba).
+- «La landing B se queda como está»: no se cambia nada más por ahora.
+
+## Pendiente: optimización de imágenes antes de producción
+
+Medido el 2026-10-02, después de que el usuario notara que GitHub Pages bajaba lento las imágenes. Ese día la transferencia de GitHub iba a 100–150 KB/s; ninguna imagen cambió en la publicación.
+
+- **Ya hecho en el build:** WebP calidad 72; anchos por pantalla (1280 / 1920 / 2560 en desktop; 800 / 1200 vertical en teléfono); carga diferida en todas menos la del Hero, que se precarga con prioridad alta. Las secuencias animadas se descargan solo en desktop, cuando su sección está cerca, y no se descargan con ahorro de datos o conexión lenta.
+- **Lo que pesa hoy para un visitante:**
+  - desktop con pantalla retina: unos 2.4 MB de escenas, más unos 12 MB de las tres secuencias animadas (50, 50 y 130 cuadros);
+  - teléfono: unos 1.3 MB.
+- **Qué se puede optimizar, en ese orden de impacto:**
+  1. Secuencias: menos cuadros, cuadros a 960 px en lugar de 1280 y más compresión. Es lo que más pesa.
+  2. Versión AVIF de cada escena (30–50 % más ligera que WebP), con el WebP como respaldo.
+  3. Tope de 1920 px (o calidad menor en la de 2560) para pantallas retina.
+  4. Quitar de la carpeta publicada los originales que no se usan (no afectan la carga, solo el peso del repositorio).
+  5. En el hosting de producción: caché larga con nombres de archivo versionados. GitHub Pages fija la caché en 10 minutos y no se puede cambiar.
+- Se hace como una pasada propia antes de producción y se comparan antes y después: peso total, tiempo hasta la primera imagen y que la calidad visual no baje.
