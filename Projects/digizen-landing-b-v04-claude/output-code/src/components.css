@@ -641,10 +641,11 @@ html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
   .rg-acts .btn { width: auto; flex: 0 1 auto; white-space: nowrap; }
   .rg-por { width: clamp(200px, 26svh, 280px); }
 }
-/* desktop y tablet horizontal: el texto a la izquierda, alineado con el resto de la página; la imagen, media pantalla a sangre */
+/* desktop y tablet horizontal: la imagen a la izquierda, a sangre; el texto a la derecha, alineado con el borde derecho del
+   resto de la página (pedido del usuario) */
 @media (min-width: 860px) {
-  .rg-imp-grid { grid-template-columns: 7fr 5fr; grid-template-rows: none; grid-template-areas: "txt fig"; }
-  .rg-imp-txt { padding: 84px 56px 48px max(var(--pad-x), calc((100vw - var(--w-grid)) / 2 + var(--pad-x))); }
+  .rg-imp-grid { grid-template-columns: 5fr 7fr; grid-template-rows: none; grid-template-areas: "fig txt"; }
+  .rg-imp-txt { padding: 84px max(var(--pad-x), calc((100vw - var(--w-grid)) / 2 + var(--pad-x))) 48px 64px; }
   .rg-imp-fig img { object-position: 17% 50%; }   /* ADA y el adolescente están en el tercio izquierdo de la escena: los dos quedan en cuadro */
 }
 @media (min-width: 860px) and (max-width: 1099px) { .rg-imp-t { font-size: var(--t-semi); } }   /* en media pantalla angosta, el monumental no cabe */

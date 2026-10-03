@@ -162,3 +162,10 @@ Además, adición de copy aprobada por el usuario: botón secundario **«Regresa
 - **Desktop (≥1100):** la fila va en la columna del texto, entre el retrato y el borde derecho del contenedor; los tres miden lo mismo (285 px a 1380; 301 a 1280).
 - **Verificado:** 1380 × 865, 1280 × 720, 1024 × 698, 768 × 954, 744 × 1000, 600 × 960 y 390 × 844: todas las estaciones miden una pantalla, sin zonas de scroll libre. El copy, igual a la fuente en los tres anchos (798 palabras, mismo orden), con los dos recortes declarados. «Conversar con ADA» abre el formulario; los enlaces de inscripción y de regreso no cambian.
 - **Sigue sin publicarse en GitHub Pages.**
+
+## Lámina de «La regla más importante»: imagen a la izquierda en desktop (pedido del usuario, 2026-10-02)
+
+- Desde 860 px la imagen va a la izquierda (5/12, a sangre) y el texto a la derecha (7/12), alineado con el borde derecho de la retícula de la página. El encuadre de la imagen no cambia: ADA y el adolescente salen completos.
+- Como ahora el panel oscuro queda a la derecha, sobre la lámina cambia de color el **botón de menú** (versión clara) y el logo se queda oscuro sobre la imagen. Teléfono y tablet vertical no cambian.
+- Verificado en 1380 × 865 y 1024 × 698: la lámina mide una pantalla, sin zonas de scroll libre; copy sin cambios.
+- **Aprobada por el usuario para publicarse en GitHub Pages** (2026-10-02).
