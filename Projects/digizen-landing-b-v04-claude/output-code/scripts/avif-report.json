@@ -71,16 +71,26 @@
  },
  "scenes/03-fastidio-v-1040": {
   "avif": null,
+  "hand": true,
   "q": null,
+  "size": [
+   1040,
+   1786
+  ],
   "ssim_avif": null,
-  "ssim_webp": 0.887,
+  "ssim_webp": null,
   "webp": 281404
  },
  "scenes/03-fastidio-v-800": {
   "avif": null,
+  "hand": true,
   "q": null,
+  "size": [
+   800,
+   1374
+  ],
   "ssim_avif": null,
-  "ssim_webp": 0.8495,
+  "ssim_webp": null,
   "webp": 110662
  },
  "scenes/04-shield-1184": {

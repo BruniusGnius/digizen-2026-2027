@@ -1,6 +1,7 @@
 /* Entrada de Tailwind v4: preflight + tokens del sistema + componentes.
    Se compila con `npm run css` → dist/styles.css */
 @import "tailwindcss";
+@import "./fonts.css";   /* Inter servida desde el proyecto (antes, Google Fonts) */
 @import "./tokens.css";
 @import "./components.css";
 

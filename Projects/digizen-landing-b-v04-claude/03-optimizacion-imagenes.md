@@ -80,3 +80,15 @@ Los WebP publicados no cambiaron, así que basta con quitar los AVIF: en `output
 ## Observación
 
 La página entra en «modo ligero» cuando el navegador reporta ahorro de datos o conexión 2G/3G: en ese modo las secuencias no se descargan y queda la imagen fija. Es por diseño, pero explica por qué en una conexión lenta las animaciones pueden no aparecer.
+
+## Mejoras tras la auditoría de Lighthouse (2026-10-05)
+
+El usuario corrió Lighthouse 13 sobre la versión publicada. En incógnito (medición limpia): desktop 97 / 100 / 100 / 66 y móvil 93 / 100 / 100 / 66 (rendimiento, accesibilidad, buenas prácticas, SEO). El SEO de 66 es a propósito: la B está marcada como vista previa (`noindex`) mientras la A es la oficial.
+
+Cambios (rama `mejoras-lighthouse`; ninguno cambia cómo se ve la página):
+
+- **Inter servida desde el proyecto.** Antes la página pedía la tipografía a Google Fonts antes de pintar (780 ms de bloqueo en móvil). Ahora los mismos archivos y los mismos rangos están en `output-code/assets/fonts/` (14 archivos, 694 KiB; el navegador solo baja los que usa: latin normal y cursiva, unos 150 KiB) y se declaran en `src/fonts.css`. El normal se precarga. Licencia: SIL Open Font License.
+- **Pósteres de las secuencias y cuadro fijo de ADA con carga diferida.** En teléfono los pósteres de desktop están ocultos pero se descargaban igual (unos 215 KiB de los 760 KiB de la página).
+- **Logo del pie con ancho y alto declarados.**
+
+Verificado en local: ninguna petición a Google; Inter disponible desde el proyecto; en teléfono los pósteres de desktop ya no se piden; copy sin cambios; sin errores de consola. Al publicar hay que copiar también `assets/fonts/`.

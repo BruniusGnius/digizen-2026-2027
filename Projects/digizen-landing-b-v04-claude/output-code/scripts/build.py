@@ -267,6 +267,10 @@ def prod(h, sid=None):
     # secuencias con cuadros AVIF: el script los pide si el navegador los decodifica; si no, los WebP
     h = re.sub(r"data-seq='assets/seq/([^']+)'", lambda m: m.group(0) + (" data-avif='1'" if m.group(1) in SEQ_AVIF_OK else ''), h)
     h = h.replace("src='00-context/logo/", "src='assets/logo/")
+    # Lighthouse (2026-10-05): el logo del pie declara su proporción; los pósteres de las secuencias y el cuadro fijo de ADA
+    # se cargan al acercarse (en teléfono los pósteres están ocultos y así ya no se descargan)
+    h = h.replace("<img class='foot-logo'", "<img class='foot-logo' width='275' height='116'")
+    h = re.sub(r"<img class='(seq-poster|ada-still)'([^>]*)>", r"<img class='\1'\2 loading='lazy' decoding='async'>", h)
     h = re.sub(r"<a( class='btn[^']*'[^>]*)>(.*?)</a>", button, h, flags=re.S)
     for txt, url in FOOT_LINKS.items():
         h = h.replace(f"<a class='lnk'>{txt}</a>", f"<a class='lnk' href='{url}' target='_blank' rel='noopener'>{txt}</a>")
@@ -486,9 +490,7 @@ def page(pins, title, indexable=True):
 {cfg_script()}
 <meta name="theme-color" content="#F4F3F0">
 <link rel="icon" type="image/svg+xml" href="assets/logo/Favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..800;1,14..32,400..800&display=swap">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-latin-normal.woff2" crossorigin>
 {pre}
 <link rel="stylesheet" href="dist/styles.css?v={ver}">
 </head>
@@ -748,9 +750,7 @@ def rules_page(pins, imgs):
 <script>window.DZ_CFG = {json.dumps(FINAL_CFG)};</script>
 <meta name="theme-color" content="#F4F3F0">
 <link rel="icon" type="image/svg+xml" href="assets/logo/Favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..800;1,14..32,400..800&display=swap">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-latin-normal.woff2" crossorigin>
 <link rel='preload' as='image' media='(min-width: 860px)' imagesrcset='{sset(d_intro)}' imagesizes='340px' fetchpriority='high'>
 <link rel="stylesheet" href="dist/styles.css?v={ver}">
 </head>
