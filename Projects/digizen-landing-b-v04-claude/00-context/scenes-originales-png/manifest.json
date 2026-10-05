@@ -1,0 +1,274 @@
+[
+  {
+    "name": "01-dinner",
+    "scene": "A Mexican mother and father at dinner with their 14-year-old son absorbed in his everyday smartphone. Quiet emotional distance, no judgement. Wide editorial composition, table across the lower third, family in lower half, ample clean white upper space for typesetting outside the artwork.",
+    "actions": [
+      {
+        "iconHint": "upscale",
+        "id": "enhance_image",
+        "label": "Enhance"
+      },
+      {
+        "iconHint": "eraser",
+        "id": "remove_background",
+        "label": "Remove Background"
+      }
+    ],
+    "canDownload": true,
+    "canFullView": true,
+    "canUse": true,
+    "id": "647143e8-dc69-4c8d-b8a4-2ec058a53c6a",
+    "mediaUrl": "https://asset.imagine.art/processed/647143e8-dc69-4c8d-b8a4-2ec058a53c6a",
+    "metadata": {
+      "file_size": 2115808,
+      "format_type": ".png",
+      "has_audio": false,
+      "height": 1024,
+      "mime_type": "image/png",
+      "type": "image",
+      "width": 1024
+    },
+    "status": "complete",
+    "thumbnailUrl": "https://asset.imagine.art/video/thumbnails/647143e8-dc69-4c8d-b8a4-2ec058a53c6a",
+    "type": "image",
+    "prompt": "DIGIZEN version B narrative editorial artwork. Premium mixed-media illustration: natural semi-photorealistic anatomy and faces, deliberately visible thick oil-paint impasto, palette-knife ridges and dry-brush edges. Bright cloud-white paper merging into pure white edges, cobalt #3561f3, cyan #22bed1, teal, small coral #ff6b5f accent, natural skin. Illustrated volume, NOT a 3D render, NOT flat vector, NOT stock photography. Contemporary middle-class Mexican family, warm intelligent humane tone. No text, typography, watermarks, logos, robots, mentor character, glowing apparition, padlocks, surveillance or security icons. A Mexican mother and father at dinner with their 14-year-old son absorbed in his everyday smartphone. Quiet emotional distance, no judgement. Wide editorial composition, table across the lower third, family in lower half, ample clean white upper space for typesetting outside the artwork."
+  },
+  {
+    "name": "02-time",
+    "scene": "Editorial still life: four dismantled paper clocks and an empty chair at a family table, a smartphone face down. Metaphor that time measurement cannot replace conversation. No padlocks, no security icons. White space, tactile blue paint and small coral accents.",
+    "actions": [
+      {
+        "iconHint": "upscale",
+        "id": "enhance_image",
+        "label": "Enhance"
+      },
+      {
+        "iconHint": "eraser",
+        "id": "remove_background",
+        "label": "Remove Background"
+      }
+    ],
+    "canDownload": true,
+    "canFullView": true,
+    "canUse": true,
+    "id": "809cd337-c5e7-4ab1-9d23-9e974f2cebc0",
+    "mediaUrl": "https://asset.imagine.art/processed/809cd337-c5e7-4ab1-9d23-9e974f2cebc0",
+    "metadata": {
+      "file_size": 1953955,
+      "format_type": ".png",
+      "has_audio": false,
+      "height": 1024,
+      "mime_type": "image/png",
+      "type": "image",
+      "width": 1024
+    },
+    "status": "complete",
+    "thumbnailUrl": "https://asset.imagine.art/video/thumbnails/809cd337-c5e7-4ab1-9d23-9e974f2cebc0",
+    "type": "image",
+    "prompt": "DIGIZEN version B narrative editorial artwork. Premium mixed-media illustration: natural semi-photorealistic anatomy and faces, deliberately visible thick oil-paint impasto, palette-knife ridges and dry-brush edges. Bright cloud-white paper merging into pure white edges, cobalt #3561f3, cyan #22bed1, teal, small coral #ff6b5f accent, natural skin. Illustrated volume, NOT a 3D render, NOT flat vector, NOT stock photography. Contemporary middle-class Mexican family, warm intelligent humane tone. No text, typography, watermarks, logos, robots, mentor character, glowing apparition, padlocks, surveillance or security icons. Editorial still life: four dismantled paper clocks and an empty chair at a family table, a smartphone face down. Metaphor that time measurement cannot replace conversation. No padlocks, no security icons. White space, tactile blue paint and small coral accents."
+  },
+  {
+    "name": "03-eyes",
+    "scene": "Close portrait of a fictional Mexican teenage boy rolling his eyes upward in mild everyday exasperation. The smartphone held naturally covers only the lower portion of his face. Expressive eyes, realistic hands, royal-blue casual shirt, white paper background.",
+    "actions": [
+      {
+        "iconHint": "upscale",
+        "id": "enhance_image",
+        "label": "Enhance"
+      },
+      {
+        "iconHint": "eraser",
+        "id": "remove_background",
+        "label": "Remove Background"
+      }
+    ],
+    "canDownload": true,
+    "canFullView": true,
+    "canUse": true,
+    "id": "6167d712-cd3a-4d61-975d-c58ef873b731",
+    "mediaUrl": "https://asset.imagine.art/processed/6167d712-cd3a-4d61-975d-c58ef873b731",
+    "metadata": {
+      "file_size": 2258982,
+      "format_type": ".png",
+      "has_audio": false,
+      "height": 1024,
+      "mime_type": "image/png",
+      "type": "image",
+      "width": 1024
+    },
+    "status": "complete",
+    "thumbnailUrl": "https://asset.imagine.art/video/thumbnails/6167d712-cd3a-4d61-975d-c58ef873b731",
+    "type": "image",
+    "prompt": "DIGIZEN version B narrative editorial artwork. Premium mixed-media illustration: natural semi-photorealistic anatomy and faces, deliberately visible thick oil-paint impasto, palette-knife ridges and dry-brush edges. Bright cloud-white paper merging into pure white edges, cobalt #3561f3, cyan #22bed1, teal, small coral #ff6b5f accent, natural skin. Illustrated volume, NOT a 3D render, NOT flat vector, NOT stock photography. Contemporary middle-class Mexican family, warm intelligent humane tone. No text, typography, watermarks, logos, robots, mentor character, glowing apparition, padlocks, surveillance or security icons. Close portrait of a fictional Mexican teenage boy rolling his eyes upward in mild everyday exasperation. The smartphone held naturally covers only the lower portion of his face. Expressive eyes, realistic hands, royal-blue casual shirt, white paper background."
+  },
+  {
+    "name": "04-distance",
+    "scene": "A fictional Mexican mother and teenage son turned slightly away from one another on opposite sides of a table, each enclosed by an identical broad open crescent-shaped painted blue brushstroke. Mirror emotional defensiveness without shields or security symbolism. Respectful, quiet, cloud-white backdrop.",
+    "actions": [
+      {
+        "iconHint": "upscale",
+        "id": "enhance_image",
+        "label": "Enhance"
+      },
+      {
+        "iconHint": "eraser",
+        "id": "remove_background",
+        "label": "Remove Background"
+      }
+    ],
+    "canDownload": true,
+    "canFullView": true,
+    "canUse": true,
+    "id": "d94e0bef-a8c4-4d67-b77a-3d1db0f50997",
+    "mediaUrl": "https://asset.imagine.art/processed/d94e0bef-a8c4-4d67-b77a-3d1db0f50997",
+    "metadata": {
+      "file_size": 1755807,
+      "format_type": ".png",
+      "has_audio": false,
+      "height": 1024,
+      "mime_type": "image/png",
+      "type": "image",
+      "width": 1024
+    },
+    "status": "complete",
+    "thumbnailUrl": "https://asset.imagine.art/video/thumbnails/d94e0bef-a8c4-4d67-b77a-3d1db0f50997",
+    "type": "image",
+    "prompt": "DIGIZEN version B narrative editorial artwork. Premium mixed-media illustration: natural semi-photorealistic anatomy and faces, deliberately visible thick oil-paint impasto, palette-knife ridges and dry-brush edges. Bright cloud-white paper merging into pure white edges, cobalt #3561f3, cyan #22bed1, teal, small coral #ff6b5f accent, natural skin. Illustrated volume, NOT a 3D render, NOT flat vector, NOT stock photography. Contemporary middle-class Mexican family, warm intelligent humane tone. No text, typography, watermarks, logos, robots, mentor character, glowing apparition, padlocks, surveillance or security icons. A fictional Mexican mother and teenage son turned slightly away from one another on opposite sides of a table, each enclosed by an identical broad open crescent-shaped painted blue brushstroke. Mirror emotional defensiveness without shields or security symbolism. Respectful, quiet, cloud-white backdrop."
+  },
+  {
+    "name": "05-crossing",
+    "scene": "A Mexican mother teaching her teenage son to look both ways before crossing. Surreal editorial street formed by large abstract blank digital-post rectangles and a painted crosswalk, bright white setting. They stand together on curb, eye level, mother pointing gently to the left. Digital judgment metaphor, no text.",
+    "actions": [
+      {
+        "iconHint": "upscale",
+        "id": "enhance_image",
+        "label": "Enhance"
+      },
+      {
+        "iconHint": "eraser",
+        "id": "remove_background",
+        "label": "Remove Background"
+      }
+    ],
+    "canDownload": true,
+    "canFullView": true,
+    "canUse": true,
+    "id": "18c9e814-82b6-436f-900a-b620b23f26b5",
+    "mediaUrl": "https://asset.imagine.art/processed/18c9e814-82b6-436f-900a-b620b23f26b5",
+    "metadata": {
+      "file_size": 2215814,
+      "format_type": ".png",
+      "has_audio": false,
+      "height": 1024,
+      "mime_type": "image/png",
+      "type": "image",
+      "width": 1024
+    },
+    "status": "complete",
+    "thumbnailUrl": "https://asset.imagine.art/video/thumbnails/18c9e814-82b6-436f-900a-b620b23f26b5",
+    "type": "image",
+    "prompt": "DIGIZEN version B narrative editorial artwork. Premium mixed-media illustration: natural semi-photorealistic anatomy and faces, deliberately visible thick oil-paint impasto, palette-knife ridges and dry-brush edges. Bright cloud-white paper merging into pure white edges, cobalt #3561f3, cyan #22bed1, teal, small coral #ff6b5f accent, natural skin. Illustrated volume, NOT a 3D render, NOT flat vector, NOT stock photography. Contemporary middle-class Mexican family, warm intelligent humane tone. No text, typography, watermarks, logos, robots, mentor character, glowing apparition, padlocks, surveillance or security icons. A Mexican mother teaching her teenage son to look both ways before crossing. Surreal editorial street formed by large abstract blank digital-post rectangles and a painted crosswalk, bright white setting. They stand together on curb, eye level, mother pointing gently to the left. Digital judgment metaphor, no text."
+  },
+  {
+    "name": "06-rules",
+    "scene": "A bright domestic refrigerator with an unlettered white sheet attached by a small cyan magnet, beside a child's colorful drawing and a grocery checklist represented by simple short strokes. Tactile impasto paint, intimate everyday family scene, no readable letters.",
+    "actions": [
+      {
+        "iconHint": "upscale",
+        "id": "enhance_image",
+        "label": "Enhance"
+      },
+      {
+        "iconHint": "eraser",
+        "id": "remove_background",
+        "label": "Remove Background"
+      }
+    ],
+    "canDownload": true,
+    "canFullView": true,
+    "canUse": true,
+    "id": "91f1e27b-7345-46e1-b0ea-53ff8b20510a",
+    "mediaUrl": "https://asset.imagine.art/processed/91f1e27b-7345-46e1-b0ea-53ff8b20510a",
+    "metadata": {
+      "file_size": 2308206,
+      "format_type": ".png",
+      "has_audio": false,
+      "height": 1024,
+      "mime_type": "image/png",
+      "type": "image",
+      "width": 1024
+    },
+    "status": "complete",
+    "thumbnailUrl": "https://asset.imagine.art/video/thumbnails/91f1e27b-7345-46e1-b0ea-53ff8b20510a",
+    "type": "image",
+    "prompt": "DIGIZEN version B narrative editorial artwork. Premium mixed-media illustration: natural semi-photorealistic anatomy and faces, deliberately visible thick oil-paint impasto, palette-knife ridges and dry-brush edges. Bright cloud-white paper merging into pure white edges, cobalt #3561f3, cyan #22bed1, teal, small coral #ff6b5f accent, natural skin. Illustrated volume, NOT a 3D render, NOT flat vector, NOT stock photography. Contemporary middle-class Mexican family, warm intelligent humane tone. No text, typography, watermarks, logos, robots, mentor character, glowing apparition, padlocks, surveillance or security icons. A bright domestic refrigerator with an unlettered white sheet attached by a small cyan magnet, beside a child's colorful drawing and a grocery checklist represented by simple short strokes. Tactile impasto paint, intimate everyday family scene, no readable letters."
+  },
+  {
+    "name": "07-together",
+    "scene": "Mexican father and teenage son sitting at a table, looking at each other attentively. Two phones lie FACE DOWN on table. Quiet beginning of real connection, understated expressions, not stock smiles. White background and cobalt/cyan painterly clothing.",
+    "actions": [
+      {
+        "iconHint": "upscale",
+        "id": "enhance_image",
+        "label": "Enhance"
+      },
+      {
+        "iconHint": "eraser",
+        "id": "remove_background",
+        "label": "Remove Background"
+      }
+    ],
+    "canDownload": true,
+    "canFullView": true,
+    "canUse": true,
+    "id": "0dba5e21-f10e-4d0c-a637-e3fc8e341d7a",
+    "mediaUrl": "https://asset.imagine.art/processed/0dba5e21-f10e-4d0c-a637-e3fc8e341d7a",
+    "metadata": {
+      "file_size": 2205643,
+      "format_type": ".png",
+      "has_audio": false,
+      "height": 1024,
+      "mime_type": "image/png",
+      "type": "image",
+      "width": 1024
+    },
+    "status": "complete",
+    "thumbnailUrl": "https://asset.imagine.art/video/thumbnails/0dba5e21-f10e-4d0c-a637-e3fc8e341d7a",
+    "type": "image",
+    "prompt": "DIGIZEN version B narrative editorial artwork. Premium mixed-media illustration: natural semi-photorealistic anatomy and faces, deliberately visible thick oil-paint impasto, palette-knife ridges and dry-brush edges. Bright cloud-white paper merging into pure white edges, cobalt #3561f3, cyan #22bed1, teal, small coral #ff6b5f accent, natural skin. Illustrated volume, NOT a 3D render, NOT flat vector, NOT stock photography. Contemporary middle-class Mexican family, warm intelligent humane tone. No text, typography, watermarks, logos, robots, mentor character, glowing apparition, padlocks, surveillance or security icons. Mexican father and teenage son sitting at a table, looking at each other attentively. Two phones lie FACE DOWN on table. Quiet beginning of real connection, understated expressions, not stock smiles. White background and cobalt/cyan painterly clothing."
+  },
+  {
+    "name": "08-autonomy",
+    "scene": "A Mexican teenage boy with a backpack crossing a bright stylized crosswalk independently, head turned to look left, while his father watches from behind at the curb, hands free with NO phone. Hopeful grounded autonomy. Wide clean white painterly composition.",
+    "actions": [
+      {
+        "iconHint": "upscale",
+        "id": "enhance_image",
+        "label": "Enhance"
+      },
+      {
+        "iconHint": "eraser",
+        "id": "remove_background",
+        "label": "Remove Background"
+      }
+    ],
+    "canDownload": true,
+    "canFullView": true,
+    "canUse": true,
+    "id": "d19275cb-900a-4606-8cce-3ad72be34e05",
+    "mediaUrl": "https://asset.imagine.art/processed/d19275cb-900a-4606-8cce-3ad72be34e05",
+    "metadata": {
+      "file_size": 1510575,
+      "format_type": ".png",
+      "has_audio": false,
+      "height": 1024,
+      "mime_type": "image/png",
+      "type": "image",
+      "width": 1024
+    },
+    "status": "complete",
+    "thumbnailUrl": "https://asset.imagine.art/video/thumbnails/d19275cb-900a-4606-8cce-3ad72be34e05",
+    "type": "image",
+    "prompt": "DIGIZEN version B narrative editorial artwork. Premium mixed-media illustration: natural semi-photorealistic anatomy and faces, deliberately visible thick oil-paint impasto, palette-knife ridges and dry-brush edges. Bright cloud-white paper merging into pure white edges, cobalt #3561f3, cyan #22bed1, teal, small coral #ff6b5f accent, natural skin. Illustrated volume, NOT a 3D render, NOT flat vector, NOT stock photography. Contemporary middle-class Mexican family, warm intelligent humane tone. No text, typography, watermarks, logos, robots, mentor character, glowing apparition, padlocks, surveillance or security icons. A Mexican teenage boy with a backpack crossing a bright stylized crosswalk independently, head turned to look left, while his father watches from behind at the curb, hands free with NO phone. Hopeful grounded autonomy. Wide clean white painterly composition."
+  }
+]

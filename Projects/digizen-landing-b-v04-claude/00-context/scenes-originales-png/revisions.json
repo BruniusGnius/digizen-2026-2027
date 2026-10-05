@@ -1,0 +1,101 @@
+[
+  {
+    "name": "02-time",
+    "actions": [
+      {
+        "iconHint": "upscale",
+        "id": "enhance_image",
+        "label": "Enhance"
+      },
+      {
+        "iconHint": "eraser",
+        "id": "remove_background",
+        "label": "Remove Background"
+      }
+    ],
+    "canDownload": true,
+    "canFullView": true,
+    "canUse": true,
+    "id": "612cd9aa-3518-4c60-8a59-5722bf128e7a",
+    "mediaUrl": "https://asset.imagine.art/processed/612cd9aa-3518-4c60-8a59-5722bf128e7a",
+    "metadata": {
+      "file_size": 2002100,
+      "format_type": ".png",
+      "has_audio": false,
+      "height": 1024,
+      "mime_type": "image/png",
+      "type": "image",
+      "width": 1024
+    },
+    "status": "complete",
+    "thumbnailUrl": "https://asset.imagine.art/video/thumbnails/612cd9aa-3518-4c60-8a59-5722bf128e7a",
+    "type": "image",
+    "prompt": "Editorial still-life illustration, NO PEOPLE and NO HUMAN FIGURES. Exactly four paper clock faces dismantled on a white tabletop, a single empty cobalt blue chair behind it, one smartphone face DOWN showing its matte blue BACK with small CAMERA LENSES. Metaphor for measuring time without conversation. Premium mixed-media semi-realistic painterly oil impasto with thick palette knife strokes, royal blue #3561f3, cyan #22bed1 and small coral #ff6b5f. Pure white background and generous white edges. NO book, no frame, no padlocks, no typography."
+  },
+  {
+    "name": "06-rules",
+    "actions": [
+      {
+        "iconHint": "upscale",
+        "id": "enhance_image",
+        "label": "Enhance"
+      },
+      {
+        "iconHint": "eraser",
+        "id": "remove_background",
+        "label": "Remove Background"
+      }
+    ],
+    "canDownload": true,
+    "canFullView": true,
+    "canUse": true,
+    "id": "7db380a5-d733-4b28-8d10-f03f04916364",
+    "mediaUrl": "https://asset.imagine.art/processed/7db380a5-d733-4b28-8d10-f03f04916364",
+    "metadata": {
+      "file_size": 2202657,
+      "format_type": ".png",
+      "has_audio": false,
+      "height": 1024,
+      "mime_type": "image/png",
+      "type": "image",
+      "width": 1024
+    },
+    "status": "complete",
+    "thumbnailUrl": "https://asset.imagine.art/video/thumbnails/7db380a5-d733-4b28-8d10-f03f04916364",
+    "type": "image",
+    "prompt": "Close-up editorial painterly still life of a refrigerator door ONLY, absolutely NO PEOPLE. An unlettered blank white rule sheet attached with cyan magnet, next to a child's drawing and a grocery list represented by abstract strokes, NO readable text. Cobalt blue and cyan with tiny coral accents. Thick oil impasto palette-knife texture, realistic object shapes, white paper background fading to pure white edges. NO book or frame."
+  },
+  {
+    "name": "07-together",
+    "actions": [
+      {
+        "iconHint": "upscale",
+        "id": "enhance_image",
+        "label": "Enhance"
+      },
+      {
+        "iconHint": "eraser",
+        "id": "remove_background",
+        "label": "Remove Background"
+      }
+    ],
+    "canDownload": true,
+    "canFullView": true,
+    "canUse": true,
+    "id": "2736a7c9-b827-44b0-bfa6-732a3252adad",
+    "mediaUrl": "https://asset.imagine.art/processed/2736a7c9-b827-44b0-bfa6-732a3252adad",
+    "metadata": {
+      "file_size": 2273432,
+      "format_type": ".png",
+      "has_audio": false,
+      "height": 1024,
+      "mime_type": "image/png",
+      "type": "image",
+      "width": 1024
+    },
+    "status": "complete",
+    "thumbnailUrl": "https://asset.imagine.art/video/thumbnails/2736a7c9-b827-44b0-bfa6-732a3252adad",
+    "type": "image",
+    "prompt": "Premium editorial painterly illustration of a Mexican father and teenage son looking at one another attentively at a white table. Both have hands resting on table, natural anatomy. Two smartphones are FACE DOWN, displays completely hidden against the table: show the solid opaque BLUE BACKS with VISIBLE REAR CAMERA LENSES, absolutely no glass screens visible. Quiet emotional connection. Photorealistic anatomical base with thick oil impasto and palette knife marks, cobalt #3561f3, cyan #22bed1, white background with white feathered painted edges, subtle coral accents. No book, no frame, no text, no guardian or mentor figure."
+  }
+]

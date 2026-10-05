@@ -1,0 +1,35 @@
+DIGIZEN · CINCO CREENCIAS
+Entrega para diseño · 22 de septiembre de 2026
+
+EMPIEZA AQUÍ
+Descomprime el ZIP y abre sitio/dist/index.html en Chrome, Safari o Edge.
+La página funciona sin instalación, sin servidor y sin conexión para leerla.
+Mantén juntos el HTML, los estilos, los scripts y la carpeta assets.
+
+QUÉ INCLUYE
+• sitio/dist/: la landing completa, con el diseño y los ajustes aprobados.
+• sitio/dist/assets/: las ocho ilustraciones finales en PNG, 1536 × 1024.
+• copy/COPY-PUBLICADO.md: el texto que aparece en la historia, extraído del HTML final.
+• copy/digizen-copy-narrativa-ab.md: documento editorial con notas de producción.
+• sitio/copy-source.md y sitio/build_page.py: fuente editable y generador opcional.
+• GUIA-DE-DISENO.md: estilo, ritmo, imágenes y funcionamiento pendiente.
+• referencias/ILUSTRACIONES.html: galería local de todas las imágenes finales.
+• referencias/PROMPTS-ILUSTRACIONES.md: instrucciones utilizadas para las ilustraciones.
+
+PARA EDITAR
+El HTML y CSS pueden editarse directamente. No se necesita npm ni herramientas de compilación.
+Si se quiere regenerar la página desde el Markdown: entrar a la carpeta sitio y ejecutar
+python3 build_page.py
+Esto sobrescribe dist/index.html: no mezclar ediciones directas al HTML con regeneración sin respaldarlas.
+El generador usa sitio/copy-source.md, no el duplicado dentro de copy/.
+
+REFERENCIA VIGENTE
+Ante diferencias con notas antiguas del Markdown, mandan el HTML incluido y GUIA-DE-DISENO.md.
+La URL de revisión es https://digizen-cinco-creencias.rud0.chatgpt.site
+Tiene acceso privado; el ZIP permite revisar la página sin depender del acceso a esa URL.
+
+ESTADO FUNCIONAL
+La lectura, animaciones, preguntas frecuentes y diálogos están implementados.
+Los pagos, la entrega del acceso a ADA, el documento completo de reglas y el destino
+externo de métricas siguen pendientes. Los diálogos lo indican. No se realizan cargos
+ni se envían o guardan los datos escritos en el formulario de prueba.
