@@ -112,4 +112,4 @@ Pedido del usuario: relleno de degradado en los botones, muy similar al del cír
 - No cambian: los botones secundarios (`.dg-btn--secondary`), ni los demás usos de `--dg-btn-bg` (barra de progreso, marca de los antetítulos, sombras, enlaces del pie).
 - Contraste del texto blanco: 4.96:1 en el peor punto bajo el texto de los botones medidos (extremo claro del degradado 4.40, extremo oscuro 9.11; el azul sólido anterior daba 5.05).
 - Verificado en local: tema claro y oscuro, desktop y teléfono (menú abierto); build de producción correcto.
-- Rama `digizen-a-botones-degradado`. No está en `main`: no se ha publicado.
+- Aprobado por el usuario y publicado el 2026-10-05 (pasó a `main` desde la rama `digizen-a-botones-degradado`).
