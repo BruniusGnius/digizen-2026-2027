@@ -157,7 +157,12 @@ Cambios (rama `mejoras-lighthouse`; ninguno cambia cómo se ve la página):
 
 Verificado en local: build de producción con la hoja como enlace normal; en móvil el video no se pide y en desktop queda listo (8 s); sin errores de consola.
 
-Pendiente, requiere decisión porque cambia colores o es un cambio mayor:
-- **Contraste** (accesibilidad 96): `.dg-emphasis--green` (#188958 sobre blanco, 4.41; pide 4.5), los `.dg-caption` de la comparación de precios (#8b98aa, 2.9 y 2.6, texto de 10 px) y el texto «Escribe aquí...» del chat de ejemplo (#8b98aa, 2.85).
+- **Contraste** (aprobado por el usuario: «sí, oscurece»). Tres cambios de color en `styles.css`, tema claro:
+  - `--dg-text-green`: #188958 → #167f52. El verde de énfasis pasa de 4.41 a 5.01 sobre blanco (4.71 sobre el fondo de la página).
+  - `.dg-caption` (notas de 10 px): de `--dg-soft` a `--dg-muted`. Pasa de 2.6–2.9 a 4.55–5.04.
+  - `.dg-chat-input` («Escribe aquí...»): de `--dg-soft` a `--dg-muted`. Pasa de 2.85 a 4.91.
+  Comprobado en el navegador con los colores calculados de cada elemento.
+
+Pendiente, por decisión:
 - **Imágenes más grandes de lo que se muestran** (hasta 418 KiB en móvil): la del reloj, la cena y el apego en móvil, y las dos del CTA. Se resuelve con varios anchos por imagen.
 - **Prerenderizado:** en móvil el título principal tarda 3.8 s porque la página se arma con JavaScript.
