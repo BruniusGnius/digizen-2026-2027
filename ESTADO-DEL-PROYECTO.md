@@ -47,18 +47,32 @@ Los PNG de `public/` y los del respaldo están repetidos a propósito: el respal
 | `output-code/assets/` (escenas por ancho, `seq/`, `reglas/`, `og/`, `logo/`, `vendor/`) | Lo que usa el sitio (≈19 MB en línea) | Sí |
 | `output-code/assets/scenes/*-v.webp` (sin número de ancho) | Originales verticales; el build genera de ahí las versiones de teléfono | No |
 | `00-context/scenes/` | Escenas fuente (WebP) y los videos de origen de las animaciones | No |
-| `00-context/scenes-originales-png/` | Originales PNG sin pérdida, rescatados de la primera B antes de descartarla. Todavía no están en git | No |
+| `00-context/scenes-originales-png/` | Originales PNG sin pérdida, rescatados de la primera B antes de descartarla | No |
 | `assets/seq/`, `assets/avatars/` | Fuentes de las animaciones de cuadros y los avatares | No |
+| `asset-backups/publicado-antes-de-optimizar-2026-10-05/` | **Respaldo anterior a la optimización (2026-10-05). No se borra.** | No |
 
-La B no tiene todavía un respaldo «antes de optimizar» porque su optimización está pendiente (ver `Projects/digizen-landing-b-v04-claude/03-build-notes-reglas.md`, sección de optimización de imágenes).
+La B se optimizó el 2026-10-05: sirve AVIF con el WebP de siempre como respaldo, 37 % menos peso en desktop sin perder fidelidad. Está en la rama, **sin publicar**. Detalle, garantías y cómo volver atrás: `Projects/digizen-landing-b-v04-claude/03-optimizacion-imagenes.md`.
 
 ## Skills del proyecto
 
 `Skills/landing-builder/`, `Skills/apple-design/` y `Skills/gsap/` son parte del proyecto y están en git. Las instrucciones para agentes están en `AGENTS.md`.
 
-## Pendientes de orden
+## Reglas del usuario (2026-10-05)
 
-- Archivos de la A que siguen solo en este disco, sin guardar en git: un OGP nuevo (`seo/digizen-ogp-1200x630.jpg` y `.psd`, modificados el 2026-09-30), dos imágenes fuente de las reglas, tres documentos y dos imágenes borradas en local. Falta decidir cuáles se guardan y si el OGP nuevo se publica.
-- `Digizen-Cinco-Creencias-Diseno-2026-09-22/` y su `.zip`, en la raíz: sin guardar en git; falta decidir su lugar.
-- Orden en GitHub: llevar la B y las Skills a `main`, retirar las vistas previas de las B descartadas (`b-v2-preview-claude/`, `codex-b-alpha/`) y borrar las ramas que ya no se usan.
-- Optimización de imágenes de la B.
+- **Nada desaparece.** Lo que se elimine pasa por la Papelera. Las imágenes no publicadas y los PSD se conservan como opciones: en la A, en `Projects/digizen-landing/imagenes-no-publicadas/`.
+- **Siempre hay originales** antes de comprimir.
+- **Las páginas publicadas en GitHub Pages no cambian** mientras su jefe las revisa, incluidas las vistas previas de las B descartadas (`b-v2-preview-claude/`, `codex-b-alpha/`).
+- `Digizen-Cinco-Creencias-Diseno-2026-09-22/` y su `.zip` se quedan: es el ejemplo del jefe que dio origen a la B.
+
+## Listo en ramas, esperando visto bueno para publicar
+
+| Qué | Rama | Estado |
+|---|---|---|
+| A: la ADA del CTA no aparecía al volver de «Reglas de ADA» | `digizen-a-fix-ada-al-volver` | Corregido y probado en local. Publicar = pasar a `main`. |
+| B: optimización de imágenes (AVIF con respaldo WebP) | `digizen-b-v04-claude` | Hecha y probada en local. Publicar = copiar `output-code/` a `gh-pages/b-v04-claude/`, incluidos los `.avif`. |
+
+## Pendientes
+
+- **OGP de la A:** el nuevo (JPG y PSD del 2026-09-30) todavía no está en línea; la página sigue citando `assets/og/digizen-og-control-caduca-criterio-no.jpg`. Los archivos nuevos esperan en `angular-build/public/assets/digizen/seo/` (sin guardar en git) y hay copia en `imagenes-no-publicadas/ogp-2026-09-30/`. Al actualizarlo, sacar el PSD de `public/` para que no se publique.
+- **Orden en GitHub** (cuando termine la revisión): llevar la B, las Skills y este mapa a `main`; borrar las ramas ya integradas. Las vistas previas publicadas no se retiran sin que el usuario lo pida.
+- Revisión a ojo, en navegador visible y en dispositivos reales, de las dos piezas de la tabla de arriba.

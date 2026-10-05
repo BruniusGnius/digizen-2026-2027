@@ -4,10 +4,25 @@
    - no al abrir la página, sino ~6 encuadres antes de llegar al pin, o en reposo después del Hero;
    - primero 1 de cada 4 cuadros (el scrub ya funciona) y luego los intermedios;
    - como máximo 6 descargas a la vez; mientras falta un cuadro se dibuja el más cercano;
-   - con ahorro de datos o conexión lenta no se descargan: queda el cuadro fijo (póster). */
+   - con ahorro de datos o conexión lenta no se descargan: queda el cuadro fijo (póster).
+   Formato: si la secuencia tiene cuadros AVIF (data-avif='1') y el navegador los decodifica, se piden esos
+   (los mismos cuadros, más ligeros); si no, los WebP de siempre. */
 (function () {
   'use strict';
   var DZ = window.DZ;
+
+  // ---------- ¿el navegador decodifica AVIF (con transparencia)? se averigua una sola vez, con una imagen de 2×2 ----------
+  var avifOK = null, avifWait = [];
+  DZ.avif = function (fn) {
+    if (avifOK !== null) { fn(avifOK); return; }
+    avifWait.push(fn);
+    if (avifWait.length > 1) return;
+    var im = new Image();
+    var done = function (ok) { avifOK = ok; avifWait.splice(0).forEach(function (f) { f(ok); }); };
+    im.onload = function () { done(im.naturalWidth === 2); };
+    im.onerror = function () { done(false); };
+    im.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAAGGbWV0YQAAAAAAAAAhaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAAAAAAAOcGl0bQAAAAAAAQAAACxpbG9jAAAAAEQAAAIAAQAAAAEAAAG/AAAAJwACAAAAAQAAAa4AAAARAAAAQmlpbmYAAAAAAAIAAAAaaW5mZQIAAAAAAQAAYXYwMUNvbG9yAAAAABppbmZlAgAAAAACAABhdjAxQWxwaGEAAAAAGmlyZWYAAAAAAAAADmF1eGwAAgABAAEAAADDaXBycAAAAJ1pcGNvAAAAFGlzcGUAAAAAAAAAAgAAAAIAAAAQcGl4aQAAAAADCAgIAAAADGF2MUOBAAwAAAAAE2NvbHJuY2x4AAEADQAGgAAAAA5waXhpAAAAAAEIAAAADGF2MUOBABwAAAAAOGF1eEMAAAAAdXJuOm1wZWc6bXBlZ0I6Y2ljcDpzeXN0ZW1zOmF1eGlsaWFyeTphbHBoYQAAAAAeaXBtYQAAAAAAAAACAAEEAQKDBAACBAEFhgcAAABAbWRhdBIACgQYADYVMgcYACihABCgEgAKCBgANogIaDQgMhkZR4eGIYeeeeaAAACQQMkcYUOdV2OZjhnY';
+  };
 
   // ---------- cargador con cola y concurrencia limitada ----------
   var cache = {}, queue = [], active = 0, MAX = 6;
@@ -80,7 +95,8 @@
     var dur = full ? 1 : parseFloat(fig.getAttribute('data-span') || 0.7);
     var rev = fig.getAttribute('data-reverse') === '1';
     var imgs = new Array(n), state = { f: (rev ? n - 1 : 0) };
-    var url = function (k) { return base + '/f' + ('00' + (start + k)).slice(-3) + '.webp'; };
+    var useAvif = fig.getAttribute('data-avif') === '1';
+    var url = function (k, ext) { return base + '/f' + ('00' + (start + k)).slice(-3) + ext; };
     function ok(im) { return im && im._dzReady && im.naturalWidth; }
     function draw() {
       var i = Math.max(0, Math.min(n - 1, Math.round(state.f)));
@@ -100,8 +116,11 @@
     }
     var firstIdx = rev ? n - 1 : 0;
     var loadAll = function () {
+      if (useAvif) DZ.avif(function (ok) { enqueue(ok ? '.avif' : '.webp'); }); else enqueue('.webp');
+    };
+    var enqueue = function (ext) {
       order(n, firstIdx).forEach(function (k, rank) {
-        var im = DZ.loader.get(url(k), rank < 13 ? 0 : 1);
+        var im = DZ.loader.get(url(k, ext), rank < 13 ? 0 : 1);
         imgs[k] = im;
         var onload = function () {
           if (k === firstIdx) { fig.classList.add('ready'); size(); }

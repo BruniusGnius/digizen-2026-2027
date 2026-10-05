@@ -14,7 +14,7 @@ Build de producción — Digizen landing B v04 (Fase 3).
    + lista de adiciones aprobadas.
 4. Verificación contra el wireframe: misma lista de paradas (pin, id, kind, E, bp, oscuro). Si difiere, falla.
 """
-import os, re, sys, shutil, html, time, json
+import os, re, sys, shutil, html, time, json, glob, subprocess, tempfile
 from html.parser import HTMLParser
 from PIL import Image
 
@@ -50,6 +50,20 @@ VOICE_STOPS = {'02.2': 'coral', '02.3': 'coral', '02.4': 'coral', '02.5': 'coral
 IA_STOPS = {'08.3'}                                                     # dato sobre IA en violeta
 PRICING_CTA_STOPS = {'12.4'}                                            # su «Inscribir a mi hijo» lleva a las tarjetas de precio
 SCENE_W, VERT_W, QUALITY = (1280, 1920, 2560), (800, 1200), 72
+# ---- AVIF (optimización de imágenes, 2026-10-05). Mismas imágenes, más ligeras; el WebP de siempre queda de respaldo
+# para los navegadores que no decodifican AVIF. Las FUENTES no se tocan (00-context/scenes, assets/seq): de ellas se
+# derivan las versiones optimizadas. Regla del usuario: nunca perder calidad sin tener el original, así que cada AVIF
+# se compara con su referencia y solo se usa si es al menos tan fiel (SSIM) como el WebP que reemplaza y pesa menos.
+AVIF_QS = (48, 52, 56, 60, 64, 68)              # se prueba de menor a mayor calidad; gana la primera que iguala al WebP
+AVIF_MIN_GAIN = 0.95                            # el AVIF debe pesar como máximo el 95 % del WebP; si no, no vale la pena
+SEQ_AVIF_QS = (40, 44, 48, 52, 56, 60, 65)      # cuadros de las secuencias
+SEQ_ADA_MIN_SSIM = 0.995                        # ADA solo existe en WebP: su AVIF debe ser casi idéntico a ese cuadro
+# Escenas cuya versión publicada se colocó a mano en output-code/assets/scenes (encuadre ampliado) y ya no sale de la
+# fuente de 00-context: la referencia es ESE WebP publicado, y su AVIF debe ser casi idéntico a él.
+HAND_MIN_SSIM, HAND_AVIF_QS = 0.985, (60, 64, 68, 72, 76, 80, 84)
+SEQ_VIDEO = {'03-fastidio': 'Rudy_laddaga_Dynamic_cinematic_video_synthesis_from_static_initial_image_youn.mp4',
+             '05-crossing': 'Rudy_laddaga_Style_Hybrid_photo-illustration_Faces_razor-sharp_photorealis.mp4'}   # video fuente de cada secuencia
+PAGE_BG = (244, 243, 238)                       # fondo de la página: sobre él se compara la ADA con transparencia
 FOOT_LINKS = {'Gnius Club ↗': 'https://gnius.club/', 'Aviso de privacidad': 'https://gnius.club/aviso-de-privacidad.html'}
 DIALOG_TEXTS = ['Conversar con ADA primero (título del diálogo, copy existente)', 'Nombre del papá o mamá', 'Tu nombre',
                 'Canal de entrega', 'Correo', 'WhatsApp', 'Correo electrónico', 'Número de WhatsApp', 'tu@correo.com',
@@ -60,19 +74,127 @@ VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'met
 def newer(src, dst):
     return not os.path.exists(dst) or os.path.getmtime(src) > os.path.getmtime(dst)
 
-def save_webp(im, w, dst):
-    r = im if w == im.width else im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
-    r.save(dst, 'WEBP', quality=QUALITY, method=6)
+def ssim(a, b, win=8):
+    """Fidelidad estructural (0–1) entre dos imágenes del mismo tamaño, sobre la luminancia, en bloques de 8 px."""
+    import numpy as np
+    def luma(im):
+        x = np.asarray(im.convert('RGB'), dtype=np.float64); return 0.299 * x[..., 0] + 0.587 * x[..., 1] + 0.114 * x[..., 2]
+    x, y = luma(a), luma(b); h, w = x.shape; h -= h % win; w -= w % win
+    blocks = lambda z: z[:h, :w].reshape(h // win, win, w // win, win).swapaxes(1, 2).reshape(-1, win * win)
+    X, Y = blocks(x), blocks(y); mx, my = X.mean(1), Y.mean(1); vx, vy = X.var(1), Y.var(1)
+    cxy = ((X - mx[:, None]) * (Y - my[:, None])).mean(1); c1, c2 = (0.01 * 255) ** 2, (0.03 * 255) ** 2
+    return float((((2 * mx * my + c1) * (2 * cxy + c2)) / ((mx ** 2 + my ** 2 + c1) * (vx + vy + c2))).mean())
+
+def flat(im):
+    """La imagen sobre el fondo de la página (para comparar las que llevan transparencia)."""
+    if im.mode != 'RGBA': return im.convert('RGB')
+    return Image.alpha_composite(Image.new('RGBA', im.size, PAGE_BG + (255,)), im).convert('RGB')
+
+def avif_as_good(ref, webp_path, avif_path, qs, bar=None):
+    """Escribe en avif_path el AVIF más ligero que sea al menos tan fiel a `ref` como el WebP (o como `bar`).
+    Devuelve (calidad, ssim) o None si ninguno lo logra pesando menos que el WebP (entonces no deja archivo)."""
+    target = bar if bar is not None else ssim(flat(ref), flat(Image.open(webp_path)))
+    limit = os.path.getsize(webp_path) * AVIF_MIN_GAIN
+    for q in qs:
+        ref.save(avif_path, 'AVIF', quality=q, speed=4)
+        got = ssim(flat(ref), flat(Image.open(avif_path)))
+        if got >= target:
+            if os.path.getsize(avif_path) <= limit: return q, got
+            break
+    if os.path.exists(avif_path): os.remove(avif_path)
+    return None
+
+AVIF_LOG = os.path.join(OUT, 'scripts', 'avif-report.json')  # qué AVIF se generó, con qué calidad y cuánto pesa frente al WebP (no se publica)
+def avif_log():
+    try: return json.load(open(AVIF_LOG, encoding='utf-8'))
+    except Exception: return {}
 
 def variants(src, name, widths):
+    """WebP por ancho (como siempre) y, al lado, su AVIF si iguala la fidelidad pesando menos. Devuelve los anchos."""
     im = Image.open(src).convert('RGB')
     ws = sorted({w for w in widths if w < im.width} | {min(im.width, max(widths))})
+    log = avif_log(); changed = False
     for w in ws:
-        dst = os.path.join(OUT, 'assets', 'scenes', f'{name}-{w}.webp')
-        if newer(src, dst): save_webp(im, w, dst)
+        dst = os.path.join(OUT, 'assets', 'scenes', f'{name}-{w}.webp'); avif = dst[:-5] + '.avif'; key = f'scenes/{name}-{w}'
+        stale = newer(src, dst)
+        if not stale and key in log and (log[key].get('avif') is None or os.path.exists(avif)): continue
+        ref = im if w == im.width else im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
+        if stale: ref.save(dst, 'WEBP', quality=QUALITY, method=6)
+        cur = Image.open(dst).convert('RGB')
+        hand = cur.size != ref.size or ssim(ref, cur) < 0.90   # lo publicado no sale de esta fuente: es otra versión de la imagen
+        if hand:
+            r = avif_as_good(cur, dst, avif, HAND_AVIF_QS, bar=HAND_MIN_SSIM)
+            log[key] = {'webp': os.path.getsize(dst), 'avif': os.path.getsize(avif) if r else None, 'q': r[0] if r else None,
+                        'ssim_avif': round(r[1], 4) if r else None, 'ssim_webp': None, 'hand': True, 'size': list(cur.size)}
+        else:
+            r = avif_as_good(ref, dst, avif, AVIF_QS)
+            log[key] = {'webp': os.path.getsize(dst), 'avif': os.path.getsize(avif) if r else None, 'q': r[0] if r else None,
+                        'ssim_avif': round(r[1], 4) if r else None, 'ssim_webp': round(ssim(ref, cur), 4)}
+        changed = True
+    if changed: json.dump(log, open(AVIF_LOG, 'w', encoding='utf-8'), indent=1, sort_keys=True)
+    if all(log.get(f'scenes/{name}-{w}', {}).get('avif') for w in ws): AVIF_OK.add(name)   # todo o nada: el srcset AVIF lleva los mismos anchos
     return ws
 
+def seq_frames(name):
+    d = os.path.join(PROJ, 'assets', 'seq', name)
+    return [f for f in sorted(os.listdir(d)) if re.fullmatch(r'f\d{3}\.webp', f)]
+
+def seq_video_refs(name, frames):
+    """Para cada cuadro WebP de la secuencia, su cuadro original del video (sin pérdida), o nada si no se identifica."""
+    import numpy as np
+    video = os.path.join(PROJ, '00-context', 'scenes', SEQ_VIDEO[name]); d = os.path.join(PROJ, 'assets', 'seq', name)
+    if not os.path.exists(video) or not shutil.which('ffmpeg'): return {}
+    w, h = Image.open(os.path.join(d, frames[0])).size
+    tmp = tempfile.mkdtemp()
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', video, '-vf', f'scale={w}:{h}:flags=lanczos', os.path.join(tmp, 's%04d.png')], check=True)
+    src = sorted(glob.glob(os.path.join(tmp, 's*.png')))
+    small = lambda im: np.asarray(im.convert('RGB').resize((96, 54)), dtype=np.float32)
+    thumbs = [small(Image.open(f)) for f in src]
+    refs = {}
+    for f in frames:
+        cur = Image.open(os.path.join(d, f)).convert('RGB'); t = small(cur)
+        i = min(range(len(src)), key=lambda k: float(((thumbs[k] - t) ** 2).mean()))
+        cand = Image.open(src[i]).convert('RGB')
+        if ssim(cand, cur) >= 0.93: refs[f] = cand   # es el mismo cuadro (el WebP q62 de un cuadro da ~0.94–0.97 contra su original)
+    return refs
+
+def seq_avif(name):
+    """Cuadros AVIF de una secuencia junto a sus WebP. Una sola calidad por secuencia, calibrada en 5 cuadros de muestra:
+    la menor que iguala la fidelidad de los WebP actuales (contra el cuadro original del video; ADA, contra su WebP)."""
+    out = os.path.join(OUT, 'assets', 'seq', name); d = os.path.join(PROJ, 'assets', 'seq', name)
+    frames = seq_frames(name); log = avif_log(); key = f'seq/{name}'
+    if key in log and (log[key].get('q') is None or all(not newer(os.path.join(d, f), os.path.join(out, f[:-5] + '.avif')) for f in frames)):
+        if log[key].get('q'): SEQ_AVIF_OK.add(name)
+        return
+    refs = seq_video_refs(name, frames) if name in SEQ_VIDEO else {}
+    load = lambda f: refs.get(f) or Image.open(os.path.join(d, f)).convert('RGBA' if Image.open(os.path.join(d, f)).mode == 'RGBA' else 'RGB')
+    sample = [frames[round(i * (len(frames) - 1) / 4)] for i in range(5)]
+    from_video = all(f in refs for f in sample)
+    q_seq = None
+    for q in SEQ_AVIF_QS:
+        ok = True; tmp = os.path.join(out, '_cal.avif')
+        for f in sample:
+            ref = load(f); ref.save(tmp, 'AVIF', quality=q, speed=4)
+            got = ssim(flat(ref), flat(Image.open(tmp)))
+            bar = ssim(ref, Image.open(os.path.join(d, f))) if from_video else SEQ_ADA_MIN_SSIM
+            if got < bar: ok = False; break
+        if os.path.exists(tmp): os.remove(tmp)
+        if ok: q_seq = q; break
+    if q_seq is None:
+        log[key] = {'q': None}; json.dump(log, open(AVIF_LOG, 'w', encoding='utf-8'), indent=1, sort_keys=True); return
+    for f in frames:
+        load(f).save(os.path.join(out, f[:-5] + '.avif'), 'AVIF', quality=q_seq, speed=4)
+    webp = sum(os.path.getsize(os.path.join(d, f)) for f in frames); avif = sum(os.path.getsize(os.path.join(out, f[:-5] + '.avif')) for f in frames)
+    if avif > webp * AVIF_MIN_GAIN:
+        for f in frames: os.remove(os.path.join(out, f[:-5] + '.avif'))
+        log[key] = {'q': None, 'webp': webp}
+    else:
+        log[key] = {'q': q_seq, 'webp': webp, 'avif': avif, 'frames': len(frames), 'from_video': sum(f in refs for f in frames)}
+        SEQ_AVIF_OK.add(name)
+    json.dump(log, open(AVIF_LOG, 'w', encoding='utf-8'), indent=1, sort_keys=True)
+
 SCENES, VERTS = {}, {}
+AVIF_OK, SEQ_AVIF_OK = set(), set()   # escenas (nombre, o nombre-v para la vertical) y secuencias que tienen AVIF
 def build_assets(names):
     os.makedirs(os.path.join(OUT, 'assets', 'scenes'), exist_ok=True)
     for nm in names:
@@ -85,13 +207,16 @@ def build_assets(names):
     for sub in ('seq', 'avatars'):
         s = os.path.join(PROJ, 'assets', sub)
         if os.path.isdir(s): shutil.copytree(s, os.path.join(OUT, 'assets', sub), dirs_exist_ok=True)
+    seq_root = os.path.join(PROJ, 'assets', 'seq')
+    for name in sorted(os.listdir(seq_root)) if os.path.isdir(seq_root) else []:
+        if os.path.isdir(os.path.join(seq_root, name)) and seq_frames(name): seq_avif(name)
     os.makedirs(os.path.join(OUT, 'assets', 'logo'), exist_ok=True)
     for f in os.listdir(os.path.join(PROJ, '00-context', 'logo')):
         if f.endswith('.svg'): shutil.copy2(os.path.join(PROJ, '00-context', 'logo', f), os.path.join(OUT, 'assets', 'logo', f))
 
-def srcset(nm, ws, v=False):
+def srcset(nm, ws, v=False, ext='webp'):
     tag = f'{nm}-v' if v else nm
-    return ', '.join(f'assets/scenes/{tag}-{w}.webp {w}w' for w in ws)
+    return ', '.join(f'assets/scenes/{tag}-{w}.{ext} {w}w' for w in ws)
 
 # ------------------------------------------------------------------ 2. HTML de cada parada
 IMG_SCENE = re.compile(r"<img([^>]*?) src='00-context/scenes/([^'/]+)\.webp'([^>]*)>")
@@ -102,9 +227,13 @@ def scene_img(m):
     ws = SCENES[nm]
     load = " fetchpriority='high' decoding='async'" if hero else " loading='lazy' decoding='async'"
     img = f"<img{before} src='assets/scenes/{nm}-{ws[-1]}.webp' srcset='{srcset(nm, ws)}' sizes='100vw'{after}{load}>"
+    # AVIF primero (si la escena lo tiene) y el WebP de siempre como respaldo; el navegador toma la primera fuente que entiende
+    a_d = f"<source type='image/avif' srcset='{srcset(nm, ws, ext='avif')}' sizes='100vw'>" if nm in AVIF_OK else ''
     if nm in VERTS:
         img = img.replace('<img', "<img data-v='1'", 1)
-        return f"<picture><source media='(max-width: 859px)' srcset='{srcset(nm, VERTS[nm], True)}' sizes='100vw'>{img}</picture>"
+        a_v = (f"<source media='(max-width: 859px)' type='image/avif' srcset='{srcset(nm, VERTS[nm], True, 'avif')}' sizes='100vw'>"
+               if f'{nm}-v' in AVIF_OK else '')
+        return f"<picture>{a_v}<source media='(max-width: 859px)' srcset='{srcset(nm, VERTS[nm], True)}' sizes='100vw'>{a_d}{img}</picture>"
     return img
 
 def button(m):
@@ -135,6 +264,8 @@ def prod(h, sid=None):
     # L03: la última fila pasa a acento al final de su parada (copia de color sobre la misma fila, oculta a lectores)
     h = ACC_ROW.sub(lambda m: f"{m.group(1)}<span class='acc-copy' data-at='exit' aria-hidden='true'>{m.group(2)}<span class='{m.group(3)}'>{m.group(4)}</span></span>{m.group(5)}", h)
     h = IMG_SCENE.sub(scene_img, h)
+    # secuencias con cuadros AVIF: el script los pide si el navegador los decodifica; si no, los WebP
+    h = re.sub(r"data-seq='assets/seq/([^']+)'", lambda m: m.group(0) + (" data-avif='1'" if m.group(1) in SEQ_AVIF_OK else ''), h)
     h = h.replace("src='00-context/logo/", "src='assets/logo/")
     h = re.sub(r"<a( class='btn[^']*'[^>]*)>(.*?)</a>", button, h, flags=re.S)
     for txt, url in FOOT_LINKS.items():
@@ -335,8 +466,11 @@ def page(pins, title, indexable=True):
     pre = ''
     if hero:
         if '01-dinner' in VERTS:
-            pre = (f"<link rel='preload' as='image' media='(max-width: 859px)' imagesrcset='{srcset('01-dinner', VERTS['01-dinner'], True)}' imagesizes='100vw' fetchpriority='high'>\n"
-                   f"<link rel='preload' as='image' media='(min-width: 860px)' imagesrcset='{srcset('01-dinner', hero)}' imagesizes='100vw' fetchpriority='high'>")
+            # se precarga el formato que el navegador va a usar: AVIF si la escena lo tiene (los que no lo entienden
+            # ignoran la precarga y toman el WebP del <picture>); no se precargan los dos para no descargar doble
+            pv = " type='image/avif'" if '01-dinner-v' in AVIF_OK else ''; pd = " type='image/avif'" if '01-dinner' in AVIF_OK else ''
+            pre = (f"<link rel='preload' as='image'{pv} media='(max-width: 859px)' imagesrcset='{srcset('01-dinner', VERTS['01-dinner'], True, 'avif' if pv else 'webp')}' imagesizes='100vw' fetchpriority='high'>\n"
+                   f"<link rel='preload' as='image'{pd} media='(min-width: 860px)' imagesrcset='{srcset('01-dinner', hero, ext='avif' if pd else 'webp')}' imagesizes='100vw' fetchpriority='high'>")
         else:
             pre = f"<link rel='preload' as='image' imagesrcset='{srcset('01-dinner', hero)}' imagesizes='100vw' fetchpriority='high'>"
     ver = time.strftime('%Y%m%d%H%M%S')  # versión por build: el navegador no reutiliza CSS/JS viejos de la caché

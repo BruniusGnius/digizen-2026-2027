@@ -178,6 +178,8 @@ Además, adición de copy aprobada por el usuario: botón secundario **«Regresa
 
 ## Pendiente: optimización de imágenes antes de producción
 
+> **Actualización 2026-10-05:** el usuario pidió adelantarla. Se hizo la parte que no cambia cómo se ve (AVIF con respaldo WebP, 37 % menos en desktop); ver `03-optimizacion-imagenes.md`. Lo de abajo queda como registro de la medición inicial.
+
 Medido el 2026-10-02, después de que el usuario notara que GitHub Pages bajaba lento las imágenes. Ese día la transferencia de GitHub iba a 100–150 KB/s; ninguna imagen cambió en la publicación.
 
 - **Ya hecho en el build:** WebP calidad 72; anchos por pantalla (1280 / 1920 / 2560 en desktop; 800 / 1200 vertical en teléfono); carga diferida en todas menos la del Hero, que se precarga con prioridad alta. Las secuencias animadas se descargan solo en desktop, cuando su sección está cerca, y no se descargan con ahorro de datos o conexión lenta.

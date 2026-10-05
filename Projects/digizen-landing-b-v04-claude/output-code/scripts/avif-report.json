@@ -1,0 +1,229 @@
+{
+ "scenes/01-dinner-1280": {
+  "avif": 114117,
+  "q": 56,
+  "ssim_avif": 0.9375,
+  "ssim_webp": 0.9351,
+  "webp": 125402
+ },
+ "scenes/01-dinner-1920": {
+  "avif": 245208,
+  "q": 56,
+  "ssim_avif": 0.933,
+  "ssim_webp": 0.9277,
+  "webp": 268878
+ },
+ "scenes/01-dinner-2560": {
+  "avif": 421770,
+  "q": 56,
+  "ssim_avif": 0.9288,
+  "ssim_webp": 0.9199,
+  "webp": 464522
+ },
+ "scenes/01-dinner-v-1163": {
+  "avif": 187007,
+  "q": 52,
+  "ssim_avif": 0.9467,
+  "ssim_webp": 0.9465,
+  "webp": 223366
+ },
+ "scenes/01-dinner-v-800": {
+  "avif": null,
+  "q": null,
+  "ssim_avif": null,
+  "ssim_webp": 0.9376,
+  "webp": 117914
+ },
+ "scenes/02-facial-recognition-1280": {
+  "avif": 65129,
+  "q": 52,
+  "ssim_avif": 0.9709,
+  "ssim_webp": 0.9702,
+  "webp": 87278
+ },
+ "scenes/02-facial-recognition-1920": {
+  "avif": 91191,
+  "q": 48,
+  "ssim_avif": 0.9762,
+  "ssim_webp": 0.976,
+  "webp": 137900
+ },
+ "scenes/02-facial-recognition-2368": {
+  "avif": 115933,
+  "q": 48,
+  "ssim_avif": 0.9804,
+  "ssim_webp": 0.9795,
+  "webp": 581340
+ },
+ "scenes/02-facial-recognition-v-1200": {
+  "avif": 69087,
+  "q": 48,
+  "ssim_avif": 0.9831,
+  "ssim_webp": 0.982,
+  "webp": 99486
+ },
+ "scenes/02-facial-recognition-v-800": {
+  "avif": 50916,
+  "q": 52,
+  "ssim_avif": 0.9801,
+  "ssim_webp": 0.9759,
+  "webp": 63226
+ },
+ "scenes/03-fastidio-v-1040": {
+  "avif": null,
+  "q": null,
+  "ssim_avif": null,
+  "ssim_webp": 0.887,
+  "webp": 281404
+ },
+ "scenes/03-fastidio-v-800": {
+  "avif": null,
+  "q": null,
+  "ssim_avif": null,
+  "ssim_webp": 0.8495,
+  "webp": 110662
+ },
+ "scenes/04-shield-1184": {
+  "avif": 210078,
+  "hand": true,
+  "q": 76,
+  "size": [
+   1370,
+   796
+  ],
+  "ssim_avif": 0.9852,
+  "ssim_webp": null,
+  "webp": 476280
+ },
+ "scenes/04-shield-v-1024": {
+  "avif": 96266,
+  "q": 52,
+  "ssim_avif": 0.9287,
+  "ssim_webp": 0.9271,
+  "webp": 133724
+ },
+ "scenes/04-shield-v-800": {
+  "avif": 70183,
+  "q": 52,
+  "ssim_avif": 0.953,
+  "ssim_webp": 0.952,
+  "webp": 98488
+ },
+ "scenes/05-crossing-1184": {
+  "avif": 125246,
+  "q": 60,
+  "ssim_avif": 0.9706,
+  "ssim_webp": 0.9665,
+  "webp": 136846
+ },
+ "scenes/05-crossing-v-800": {
+  "avif": 110287,
+  "q": 56,
+  "ssim_avif": 0.9653,
+  "ssim_webp": 0.9647,
+  "webp": 133086
+ },
+ "scenes/05-crossing-v-853": {
+  "avif": null,
+  "q": null,
+  "ssim_avif": null,
+  "ssim_webp": 0.9643,
+  "webp": 151906
+ },
+ "scenes/06-rules-1184": {
+  "avif": 82484,
+  "q": 56,
+  "ssim_avif": 0.9579,
+  "ssim_webp": 0.9553,
+  "webp": 93608
+ },
+ "scenes/06-rules-v-1024": {
+  "avif": 86825,
+  "q": 52,
+  "ssim_avif": 0.9311,
+  "ssim_webp": 0.927,
+  "webp": 109326
+ },
+ "scenes/06-rules-v-800": {
+  "avif": 63211,
+  "q": 52,
+  "ssim_avif": 0.9548,
+  "ssim_webp": 0.9511,
+  "webp": 79496
+ },
+ "scenes/07-together-mother-daughter-1280": {
+  "avif": 72264,
+  "q": 52,
+  "ssim_avif": 0.9592,
+  "ssim_webp": 0.9536,
+  "webp": 83910
+ },
+ "scenes/07-together-mother-daughter-1560": {
+  "avif": 92952,
+  "q": 52,
+  "ssim_avif": 0.9662,
+  "ssim_webp": 0.9597,
+  "webp": 105946
+ },
+ "scenes/07-together-mother-daughter-v-1037": {
+  "avif": 73118,
+  "q": 48,
+  "ssim_avif": 0.9699,
+  "ssim_webp": 0.9686,
+  "webp": 97550
+ },
+ "scenes/07-together-mother-daughter-v-800": {
+  "avif": 62370,
+  "q": 52,
+  "ssim_avif": 0.9712,
+  "ssim_webp": 0.9651,
+  "webp": 70574
+ },
+ "scenes/08-autonomy-father-1184": {
+  "avif": 241766,
+  "hand": true,
+  "q": 72,
+  "size": [
+   1374,
+   798
+  ],
+  "ssim_avif": 0.9856,
+  "ssim_webp": null,
+  "webp": 634830
+ },
+ "scenes/08-autonomy-father-v-800": {
+  "avif": 156326,
+  "q": 60,
+  "ssim_avif": 0.9676,
+  "ssim_webp": 0.9595,
+  "webp": 165322
+ },
+ "scenes/08-autonomy-father-v-911": {
+  "avif": 167526,
+  "q": 56,
+  "ssim_avif": 0.9607,
+  "ssim_webp": 0.9607,
+  "webp": 204748
+ },
+ "seq/03-fastidio": {
+  "avif": 2511526,
+  "frames": 49,
+  "from_video": 49,
+  "q": 48,
+  "webp": 3096912
+ },
+ "seq/05-crossing": {
+  "avif": 3617661,
+  "frames": 49,
+  "from_video": 49,
+  "q": 48,
+  "webp": 4744724
+ },
+ "seq/ada-wave": {
+  "avif": 1861481,
+  "frames": 130,
+  "from_video": 0,
+  "q": 56,
+  "webp": 4349004
+ }
+}
