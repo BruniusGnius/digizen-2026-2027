@@ -142,3 +142,22 @@ Pedido del usuario: publicar las correcciones con optimización de imágenes en 
 - **Lo que no se hizo.** Las 17 imágenes sueltas (fuera de `<picture>`, 0.9 MB en total) siguen en WebP: envolverlas cambia el marcado y pide revisión visual. El video del reloj (6.1 MB) tampoco se tocó.
 - **Verificado en local.** Build de producción correcto (148 AVIF en la salida, ningún PSD). En el navegador: el Hero y la imagen de reglas toman el AVIF; al volver de las reglas ADA queda preparada y pintada con sus 130 cuadros AVIF; sin errores de consola.
 - **No verificado.** A ojo en un navegador visible (el panel de pruebas estaba oculto y pausa las animaciones) ni en un navegador sin AVIF.
+
+---
+
+## Mejoras tras la auditoría de Lighthouse — 2026-10-05
+
+El usuario corrió Lighthouse 13 sobre la versión publicada, con y sin extensiones de Chrome. En incógnito (medición limpia): desktop 99 / 96 / 100 / 100 y móvil 88 / 96 / 100 / 100 (rendimiento, accesibilidad, buenas prácticas, SEO). Con sus extensiones el rendimiento bajaba a 75 y 48 por un salto de diseño de 0.85–1.0, y aparecían 1.9 MB de «JavaScript sin usar» y errores de consola que eran de las extensiones.
+
+Cambios (rama `mejoras-lighthouse`; ninguno cambia cómo se ve la página):
+
+- **Hoja de estilos sin carrera** (`angular.json`, `inlineCritical: false`). Angular ponía en línea los «estilos críticos» y cargaba el resto en diferido; como el HTML llega vacío, esos estilos críticos no incluían ninguna regla de la portada. Si el JavaScript pintaba antes de que llegara la hoja (pasa con extensiones que ocupan el navegador), la página se veía un instante sin estilos y luego saltaba entera. Ahora la hoja es un enlace normal: no hay nada que pintar antes de tenerla.
+- **El video del reloj no se descarga en móvil** (`app.html`, `preload="none"`). Pesa 6.2 MB y solo se usa en desktop, pero el marcado lo precargaba en todos los dispositivos (7.6 MB de página en móvil). En desktop lo sigue pidiendo el script, como antes.
+- **Enlace de WhatsApp del pie:** su nombre accesible ahora incluye el número visible («(+52) 221 848 1116, enviar WhatsApp a Gnius Club»).
+
+Verificado en local: build de producción con la hoja como enlace normal; en móvil el video no se pide y en desktop queda listo (8 s); sin errores de consola.
+
+Pendiente, requiere decisión porque cambia colores o es un cambio mayor:
+- **Contraste** (accesibilidad 96): `.dg-emphasis--green` (#188958 sobre blanco, 4.41; pide 4.5), los `.dg-caption` de la comparación de precios (#8b98aa, 2.9 y 2.6, texto de 10 px) y el texto «Escribe aquí...» del chat de ejemplo (#8b98aa, 2.85).
+- **Imágenes más grandes de lo que se muestran** (hasta 418 KiB en móvil): la del reloj, la cena y el apego en móvil, y las dos del CTA. Se resuelve con varios anchos por imagen.
+- **Prerenderizado:** en móvil el título principal tarda 3.8 s porque la página se arma con JavaScript.
