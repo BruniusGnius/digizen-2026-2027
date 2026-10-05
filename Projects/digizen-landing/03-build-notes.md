@@ -113,3 +113,15 @@ Pedido del usuario: relleno de degradado en los botones, muy similar al del cír
 - Contraste del texto blanco: 4.96:1 en el peor punto bajo el texto de los botones medidos (extremo claro del degradado 4.40, extremo oscuro 9.11; el azul sólido anterior daba 5.05).
 - Verificado en local: tema claro y oscuro, desktop y teléfono (menú abierto); build de producción correcto.
 - Aprobado por el usuario y publicado el 2026-10-05 (pasó a `main` desde la rama `digizen-a-botones-degradado`).
+
+---
+
+## ADA no aparecía en el CTA al volver de «Reglas de ADA» — 2026-10-05
+
+Reporte del usuario: en GitHub, al pasar de «Reglas de ADA» a Digizen, la ADA que saluda en el CTA no se desplegaba.
+
+- **Causa.** La portada vive dentro de un `@if`: al entrar a las reglas Angular la desmonta y, al volver, crea nodos nuevos. Las animaciones de la portada se preparaban una sola vez, en `ngAfterViewInit`, así que el lienzo nuevo de ADA nunca recibía su clase `is-ready` (se quedaba con opacidad 0) ni sus cuadros. Lo mismo le pasaba al chat animado y al video del reloj. También fallaba al entrar directo por `/reglas-de-ada` y pasar después a la portada.
+- **Corrección.** Solo en `angular-build/src/app/app.ts`: `setupLandingMotion()` prepara las tres animaciones cada vez que la portada vuelve a existir (al cargar, al volver de las reglas y con el botón Atrás) y `teardownLandingMotion()` suelta los disparadores anteriores. Una preparación que quedó a medias al cambiar de página se descarta. No cambian el marcado, los estilos, el copy ni el comportamiento al cargar la portada.
+- **Verificado.** En la versión publicada se reprodujo el fallo (al volver: lienzo vacío, sin `is-ready`). En local, con la corrección: al volver con «Volver a Digizen», con el botón Atrás y entrando directo por las reglas, el lienzo queda preparado y pintado, se cargan los 130 cuadros y el video del reloj queda listo; sin errores de consola; build de producción correcto.
+- **No verificado.** El recorrido de la animación con el scroll en un navegador visible: el panel de pruebas estaba oculto y pausa las animaciones. Falta una revisión a ojo.
+- Rama `digizen-a-fix-ada-al-volver`. No está en `main`: no se ha publicado.

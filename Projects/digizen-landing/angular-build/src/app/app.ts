@@ -203,12 +203,12 @@ export class App implements AfterViewInit, OnDestroy {
   private anchorTween?: gsap.core.Tween;
   private ruleHighlightTween?: gsap.core.Tween | gsap.core.Timeline;
   private adaWaveTrigger?: ScrollTrigger;
+  private clockVideoSync?: () => void;
+  private landingMotionRun = 0;
 
   ngAfterViewInit(): void {
     this.setupAnchorScroll();
-    this.setupChatSequence();
-    this.setupClockScrollVideo();
-    this.setupAdaWave();
+    this.setupLandingMotion();
     this.setupSectionObserver();
     this.measureNav();
     this.scheduleNavRemeasure();
@@ -228,10 +228,8 @@ export class App implements AfterViewInit, OnDestroy {
     cancelAnimationFrame(this.frame);
     cancelAnimationFrame(this.clockVideoFrame);
     this.observer?.disconnect();
-    this.adaWarmupObserver?.disconnect();
-    this.clockVideoTrigger?.kill();
-    this.chatTrigger?.kill();
-    this.adaWaveTrigger?.kill();
+    this.landingMotionRun++;
+    this.teardownLandingMotion();
     this.anchorTween?.kill();
     this.ruleHighlightTween?.kill();
   }
@@ -299,10 +297,49 @@ export class App implements AfterViewInit, OnDestroy {
 
   private refreshAfterPageChange(): void {
     window.setTimeout(() => {
+      this.setupLandingMotion();
       this.setupSectionObserver();
       this.measureNav();
       this.handleScroll();
     });
+  }
+
+  /**
+   * La portada vive dentro de un @if: al entrar a «Reglas de ADA» Angular la desmonta y, al
+   * volver, crea nodos nuevos (el lienzo de ADA del CTA, el hilo del chat y el video del reloj).
+   * Sus animaciones se preparan cada vez que la portada vuelve a existir, no solo al cargar;
+   * antes se preparaban una sola vez y, al regresar de las reglas, ADA quedaba invisible.
+   */
+  private setupLandingMotion(attempt = 0): void {
+    const run = ++this.landingMotionRun;
+    this.teardownLandingMotion();
+    if (this.currentPage() !== 'landing') return;
+    if (!document.querySelector('canvas[data-ada-wave]')) {
+      // La portada todavia no se ha pintado: se reintenta en el siguiente cuadro.
+      if (attempt < 60) {
+        requestAnimationFrame(() => {
+          if (run === this.landingMotionRun) this.setupLandingMotion(attempt + 1);
+        });
+      }
+      return;
+    }
+    this.setupChatSequence();
+    this.setupClockScrollVideo();
+    this.setupAdaWave();
+  }
+
+  private teardownLandingMotion(): void {
+    cancelAnimationFrame(this.clockVideoFrame);
+    this.adaWarmupObserver?.disconnect();
+    this.adaWarmupObserver = undefined;
+    this.adaWaveTrigger?.kill();
+    this.adaWaveTrigger = undefined;
+    this.chatTrigger?.kill();
+    this.chatTrigger = undefined;
+    this.clockVideoTrigger?.kill();
+    this.clockVideoTrigger = undefined;
+    if (this.clockVideoSync) this.clockVideoQuery?.removeEventListener('change', this.clockVideoSync);
+    this.clockVideoSync = undefined;
   }
 
   private async transitionTo(page: Page, url: string, afterReveal?: () => void): Promise<void> {
@@ -589,9 +626,13 @@ export class App implements AfterViewInit, OnDestroy {
   private setupChatSequence(): void {
     // Diferido hasta que la fuente este lista: el alto del hilo se mide para
     // reservarlo, y con Inter a medio cargar esa medida sale corta.
+    const run = this.landingMotionRun;
     const fonts = (document as Document & { fonts?: FontFaceSet }).fonts;
-    if (fonts?.ready) void fonts.ready.then(() => this.buildChatSequence());
-    else this.buildChatSequence();
+    if (fonts?.ready) {
+      void fonts.ready.then(() => {
+        if (run === this.landingMotionRun) this.buildChatSequence();
+      });
+    } else this.buildChatSequence();
   }
 
   private buildChatSequence(): void {
@@ -677,6 +718,10 @@ export class App implements AfterViewInit, OnDestroy {
 
     const sources = this.adaFrames;
     const desktop = window.matchMedia('(min-width: 1024px)');
+    // Si la portada se desmonta o se vuelve a montar mientras cargan los cuadros, esta
+    // preparacion queda obsoleta y no debe tocar el lienzo nuevo ni crear su disparador.
+    const run = this.landingMotionRun;
+    const stale = () => run !== this.landingMotionRun || !canvas.isConnected;
     let shown = -1;
     let started = false;
 
@@ -704,7 +749,7 @@ export class App implements AfterViewInit, OnDestroy {
       // El primer cuadro se pinta en cuanto llega: con 130 cuadros, esperar a todos
       // dejaria el hueco vacio demasiado tiempo.
       void load(sources[0]).then((first) => {
-        if (!first) return;
+        if (!first || stale()) return;
         this.adaImages[0] = first;
         draw(0);
         canvas.classList.add('is-ready');
@@ -714,6 +759,7 @@ export class App implements AfterViewInit, OnDestroy {
         if (!desktop.matches) return;
 
         void Promise.all(sources.slice(1).map(load)).then((rest) => {
+          if (stale()) return;
           rest.forEach((img, i) => {
             if (img) this.adaImages[i + 1] = img;
           });
@@ -757,7 +803,11 @@ export class App implements AfterViewInit, OnDestroy {
   }
 
   private setupClockScrollVideo(): void {
-    const video = this.clockScrollVideo?.nativeElement;
+    // Tras volver de las reglas el video es un nodo nuevo: se toma el que esta en la pagina.
+    const queried = this.clockScrollVideo?.nativeElement;
+    const video = queried?.isConnected
+      ? queried
+      : document.querySelector<HTMLVideoElement>('video.dg-scroll-video');
     if (!video) return;
     const trigger = video.closest<HTMLElement>('.dg-evidence-visual') ?? video;
 
@@ -803,6 +853,7 @@ export class App implements AfterViewInit, OnDestroy {
       video.load();
     };
 
+    this.clockVideoSync = sync;
     this.clockVideoQuery.addEventListener('change', sync);
     sync();
   }
