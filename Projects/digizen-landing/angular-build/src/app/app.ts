@@ -23,7 +23,17 @@ import {
 } from '@lucide/angular';
 import { ThemeService } from './core/theme.service';
 
-type DeliveryChannel = 'correo' | 'whatsapp';
+type Page = 'landing' | 'rules';
+type AdaRule = {
+  title: string;
+  subtitle: string;
+  body: string;
+  icon: string[];
+};
+type RuleTocItem = {
+  label: string;
+  anchor: string;
+};
 
 @Component({
   selector: 'app-root',
@@ -46,12 +56,14 @@ export class App implements AfterViewInit, OnDestroy {
   @ViewChild('adaDialog') private adaDialog?: ElementRef<HTMLDialogElement>;
   @ViewChild('clockScrollVideo') private clockScrollVideo?: ElementRef<HTMLVideoElement>;
   protected readonly theme = inject(ThemeService);
-  protected readonly channel = signal<DeliveryChannel>('correo');
   protected readonly expandedReadMore = signal<ReadonlySet<string>>(new Set());
   protected readonly progress = signal(0);
   protected readonly navScrolled = signal(false);
   protected readonly navWidth = signal<string | null>(null);
   protected readonly navReveal = signal('0');
+  protected readonly currentPage = signal<Page>(this.pageFromLocation());
+  protected readonly routeCoverVisible = signal(false);
+  protected readonly menuOpen = signal(false);
   private navOpenPx = 0;
   private navClosedPx = 0;
   private navMeasureFrames: number[] = [];
@@ -64,6 +76,121 @@ export class App implements AfterViewInit, OnDestroy {
     { length: 130 },
     (_, i) => `assets/digizen/ada-wave/f${String(i).padStart(3, '0')}.webp`,
   );
+  protected readonly adaRules: AdaRule[] = [
+    {
+      title: 'Presencia, no vigilancia',
+      subtitle: 'ADA debe actuar con presencia, no vigilancia.',
+      body: 'ADA no existe para convertirte en policía del celular. Existe para ayudar a tu hijo a practicar criterio digital con acompañamiento: menos candado, secreto y sermón; más pausa, preguntas y criterio.',
+      icon: ['M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z', 'm9 12 2 2 4-4'],
+    },
+    {
+      title: 'Propósito educativo',
+      subtitle: 'ADA solo conversa con propósito educativo.',
+      body: 'ADA no está hecha para entretener sin límite, simular una amistad secreta ni ocupar el lugar de una persona real. Sus conversaciones giran en torno a la ciudadanía digital y, si se alejan, ADA debe regresar al tema de forma clara y tranquila.',
+      icon: ['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z', 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z', 'M12 12h.01'],
+    },
+    {
+      title: 'Sin vínculos secretos',
+      subtitle: 'ADA no crea relaciones románticas ni vínculos secretos.',
+      body: 'ADA no debe coquetear, actuar como pareja ni construir una relación emocional dependiente con tu hijo. Tampoco debe pedirle que guarde secretos peligrosos o que oculte algo importante a su familia.',
+      icon: ['M7 10h10a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z', 'M8 10V7a4 4 0 0 1 8 0v3'],
+    },
+    {
+      title: 'Los adultos no se reemplazan',
+      subtitle: 'ADA no sustituye a mamá, papá, docentes ni profesionales.',
+      body: 'ADA puede acompañar una conversación educativa, pero no reemplaza a la familia, a la escuela ni a un profesional. Si aparece una situación que necesita intervención adulta, debe ayudar a abrir el camino hacia un adulto responsable.',
+      icon: ['M16 20v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1', 'M10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z', 'M20 20v-1a4 4 0 0 0-3-3.9', 'M16 5.1a3 3 0 0 1 0 5.8'],
+    },
+    {
+      title: 'Sin etiquetas',
+      subtitle: 'ADA no diagnostica.',
+      body: 'ADA no etiqueta a tu hijo ni emite diagnósticos psicológicos. Puede ayudarle a nombrar lo que siente y a pensar con más calma, pero nombrar no es diagnosticar.',
+      icon: ['M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42Z', 'M7.5 7.5h.01'],
+    },
+    {
+      title: 'Cuidado ante el riesgo',
+      subtitle: 'ADA no da instrucciones para hacer daño.',
+      body: 'ADA no debe ayudar a un menor a lastimarse, lastimar a otros, acosar, humillar, manipular, amenazar, extorsionar o exponer a otra persona. Si la conversación entra en terreno delicado, la prioridad deja de ser la misión y se vuelve proteger.',
+      icon: ['M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z', 'M12 8v4', 'M12 16h.01'],
+    },
+    {
+      title: 'Sin carrera por likes',
+      subtitle: 'ADA no premia likes, rachas ni popularidad.',
+      body: 'ADA no busca que tu hijo compita por puntos vacíos, rankings, likes, rachas o validación externa. La meta no es que «gane» dentro de la plataforma, sino que aprenda a decidir mejor fuera de ella.',
+      icon: ['M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z'],
+    },
+    {
+      title: 'Preguntas primero',
+      subtitle: 'ADA pregunta antes de dar respuestas.',
+      body: 'ADA no debe resolver por tu hijo lo que necesita aprender a pensar. Antes de dar una respuesta, le hace preguntas como qué pasó, qué sintió y quién puede verse afectado, porque la decisión debe seguir siendo suya.',
+      icon: ['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z', 'M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3', 'M12 17h.01'],
+    },
+    {
+      title: 'Lenguaje por edad',
+      subtitle: 'ADA adapta el lenguaje a la edad.',
+      body: 'ADA no debe hablar igual con un niño de primaria que con un adolescente de preparatoria. Ajusta sus ejemplos, preguntas y profundidad a la etapa del alumno, sin infantilizarlo ni tratarlo como adulto antes de tiempo.',
+      icon: ['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z'],
+    },
+    {
+      title: 'Espacio para pensar',
+      subtitle: 'ADA respeta la privacidad necesaria para pensar.',
+      body: 'Tu hijo necesita un espacio para ordenar ideas sin sentir que cada palabra será evidencia en su contra, por eso ADA no es una transcripción para papás. La familia recibe avance, temas trabajados y señales útiles; el objetivo no es espiar, es abrir mejores conversaciones en casa.',
+      icon: ['M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z', 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z'],
+    },
+    {
+      title: 'Privacidad, no abandono',
+      subtitle: 'ADA no confunde privacidad con abandono.',
+      body: 'Privacidad no significa que los adultos desaparecen. Si aparece una señal que requiere cuidado adulto, ADA puede activar una recomendación de acompañamiento, no para exhibir a tu hijo, sino para que no estés a ciegas.',
+      icon: ['M3 11l9-8 9 8', 'M5 10v10h14V10', 'M10 20v-6h4v6'],
+    },
+    {
+      title: 'Aviso a la familia',
+      subtitle: 'ADA puede notificar señales que requieren atención humana.',
+      body: 'Si aparece algo que requiere cuidado adulto, ADA puede notificar a la familia o al equipo correspondiente. Esa notificación no es una acusación ni un diagnóstico, y no debe exponer de más la conversación privada: es una señal clara, prudente y suficiente para actuar a tiempo.',
+      icon: ['M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9', 'M10.3 21a1.94 1.94 0 0 0 3.4 0'],
+    },
+    {
+      title: 'Sin promesas vacías',
+      subtitle: 'ADA reconoce sus límites.',
+      body: 'ADA no debe prometer riesgo cero: no promete detectar todo ni eliminar el ciberacoso, la presión social, la desinformación o los errores. Una IA que promete demasiado no da seguridad, da una falsa calma.',
+      icon: ['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z', 'M12 16v-4', 'M12 8h.01'],
+    },
+  ];
+  protected readonly ruleAnchors = [
+    'regla-presencia-no-vigilancia',
+    'regla-proposito-educativo',
+    'regla-sin-vinculos-secretos',
+    'regla-adultos-presentes',
+    'regla-sin-diagnosticos',
+    'regla-cuidado-ante-el-riesgo',
+    'regla-sin-carrera-por-likes',
+    'regla-preguntas-primero',
+    'regla-lenguaje-por-edad',
+    'regla-espacio-para-pensar',
+    'regla-privacidad-con-cuidado',
+    'regla-aviso-a-la-familia',
+    'regla-limites-claros',
+  ];
+  protected readonly compactRuleTocItems: RuleTocItem[] = [
+    { label: 'Respetar la privacidad de tu hijo', anchor: 'regla-espacio-para-pensar' },
+    { label: 'Evitar vínculos peligrosos', anchor: 'regla-sin-vinculos-secretos' },
+    { label: 'Reconocer señales que requieren ayuda adulta', anchor: 'regla-aviso-a-la-familia' },
+  ];
+  protected readonly fullRuleTocItems: RuleTocItem[] = [
+    { label: 'Presencia, no vigilancia', anchor: 'regla-presencia-no-vigilancia' },
+    { label: 'Propósito educativo', anchor: 'regla-proposito-educativo' },
+    { label: 'Sin vínculos secretos', anchor: 'regla-sin-vinculos-secretos' },
+    { label: 'Adultos presentes', anchor: 'regla-adultos-presentes' },
+    { label: 'Sin diagnósticos', anchor: 'regla-sin-diagnosticos' },
+    { label: 'Cuidado ante el riesgo', anchor: 'regla-cuidado-ante-el-riesgo' },
+    { label: 'Sin carrera por likes', anchor: 'regla-sin-carrera-por-likes' },
+    { label: 'Preguntas primero', anchor: 'regla-preguntas-primero' },
+    { label: 'Lenguaje por edad', anchor: 'regla-lenguaje-por-edad' },
+    { label: 'Espacio para pensar', anchor: 'regla-espacio-para-pensar' },
+    { label: 'Privacidad con cuidado', anchor: 'regla-privacidad-con-cuidado' },
+    { label: 'Aviso a la familia', anchor: 'regla-aviso-a-la-familia' },
+    { label: 'Límites claros', anchor: 'regla-limites-claros' },
+  ];
 
   private frame = 0;
   private clockVideoFrame = 0;
@@ -74,6 +201,7 @@ export class App implements AfterViewInit, OnDestroy {
   private adaImages: HTMLImageElement[] = [];
   private adaWarmupObserver?: IntersectionObserver;
   private anchorTween?: gsap.core.Tween;
+  private ruleHighlightTween?: gsap.core.Tween | gsap.core.Timeline;
   private adaWaveTrigger?: ScrollTrigger;
 
   ngAfterViewInit(): void {
@@ -86,12 +214,14 @@ export class App implements AfterViewInit, OnDestroy {
     this.scheduleNavRemeasure();
     window.addEventListener('resize', this.measureNav, { passive: true });
     window.addEventListener('load', this.measureNav, { once: true });
+    window.addEventListener('popstate', this.syncPageFromLocation);
     this.handleScroll();
   }
 
   ngOnDestroy(): void {
     window.removeEventListener('resize', this.measureNav);
     window.removeEventListener('load', this.measureNav);
+    window.removeEventListener('popstate', this.syncPageFromLocation);
     this.navMeasureFrames.forEach((frame) => cancelAnimationFrame(frame));
     this.navMeasureTimers.forEach((timer) => window.clearTimeout(timer));
     window.removeEventListener('scroll', this.queueScroll);
@@ -103,15 +233,105 @@ export class App implements AfterViewInit, OnDestroy {
     this.chatTrigger?.kill();
     this.adaWaveTrigger?.kill();
     this.anchorTween?.kill();
+    this.ruleHighlightTween?.kill();
+  }
+
+  protected toggleMenu(): void {
+    this.menuOpen.update((open) => !open);
+  }
+
+  protected closeMenu(): void {
+    this.menuOpen.set(false);
+  }
+
+  protected ruleAccent(index: number): string {
+    return ['violet', 'cyan', 'green', 'blue'][index % 4];
   }
 
   protected toggleTheme(): void {
     this.theme.toggle();
   }
-  protected setChannel(channel: DeliveryChannel): void {
-    this.channel.set(channel);
+
+  protected ruleNumber(index: number): string {
+    return String(index + 1).padStart(2, '0');
   }
 
+  protected ruleAnchor(index: number): string {
+    return this.ruleAnchors[index] ?? `regla-${index + 1}`;
+  }
+
+  protected goHome(event?: Event, anchor = 'hero-title'): void {
+    event?.preventDefault();
+    this.closeMenu();
+    if (this.currentPage() === 'rules') {
+      void this.transitionTo('landing', this.appUrl(anchor === 'hero-title' ? '' : `#${anchor}`), () => {
+        const target = document.querySelector<HTMLElement>(`#${anchor}`);
+        if (target) this.scrollToElement(target, this.anchorOffsetFor(target));
+      });
+      return;
+    }
+    history.pushState(null, '', this.appUrl(anchor === 'hero-title' ? '' : `#${anchor}`));
+    window.setTimeout(() => {
+      const target = document.querySelector<HTMLElement>(`#${anchor}`);
+      if (target) this.scrollToElement(target, this.anchorOffsetFor(target));
+    });
+  }
+
+  protected goRules(event?: Event): void {
+    event?.preventDefault();
+    this.closeMenu();
+    void this.transitionTo('rules', this.appUrl('reglas-de-ada'));
+  }
+
+  private readonly syncPageFromLocation = (): void => {
+    this.currentPage.set(this.pageFromLocation());
+    this.refreshAfterPageChange();
+  };
+
+  /** Construye la URL respetando el <base href> (raíz en local, subcarpeta en GitHub Pages). */
+  private appUrl(path: string): string {
+    return new URL(path, document.baseURI).href;
+  }
+
+  private pageFromLocation(): Page {
+    return window.location.pathname.replace(/\/$/, '').endsWith('/reglas-de-ada') ? 'rules' : 'landing';
+  }
+
+  private refreshAfterPageChange(): void {
+    window.setTimeout(() => {
+      this.setupSectionObserver();
+      this.measureNav();
+      this.handleScroll();
+    });
+  }
+
+  private async transitionTo(page: Page, url: string, afterReveal?: () => void): Promise<void> {
+    if (this.currentPage() === page && window.location.pathname === new URL(url, document.baseURI).pathname) return;
+    const root = document.documentElement;
+    this.anchorTween?.kill();
+    this.routeCoverVisible.set(true);
+    root.classList.add('dg-route-lock-scroll');
+    await this.wait(260);
+    window.scrollTo(0, 0);
+    this.currentPage.set(page);
+    history.pushState(null, '', url);
+    this.refreshAfterPageChange();
+    await this.nextFrame();
+    await this.nextFrame();
+    afterReveal?.();
+    await this.wait(120);
+    this.routeCoverVisible.set(false);
+    await this.wait(260);
+    root.classList.remove('dg-route-lock-scroll');
+  }
+
+  private wait(ms: number): Promise<void> {
+    return new Promise((resolve) => window.setTimeout(resolve, ms));
+  }
+
+  private nextFrame(): Promise<void> {
+    return new Promise((resolve) => requestAnimationFrame(() => resolve()));
+  }
   protected isReadMoreExpanded(id: string): boolean {
     return this.expandedReadMore().has(id);
   }
@@ -150,10 +370,9 @@ export class App implements AfterViewInit, OnDestroy {
         this.readMoreFrames.set(panel, requestAnimationFrame(step));
       } else {
         this.readMoreFrames.delete(panel);
-        // Stay in px instead of switching to 'auto': that layout-mode change
-        // can resolve to a fractionally different height than scrollHeight
-        // and cause a last-instant micro-jump.
-        panel.style.height = opening ? `${inner.scrollHeight}px` : '0px';
+        // Release the open panel after the animation. Copy can reflow after
+        // fonts/responsive layout settle, and a stale px height clips text.
+        panel.style.height = opening ? 'auto' : '0px';
       }
     };
     this.readMoreFrames.set(panel, requestAnimationFrame(step));
@@ -173,10 +392,10 @@ export class App implements AfterViewInit, OnDestroy {
     this.mobileCtaVisible.set(false);
   }
 
-  protected checkout(plan?: 'diferido' | 'contado'): void {
+  protected checkout(plan?: 'mensualidades' | 'contado'): void {
     if (!plan) {
       const precio = document.querySelector<HTMLElement>('#precio');
-      if (precio) this.scrollToElement(precio, 108);
+      if (precio) this.scrollToElement(precio, this.anchorOffsetFor(precio));
       return;
     }
     window.dispatchEvent(new CustomEvent('digizen:checkout', { detail: { plan } }));
@@ -256,6 +475,8 @@ export class App implements AfterViewInit, OnDestroy {
   }
 
   private setupSectionObserver(): void {
+    this.observer?.disconnect();
+    window.removeEventListener('scroll', this.queueScroll);
     const sections = document.querySelectorAll<HTMLElement>('[data-nav-section]');
     const Observer = (window as unknown as { IntersectionObserver?: typeof IntersectionObserver })
       .IntersectionObserver;
@@ -289,8 +510,6 @@ export class App implements AfterViewInit, OnDestroy {
    */
   private setupAnchorScroll(): void {
     if (typeof window.matchMedia !== 'function') return;
-    const OFFSET = 108; // igual que el scroll-margin-top de las secciones
-
     document.addEventListener('click', (event) => {
       const link = (event.target as HTMLElement | null)?.closest?.('a[href^="#"]');
       if (!(link instanceof HTMLAnchorElement)) return;
@@ -300,17 +519,27 @@ export class App implements AfterViewInit, OnDestroy {
       if (!target) return;
 
       event.preventDefault();
-      this.scrollToElement(target, OFFSET);
+      this.scrollToElement(target, this.anchorOffsetFor(target), () => this.highlightRuleTarget(target));
       history.pushState(null, '', id);
     });
   }
 
-  private scrollToElement(target: HTMLElement, offset: number): void {
+  private anchorOffsetFor(target: HTMLElement): number {
+    if (target.id === 'precio' && window.matchMedia('(min-width: 1024px)').matches) {
+      return 42;
+    }
+    return 108;
+  }
+
+  private scrollToElement(target: HTMLElement, offset: number, onComplete?: () => void): void {
     const soft = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const to = Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset);
     const from = window.scrollY;
     const distance = Math.abs(to - from);
-    if (distance < 2) return;
+    if (distance < 2) {
+      onComplete?.();
+      return;
+    }
 
     // Duracion proporcional a la distancia pero con tope: sin el, saltar de una punta
     // a otra de la landing se vuelve un viaje largo que atraviesa las animaciones.
@@ -328,7 +557,33 @@ export class App implements AfterViewInit, OnDestroy {
       // que es lo que se siente como aterrizaje en vez de como frenazo.
       ease: 'power3.out',
       onUpdate: () => window.scrollTo(0, pos.y),
+      onComplete,
     });
+  }
+
+  private highlightRuleTarget(target: HTMLElement): void {
+    if (!target.classList.contains('dg-rule-card')) return;
+
+    const soft = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.ruleHighlightTween?.kill();
+    target.classList.remove('dg-rule-card--targeted');
+    void target.offsetWidth;
+    target.classList.add('dg-rule-card--targeted');
+
+    if (soft) {
+      this.ruleHighlightTween = gsap.delayedCall(3.8, () => {
+        target.classList.remove('dg-rule-card--targeted');
+      });
+      return;
+    }
+
+    this.ruleHighlightTween = gsap
+      .timeline({
+        onComplete: () => target.classList.remove('dg-rule-card--targeted'),
+      })
+      .fromTo(target, { scale: 0.998 }, { scale: 1.01, duration: 0.26, ease: 'power2.out' })
+      .to(target, { scale: 1, duration: 0.5, ease: 'power3.out' })
+      .to({}, { duration: 2.75 });
   }
 
   private setupChatSequence(): void {

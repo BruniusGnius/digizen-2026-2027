@@ -53,6 +53,13 @@ jobs:
           git init -q
           git config user.name 'BruniusGnius'
           git config user.email 'bruno@gnius.club'
+          # Preservar las versiones B publicadas en subcarpetas (b-*, codex-*):
+          # este deploy solo reemplaza la raiz (version A) y no las toca.
+          git fetch -q --depth=1 "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages:refs/heads/prev
+          for d in $(git ls-tree --name-only prev | grep -E '^(b-|codex-)'); do
+            git checkout prev -- "$d"
+            echo "Preservada subcarpeta: $d"
+          done
           git add -A
           git commit -q -m 'Deploy production build to GitHub Pages'
           # Historia de un solo commit: el sitio pesa >140MB y acumular

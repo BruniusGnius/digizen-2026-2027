@@ -99,3 +99,17 @@ La revisión se aplicó exclusivamente en `angular-build/src/styles.css`. No se 
 
 **Puntaje ponderado:** 4.8 / 5
 **Resultado:** aprobado internamente; la revisión preserva el wireframe y el copy.
+
+---
+
+## Botones principales con el degradado del logo — 2026-10-05
+
+Pedido del usuario: relleno de degradado en los botones, muy similar al del círculo del logo de Digizen (el que va detrás del joven con la mochila).
+
+- El cambio está solo en `angular-build/src/styles.css`. No se modificaron `app.html`, `app.ts`, copy, estructura ni interacciones.
+- Token nuevo `--dg-btn-fill: linear-gradient(230deg, #1a75ea 0%, #2c1ddb 100%)`: los mismos dos colores y la misma dirección del círculo del logo (`logo-SVG/digizen-logo-*.svg`: `#1a75ea` arriba a la derecha → `#2c1ddb` abajo a la izquierda).
+- Lo usan los botones principales (`.dg-btn`) y el enlace «Inscribir a mi hijo» del menú móvil (`.dg-nav-links-cta`), en tema claro y oscuro. `background-origin: border-box` evita que el degradado se repita bajo el borde de 1 px.
+- No cambian: los botones secundarios (`.dg-btn--secondary`), ni los demás usos de `--dg-btn-bg` (barra de progreso, marca de los antetítulos, sombras, enlaces del pie).
+- Contraste del texto blanco: 4.96:1 en el peor punto bajo el texto de los botones medidos (extremo claro del degradado 4.40, extremo oscuro 9.11; el azul sólido anterior daba 5.05).
+- Verificado en local: tema claro y oscuro, desktop y teléfono (menú abierto); build de producción correcto.
+- Aprobado por el usuario y publicado el 2026-10-05 (pasó a `main` desde la rama `digizen-a-botones-degradado`).

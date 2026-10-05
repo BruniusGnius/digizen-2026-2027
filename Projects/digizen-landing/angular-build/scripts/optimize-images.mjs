@@ -26,6 +26,8 @@ const pngAssets = [
   'assets/digizen/generated/scenes/dg-scene-a07-presence-mother-son.png',
   'assets/digizen/generated/scenes/dg-scene-a08-founder-high-five.png',
   'assets/digizen/generated/scenes/dg-scene-cta-mother-daughter-laptop-1-1.png',
+  'assets/digizen/generated/scenes/dg-scene-a09-rules-presence-mobile.png',
+  'assets/digizen/generated/scenes/dg-scene-a09-rules-presence.png',
 ];
 
 function publicPath(assetPath) {
