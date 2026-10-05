@@ -2,7 +2,7 @@
 project: digizen-landing-b-v04-claude
 documento: optimización de imágenes
 fecha: 2026-10-05
-estado: hecha en local y en la rama; NO publicada (las páginas de GitHub Pages no cambian mientras se revisan)
+estado: publicada el 2026-10-05 por indicación del usuario (gh-pages, carpeta b-v04-claude)
 ---
 
 # Optimización de imágenes de la landing B
