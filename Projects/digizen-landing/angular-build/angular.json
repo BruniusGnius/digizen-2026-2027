@@ -32,6 +32,7 @@
                   "**/dg-scene-a05-decision-tree-v0*.png",
                   "**/digizen-v05-scene-decision-context.png",
                   "**/*.png",
+                  "**/*.psd",
                   "**/.DS_Store"
                 ]
               }

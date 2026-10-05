@@ -124,4 +124,21 @@ Reporte del usuario: en GitHub, al pasar de «Reglas de ADA» a Digizen, la ADA 
 - **Corrección.** Solo en `angular-build/src/app/app.ts`: `setupLandingMotion()` prepara las tres animaciones cada vez que la portada vuelve a existir (al cargar, al volver de las reglas y con el botón Atrás) y `teardownLandingMotion()` suelta los disparadores anteriores. Una preparación que quedó a medias al cambiar de página se descarta. No cambian el marcado, los estilos, el copy ni el comportamiento al cargar la portada.
 - **Verificado.** En la versión publicada se reprodujo el fallo (al volver: lienzo vacío, sin `is-ready`). En local, con la corrección: al volver con «Volver a Digizen», con el botón Atrás y entrando directo por las reglas, el lienzo queda preparado y pintado, se cargan los 130 cuadros y el video del reloj queda listo; sin errores de consola; build de producción correcto.
 - **No verificado.** El recorrido de la animación con el scroll en un navegador visible: el panel de pruebas estaba oculto y pausa las animaciones. Falta una revisión a ojo.
-- Rama `digizen-a-fix-ada-al-volver`. No está en `main`: no se ha publicado.
+- Aprobado por el usuario y publicado el 2026-10-05 (pasó a `main` desde la rama `digizen-a-fix-ada-al-volver`).
+
+---
+
+## Optimización de imágenes: AVIF con respaldo WebP — 2026-10-05
+
+Pedido del usuario: publicar las correcciones con optimización de imágenes en A y B, conservando siempre los originales.
+
+- **Qué cambia.** Las imágenes se sirven también en AVIF; el WebP que ya estaba publicado no se tocó y queda de respaldo para el navegador que no entienda AVIF. No se bajó resolución ni cambió ninguna composición.
+  - Escenas: los 9 `<picture>` de `app.html` ofrecen primero su AVIF (18 imágenes: Hero, escenas con versión móvil y las de la página de reglas). La precarga del Hero en `index.html` pasó a AVIF para no descargar los dos formatos.
+  - ADA que saluda: los 130 cuadros existen en AVIF. `app.ts` averigua una vez si el navegador lo decodifica (`supportsAvif()`) y pide esos cuadros; si no, los WebP.
+  - `angular.json` excluye `**/*.psd`: el PSD del OGP (4.9 MB) se publicaba por accidente. El archivo sigue en su carpeta.
+- **Garantía de calidad.** `scripts/make-avif.py` compara cada AVIF con su referencia y solo lo conserva si es al menos tan fiel (SSIM) como el WebP y pesa menos. Para las escenas la referencia es su **PNG original** de `public/`; para ADA, su cuadro WebP (SSIM ≥ 0.995). El detalle por imagen queda en `scripts/avif-report.json`.
+- **Resultado.** Escenas con AVIF: 2.80 MB → 2.11 MB (25 % menos; cada una entre 14 % y 38 %). ADA: 4.15 MB → 1.78 MB (57 % menos). Lo publicado baja además 4.9 MB por el PSD.
+- **Originales.** Nada se sobrescribió: los PNG siguen en `public/` y el respaldo `asset-backups/original-images-2026-09-18/` no se tocó.
+- **Lo que no se hizo.** Las 17 imágenes sueltas (fuera de `<picture>`, 0.9 MB en total) siguen en WebP: envolverlas cambia el marcado y pide revisión visual. El video del reloj (6.1 MB) tampoco se tocó.
+- **Verificado en local.** Build de producción correcto (148 AVIF en la salida, ningún PSD). En el navegador: el Hero y la imagen de reglas toman el AVIF; al volver de las reglas ADA queda preparada y pintada con sus 130 cuadros AVIF; sin errores de consola.
+- **No verificado.** A ojo en un navegador visible (el panel de pruebas estaba oculto y pausa las animaciones) ni en un navegador sin AVIF.

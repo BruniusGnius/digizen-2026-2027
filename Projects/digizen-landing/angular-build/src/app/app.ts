@@ -204,6 +204,7 @@ export class App implements AfterViewInit, OnDestroy {
   private ruleHighlightTween?: gsap.core.Tween | gsap.core.Timeline;
   private adaWaveTrigger?: ScrollTrigger;
   private clockVideoSync?: () => void;
+  private avifSupport?: Promise<boolean>;
   private landingMotionRun = 0;
 
   ngAfterViewInit(): void {
@@ -711,12 +712,23 @@ export class App implements AfterViewInit, OnDestroy {
     });
   }
 
+  /** Se averigua una sola vez, con una imagen AVIF de 2x2 con transparencia. */
+  private supportsAvif(): Promise<boolean> {
+    return (this.avifSupport ??= new Promise<boolean>((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(img.naturalWidth === 2);
+      img.onerror = () => resolve(false);
+      img.src =
+        'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAAGGbWV0YQAAAAAAAAAhaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAAAAAAAOcGl0bQAAAAAAAQAAACxpbG9jAAAAAEQAAAIAAQAAAAEAAAG/AAAAJwACAAAAAQAAAa4AAAARAAAAQmlpbmYAAAAAAAIAAAAaaW5mZQIAAAAAAQAAYXYwMUNvbG9yAAAAABppbmZlAgAAAAACAABhdjAxQWxwaGEAAAAAGmlyZWYAAAAAAAAADmF1eGwAAgABAAEAAADDaXBycAAAAJ1pcGNvAAAAFGlzcGUAAAAAAAAAAgAAAAIAAAAQcGl4aQAAAAADCAgIAAAADGF2MUOBAAwAAAAAE2NvbHJuY2x4AAEADQAGgAAAAA5waXhpAAAAAAEIAAAADGF2MUOBABwAAAAAOGF1eEMAAAAAdXJuOm1wZWc6bXBlZ0I6Y2ljcDpzeXN0ZW1zOmF1eGlsaWFyeTphbHBoYQAAAAAeaXBtYQAAAAAAAAACAAEEAQKDBAACBAEFhgcAAABAbWRhdBIACgQYADYVMgcYACihABCgEgAKCBgANogIaDQgMhkZR4eGIYeeeeaAAACQQMkcYUOdV2OZjhnY';
+    }));
+  }
+
   private setupAdaWave(): void {
     const canvas = document.querySelector<HTMLCanvasElement>('canvas[data-ada-wave]');
     const ctx = canvas?.getContext('2d');
     if (!canvas || !ctx || typeof window.matchMedia !== 'function') return;
 
-    const sources = this.adaFrames;
+    let sources = this.adaFrames;
     const desktop = window.matchMedia('(min-width: 1024px)');
     // Si la portada se desmonta o se vuelve a montar mientras cargan los cuadros, esta
     // preparacion queda obsoleta y no debe tocar el lienzo nuevo ni crear su disparador.
@@ -745,7 +757,16 @@ export class App implements AfterViewInit, OnDestroy {
     const startWarmup = () => {
       if (started) return;
       started = true;
+      // Los mismos 130 cuadros existen en AVIF (57 % mas ligeros, comprobados contra los WebP);
+      // si el navegador no los decodifica, se usan los WebP de siempre.
+      void this.supportsAvif().then((avif) => {
+        if (stale()) return;
+        if (avif) sources = sources.map((src) => src.replace(/\.webp$/, '.avif'));
+        warmup();
+      });
+    };
 
+    const warmup = () => {
       // El primer cuadro se pinta en cuanto llega: con 130 cuadros, esperar a todos
       // dejaria el hueco vacio demasiado tiempo.
       void load(sources[0]).then((first) => {

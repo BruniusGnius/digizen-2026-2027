@@ -1,0 +1,152 @@
+{
+ "assets/digizen/ada-wave": {
+  "avif": 1861481,
+  "frames": 130,
+  "q": 56,
+  "webp": 4349004
+ },
+ "assets/digizen/generated/scenes/ada-rule-desktop.webp": {
+  "avif": 58092,
+  "q": 60,
+  "referencia": "png",
+  "ssim_avif": 0.9913,
+  "ssim_webp": 0.9907,
+  "webp": 75634
+ },
+ "assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy-mobile.webp": {
+  "avif": 61863,
+  "q": 60,
+  "referencia": "png",
+  "ssim_avif": 0.967,
+  "ssim_webp": 0.9636,
+  "webp": 77504
+ },
+ "assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy.webp": {
+  "avif": 53339,
+  "q": 60,
+  "referencia": "png",
+  "ssim_avif": 0.9665,
+  "ssim_webp": 0.966,
+  "webp": 69328
+ },
+ "assets/digizen/generated/scenes/dg-scene-a02-parent-phone-attachment-mobile.webp": {
+  "avif": 105687,
+  "q": 60,
+  "referencia": "png",
+  "ssim_avif": 0.9646,
+  "ssim_webp": 0.9611,
+  "webp": 128514
+ },
+ "assets/digizen/generated/scenes/dg-scene-a02-parent-phone-attachment.webp": {
+  "avif": 64487,
+  "q": 60,
+  "referencia": "png",
+  "ssim_avif": 0.9576,
+  "ssim_webp": 0.9555,
+  "webp": 77174
+ },
+ "assets/digizen/generated/scenes/dg-scene-a03-mother-son-dinner-mobile.webp": {
+  "avif": 156835,
+  "q": 60,
+  "referencia": "png",
+  "ssim_avif": 0.9526,
+  "ssim_webp": 0.9523,
+  "webp": 207272
+ },
+ "assets/digizen/generated/scenes/dg-scene-a03-mother-son-dinner.webp": {
+  "avif": 85429,
+  "q": 64,
+  "referencia": "png",
+  "ssim_avif": 0.9609,
+  "ssim_webp": 0.9564,
+  "webp": 98878
+ },
+ "assets/digizen/generated/scenes/dg-scene-a05-decision-tree-16-9.webp": {
+  "avif": 159054,
+  "q": 56,
+  "referencia": "png",
+  "ssim_avif": 0.983,
+  "ssim_webp": 0.9812,
+  "webp": 254950
+ },
+ "assets/digizen/generated/scenes/dg-scene-a05-decision-tree.webp": {
+  "avif": 110478,
+  "q": 56,
+  "referencia": "png",
+  "ssim_avif": 0.9858,
+  "ssim_webp": 0.9846,
+  "webp": 178066
+ },
+ "assets/digizen/generated/scenes/dg-scene-a05-father-tests-ada-mobile.webp": {
+  "avif": 64580,
+  "q": 60,
+  "referencia": "png",
+  "ssim_avif": 0.9691,
+  "ssim_webp": 0.9648,
+  "webp": 80872
+ },
+ "assets/digizen/generated/scenes/dg-scene-a05-father-tests-ada.webp": {
+  "avif": 57490,
+  "q": 60,
+  "referencia": "png",
+  "ssim_avif": 0.9675,
+  "ssim_webp": 0.9641,
+  "webp": 73824
+ },
+ "assets/digizen/generated/scenes/dg-scene-a06-trust-father-daughter-mobile.webp": {
+  "avif": 104375,
+  "q": 60,
+  "referencia": "png",
+  "ssim_avif": 0.9639,
+  "ssim_webp": 0.9601,
+  "webp": 140070
+ },
+ "assets/digizen/generated/scenes/dg-scene-a06-trust-father-daughter.webp": {
+  "avif": 74638,
+  "q": 60,
+  "referencia": "png",
+  "ssim_avif": 0.967,
+  "ssim_webp": 0.9659,
+  "webp": 103678
+ },
+ "assets/digizen/generated/scenes/dg-scene-a07-presence-mother-son-mobile.webp": {
+  "avif": 67820,
+  "q": 64,
+  "referencia": "png",
+  "ssim_avif": 0.9678,
+  "ssim_webp": 0.9668,
+  "webp": 83430
+ },
+ "assets/digizen/generated/scenes/dg-scene-a07-presence-mother-son.webp": {
+  "avif": 106719,
+  "q": 64,
+  "referencia": "png",
+  "ssim_avif": 0.9656,
+  "ssim_webp": 0.9655,
+  "webp": 131774
+ },
+ "assets/digizen/generated/scenes/dg-scene-a09-rules-presence-mobile.webp": {
+  "avif": 403051,
+  "q": 64,
+  "referencia": "png",
+  "ssim_avif": 0.9652,
+  "ssim_webp": 0.9649,
+  "webp": 533010
+ },
+ "assets/digizen/generated/scenes/dg-scene-a09-rules-presence.webp": {
+  "avif": 358973,
+  "q": 64,
+  "referencia": "png",
+  "ssim_avif": 0.9659,
+  "ssim_webp": 0.9654,
+  "webp": 477052
+ },
+ "assets/digizen/generated/scenes/dg-scene-a10-ada-rules-closing.webp": {
+  "avif": 119036,
+  "q": 64,
+  "referencia": "png",
+  "ssim_avif": 0.9936,
+  "ssim_webp": 0.993,
+  "webp": 145026
+ }
+}
