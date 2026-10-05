@@ -50,6 +50,7 @@ Los PNG de `public/` y los del respaldo están repetidos a propósito: el respal
 | `00-context/scenes-originales-png/` | Originales PNG sin pérdida, rescatados de la primera B antes de descartarla | No |
 | `assets/seq/`, `assets/avatars/` | Fuentes de las animaciones de cuadros y los avatares | No |
 | `asset-backups/publicado-antes-de-optimizar-2026-10-05/` | **Respaldo anterior a la optimización (2026-10-05). No se borra.** | No |
+| `imagenes-no-publicadas/` | Opciones que no se publican. Incluye lo recuperado de las B descartadas: 4 escenas en versión web y 30 capturas de revisión de la primera B (ver su `LEEME.md`) | No |
 
 La B se optimizó el 2026-10-05: sirve AVIF con el WebP de siempre como respaldo, 37 % menos peso en desktop sin perder fidelidad. Está en la rama, **sin publicar**. Detalle, garantías y cómo volver atrás: `Projects/digizen-landing-b-v04-claude/03-optimizacion-imagenes.md`.
 
