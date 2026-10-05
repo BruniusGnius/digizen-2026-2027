@@ -81,6 +81,13 @@ Detalle, garantías y cómo volver atrás: `Projects/digizen-landing-b-v04-claud
 
 - **A:** botones principales con el degradado del logo; corrección de la ADA del CTA, que no aparecía al volver de «Reglas de ADA»; optimización de imágenes (escenas y los 130 cuadros de ADA en AVIF); el PSD del OGP deja de publicarse.
 - **B:** optimización de imágenes (escenas y animaciones de cuadros en AVIF con respaldo WebP).
+- **Mejoras tras Lighthouse, en las dos y en sus páginas de reglas:**
+  - A: la hoja de estilos ya no se carga en diferido (evita que la página salte con extensiones del navegador); el video del reloj no se descarga en móvil; nombre accesible del enlace de WhatsApp; contraste de tres textos.
+  - B: tipografía Inter servida desde el proyecto (`output-code/assets/fonts/`), sin Google Fonts; pósteres de las secuencias con carga diferida; logo del pie con medidas.
+
+## Mediciones
+
+`Projects/auditorias-lighthouse/` guarda la línea base de Lighthouse (incógnito, 2026-10-05, antes de las mejoras de arriba) y explica cómo medir para que valga: siempre en incógnito, porque las extensiones falsean el resultado.
 
 ## Pendientes
 
@@ -88,3 +95,5 @@ Detalle, garantías y cómo volver atrás: `Projects/digizen-landing-b-v04-claud
 - **OGP de la A:** el nuevo (JPG y PSD del 2026-09-30) todavía no está en línea; la página sigue citando `assets/og/digizen-og-control-caduca-criterio-no.jpg`. Los archivos nuevos esperan en `angular-build/public/assets/digizen/seo/` (sin guardar en git) y hay copia en `imagenes-no-publicadas/ogp-2026-09-30/`.
 - **Revisión a ojo** de lo publicado, en un navegador normal y en dispositivos reales: las pruebas automáticas se hicieron con el panel oculto, que pausa las animaciones.
 - **Optimización que sí cambia cómo se ve** (requiere decisión): tope de 1920 px en pantallas retina y menos cuadros en las secuencias de la B; las 17 imágenes sueltas y el video del reloj de la A.
+- **Para la versión final de la A** (decisión del usuario, 2026-10-05): varios tamaños por imagen (hoy algunas son más grandes de lo que se muestran) y prerenderizado. El prerenderizado también resolvería que la dirección directa `/reglas-de-ada` responde con código 404 en GitHub Pages, aunque muestra la página.
+- **Volver a medir** con Lighthouse en incógnito después de lo publicado el 2026-10-05, y medir también las páginas de reglas, que no tienen medición.
