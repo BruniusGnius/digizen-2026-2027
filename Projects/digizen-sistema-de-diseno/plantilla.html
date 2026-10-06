@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="es-MX" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Sistema de diseño Digizen</title>
+<link rel="icon" type="image/svg+xml" href="assets/digizen/logo-SVG/Favicon.svg">
+<link rel="stylesheet" href="css/digizen-a.css">
+<link rel="stylesheet" href="css/digizen-ajustes.css">
+<link rel="stylesheet" href="css/guia.css">
+</head>
+<body class="ds-body">
+
+<header class="ds-top">
+  <a class="dg-logo ds-top-logo" href="#inicio" aria-label="Sistema de diseño de Digizen, ir al inicio">
+    <img class="dg-logo-light" src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="Digizen" width="520" height="200">
+    <img class="dg-logo-dark" src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520" height="200">
+  </a>
+  <p class="ds-top-title">Sistema de diseño <span>Landing A</span></p>
+  <button class="dg-theme ds-theme" type="button" data-ds-theme aria-pressed="false" aria-label="Activar tema oscuro">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.4 8.4 0 0 1 8.8 3.8 8.4 8.4 0 1 0 20.2 15.2Z"></path></svg>
+  </button>
+</header>
+
+<div class="ds-layout">
+
+<nav class="ds-side" aria-label="Contenido del sistema de diseño">
+  <details class="ds-side-box" open>
+    <summary>Contenido</summary>
+    <ol class="ds-side-list">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#filosofia">1 · Filosofía</a>
+        <ol><li><a href="#intencion">Intención</a></li><li><a href="#principios">Principios</a></li><li><a href="#decisiones">Decisiones vigentes</a></li></ol></li>
+      <li><a href="#fundamentos">2 · Fundamentos</a>
+        <ol><li><a href="#color">Color</a></li><li><a href="#tipografia">Tipografía</a></li><li><a href="#espacio">Espacio y retícula</a></li><li><a href="#forma">Forma y elevación</a></li><li><a href="#iconos">Iconos</a></li><li><a href="#imagenes">Imágenes</a></li><li><a href="#movimiento">Movimiento</a></li><li><a href="#temas">Temas</a></li></ol></li>
+      <li><a href="#experiencia">3 · Experiencia</a>
+        <ol><li><a href="#ux-decision">Una decisión por momento</a></li><li><a href="#ux-navegacion">Navegación</a></li><li><a href="#ux-lectura">Lectura por capas</a></li><li><a href="#ux-formularios">Formularios</a></li><li><a href="#ux-accesibilidad">Accesibilidad</a></li><li><a href="#ux-rendimiento">Rendimiento</a></li><li><a href="#ux-contenido">Contenido</a></li></ol></li>
+      <li><a href="#guia">4 · Guía de componentes</a></li>
+      <li><a href="#libreria">5 · Librería</a>
+        <ol><li><a href="#grupo-accion">Acción</a></li><li><a href="#grupo-texto">Texto</a></li><li><a href="#grupo-notas">Notas e imagen</a></li><li><a href="#grupo-capas">Lectura por capas</a></li><li><a href="#grupo-tarjetas">Tarjetas</a></li><li><a href="#grupo-producto">Producto y formulario</a></li><li><a href="#grupo-precio">Precio y garantía</a></li><li><a href="#grupo-marco">Navegación y marco</a></li><li><a href="#grupo-reglas">Reglas de ADA</a></li></ol></li>
+    </ol>
+  </details>
+</nav>
+
+<main class="ds-main">
+
+<!-- ============================================================ INICIO -->
+<section class="ds-hero" id="inicio">
+  <p class="dg-kicker">Landing A · Digizen</p>
+  <h1 class="dg-display ds-hero-title">Sistema de diseño</h1>
+  <p class="dg-lead">Todo lo que la interfaz y la experiencia de la landing A necesitan para mantenerse coherentes: por qué se ve así, con qué se construye, cómo se comporta y cada componente ya diseñado.</p>
+  <div class="ds-meta">
+    <div><b>Qué documenta</b><span>Lo que está construido y publicado en <code class="ds-code-inline">Projects/digizen-landing/angular-build</code>, más un <a href="#ajustes">ajuste del sistema</a> que la landing aún no aplica.</span></div>
+    <div><b>De dónde sale</b><span>Los valores se leen del CSS real; los componentes de la librería se extraen de la página ya renderizada y se pintan con ese mismo CSS.</span></div>
+    <div><b>Fecha</b><span>5 de octubre de 2026. Se regenera con <code class="ds-code-inline">construir.py</code>.</span></div>
+  </div>
+  <ol class="ds-parts">
+    <li><a href="#filosofia"><span class="dg-index">1</span><b>Filosofía</b><span>La intención, los principios y las decisiones que están vigentes.</span></a></li>
+    <li><a href="#fundamentos"><span class="dg-index">2</span><b>Fundamentos</b><span>Color, tipografía, espacio, forma, iconos, imágenes, movimiento y temas.</span></a></li>
+    <li><a href="#experiencia"><span class="dg-index">3</span><b>Experiencia</b><span>Cómo se decide, se navega, se lee y se llena un formulario; accesibilidad y rendimiento.</span></a></li>
+    <li><a href="#guia"><span class="dg-index">4</span><b>Guía de componentes</b><span>Para qué sirve cada uno, sus partes, variantes y reglas.</span></a></li>
+    <li><a href="#libreria"><span class="dg-index">5</span><b>Librería</b><span>Los componentes ya diseñados, tal como están en la landing, con su marcado.</span></a></li>
+  </ol>
+</section>
+
+<!-- ============================================================ 1 · FILOSOFÍA -->
+<section class="ds-part" id="filosofia">
+  <header class="ds-part-head">
+    <p class="dg-kicker">Parte 1</p>
+    <h2 class="dg-h2"><span class="dg-h2-muted">Por qué se ve y se siente así.</span>Filosofía</h2>
+  </header>
+
+  <section class="ds-sec" id="intencion">
+    <h3 class="dg-h3">Intención</h3>
+    <blockquote class="dg-note ds-note-wide">
+      <div class="dg-note-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"/></svg></div>
+      <div><strong>Claro, sereno y competente.</strong><em>Nunca como vigilancia, castigo o una plataforma infantilizada.</em></div>
+    </blockquote>
+    <div class="ds-prose">
+      <p>Digizen acompaña conversaciones familiares sobre vida digital. La experiencia combina una <strong>base editorial sobria</strong> con <strong>momentos expresivos alrededor de ADA</strong>.</p>
+      <p>La landing le habla a un papá o a una mamá que llega con culpa y cansancio. Por eso el diseño baja la guardia antes de pedir algo: mucho aire, una sola idea por tramo, color solo donde significa algo y una acción clara cuando el lector ya entendió.</p>
+    </div>
+  </section>
+
+  <section class="ds-sec" id="principios">
+    <h3 class="dg-h3">Principios</h3>
+    <p class="ds-lede">Son los siete principios del sistema de producto de Digizen (<code class="ds-code-inline">01-design-system.md</code>). Gobiernan también la landing.</p>
+    <div class="ds-cards ds-cards--3">
+      <article class="dg-card" style="--accent: var(--dg-cyan)"><div class="dg-icon"><span>1</span></div><h4>Acompañar, no vigilar</h4><p>Privacidad, acuerdos y señales de cuidado se diferencian de forma explícita y calmada.</p></article>
+      <article class="dg-card" style="--accent: var(--dg-blue)"><div class="dg-icon"><span>2</span></div><h4>Una decisión por momento</h4><p>Cada tramo prioriza un único siguiente paso; la información auxiliar se mantiene visible sin competir.</p></article>
+      <article class="dg-card" style="--accent: var(--dg-violet)"><div class="dg-icon"><span>3</span></div><h4>La paleta es fija</h4><p>Se conservan los tonos de la propuesta original; el sistema define sus usos, no los sustituye.</p></article>
+      <article class="dg-card" style="--accent: var(--dg-green)"><div class="dg-icon"><span>4</span></div><h4>Iconos y bordes también comunican</h4><p>La placa de icono y las líneas de las cajas son parte del lenguaje de navegación y agrupación.</p></article>
+      <article class="dg-card" style="--accent: var(--dg-coral)"><div class="dg-icon"><span>5</span></div><h4>La calidez está en ADA; la estructura es tranquila</h4><p>Degradados, brillos y movimiento pertenecen a ADA y a la respuesta puntual, no a todas las superficies.</p></article>
+      <article class="dg-card" style="--accent: var(--dg-orange)"><div class="dg-icon"><span>6</span></div><h4>El criterio es legible</h4><p>La jerarquía permite escanear qué es lo principal, qué puede hacer la familia y qué profundidad es opcional.</p></article>
+      <article class="dg-card" style="--accent: var(--dg-blue)"><div class="dg-icon"><span>7</span></div><h4>Sistema antes que excepción</h4><p>Los mismos valores resuelven todas las piezas; solo cambian la densidad y el lenguaje de cada audiencia.</p></article>
+    </div>
+  </section>
+
+  <section class="ds-sec" id="decisiones">
+    <h3 class="dg-h3">Decisiones vigentes</h3>
+    <p class="ds-lede">Lo que hoy está construido. Cuando un documento anterior dice otra cosa, vale lo de esta lista.</p>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Decisión</th><th>Cómo se ve</th><th>Desde</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Base fría y superficies opacas</th><td>Fondo gris-azulado, tarjetas blancas con borde de 1 px y una sola sombra suave. Sin retículas ni degradados de ambiente en el contenido.</td><td>11 sep 2026</td></tr>
+        <tr><th scope="row">Titulares en dos tonos</th><td>El fragmento que prepara va en gris; el mensaje, en tinta. Es la firma tipográfica de la página.</td><td>11 sep 2026</td></tr>
+        <tr><th scope="row">Color solo con significado</th><td>Azul para estructura, cian para ADA, coral para cuidado, verde para confirmar, dorado para hitos. Coral nunca es una acción.</td><td>11 sep 2026</td></tr>
+        <tr><th scope="row">Escenas en foto-ilustración</th><td>Rostros con calidad fotográfica intervenidos con pincelada, sobre lienzo blanco con halo de bloques de color.</td><td>15 sep 2026</td></tr>
+        <tr><th scope="row">Botón principal con el degradado del logo</th><td>De <code class="ds-code-inline">#1a75ea</code> a <code class="ds-code-inline">#2c1ddb</code>, la misma dirección del círculo del logo. Antes era azul sólido; el documento de la revisión v2 todavía habla de violeta.</td><td>5 oct 2026</td></tr>
+        <tr><th scope="row">Contraste mínimo de 4.5:1</th><td>El verde de énfasis se oscureció y las notas de 10 px pasaron al gris de lectura.</td><td>5 oct 2026</td></tr>
+        <tr><th scope="row">Imágenes en AVIF con WebP de respaldo</th><td>Cada AVIF se compara con su original y solo se usa si es al menos tan fiel como el WebP.</td><td>5 oct 2026</td></tr>
+        <tr><th scope="row">ADA puede aparecer en las escenas</th><td>Cuando la escena trata de su acompañamiento, como en la regla principal de Reglas de ADA. Antes la regla decía que nunca aparecía.</td><td>5 oct 2026</td></tr>
+        <tr><th scope="row">Tarjetas de un mismo grupo, misma altura</th><td>La más larga marca la altura de todas, en la fila y entre filas. Excepción intencional: la tarjeta de precio destacada es más grande que la otra.</td><td>5 oct 2026</td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 class="ds-h4" id="ajustes">Ajuste respecto a la landing publicada</h4>
+    <p class="ds-lede ds-m0">Una regla del sistema que la landing A todavía no aplica. Vive en <code class="ds-code-inline">css/digizen-ajustes.css</code>, aparte de la copia del CSS de la landing; los ejemplos de esta guía ya la llevan. La landing no se modificó.</p>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Qué</th><th>En la landing publicada</th><th>En el sistema</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Altura entre filas de tarjetas</th><td>Las tarjetas de una misma fila miden igual, pero cada fila toma su propia altura. En Reglas de ADA, a 1280 px de ancho, unas filas miden 305 px y otras 328.</td><td>Todas las filas de una rejilla miden lo mismo (<code class="ds-code-inline">grid-auto-rows: 1fr</code>). En Reglas de ADA la regla principal conserva su alto.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</section>
+
+<!-- ============================================================ 2 · FUNDAMENTOS -->
+<section class="ds-part" id="fundamentos">
+  <header class="ds-part-head">
+    <p class="dg-kicker">Parte 2</p>
+    <h2 class="dg-h2"><span class="dg-h2-muted">Con qué se construye.</span>Fundamentos</h2>
+  </header>
+
+  <section class="ds-sec" id="color">
+    <h3 class="dg-h3">Color</h3>
+    <div class="ds-prose">
+      <p>Todo color es una variable CSS con prefijo <code class="ds-code-inline">--dg-</code>. Cada una tiene valor para el tema claro y para el oscuro; los componentes nunca escriben un color directo.</p>
+      <p>Hay <strong>dos juegos de color con significado</strong>. Los de <em>relleno</em> pintan placas, avatares y acentos, siempre con el icono en blanco. Los de <em>texto</em> son versiones más oscuras de los mismos tonos, porque el relleno no alcanza contraste como letra sobre fondo claro.</p>
+    </div>
+    <!--@tabla-color-->
+    <h4 class="ds-h4">Contraste del texto</h4>
+    <p class="ds-lede">Calculado con los valores reales. Verde: pasa para cualquier texto (4.5 o más). Ámbar: solo para texto grande (3 o más). Rojo: no usar como texto.</p>
+    <!--@tabla-contraste-->
+    <div class="ds-rules">
+      <div class="ds-do"><b>Hacer</b><ul><li>Usar el color por lo que significa, igual en toda la página.</li><li>Poner el énfasis de color en una sola frase del titular.</li><li>Usar <code class="ds-code-inline">--dg-muted</code> para todo texto de 14 px o menos.</li></ul></div>
+      <div class="ds-dont"><b>Evitar</b><ul><li>Coral en botones o acciones: coral es cuidado, no «adelante».</li><li><code class="ds-code-inline">--dg-soft</code> en texto pequeño: solo vale en el fragmento gris del titular.</li><li>Colores de relleno como color de letra.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="ds-sec" id="tipografia">
+    <h3 class="dg-h3">Tipografía</h3>
+    <div class="ds-prose">
+      <p>Una sola familia: <strong>Inter variable</strong>, servida desde el proyecto. La jerarquía se construye con tamaño, peso y tono, no con otra tipografía.</p>
+      <p>El peso del texto base cambia con el tema: <strong><!--@var --dg-weight-body--></strong> en claro y 450 en oscuro, para que la letra clara sobre fondo oscuro no engorde. Las negritas dentro del texto van a 700 y en tinta.</p>
+    </div>
+    <div class="ds-type">
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-display">Le quitaste el celular… con el tuyo en la&nbsp;mano</p></div><div class="ds-type-meta"><b>Apertura</b><!--@css .dg-display--><span class="ds-type-uso">Solo el título de la primera pantalla.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-h2"><span class="dg-h2-muted">Nadie te enseñó&nbsp;esto.</span>A ti tampoco te lo&nbsp;enseñaron</p></div><div class="ds-type-meta"><b>Titular en dos tonos</b><!--@css .dg-h2--><!--@css .dg-h2-muted--><span class="ds-type-uso">Título de cada tramo. El fragmento gris prepara; el de tinta dice el mensaje.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-h3">El control caduca. El criterio no.</p></div><div class="ds-type-meta"><b>Subtítulo</b><!--@css .dg-h3--><span class="ds-type-uso">Módulos dentro de un tramo y títulos de formulario.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-lead dg-lead--h2">Y los dos sabemos cómo terminó: <strong class="dg-emphasis--coral">en dos días encontró cómo saltárselo.</strong></p></div><div class="ds-type-meta"><b>Entrada grande</b><!--@css .dg-lead--h2--><span class="ds-type-uso">Segunda línea de la apertura.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-lead ds-m0">Todo lo que la interfaz necesita para mantenerse coherente.</p></div><div class="ds-type-meta"><b>Entrada</b><!--@css .dg-lead--><span class="ds-type-uso">Apoyo de una promesa.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><div class="dg-copy ds-m0"><p>A ti te tocó un mundo de calles y bicicletas. A tu hijo le tocó uno que se inventa cada mañana. <strong>Nadie te dio el manual.</strong></p></div></div><div class="ds-type-meta"><b>Lectura</b><!--@css .dg-copy--><span class="ds-type-uso">Párrafos. Ancho máximo de 68 caracteres.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-decision-title ds-m0">Tu hijo puede empezar hoy mismo.</p></div><div class="ds-type-meta"><b>Título de decisión</b><!--@css .dg-decision-title--><span class="ds-type-uso">Solo dentro del panel de decisión.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-price ds-m0">$4,990</p></div><div class="ds-type-meta"><b>Precio</b><!--@css .dg-price--><span class="ds-type-uso">La cifra de la tarjeta de precio.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-support ds-m0">Sin grupos, sin temporadas. Garantía 30 días desde el primer chat.</p></div><div class="ds-type-meta"><b>Apoyo</b><!--@css .dg-support--><span class="ds-type-uso">Aclaraciones bajo un título o un botón.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-kicker ds-m0">No estás solo</p></div><div class="ds-type-meta"><b>Antetítulo</b><!--@css .dg-kicker--><span class="ds-type-uso">Ubica el tramo, con su marca vertical. Nunca es una acción.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-eyebrow">¿Ya viste suficiente?</p></div><div class="ds-type-meta"><b>Sobretítulo</b><!--@css .dg-eyebrow--><span class="ds-type-uso">Dentro de paneles de decisión y tarjetas de precio.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-caption">Vigencia</p><p class="dg-detail ds-m0">Vale hasta el 15 de noviembre.</p></div><div class="ds-type-meta"><b>Nota y detalle</b><!--@css .dg-caption--><!--@css .dg-detail--><span class="ds-type-uso">Datos de comparación en la tarjeta de precio.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><label class="dg-label ds-m0">Nombre del papá o mamá</label></div><div class="ds-type-meta"><b>Etiqueta de campo</b><!--@css .dg-label--><span class="ds-type-uso">Siempre arriba de su campo.</span></div></div>
+    </div>
+    <h4 class="ds-h4">Énfasis de color</h4>
+    <p class="ds-lede">Una clase por significado. Se aplican a una frase dentro de un titular o de una tarjeta.</p>
+    <div class="ds-emph">
+      <p class="dg-h3"><span class="dg-emphasis--blue">Un criterio que la pantalla no pueda comprar.</span></p><code class="ds-code-inline">.dg-emphasis--blue</code>
+      <p class="dg-h3"><span class="dg-emphasis--cyan">Esto se llama ADA.</span></p><code class="ds-code-inline">.dg-emphasis--cyan</code>
+      <p class="dg-h3"><span class="dg-emphasis--violet">"¿Una IA hablando con mi hijo?"</span></p><code class="ds-code-inline">.dg-emphasis--violet</code>
+      <p class="dg-h3"><span class="dg-emphasis--coral">Bloquear no te lo devuelve.</span></p><code class="ds-code-inline">.dg-emphasis--coral</code>
+      <p class="dg-h3"><span class="dg-emphasis--green">verte presente</span></p><code class="ds-code-inline">.dg-emphasis--green</code>
+    </div>
+    <div class="ds-rules">
+      <div class="ds-do"><b>Hacer</b><ul><li>Dejar que el navegador equilibre las líneas (<code class="ds-code-inline">text-wrap: pretty</code>) y fijar con espacio duro las dos últimas palabras de un titular.</li><li>Usar negrita para el golpe de la idea y cursiva para una voz citada.</li><li>Mantener el ancho de lectura: 14 caracteres en la apertura, 28 en titulares, 68 en párrafos.</li></ul></div>
+      <div class="ds-dont"><b>Evitar</b><ul><li>Más de un énfasis de color en el mismo titular.</li><li>Mayúsculas fuera de antetítulos, sobretítulos, notas y etiquetas.</li><li>Texto de lectura por debajo de 12 px.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="ds-sec" id="espacio">
+    <h3 class="dg-h3">Espacio y retícula</h3>
+    <div class="ds-prose"><p>La página es una columna central de hasta 1440 px. Cada tramo es una sección con su propio aire; dentro, el contenido se reparte en dos columnas desiguales: el texto manda y la imagen acompaña.</p></div>
+    <div class="ds-scale" aria-label="Escala de espacio">
+      <div><i style="width:4px"></i><b>4</b></div><div><i style="width:8px"></i><b>8</b></div><div><i style="width:12px"></i><b>12</b></div><div><i style="width:16px"></i><b>16</b></div><div><i style="width:24px"></i><b>24</b></div><div><i style="width:32px"></i><b>32</b></div><div><i style="width:48px"></i><b>48</b></div>
+    </div>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Medida</th><th>Valor</th><th>Para qué</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Escala</th><td>4 · 8 · 12 · 16 · 24 · 32 · 48 px</td><td>8–12 une icono con texto; 16 separa ideas cercanas; 24 grupos; 32 módulos; 48 cambio de bloque.</td></tr>
+        <tr><th scope="row">Contenedor</th><td><code class="ds-code-inline">min(1440px, 100%)</code>, margen lateral de 40 px (10 px en móvil)</td><td><code class="ds-code-inline">.dg-main</code></td></tr>
+        <tr><th scope="row">Entre secciones</th><td><code class="ds-code-inline">clamp(32px, 3vw, 48px)</code> en desktop; 28 px en móvil</td><td>Separación vertical de los tramos.</td></tr>
+        <tr><th scope="row">Aire de la sección</th><td><code class="ds-code-inline">clamp(30px, 3.6vw, 52px)</code>; 30 × 18 px en móvil</td><td><code class="ds-code-inline">.dg-section</code></td></tr>
+        <tr><th scope="row">Dos columnas</th><td><code class="ds-code-inline">1.5fr</code> + <code class="ds-code-inline">minmax(250px, 1fr)</code>, separación <code class="ds-code-inline">clamp(32px, 4vw, 56px)</code></td><td><code class="ds-code-inline">.dg-grid-2</code>. Con <code class="ds-code-inline">--media-first</code> la imagen va primero.</td></tr>
+        <tr><th scope="row">Rejilla de tarjetas</th><td>Columnas iguales y todas las tarjetas del grupo con la misma altura</td><td>La más larga marca la altura, en la fila y entre filas. Ninguna lleva altura fija; en una sola columna (móvil) cada una mide lo que su contenido.</td></tr>
+        <tr><th scope="row">Cortes</th><td>768 px · 1024 px · 1120 px</td><td>El cambio principal es a 1024 px: debajo, una sola columna y entra la barra de acción móvil.</td></tr>
+        <tr><th scope="row">Ancla</th><td>108 px de margen superior al llegar a una sección (42 px en la de precio)</td><td>Para que la barra de navegación no tape el título.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="ds-sec" id="forma">
+    <h3 class="dg-h3">Forma y elevación</h3>
+    <div class="ds-prose"><p>Esquinas poco redondeadas y una sola sombra por nivel. La tarjeta se distingue por su borde fino, no por su sombra.</p></div>
+    <div class="ds-shapes">
+      <div class="ds-shape" style="border-radius:var(--dg-radius-card)"><b>8 px</b><span>Tarjetas, secciones e imágenes</span><code class="ds-code-inline">--dg-radius-card</code></div>
+      <div class="ds-shape" style="border-radius:var(--dg-radius-control)"><b>10 px</b><span>Botones, campos y barra de navegación</span><code class="ds-code-inline">--dg-radius-control</code></div>
+      <div class="ds-shape" style="border-radius:15px"><b>15 px</b><span>Placa de icono y barra móvil</span></div>
+      <div class="ds-shape" style="border-radius:var(--dg-radius-stage)"><b>16 px</b><span>Escena de ADA y avatar de nota</span><code class="ds-code-inline">--dg-radius-stage</code></div>
+      <div class="ds-shape" style="border-radius:22px"><b>22 px</b><span>Diálogo</span></div>
+    </div>
+    <div class="ds-shapes">
+      <div class="ds-shape ds-shape--flat"><b>Borde</b><span>1 px, <code class="ds-code-inline">--dg-line</code>. La opción destacada usa 2 px en verde.</span></div>
+      <div class="ds-shape" style="box-shadow:var(--dg-shadow-card)"><b>Sombra de tarjeta</b><span><!--@var --dg-shadow-card--></span><code class="ds-code-inline">--dg-shadow-card</code></div>
+      <div class="ds-shape" style="box-shadow:var(--dg-shadow-float)"><b>Sombra flotante</b><span><!--@var --dg-shadow-float--></span><code class="ds-code-inline">--dg-shadow-float</code></div>
+    </div>
+    <p class="ds-lede">La sombra flotante es solo para lo que se superpone: navegación, barra móvil, diálogo y la tarjeta de precio destacada.</p>
+  </section>
+
+  <section class="ds-sec" id="iconos">
+    <h3 class="dg-h3">Iconos</h3>
+    <div class="ds-prose"><p>Iconos de línea, trazo redondeado, en una cuadrícula de 24. Nunca van sueltos: viven en una <strong>placa</strong> de color con el icono en blanco. El color de la placa sigue el significado, no la decoración.</p></div>
+    <div class="ds-icons">
+      <div><div class="dg-icon" style="--accent: var(--dg-blue)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12 5 5L20 6"></path></svg></div><span>Azul · estructura</span></div>
+      <div><div class="dg-icon" style="--accent: var(--dg-cyan)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg></div><span>Cian · ADA</span></div>
+      <div><div class="dg-icon" style="--accent: var(--dg-violet)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 8l8 5 8-5-8-5Z"></path><path d="m4 13 8 5 8-5"></path></svg></div><span>Violeta · reflexión</span></div>
+      <div><div class="dg-icon" style="--accent: var(--dg-green)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21.2l8.8-8.8a5.5 5.5 0 0 0 0-7.8Z"></path></svg></div><span>Verde · confirmación</span></div>
+      <div><div class="dg-icon" style="--accent: var(--dg-coral)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"></path></svg></div><span>Coral · cuidado</span></div>
+    </div>
+
+    <h4 class="ds-h4">Indicadores</h4>
+    <div class="ds-prose"><p>Hay tres piezas más chicas que no son iconos con significado: son <strong>marcas que acompañan a una línea de texto</strong>. Tienen la forma de la placa (cuadro redondeado, con radio cercano a un tercio del lado) y su tamaño depende de lo que hacen: la que solo señala mide 24 px; la que invita a tocar mide más.</p></div>
+    <div class="ds-indic">
+      <div class="ds-indic-item">
+        <div class="ds-indic-demo"><span class="dg-accordion-title"><span class="dg-index">01</span>El candado que ya abrió.</span></div>
+        <b>Índice · 24 px</b><span>Numera la fila. Es una etiqueta y no se toca: por eso es la más chica y va alineada con el texto.</span>
+      </div>
+      <div class="ds-indic-item">
+        <div class="ds-indic-demo"><span class="dg-rules-toc-link"><span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Respetar la privacidad de tu hijo</span></div>
+        <b>Palomita · 24 px en escritorio, 28 px en tablet y móvil</b><span>Marca cada regla de la lista, y la fila completa es un enlace. En escritorio la lista es compacta (texto de 14 px); en tablet y móvil el texto crece a 15 px y la fila se toca con el dedo, así que la marca también crece.</span>
+      </div>
+      <div class="ds-indic-item">
+        <div class="ds-indic-demo"><span class="dg-accordion-title">El candado que ya abrió.</span><svg viewBox="0 0 20 20" aria-hidden="true" class="dg-chevron"><path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"></path></svg></div>
+        <b>Flecha · 32 px</b><span>Es la única que anuncia una acción: la fila se despliega. Por eso es la más grande y la única con sombra.</span>
+      </div>
+    </div>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Pieza</th><th>Medidas</th><th>Por qué ese tamaño</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Placa de icono</th><td>46 × 46 px, radio 15 px, icono de 22 px</td><td>Es el icono con significado y encabeza una tarjeta. El color llega por <code class="ds-code-inline">style="--accent: var(--dg-…)"</code>; sin él es cian.</td></tr>
+        <tr><th scope="row">Avatar de nota</th><td>82 × 82 px, radio 16 px</td><td>Presenta a quien habla en la nota. Degradado de dos tonos vecinos: azul a cian, coral a naranja, naranja a dorado, cian a verde.</td></tr>
+        <tr><th scope="row">Índice</th><td>24 px de alto, radio 7 px, número de 10 px</td><td>Etiqueta de orden. Número en blanco sobre azul.</td></tr>
+        <tr><th scope="row">Palomita</th><td>24 × 24 px con radio 8 px en escritorio; 28 × 28 px con radio 9 px debajo de 1024 px</td><td>Marca de lista sobre verde. Crece donde la fila se toca con el dedo.</td></tr>
+        <tr><th scope="row">Flecha</th><td>32 × 32 px, radio 10 px</td><td>Indicador de acción. Azul con sombra corta: avisa que la fila se despliega.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="ds-lede">Un indicador nunca alcanza el tamaño de la placa ni cambia de color: azul para orden y despliegue, verde para confirmación.</p>
+  </section>
+
+  <section class="ds-sec" id="imagenes">
+    <h3 class="dg-h3">Imágenes</h3>
+    <div class="ds-prose">
+      <p>Las escenas son <strong>foto-ilustración</strong>: rostros y piel con calidad fotográfica, intervenidos con pincelada visible, sobre lienzo blanco con un halo de bloques de color (coral, naranja, verde azulado y dorado). Muestran a la familia y el celular; nunca candados, iconos de vigilancia ni dramatismo.</p>
+    </div>
+    <div class="ds-media-row">
+      <figure class="dg-media dg-media--portrait"><picture><source srcset="assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy.avif" type="image/avif"><img src="assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy.webp" alt="Padre absorto en su propio celular mientras sostiene el celular recién confiscado de su hijo" width="768" height="1024" loading="lazy"></picture></figure>
+      <figure class="dg-media dg-media--portrait"><picture><source srcset="assets/digizen/generated/scenes/dg-scene-a03-mother-son-dinner.avif" type="image/avif"><img src="assets/digizen/generated/scenes/dg-scene-a03-mother-son-dinner.webp" alt="Mamá e hijo sentados cerca en la cena, pero el celular abre una distancia entre ellos" width="768" height="1024" loading="lazy"></picture></figure>
+      <figure class="dg-media dg-media--portrait"><picture><source srcset="assets/digizen/generated/scenes/dg-scene-a07-presence-mother-son.avif" type="image/avif"><img src="assets/digizen/generated/scenes/dg-scene-a07-presence-mother-son.webp" alt="Mamá e hijo compartiendo un momento de presencia" width="768" height="1024" loading="lazy"></picture></figure>
+    </div>
+    <h4 class="ds-h4">ADA en las escenas</h4>
+    <div class="ds-prose">
+      <p><strong>ADA puede aparecer en una escena cuando la escena trata de su acompañamiento.</strong> Ya ocurre en Reglas de ADA: en la regla principal está junto a un adolescente que piensa frente a dos caminos. Si la escena es sobre la familia, los protagonistas son ellos y ADA no entra por decoración.</p>
+      <p>Cuando aparece es la misma ADA de siempre: personaje en 3D, con su diseño y sus colores, integrada a la pincelada de la escena. Va al lado del chico y a su altura: acompaña, no vigila ni elige por él.</p>
+      <p>Fuera de las escenas, ADA vive en el chat, en el saludo del formulario y en la entrada de la página de reglas.</p>
+    </div>
+    <figure class="dg-media ds-media-wide"><picture><source srcset="assets/digizen/generated/scenes/dg-scene-a09-rules-presence.avif" type="image/avif"><img src="assets/digizen/generated/scenes/dg-scene-a09-rules-presence.webp" alt="ADA y un adolescente de pie en una plataforma virtual, frente a dos caminos de tarjetas de redes sociales: él se lleva la mano a la barbilla para pensar y ADA, a su lado, abre las manos para acompañarlo sin elegir por él" width="2048" height="1366" loading="lazy"></picture><figcaption>Reglas de ADA, «Presencia, no vigilancia»: ADA acompaña dentro de la escena.</figcaption></figure>
+
+    <h4 class="ds-h4">Reglas de producción</h4>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Regla</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Una imagen por escena</th><td>Se genera una sola, en vertical. Los recortes para tablet y móvil (<code class="ds-code-inline">-mobile</code>) y otras proporciones (<code class="ds-code-inline">-16-9</code>, <code class="ds-code-inline">-1-1</code>) salen de esa misma imagen.</td></tr>
+        <tr><th scope="row">Tres archivos por imagen</th><td>El PNG original se queda en el proyecto y no se publica. De él salen el WebP y el AVIF. El respaldo previo a la optimización no se borra.</td></tr>
+        <tr><th scope="row">AVIF primero, WebP de respaldo</th><td>Dentro de <code class="ds-code-inline">&lt;picture&gt;</code>. Un AVIF solo se usa si es al menos tan fiel al original como el WebP y pesa menos.</td></tr>
+        <tr><th scope="row">Medidas declaradas</th><td>Toda imagen lleva <code class="ds-code-inline">width</code> y <code class="ds-code-inline">height</code>. Carga diferida en todas menos la de apertura, que lleva prioridad alta.</td></tr>
+        <tr><th scope="row">Texto alternativo</th><td>Describe la escena y lo que comunica. Si la imagen es decorativa (el retrato del panel de decisión), va vacío y oculta a lectores de pantalla.</td></tr>
+        <tr><th scope="row">Marco</th><td><code class="ds-code-inline">.dg-media</code>: borde fino, radio de tarjeta y sombra de tarjeta. Sin leyendas encima de la imagen.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="ds-lede">El canon completo y los prompts están en <code class="ds-code-inline">05-image-generation-canon-2026-09-15.md</code> y en los archivos <code class="ds-code-inline">06</code> a <code class="ds-code-inline">10</code> de la carpeta de la landing.</p>
+  </section>
+
+  <section class="ds-sec" id="movimiento">
+    <h3 class="dg-h3">Movimiento</h3>
+    <div class="ds-prose"><p>El movimiento responde a algo que hizo el lector: tocar, pasar el cursor o avanzar con el scroll. No hay animación de ambiente. Todo usa la misma curva, que arranca rápido y frena suave.</p></div>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Qué</th><th>Cómo</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Curva</th><td><code class="ds-code-inline"><!--@var --dg-ease--></code> (<code class="ds-code-inline">--dg-ease</code>)</td></tr>
+        <tr><th scope="row">Duraciones</th><td>160–180 ms en cambios de color y de estado; 210–260 ms en botones, paneles y diálogo.</td></tr>
+        <tr><th scope="row">Botón</th><td>Al pasar el cursor sube 1 px y crece su sombra. Al presionar baja 1 px y se encoge a 96.5 % en 90 ms.</td></tr>
+        <tr><th scope="row">Chat de producto</th><td>Los mensajes entran una sola vez, cuando el chat llega al 78 % de la pantalla. ADA «escribe» antes de cada respuesta.</td></tr>
+        <tr><th scope="row">ADA que saluda</th><td>130 cuadros recorridos con el scroll mientras el formulario cruza la pantalla. Solo en desktop; en tablet y móvil queda el primer cuadro.</td></tr>
+        <tr><th scope="row">Reloj</th><td>Video que avanza con el scroll. Solo en desktop; en tablet y móvil se muestra la imagen fija y el video no se descarga.</td></tr>
+        <tr><th scope="row">Navegación</th><td>La barra se ensancha y revela el logo en los primeros pixeles de scroll; su línea inferior marca el avance de lectura.</td></tr>
+        <tr><th scope="row">Ir a una sección</th><td>Desplazamiento propio con duración acotada: un salto del menú al pie no tarda segundos.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ds-rules">
+      <div class="ds-do"><b>Hacer</b><ul><li>Con «reducir movimiento» activo, <strong>degradar, no cancelar</strong>: se quita el desplazamiento y el rebote y queda la misma secuencia resuelta con opacidad.</li><li>Con «reducir transparencia» activo, quitar el desenfoque de las barras y usar fondo sólido.</li><li>Animar solo transformación y opacidad.</li></ul></div>
+      <div class="ds-dont"><b>Evitar</b><ul><li>Animaciones que corren solas o en bucle.</li><li>Descargar en móvil lo que solo se anima en desktop.</li><li>Dejar un contenido invisible esperando una animación que puede no llegar.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="ds-sec" id="temas">
+    <h3 class="dg-h3">Temas</h3>
+    <div class="ds-prose">
+      <p>La landing tiene tema claro y oscuro. El oscuro no es un filtro: cada variable tiene su valor propio y el logo cambia de versión. Se activa con <code class="ds-code-inline">data-theme="dark"</code> en el elemento <code class="ds-code-inline">&lt;html&gt;</code>; el botón redondo de la barra lo alterna.</p>
+      <p>Esta guía usa el mismo mecanismo. Cámbialo con el botón de arriba a la derecha y revisa cualquier componente en los dos temas.</p>
+    </div>
+    <p><button class="dg-btn dg-btn--secondary" type="button" data-ds-theme>Cambiar de tema</button></p>
+  </section>
+</section>
+
+<!-- ============================================================ 3 · EXPERIENCIA -->
+<section class="ds-part" id="experiencia">
+  <header class="ds-part-head">
+    <p class="dg-kicker">Parte 3</p>
+    <h2 class="dg-h2"><span class="dg-h2-muted">Cómo se comporta.</span>Experiencia</h2>
+  </header>
+
+  <section class="ds-sec" id="ux-decision">
+    <h3 class="dg-h3">Una decisión por momento</h3>
+    <div class="ds-prose">
+      <p>La página cuenta una historia larga. No pide nada hasta que el lector entendió algo, y cuando pide, ofrece siempre las mismas dos salidas: <strong>inscribir</strong> (principal) o <strong>conversar con ADA</strong> (secundaria, sin riesgo).</p>
+    </div>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Pieza</th><th>Regla</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Par de acciones</th><td>Principal a la izquierda o arriba, secundaria después. Cada botón dice la acción y su refuerzo: «Inscribir a mi hijo · EMPIEZA HOY», «Tengo dudas · CONVERSAR CON ADA».</td></tr>
+        <tr><th scope="row">Panel de decisión</th><td>Aparece cuatro veces, después de cada tramo fuerte. Siempre con la misma estructura: retrato, pregunta, promesa y el par de acciones.</td></tr>
+        <tr><th scope="row">Barra de acción en móvil</th><td>Aparece cuando el lector ya pasó el primer panel de decisión. Antes de la oferta invita a conversar con ADA; al entrar a la oferta cambia a inscribir. Se puede cerrar.</td></tr>
+        <tr><th scope="row">Acción en la barra de navegación</th><td>«Inscribir» está siempre a la vista en desktop y lleva a las tarjetas de precio.</td></tr>
+        <tr><th scope="row">Un solo destino</th><td>Todo botón de inscripción lleva a las tarjetas de precio; todo botón de ADA abre el mismo formulario.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="ds-sec" id="ux-navegacion">
+    <h3 class="dg-h3">Navegación</h3>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Pieza</th><th>Regla</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Barra</th><td>Fija arriba con cinco temas: ADA, Oferta, Garantía, Reglas de ADA y FAQs. El tema de la sección visible se marca en azul.</td></tr>
+        <tr><th scope="row">Avance de lectura</th><td>Una línea de 2 px en la base de la barra crece con el scroll.</td></tr>
+        <tr><th scope="row">Desktop</th><td>El logo va grande, fuera de la barra; al bajar, la barra se ensancha y lo incorpora.</td></tr>
+        <tr><th scope="row">Tablet y móvil</th><td>Logo dentro de la barra y menú desplegable. Dentro del menú, la acción «Inscribir a mi hijo» va como botón.</td></tr>
+        <tr><th scope="row">Reglas de ADA</th><td>Es una página aparte dentro de la misma aplicación. Al entrar y al volver, una cortina breve cubre el cambio; «Volver a Digizen» regresa a la portada.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="ds-sec" id="ux-lectura">
+    <h3 class="dg-h3">Lectura por capas</h3>
+    <div class="ds-prose"><p>El texto es largo y emocional. Para no abrumar, la profundidad es opcional y el lector decide cuándo abrirla.</p></div>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Recurso</th><th>Cuándo</th><th>Regla</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Leer más</th><td>Un párrafo que sigue con testimonios o detalle.</td><td>Se corta en el punto de tensión, con puntos suspensivos y «Ver más». Al abrir, «Ver menos» queda al final.</td></tr>
+        <tr><th scope="row">Acordeón con índice</th><td>Una lista de pruebas o argumentos.</td><td>El primero abre. Cada fila lleva número y flecha azul.</td></tr>
+        <tr><th scope="row">Preguntas frecuentes</th><td>Dudas antes de decidir.</td><td>Cada pregunta es una caja propia que se abre en su sitio.</td></tr>
+        <tr><th scope="row">Índice de reglas</th><td>La página de reglas de ADA.</td><td>La lista de arriba lleva a cada tarjeta y la resalta un momento al llegar.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="ds-lede">Todo lo que se despliega debe verse desplegable: flecha, subrayado o símbolo, y cambio de cursor. Una tarjeta que no hace nada no debe parecer un botón.</p>
+  </section>
+
+  <section class="ds-sec" id="ux-formularios">
+    <h3 class="dg-h3">Formularios y diálogo</h3>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Regla</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Pedir lo mínimo</th><td>Nombre, correo y WhatsApp opcional. Lo opcional se dice en la etiqueta.</td></tr>
+        <tr><th scope="row">Etiqueta arriba</th><td>En mayúsculas pequeñas, siempre visible. El texto de ejemplo dentro del campo no sustituye a la etiqueta.</td></tr>
+        <tr><th scope="row">Campos cómodos</th><td>48 px de alto mínimo, con el tipo correcto (correo, teléfono) y autocompletado.</td></tr>
+        <tr><th scope="row">Una acción</th><td>Un solo botón, a todo el ancho, con la misma frase que abrió el formulario.</td></tr>
+        <tr><th scope="row">Decir qué pasa después</th><td>Una línea de apoyo bajo el botón explica a dónde llega el acceso.</td></tr>
+        <tr><th scope="row">Diálogo</th><td>Centrado en desktop; en móvil sube desde abajo. Se cierra con la ×, con Escape o tocando fuera.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="ds-sec" id="ux-accesibilidad">
+    <h3 class="dg-h3">Accesibilidad</h3>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Regla</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Contraste</th><td>4.5:1 como mínimo en todo texto; 3:1 solo en texto grande. Medido con Lighthouse el 5 de octubre de 2026.</td></tr>
+        <tr><th scope="row">Foco visible</th><td>Anillo de 3 px separado 3 px, en botones, enlaces, campos y filas desplegables.</td></tr>
+        <tr><th scope="row">Tamaño de toque</th><td>44 px como mínimo; 48 px en las acciones principales y los campos.</td></tr>
+        <tr><th scope="row">Nombre accesible</th><td>Si un control tiene nombre para lectores de pantalla, ese nombre incluye el texto que se ve.</td></tr>
+        <tr><th scope="row">Estructura</th><td>Un solo título de página; cada sección se anuncia con su titular. Los iconos decorativos se ocultan a lectores de pantalla.</td></tr>
+        <tr><th scope="row">Color acompañado</th><td>El color nunca es el único aviso: coral va con título y texto; la opción destacada va con borde y etiqueta.</td></tr>
+        <tr><th scope="row">Preferencias del sistema</th><td>Se respetan «reducir movimiento» y «reducir transparencia».</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="ds-sec" id="ux-rendimiento">
+    <h3 class="dg-h3">Rendimiento</h3>
+    <div class="ds-prose"><p>La página debe aparecer rápido en un teléfono con conexión regular. Estas reglas salen de lo medido y corregido.</p></div>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Regla</th><th>Por qué</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">La imagen de apertura se precarga</th><td>En el formato que el navegador va a usar, y solo ese.</td></tr>
+        <tr><th scope="row">Lo demás carga al acercarse</th><td>Imágenes con carga diferida; los cuadros de ADA empiezan a bajar cuando su sección está cerca.</td></tr>
+        <tr><th scope="row">Móvil no descarga lo de desktop</th><td>El video del reloj y los cuadros de ADA solo se piden en desktop.</td></tr>
+        <tr><th scope="row">La hoja de estilos llega antes de pintar</th><td>Como enlace normal. Diferida, la página podía verse un instante sin estilos y saltar.</td></tr>
+        <tr><th scope="row">Tipografía propia</th><td>Inter se sirve desde el proyecto; no se espera a otro servidor.</td></tr>
+        <tr><th scope="row">Medir en incógnito</th><td>Las extensiones del navegador falsean Lighthouse. La línea base está en <code class="ds-code-inline">Projects/auditorias-lighthouse/</code>.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="ds-sec" id="ux-contenido">
+    <h3 class="dg-h3">Contenido</h3>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Regla</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">El texto es literal</th><td>El copy viene de su fuente y no se resume, corrige ni reescribe al diseñar. Un cambio de texto se pide y se aprueba aparte.</td></tr>
+        <tr><th scope="row">Tú a tú</th><td>Segunda persona, frases cortas, sin tecnicismos. Primero se quita la culpa; después se explica.</td></tr>
+        <tr><th scope="row">Negrita y cursiva</th><td>Negrita para el golpe de la idea. Cursiva para lo que alguien dice o piensa.</td></tr>
+        <tr><th scope="row">Citas</th><td>La cita va en negrita y su autor debajo, en mayúsculas pequeñas («Una mamá», «Un niño»).</td></tr>
+        <tr><th scope="row">Rayas</th><td>Una raya nunca queda al final de una línea: se une a la palabra siguiente con espacio duro.</td></tr>
+        <tr><th scope="row">Sin emojis</th><td>Los símbolos son iconos de línea dentro de su placa.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</section>
+
+<!-- ============================================================ 4 · GUÍA DE COMPONENTES -->
+<section class="ds-part" id="guia">
+  <header class="ds-part-head">
+    <p class="dg-kicker">Parte 4</p>
+    <h2 class="dg-h2"><span class="dg-h2-muted">Para qué sirve cada pieza.</span>Guía de componentes</h2>
+    <p class="ds-lede">Todos parten de la misma gramática: superficie blanca, borde de 1 px, radio de 8 px y una sombra suave. El color, el icono o la regla expresan significado; no crean una familia distinta. Cada entrada enlaza a su ejemplo en la librería.</p>
+  </header>
+
+  <div class="ds-comps">
+    <article class="ds-comp"><h4>Botón <code class="ds-code-inline">.dg-btn</code></h4>
+      <dl><dt>Para qué</dt><dd>Avanzar o confirmar. El secundario (<code class="ds-code-inline">--secondary</code>) ofrece la ruta alterna.</dd>
+      <dt>Partes</dt><dd>Texto e icono de línea de 18 px. El icono va al final si indica avance y al inicio si nombra el canal.</dd>
+      <dt>Medidas</dt><dd>48 px de alto mínimo, radio 10 px, texto de 14 px y peso 700. En la barra, 42 px.</dd>
+      <dt>Estados</dt><dd>Reposo, cursor encima (sube 1 px), presionado (se encoge), foco con anillo.</dd>
+      <dt>Reglas</dt><dd>Un solo principal por grupo. Texto en tipo oración; el refuerzo, si lo hay, en mayúsculas tras un punto medio.</dd></dl>
+      <a class="ds-comp-link" href="#lib-botones">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Antetítulo <code class="ds-code-inline">.dg-kicker</code> y sobretítulo <code class="ds-code-inline">.dg-eyebrow</code></h4>
+      <dl><dt>Para qué</dt><dd>Decir en qué tramo está el lector con una frase cercana («No estás solo»).</dd>
+      <dt>Partes</dt><dd>El antetítulo lleva una marca vertical de 3 × 14 px. El sobretítulo no lleva marca.</dd>
+      <dt>Reglas</dt><dd>Nunca es un enlace ni una acción. La apertura de la página no lleva antetítulo.</dd></dl>
+      <a class="ds-comp-link" href="#lib-titular">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Titular en dos tonos <code class="ds-code-inline">.dg-h2</code></h4>
+      <dl><dt>Para qué</dt><dd>Abrir cada tramo con una frase que prepara y otra que afirma.</dd>
+      <dt>Partes</dt><dd>Un <code class="ds-code-inline">span.dg-h2-muted</code> en gris, en su propia línea, y el resto en tinta.</dd>
+      <dt>Variantes</dt><dd>Con énfasis de color en una frase. Con el gris en la segunda parte cuando el titular lleva raya.</dd>
+      <dt>Reglas</dt><dd>Máximo 28 caracteres de ancho. Un solo énfasis de color.</dd></dl>
+      <a class="ds-comp-link" href="#lib-titular">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Nota <code class="ds-code-inline">.dg-note</code></h4>
+      <dl><dt>Para qué</dt><dd>La voz que acompaña: una frase que el lector debería llevarse.</dd>
+      <dt>Partes</dt><dd>Avatar de 82 px con icono de línea, frase fuerte y remate en cursiva.</dd>
+      <dt>Variantes</dt><dd>Azul-cian (por defecto), coral (cuidado), dorado (hito) y verde (confirmación).</dd>
+      <dt>Reglas</dt><dd>Una por tramo como máximo. Es texto, no un botón.</dd></dl>
+      <a class="ds-comp-link" href="#lib-nota">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Tarjeta <code class="ds-code-inline">.dg-card</code></h4>
+      <dl><dt>Para qué</dt><dd>Agrupar ideas cortas y paralelas: señales, beneficios, garantías, lo que incluye.</dd>
+      <dt>Partes</dt><dd>Placa de icono, título y una o dos líneas de texto de 13 px.</dd>
+      <dt>Variantes</dt><dd>Icono arriba; icono al lado (<code class="ds-code-inline">--side</code>); cabecera con icono y título en línea (<code class="ds-code-inline">.dg-guard-card</code>).</dd>
+      <dt>Reglas</dt><dd>Las tarjetas de un mismo grupo miden lo mismo de alto, en la fila y entre filas: la más larga marca la altura y ninguna lleva altura fija. No es pulsable salvo que lleve un botón o un enlace dentro.</dd></dl>
+      <a class="ds-comp-link" href="#lib-tarjetas">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Marco de imagen <code class="ds-code-inline">.dg-media</code></h4>
+      <dl><dt>Para qué</dt><dd>Enmarcar una escena junto al texto de su tramo.</dd>
+      <dt>Variantes</dt><dd>Vertical 4:5 (<code class="ds-code-inline">--portrait</code>) y proporciones propias para el árbol de decisiones, la invitación y la presencia.</dd>
+      <dt>Reglas</dt><dd>Una imagen por tramo. En tablet y móvil entra el recorte horizontal. Sin texto encima.</dd></dl>
+      <a class="ds-comp-link" href="#lib-media">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Panel de decisión <code class="ds-code-inline">.dg-decision</code></h4>
+      <dl><dt>Para qué</dt><dd>Ofrecer el siguiente paso cuando el lector terminó un tramo.</dd>
+      <dt>Partes</dt><dd>Retrato que sobresale por arriba, sobretítulo, título, línea de apoyo y el par de acciones.</dd>
+      <dt>Reglas</dt><dd>Misma estructura las cuatro veces; solo cambia el texto. En móvil se apila y los botones ocupan todo el ancho.</dd></dl>
+      <a class="ds-comp-link" href="#lib-decision">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Acordeón <code class="ds-code-inline">.dg-accordion</code></h4>
+      <dl><dt>Para qué</dt><dd>Presentar una serie de pruebas sin obligar a leerlas todas.</dd>
+      <dt>Partes</dt><dd>Fila de 62 px con índice, título y flecha azul; el cuerpo aparece con un fundido corto.</dd>
+      <dt>Estados</dt><dd>Cerrado, abierto y foco. El primero abre.</dd></dl>
+      <a class="ds-comp-link" href="#lib-acordeon">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Leer más <code class="ds-code-inline">.dg-readmore-trigger</code></h4>
+      <dl><dt>Para qué</dt><dd>Dejar a la vista el arranque de un texto largo y guardar el resto.</dd>
+      <dt>Partes</dt><dd>Enlace en violeta, subrayado, con flecha pequeña; panel que crece en alto.</dd>
+      <dt>Reglas</dt><dd>Se corta donde el lector quiere saber más, nunca a media idea sin gancho.</dd></dl>
+      <a class="ds-comp-link" href="#lib-leer-mas">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Chat de producto <code class="ds-code-inline">.dg-product</code></h4>
+      <dl><dt>Para qué</dt><dd>Mostrar cómo conversa ADA de verdad, en vez de describirlo.</dd>
+      <dt>Partes</dt><dd>Ventana con cabecera (avatar, nombre y papel), hilo de burbujas y campo de texto de muestra.</dd>
+      <dt>Reglas</dt><dd>ADA a la izquierda en gris claro; el alumno a la derecha en azul tenue. Es una muestra: nada es pulsable.</dd></dl>
+      <a class="ds-comp-link" href="#lib-chat">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Formulario <code class="ds-code-inline">.dg-form</code></h4>
+      <dl><dt>Para qué</dt><dd>Recibir los datos del adulto para que converse con ADA antes de pagar.</dd>
+      <dt>Partes</dt><dd>Título, línea de apoyo, tres campos con etiqueta, un botón y una nota final.</dd>
+      <dt>Reglas</dt><dd>En desktop va en una fila junto a ADA saludando; en móvil se apila. El mismo contenido vive en el diálogo.</dd></dl>
+      <a class="ds-comp-link" href="#lib-formulario">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Tarjeta de precio <code class="ds-code-inline">.dg-pricing-card</code></h4>
+      <dl><dt>Para qué</dt><dd>Comparar las dos formas de pago.</dd>
+      <dt>Partes</dt><dd>Logo, sobretítulo, nombre, cifra, explicación, comparación (nota y detalle) y botón.</dd>
+      <dt>Variantes</dt><dd>Destacada (<code class="ds-code-inline">--featured</code>): más grande que la otra a propósito, con borde verde de 2 px, fondo propio y sombra flotante.</dd>
+      <dt>Reglas</dt><dd>Es la única excepción a la regla de altura: la destacada es más grande y las dos se centran entre sí. El ahorro se dice en negrita, sin etiquetas de descuento.</dd></dl>
+      <a class="ds-comp-link" href="#lib-precio">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Sello de garantía <code class="ds-code-inline">.dg-guarantee-seal</code></h4>
+      <dl><dt>Para qué</dt><dd>Hacer visible la garantía de 30 días junto al texto que la explica.</dd>
+      <dt>Reglas</dt><dd>Uno solo en la página, en el tramo de cierre. Usa la paleta del logo e iconos de línea.</dd></dl>
+      <a class="ds-comp-link" href="#lib-garantia">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Navegación <code class="ds-code-inline">.dg-nav</code></h4>
+      <dl><dt>Para qué</dt><dd>Saltar a un tema y tener la inscripción siempre a la mano.</dd>
+      <dt>Partes</dt><dd>Logo, enlaces de tema, botón de tema, botón de menú (móvil), acción y línea de avance.</dd>
+      <dt>Estados</dt><dd>Enlace activo en azul con fondo tenue; menú abierto en tablet y móvil.</dd></dl>
+      <a class="ds-comp-link" href="#lib-nav">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Barra de acción móvil <code class="ds-code-inline">.dg-mobile-cta</code></h4>
+      <dl><dt>Para qué</dt><dd>Mantener la acción al alcance del pulgar en pantallas chicas.</dd>
+      <dt>Reglas</dt><dd>Solo debajo de 1024 px. Entra después del primer panel de decisión, cambia de mensaje al llegar a la oferta y se puede cerrar.</dd></dl>
+      <a class="ds-comp-link" href="#lib-movil">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Diálogo <code class="ds-code-inline">.dg-dialog</code></h4>
+      <dl><dt>Para qué</dt><dd>Abrir el formulario de ADA sin sacar al lector de donde está.</dd>
+      <dt>Reglas</dt><dd>Fondo oscurecido con desenfoque leve. Al cerrar, el foco vuelve al botón que lo abrió.</dd></dl>
+      <a class="ds-comp-link" href="#lib-dialogo">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Tarjeta de regla <code class="ds-code-inline">.dg-rule-card</code></h4>
+      <dl><dt>Para qué</dt><dd>Enunciar una regla de ADA y explicarla en lenguaje llano.</dd>
+      <dt>Partes</dt><dd>Placa de icono, número, título, la regla en una frase y su explicación.</dd>
+      <dt>Variantes</dt><dd>Ancha con imagen para la regla principal. El color de la placa rota entre violeta, cian, verde y azul.</dd>
+      <dt>Estados</dt><dd>Al llegar desde el índice se resalta un momento.</dd>
+      <dt>Reglas</dt><dd>Todas las tarjetas de regla miden lo mismo de alto; solo la principal, que va sola en su fila, conserva el suyo.</dd></dl>
+      <a class="ds-comp-link" href="#lib-regla">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Sección <code class="ds-code-inline">.dg-section</code></h4>
+      <dl><dt>Para qué</dt><dd>Contener un tramo del relato con su propio aire.</dd>
+      <dt>Variantes</dt><dd><code class="ds-code-inline">--cyan</code>, <code class="ds-code-inline">--violet</code> y <code class="ds-code-inline">--grid</code> son marcas de tramo; hoy todas comparten el mismo fondo transparente.</dd>
+      <dt>Reglas</dt><dd>Cada sección se anuncia con su titular. Las que aparecen en la barra llevan un identificador para llegar con ancla.</dd></dl></article>
+  </div>
+</section>
+
+<!-- ============================================================ 5 · LIBRERÍA -->
+<section class="ds-part" id="libreria">
+  <header class="ds-part-head">
+    <p class="dg-kicker">Parte 5</p>
+    <h2 class="dg-h2"><span class="dg-h2-muted">Los componentes ya diseñados.</span>Librería</h2>
+    <p class="ds-lede">Cada ejemplo es el marcado real de la landing, pintado con su CSS real. Cambia de tema para verlos en oscuro. «Ver el marcado» muestra el HTML para copiarlo; los trazos de los iconos se resumen.</p>
+  </header>
+
+  <section class="ds-sec" id="grupo-accion"><h3 class="dg-h3">Acción</h3>
+    <!--@lib botones-->
+    <!--@lib decision-->
+  </section>
+
+  <section class="ds-sec" id="grupo-texto"><h3 class="dg-h3">Texto</h3>
+    <!--@lib hero-->
+    <!--@lib titular-->
+    <!--@lib titular-enfasis-->
+    <!--@lib copy-->
+  </section>
+
+  <section class="ds-sec" id="grupo-notas"><h3 class="dg-h3">Notas e imagen</h3>
+    <!--@lib nota-->
+    <!--@lib nota-variantes-->
+    <!--@lib media-->
+  </section>
+
+  <section class="ds-sec" id="grupo-capas"><h3 class="dg-h3">Lectura por capas</h3>
+    <!--@lib acordeon-->
+    <!--@lib leer-mas-->
+    <!--@lib faq-->
+  </section>
+
+  <section class="ds-sec" id="grupo-tarjetas"><h3 class="dg-h3">Tarjetas</h3>
+    <!--@lib tarjetas-->
+    <!--@lib tarjetas-lado-->
+    <!--@lib tarjetas-guardia-->
+    <!--@lib inclusion-->
+    <!--@lib aviso-reglas-->
+  </section>
+
+  <section class="ds-sec" id="grupo-producto"><h3 class="dg-h3">Producto y formulario</h3>
+    <!--@lib chat-->
+    <!--@lib formulario-->
+    <!--@lib dialogo-->
+  </section>
+
+  <section class="ds-sec" id="grupo-precio"><h3 class="dg-h3">Precio y garantía</h3>
+    <!--@lib precio-->
+    <!--@lib garantia-->
+  </section>
+
+  <section class="ds-sec" id="grupo-marco"><h3 class="dg-h3">Navegación y marco</h3>
+    <!--@lib nav-->
+    <!--@lib movil-->
+    <!--@lib pie-->
+  </section>
+
+  <section class="ds-sec" id="grupo-reglas"><h3 class="dg-h3">Reglas de ADA</h3>
+    <!--@lib reglas-resumen-->
+    <!--@lib regla-principal-->
+    <!--@lib regla-->
+  </section>
+</section>
+
+<footer class="ds-foot">
+  <p>Sistema de diseño de la landing A de Digizen. Se genera desde el código de la landing con <code class="ds-code-inline">construir.py</code>; no se edita a mano el archivo <code class="ds-code-inline">index.html</code>.</p>
+</footer>
+
+</main>
+</div>
+
+<script src="js/guia.js"></script>
+</body>
+</html>

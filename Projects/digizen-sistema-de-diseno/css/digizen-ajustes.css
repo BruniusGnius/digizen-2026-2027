@@ -1,0 +1,28 @@
+/* Ajuste del sistema de diseño sobre el CSS publicado de la landing A.
+
+   digizen-a.css es una copia fiel de la landing. Este archivo se carga después y contiene solo la regla
+   del sistema que la landing todavía no aplica. Está explicada en la guía:
+   Filosofía → Ajuste respecto a la landing publicada. */
+
+/* Las tarjetas de un mismo grupo miden lo mismo de alto.
+   La rejilla ya iguala las de una misma fila; esto iguala también las filas entre sí.
+   Solo desde 768 px: debajo las tarjetas van en una columna y cada una mide lo que su contenido.
+   La tarjeta de precio destacada no entra: es más grande que la otra a propósito. */
+@media (min-width: 768px) {
+  .dg-criteria-card-grid,
+  .dg-feature-grid,
+  .dg-guard-grid,
+  .dg-inclusion-grid {
+    grid-auto-rows: 1fr;
+  }
+  /* Reglas de ADA: igual, pero la regla principal (ancha, con imagen) va sola en la primera fila y conserva su alto.
+     Un navegador sin :has() se queda como la landing publicada: cada fila con su altura. */
+  @supports selector(:has(*)) {
+    .dg-rules-grid {
+      grid-auto-rows: 1fr;
+    }
+    .dg-rules-grid:has(> .dg-rule-card--wide:first-child) {
+      grid-template-rows: auto;
+    }
+  }
+}

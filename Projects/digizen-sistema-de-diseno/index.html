@@ -1,0 +1,1412 @@
+<!doctype html>
+<html lang="es-MX" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Sistema de diseño Digizen</title>
+<link rel="icon" type="image/svg+xml" href="assets/digizen/logo-SVG/Favicon.svg">
+<link rel="stylesheet" href="css/digizen-a.css">
+<link rel="stylesheet" href="css/digizen-ajustes.css">
+<link rel="stylesheet" href="css/guia.css">
+</head>
+<body class="ds-body">
+
+<header class="ds-top">
+  <a class="dg-logo ds-top-logo" href="#inicio" aria-label="Sistema de diseño de Digizen, ir al inicio">
+    <img class="dg-logo-light" src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="Digizen" width="520" height="200">
+    <img class="dg-logo-dark" src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520" height="200">
+  </a>
+  <p class="ds-top-title">Sistema de diseño <span>Landing A</span></p>
+  <button class="dg-theme ds-theme" type="button" data-ds-theme aria-pressed="false" aria-label="Activar tema oscuro">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.4 8.4 0 0 1 8.8 3.8 8.4 8.4 0 1 0 20.2 15.2Z"></path></svg>
+  </button>
+</header>
+
+<div class="ds-layout">
+
+<nav class="ds-side" aria-label="Contenido del sistema de diseño">
+  <details class="ds-side-box" open>
+    <summary>Contenido</summary>
+    <ol class="ds-side-list">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#filosofia">1 · Filosofía</a>
+        <ol><li><a href="#intencion">Intención</a></li><li><a href="#principios">Principios</a></li><li><a href="#decisiones">Decisiones vigentes</a></li></ol></li>
+      <li><a href="#fundamentos">2 · Fundamentos</a>
+        <ol><li><a href="#color">Color</a></li><li><a href="#tipografia">Tipografía</a></li><li><a href="#espacio">Espacio y retícula</a></li><li><a href="#forma">Forma y elevación</a></li><li><a href="#iconos">Iconos</a></li><li><a href="#imagenes">Imágenes</a></li><li><a href="#movimiento">Movimiento</a></li><li><a href="#temas">Temas</a></li></ol></li>
+      <li><a href="#experiencia">3 · Experiencia</a>
+        <ol><li><a href="#ux-decision">Una decisión por momento</a></li><li><a href="#ux-navegacion">Navegación</a></li><li><a href="#ux-lectura">Lectura por capas</a></li><li><a href="#ux-formularios">Formularios</a></li><li><a href="#ux-accesibilidad">Accesibilidad</a></li><li><a href="#ux-rendimiento">Rendimiento</a></li><li><a href="#ux-contenido">Contenido</a></li></ol></li>
+      <li><a href="#guia">4 · Guía de componentes</a></li>
+      <li><a href="#libreria">5 · Librería</a>
+        <ol><li><a href="#grupo-accion">Acción</a></li><li><a href="#grupo-texto">Texto</a></li><li><a href="#grupo-notas">Notas e imagen</a></li><li><a href="#grupo-capas">Lectura por capas</a></li><li><a href="#grupo-tarjetas">Tarjetas</a></li><li><a href="#grupo-producto">Producto y formulario</a></li><li><a href="#grupo-precio">Precio y garantía</a></li><li><a href="#grupo-marco">Navegación y marco</a></li><li><a href="#grupo-reglas">Reglas de ADA</a></li></ol></li>
+    </ol>
+  </details>
+</nav>
+
+<main class="ds-main">
+
+<!-- ============================================================ INICIO -->
+<section class="ds-hero" id="inicio">
+  <p class="dg-kicker">Landing A · Digizen</p>
+  <h1 class="dg-display ds-hero-title">Sistema de diseño</h1>
+  <p class="dg-lead">Todo lo que la interfaz y la experiencia de la landing A necesitan para mantenerse coherentes: por qué se ve así, con qué se construye, cómo se comporta y cada componente ya diseñado.</p>
+  <div class="ds-meta">
+    <div><b>Qué documenta</b><span>Lo que está construido y publicado en <code class="ds-code-inline">Projects/digizen-landing/angular-build</code>, más un <a href="#ajustes">ajuste del sistema</a> que la landing aún no aplica.</span></div>
+    <div><b>De dónde sale</b><span>Los valores se leen del CSS real; los componentes de la librería se extraen de la página ya renderizada y se pintan con ese mismo CSS.</span></div>
+    <div><b>Fecha</b><span>5 de octubre de 2026. Se regenera con <code class="ds-code-inline">construir.py</code>.</span></div>
+  </div>
+  <ol class="ds-parts">
+    <li><a href="#filosofia"><span class="dg-index">1</span><b>Filosofía</b><span>La intención, los principios y las decisiones que están vigentes.</span></a></li>
+    <li><a href="#fundamentos"><span class="dg-index">2</span><b>Fundamentos</b><span>Color, tipografía, espacio, forma, iconos, imágenes, movimiento y temas.</span></a></li>
+    <li><a href="#experiencia"><span class="dg-index">3</span><b>Experiencia</b><span>Cómo se decide, se navega, se lee y se llena un formulario; accesibilidad y rendimiento.</span></a></li>
+    <li><a href="#guia"><span class="dg-index">4</span><b>Guía de componentes</b><span>Para qué sirve cada uno, sus partes, variantes y reglas.</span></a></li>
+    <li><a href="#libreria"><span class="dg-index">5</span><b>Librería</b><span>Los componentes ya diseñados, tal como están en la landing, con su marcado.</span></a></li>
+  </ol>
+</section>
+
+<!-- ============================================================ 1 · FILOSOFÍA -->
+<section class="ds-part" id="filosofia">
+  <header class="ds-part-head">
+    <p class="dg-kicker">Parte 1</p>
+    <h2 class="dg-h2"><span class="dg-h2-muted">Por qué se ve y se siente así.</span>Filosofía</h2>
+  </header>
+
+  <section class="ds-sec" id="intencion">
+    <h3 class="dg-h3">Intención</h3>
+    <blockquote class="dg-note ds-note-wide">
+      <div class="dg-note-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"/></svg></div>
+      <div><strong>Claro, sereno y competente.</strong><em>Nunca como vigilancia, castigo o una plataforma infantilizada.</em></div>
+    </blockquote>
+    <div class="ds-prose">
+      <p>Digizen acompaña conversaciones familiares sobre vida digital. La experiencia combina una <strong>base editorial sobria</strong> con <strong>momentos expresivos alrededor de ADA</strong>.</p>
+      <p>La landing le habla a un papá o a una mamá que llega con culpa y cansancio. Por eso el diseño baja la guardia antes de pedir algo: mucho aire, una sola idea por tramo, color solo donde significa algo y una acción clara cuando el lector ya entendió.</p>
+    </div>
+  </section>
+
+  <section class="ds-sec" id="principios">
+    <h3 class="dg-h3">Principios</h3>
+    <p class="ds-lede">Son los siete principios del sistema de producto de Digizen (<code class="ds-code-inline">01-design-system.md</code>). Gobiernan también la landing.</p>
+    <div class="ds-cards ds-cards--3">
+      <article class="dg-card" style="--accent: var(--dg-cyan)"><div class="dg-icon"><span>1</span></div><h4>Acompañar, no vigilar</h4><p>Privacidad, acuerdos y señales de cuidado se diferencian de forma explícita y calmada.</p></article>
+      <article class="dg-card" style="--accent: var(--dg-blue)"><div class="dg-icon"><span>2</span></div><h4>Una decisión por momento</h4><p>Cada tramo prioriza un único siguiente paso; la información auxiliar se mantiene visible sin competir.</p></article>
+      <article class="dg-card" style="--accent: var(--dg-violet)"><div class="dg-icon"><span>3</span></div><h4>La paleta es fija</h4><p>Se conservan los tonos de la propuesta original; el sistema define sus usos, no los sustituye.</p></article>
+      <article class="dg-card" style="--accent: var(--dg-green)"><div class="dg-icon"><span>4</span></div><h4>Iconos y bordes también comunican</h4><p>La placa de icono y las líneas de las cajas son parte del lenguaje de navegación y agrupación.</p></article>
+      <article class="dg-card" style="--accent: var(--dg-coral)"><div class="dg-icon"><span>5</span></div><h4>La calidez está en ADA; la estructura es tranquila</h4><p>Degradados, brillos y movimiento pertenecen a ADA y a la respuesta puntual, no a todas las superficies.</p></article>
+      <article class="dg-card" style="--accent: var(--dg-orange)"><div class="dg-icon"><span>6</span></div><h4>El criterio es legible</h4><p>La jerarquía permite escanear qué es lo principal, qué puede hacer la familia y qué profundidad es opcional.</p></article>
+      <article class="dg-card" style="--accent: var(--dg-blue)"><div class="dg-icon"><span>7</span></div><h4>Sistema antes que excepción</h4><p>Los mismos valores resuelven todas las piezas; solo cambian la densidad y el lenguaje de cada audiencia.</p></article>
+    </div>
+  </section>
+
+  <section class="ds-sec" id="decisiones">
+    <h3 class="dg-h3">Decisiones vigentes</h3>
+    <p class="ds-lede">Lo que hoy está construido. Cuando un documento anterior dice otra cosa, vale lo de esta lista.</p>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Decisión</th><th>Cómo se ve</th><th>Desde</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Base fría y superficies opacas</th><td>Fondo gris-azulado, tarjetas blancas con borde de 1 px y una sola sombra suave. Sin retículas ni degradados de ambiente en el contenido.</td><td>11 sep 2026</td></tr>
+        <tr><th scope="row">Titulares en dos tonos</th><td>El fragmento que prepara va en gris; el mensaje, en tinta. Es la firma tipográfica de la página.</td><td>11 sep 2026</td></tr>
+        <tr><th scope="row">Color solo con significado</th><td>Azul para estructura, cian para ADA, coral para cuidado, verde para confirmar, dorado para hitos. Coral nunca es una acción.</td><td>11 sep 2026</td></tr>
+        <tr><th scope="row">Escenas en foto-ilustración</th><td>Rostros con calidad fotográfica intervenidos con pincelada, sobre lienzo blanco con halo de bloques de color.</td><td>15 sep 2026</td></tr>
+        <tr><th scope="row">Botón principal con el degradado del logo</th><td>De <code class="ds-code-inline">#1a75ea</code> a <code class="ds-code-inline">#2c1ddb</code>, la misma dirección del círculo del logo. Antes era azul sólido; el documento de la revisión v2 todavía habla de violeta.</td><td>5 oct 2026</td></tr>
+        <tr><th scope="row">Contraste mínimo de 4.5:1</th><td>El verde de énfasis se oscureció y las notas de 10 px pasaron al gris de lectura.</td><td>5 oct 2026</td></tr>
+        <tr><th scope="row">Imágenes en AVIF con WebP de respaldo</th><td>Cada AVIF se compara con su original y solo se usa si es al menos tan fiel como el WebP.</td><td>5 oct 2026</td></tr>
+        <tr><th scope="row">ADA puede aparecer en las escenas</th><td>Cuando la escena trata de su acompañamiento, como en la regla principal de Reglas de ADA. Antes la regla decía que nunca aparecía.</td><td>5 oct 2026</td></tr>
+        <tr><th scope="row">Tarjetas de un mismo grupo, misma altura</th><td>La más larga marca la altura de todas, en la fila y entre filas. Excepción intencional: la tarjeta de precio destacada es más grande que la otra.</td><td>5 oct 2026</td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 class="ds-h4" id="ajustes">Ajuste respecto a la landing publicada</h4>
+    <p class="ds-lede ds-m0">Una regla del sistema que la landing A todavía no aplica. Vive en <code class="ds-code-inline">css/digizen-ajustes.css</code>, aparte de la copia del CSS de la landing; los ejemplos de esta guía ya la llevan. La landing no se modificó.</p>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Qué</th><th>En la landing publicada</th><th>En el sistema</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Altura entre filas de tarjetas</th><td>Las tarjetas de una misma fila miden igual, pero cada fila toma su propia altura. En Reglas de ADA, a 1280 px de ancho, unas filas miden 305 px y otras 328.</td><td>Todas las filas de una rejilla miden lo mismo (<code class="ds-code-inline">grid-auto-rows: 1fr</code>). En Reglas de ADA la regla principal conserva su alto.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</section>
+
+<!-- ============================================================ 2 · FUNDAMENTOS -->
+<section class="ds-part" id="fundamentos">
+  <header class="ds-part-head">
+    <p class="dg-kicker">Parte 2</p>
+    <h2 class="dg-h2"><span class="dg-h2-muted">Con qué se construye.</span>Fundamentos</h2>
+  </header>
+
+  <section class="ds-sec" id="color">
+    <h3 class="dg-h3">Color</h3>
+    <div class="ds-prose">
+      <p>Todo color es una variable CSS con prefijo <code class="ds-code-inline">--dg-</code>. Cada una tiene valor para el tema claro y para el oscuro; los componentes nunca escriben un color directo.</p>
+      <p>Hay <strong>dos juegos de color con significado</strong>. Los de <em>relleno</em> pintan placas, avatares y acentos, siempre con el icono en blanco. Los de <em>texto</em> son versiones más oscuras de los mismos tonos, porque el relleno no alcanza contraste como letra sobre fondo claro.</p>
+    </div>
+    <h4 class="ds-h4">Superficies</h4>
+<div class="ds-tokens">
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-canvas)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-canvas</code><span class="ds-token-uso">Fondo general de la página.</span><span class="ds-token-val"><b>Claro</b> #f6f8fb · <b>Oscuro</b> #030303</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-canvas-end)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-canvas-end</code><span class="ds-token-uso">Cierre del degradado del fondo.</span><span class="ds-token-val"><b>Claro</b> #eef4f8 · <b>Oscuro</b> #0f1412</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-surface)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-surface</code><span class="ds-token-uso">Arranque del degradado del fondo; campos de solo lectura.</span><span class="ds-token-val"><b>Claro</b> #fbfcfe · <b>Oscuro</b> #0e0e0f</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-raised)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-raised</code><span class="ds-token-uso">Tarjetas, controles y diálogo.</span><span class="ds-token-val"><b>Claro</b> #ffffff · <b>Oscuro</b> #151516</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-subtle)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-subtle</code><span class="ds-token-uso">Superficie secundaria y marco de las imágenes.</span><span class="ds-token-val"><b>Claro</b> #eef4f8 · <b>Oscuro</b> #202022</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-decision)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-decision</code><span class="ds-token-uso">Fondo de la tarjeta de precio destacada.</span><span class="ds-token-val"><b>Claro</b> #edf4fb · <b>Oscuro</b> #111112</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-nav)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-nav</code><span class="ds-token-uso">Barra de navegación y barra móvil (con desenfoque).</span><span class="ds-token-val"><b>Claro</b> rgba(255, 255, 255, 0.92) · <b>Oscuro</b> rgba(21, 21, 22, 0.92)</span></div></div>
+</div>
+<h4 class="ds-h4">Texto y líneas</h4>
+<div class="ds-tokens">
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-ink)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-ink</code><span class="ds-token-uso">Texto principal y titulares.</span><span class="ds-token-val"><b>Claro</b> #152033 · <b>Oscuro</b> #f4f7fb</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-muted)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-muted</code><span class="ds-token-uso">Texto de lectura, notas y ayudas.</span><span class="ds-token-val"><b>Claro</b> #617085 · <b>Oscuro</b> #aab7c8</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-soft)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-soft</code><span class="ds-token-uso">Fragmento gris de los titulares. No se usa en texto pequeño.</span><span class="ds-token-val"><b>Claro</b> #8b98aa · <b>Oscuro</b> #8190a5</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-line)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-line</code><span class="ds-token-uso">Bordes y divisores.</span><span class="ds-token-val"><b>Claro</b> #dfe7ee · <b>Oscuro</b> rgba(223, 231, 238, 0.16)</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-line-strong)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-line-strong</code><span class="ds-token-uso">Borde reforzado.</span><span class="ds-token-val"><b>Claro</b> #a5b4c5 · <b>Oscuro</b> rgba(223, 231, 238, 0.32)</span></div></div>
+</div>
+<h4 class="ds-h4">Color con significado: relleno</h4>
+<div class="ds-tokens">
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-blue)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-blue</code><span class="ds-token-uso">Estructura, navegación y progreso.</span><span class="ds-token-val"><b>Claro</b> #3561f3 · <b>Oscuro</b> #4a90ff</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-cyan)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-cyan</code><span class="ds-token-uso">ADA y acompañamiento.</span><span class="ds-token-val"><b>Claro</b> #22bed1 · <b>Oscuro</b> #43deea</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-violet)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-violet</code><span class="ds-token-uso">Reflexión y voz del alumno; enlaces de «Ver más».</span><span class="ds-token-val"><b>Claro</b> #7057e6 · <b>Oscuro</b> #aa98ff</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-coral)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-coral</code><span class="ds-token-uso">Señal de cuidado. Nunca una acción.</span><span class="ds-token-val"><b>Claro</b> #ff6b5f · <b>Oscuro</b> #ff8077</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-orange)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-orange</code><span class="ds-token-uso">Energía y avance.</span><span class="ds-token-val"><b>Claro</b> #f59d36 · <b>Oscuro</b> #ffd477</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-gold)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-gold</code><span class="ds-token-uso">Hito o logro.</span><span class="ds-token-val"><b>Claro</b> #f2c348 · <b>Oscuro</b> #ffd477</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-green)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-green</code><span class="ds-token-uso">Confirmación; borde de la opción destacada.</span><span class="ds-token-val"><b>Claro</b> #35b576 · <b>Oscuro</b> #63d59f</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-teal)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-teal</code><span class="ds-token-uso">Acento auxiliar.</span><span class="ds-token-val"><b>Claro</b> #1f6b69 · <b>Oscuro</b> #43deea</span></div></div>
+</div>
+<h4 class="ds-h4">Color con significado: texto</h4>
+<div class="ds-tokens">
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-text-blue)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-text-blue</code><span class="ds-token-uso">Énfasis azul dentro de un titular.</span><span class="ds-token-val"><b>Claro</b> #2855db · <b>Oscuro</b> #4a90ff</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-text-cyan)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-text-cyan</code><span class="ds-token-uso">Énfasis de ADA.</span><span class="ds-token-val"><b>Claro</b> #087f91 · <b>Oscuro</b> #43deea</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-text-violet)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-text-violet</code><span class="ds-token-uso">Énfasis de reflexión.</span><span class="ds-token-val"><b>Claro</b> #6245d7 · <b>Oscuro</b> #aa98ff</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-text-coral)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-text-coral</code><span class="ds-token-uso">Énfasis de cuidado o dolor.</span><span class="ds-token-val"><b>Claro</b> #df554c · <b>Oscuro</b> #ff9b94</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-text-green)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-text-green</code><span class="ds-token-uso">Énfasis de confirmación.</span><span class="ds-token-val"><b>Claro</b> #167f52 · <b>Oscuro</b> #7ae0ae</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-kicker-ink)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-kicker-ink</code><span class="ds-token-uso">Antetítulos (kicker).</span><span class="ds-token-val"><b>Claro</b> #316cff · <b>Oscuro</b> #4a90ff</span></div></div>
+</div>
+<h4 class="ds-h4">Acción y estado</h4>
+<div class="ds-tokens">
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-btn-fill)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-btn-fill</code><span class="ds-token-uso">Relleno del botón principal: el degradado del círculo del logo.</span><span class="ds-token-val"><b>Claro</b> linear-gradient(230deg, #1a75ea 0%, #2c1ddb 100%) · <b>Oscuro</b> linear-gradient(230deg, #1a75ea 0%, #2c1ddb 100%)</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-btn-bg)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-btn-bg</code><span class="ds-token-uso">Color base del botón: sombras, barra de progreso y marca del antetítulo.</span><span class="ds-token-val"><b>Claro</b> #3561f3 · <b>Oscuro</b> #4a90ff</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-btn-ink)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-btn-ink</code><span class="ds-token-uso">Texto del botón principal.</span><span class="ds-token-val"><b>Claro</b> #ffffff · <b>Oscuro</b> #ffffff</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-selected)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-selected</code><span class="ds-token-uso">Opción elegida.</span><span class="ds-token-val"><b>Claro</b> rgba(49, 108, 255, 0.08) · <b>Oscuro</b> rgba(74, 144, 255, 0.16)</span></div></div>
+<div class="ds-token"><span class="ds-swatch" style="background:var(--dg-focus)"></span><div class="ds-token-txt"><code class="ds-code-inline">--dg-focus</code><span class="ds-token-uso">Anillo de foco del teclado.</span><span class="ds-token-val"><b>Claro</b> rgba(34, 190, 209, 0.36) · <b>Oscuro</b> rgba(67, 222, 234, 0.38)</span></div></div>
+</div>
+    <h4 class="ds-h4">Contraste del texto</h4>
+    <p class="ds-lede">Calculado con los valores reales. Verde: pasa para cualquier texto (4.5 o más). Ámbar: solo para texto grande (3 o más). Rojo: no usar como texto.</p>
+    <div class="ds-table-wrap"><table class="ds-table ds-table-cr"><thead><tr><th rowspan="2">Texto</th><th colspan="2">Tema claro</th><th colspan="2">Tema oscuro</th></tr><tr><th>sobre tarjeta</th><th>sobre fondo</th><th>sobre tarjeta</th><th>sobre fondo</th></tr></thead><tbody><tr><th scope="row"><code class="ds-code-inline">--dg-ink</code><span>Texto principal</span></th><td class="ds-cr ds-cr-ok">16.33</td><td class="ds-cr ds-cr-ok">15.35</td><td class="ds-cr ds-cr-ok">16.98</td><td class="ds-cr ds-cr-ok">19.19</td></tr><tr><th scope="row"><code class="ds-code-inline">--dg-muted</code><span>Texto de lectura y notas</span></th><td class="ds-cr ds-cr-ok">5.04</td><td class="ds-cr ds-cr-ok">4.74</td><td class="ds-cr ds-cr-ok">8.97</td><td class="ds-cr ds-cr-ok">10.13</td></tr><tr><th scope="row"><code class="ds-code-inline">--dg-soft</code><span>Fragmento gris del titular (solo texto grande)</span></th><td class="ds-cr ds-cr-no">2.93</td><td class="ds-cr ds-cr-no">2.75</td><td class="ds-cr ds-cr-ok">5.62</td><td class="ds-cr ds-cr-ok">6.35</td></tr><tr><th scope="row"><code class="ds-code-inline">--dg-text-blue</code><span>Énfasis azul</span></th><td class="ds-cr ds-cr-ok">6.15</td><td class="ds-cr ds-cr-ok">5.78</td><td class="ds-cr ds-cr-ok">5.84</td><td class="ds-cr ds-cr-ok">6.60</td></tr><tr><th scope="row"><code class="ds-code-inline">--dg-text-cyan</code><span>Énfasis cian</span></th><td class="ds-cr ds-cr-ok">4.71</td><td class="ds-cr ds-cr-gr">4.43</td><td class="ds-cr ds-cr-ok">11.19</td><td class="ds-cr ds-cr-ok">12.64</td></tr><tr><th scope="row"><code class="ds-code-inline">--dg-text-violet</code><span>Énfasis violeta</span></th><td class="ds-cr ds-cr-ok">6.27</td><td class="ds-cr ds-cr-ok">5.89</td><td class="ds-cr ds-cr-ok">7.51</td><td class="ds-cr ds-cr-ok">8.49</td></tr><tr><th scope="row"><code class="ds-code-inline">--dg-text-coral</code><span>Énfasis coral</span></th><td class="ds-cr ds-cr-gr">3.79</td><td class="ds-cr ds-cr-gr">3.56</td><td class="ds-cr ds-cr-ok">9.01</td><td class="ds-cr ds-cr-ok">10.18</td></tr><tr><th scope="row"><code class="ds-code-inline">--dg-text-green</code><span>Énfasis verde</span></th><td class="ds-cr ds-cr-ok">5.01</td><td class="ds-cr ds-cr-ok">4.71</td><td class="ds-cr ds-cr-ok">11.38</td><td class="ds-cr ds-cr-ok">12.87</td></tr><tr><th scope="row"><code class="ds-code-inline">--dg-kicker-ink</code><span>Antetítulo</span></th><td class="ds-cr ds-cr-gr">4.45</td><td class="ds-cr ds-cr-gr">4.18</td><td class="ds-cr ds-cr-ok">5.84</td><td class="ds-cr ds-cr-ok">6.60</td></tr></tbody></table></div>
+    <div class="ds-rules">
+      <div class="ds-do"><b>Hacer</b><ul><li>Usar el color por lo que significa, igual en toda la página.</li><li>Poner el énfasis de color en una sola frase del titular.</li><li>Usar <code class="ds-code-inline">--dg-muted</code> para todo texto de 14 px o menos.</li></ul></div>
+      <div class="ds-dont"><b>Evitar</b><ul><li>Coral en botones o acciones: coral es cuidado, no «adelante».</li><li><code class="ds-code-inline">--dg-soft</code> en texto pequeño: solo vale en el fragmento gris del titular.</li><li>Colores de relleno como color de letra.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="ds-sec" id="tipografia">
+    <h3 class="dg-h3">Tipografía</h3>
+    <div class="ds-prose">
+      <p>Una sola familia: <strong>Inter variable</strong>, servida desde el proyecto. La jerarquía se construye con tamaño, peso y tono, no con otra tipografía.</p>
+      <p>El peso del texto base cambia con el tema: <strong>550</strong> en claro y 450 en oscuro, para que la letra clara sobre fondo oscuro no engorde. Las negritas dentro del texto van a 700 y en tinta.</p>
+    </div>
+    <div class="ds-type">
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-display">Le quitaste el celular… con el tuyo en la&nbsp;mano</p></div><div class="ds-type-meta"><b>Apertura</b><p class="ds-spec"><code class="ds-code-inline">.dg-display</code><span><b>tamaño</b> clamp(2.55rem, 5.4vw, 4.6rem)</span><span><b>peso</b> 780</span><span><b>espaciado</b> -0.045em</span><span><b>interlínea</b> 1.1</span><span><b>color</b> var(--dg-ink)</span><span><b>ancho máx.</b> 14ch</span></p><span class="ds-type-uso">Solo el título de la primera pantalla.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-h2"><span class="dg-h2-muted">Nadie te enseñó&nbsp;esto.</span>A ti tampoco te lo&nbsp;enseñaron</p></div><div class="ds-type-meta"><b>Titular en dos tonos</b><p class="ds-spec"><code class="ds-code-inline">.dg-h2</code><span><b>tamaño</b> clamp(2rem, 3.4vw, 3.45rem)</span><span><b>peso</b> 760</span><span><b>espaciado</b> -0.035em</span><span><b>interlínea</b> 1.12</span><span><b>color</b> var(--dg-ink)</span><span><b>ancho máx.</b> 28ch</span></p><p class="ds-spec"><code class="ds-code-inline">.dg-h2-muted</code><span><b>peso</b> 560</span><span><b>espaciado</b> -0.025em</span><span><b>color</b> var(--dg-soft)</span></p><span class="ds-type-uso">Título de cada tramo. El fragmento gris prepara; el de tinta dice el mensaje.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-h3">El control caduca. El criterio no.</p></div><div class="ds-type-meta"><b>Subtítulo</b><p class="ds-spec"><code class="ds-code-inline">.dg-h3</code><span><b>tamaño</b> clamp(1.3rem, 2.2vw, 1.8rem)</span><span><b>peso</b> 720</span><span><b>espaciado</b> -0.018em</span><span><b>interlínea</b> 1.2</span><span><b>color</b> var(--dg-ink)</span></p><span class="ds-type-uso">Módulos dentro de un tramo y títulos de formulario.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-lead dg-lead--h2">Y los dos sabemos cómo terminó: <strong class="dg-emphasis--coral">en dos días encontró cómo saltárselo.</strong></p></div><div class="ds-type-meta"><b>Entrada grande</b><p class="ds-spec"><code class="ds-code-inline">.dg-lead--h2</code><span><b>tamaño</b> clamp(1.4rem, 2.4vw, 2.1rem)</span><span><b>espaciado</b> -0.025em</span><span><b>interlínea</b> 1.25</span></p><span class="ds-type-uso">Segunda línea de la apertura.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-lead ds-m0">Todo lo que la interfaz necesita para mantenerse coherente.</p></div><div class="ds-type-meta"><b>Entrada</b><p class="ds-spec"><code class="ds-code-inline">.dg-lead</code><span><b>tamaño</b> clamp(1rem, 1.4vw, 1.12rem)</span><span><b>peso</b> var(--dg-weight-lead)</span><span><b>interlínea</b> 1.58</span><span><b>color</b> var(--dg-ink)</span><span><b>ancho máx.</b> 60ch</span></p><span class="ds-type-uso">Apoyo de una promesa.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><div class="dg-copy ds-m0"><p>A ti te tocó un mundo de calles y bicicletas. A tu hijo le tocó uno que se inventa cada mañana. <strong>Nadie te dio el manual.</strong></p></div></div><div class="ds-type-meta"><b>Lectura</b><p class="ds-spec"><code class="ds-code-inline">.dg-copy</code><span><b>tamaño</b> 1rem</span><span><b>peso</b> var(--dg-weight-copy)</span><span><b>interlínea</b> 1.72</span><span><b>color</b> var(--dg-muted)</span><span><b>ancho máx.</b> 68ch</span></p><span class="ds-type-uso">Párrafos. Ancho máximo de 68 caracteres.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-decision-title ds-m0">Tu hijo puede empezar hoy mismo.</p></div><div class="ds-type-meta"><b>Título de decisión</b><p class="ds-spec"><code class="ds-code-inline">.dg-decision-title</code><span><b>tamaño</b> clamp(1.35rem, 2.2vw, 1.85rem)</span><span><b>peso</b> 800</span><span><b>espaciado</b> -0.03em</span><span><b>interlínea</b> 1.2</span><span><b>color</b> var(--dg-ink)</span><span><b>ancho máx.</b> 28ch</span></p><span class="ds-type-uso">Solo dentro del panel de decisión.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-price ds-m0">$4,990</p></div><div class="ds-type-meta"><b>Precio</b><p class="ds-spec"><code class="ds-code-inline">.dg-price</code><span><b>tamaño</b> clamp(2.1rem, 3.5vw, 2.8rem)</span><span><b>peso</b> 820</span><span><b>espaciado</b> -0.05em</span><span><b>interlínea</b> 1.1</span><span><b>color</b> var(--dg-ink)</span></p><span class="ds-type-uso">La cifra de la tarjeta de precio.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-support ds-m0">Sin grupos, sin temporadas. Garantía 30 días desde el primer chat.</p></div><div class="ds-type-meta"><b>Apoyo</b><p class="ds-spec"><code class="ds-code-inline">.dg-support</code><span><b>tamaño</b> 13px</span><span><b>peso</b> var(--dg-weight-copy)</span><span><b>interlínea</b> 1.6</span><span><b>color</b> var(--dg-muted)</span><span><b>ancho máx.</b> 58ch</span></p><span class="ds-type-uso">Aclaraciones bajo un título o un botón.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-kicker ds-m0">No estás solo</p></div><div class="ds-type-meta"><b>Antetítulo</b><p class="ds-spec"><code class="ds-code-inline">.dg-kicker</code><span><b>tamaño</b> 11px</span><span><b>peso</b> 850</span><span><b>espaciado</b> 0.11em</span><span><b>interlínea</b> 1.2</span><span><b>color</b> var(--dg-kicker-ink)</span></p><span class="ds-type-uso">Ubica el tramo, con su marca vertical. Nunca es una acción.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-eyebrow">¿Ya viste suficiente?</p></div><div class="ds-type-meta"><b>Sobretítulo</b><p class="ds-spec"><code class="ds-code-inline">.dg-eyebrow</code><span><b>tamaño</b> 11px</span><span><b>peso</b> 850</span><span><b>espaciado</b> 0.1em</span><span><b>color</b> var(--dg-blue)</span></p><span class="ds-type-uso">Dentro de paneles de decisión y tarjetas de precio.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><p class="dg-caption">Vigencia</p><p class="dg-detail ds-m0">Vale hasta el 15 de noviembre.</p></div><div class="ds-type-meta"><b>Nota y detalle</b><p class="ds-spec"><code class="ds-code-inline">.dg-caption</code><span><b>tamaño</b> 10px</span><span><b>peso</b> 850</span><span><b>espaciado</b> 0.08em</span><span><b>color</b> var(--dg-muted)</span></p><p class="ds-spec"><code class="ds-code-inline">.dg-detail</code><span><b>tamaño</b> 12px</span><span><b>interlínea</b> 1.55</span><span><b>color</b> var(--dg-muted)</span></p><span class="ds-type-uso">Datos de comparación en la tarjeta de precio.</span></div></div>
+      <div class="ds-type-row"><div class="ds-type-sample"><label class="dg-label ds-m0">Nombre del papá o mamá</label></div><div class="ds-type-meta"><b>Etiqueta de campo</b><p class="ds-spec"><code class="ds-code-inline">.dg-label</code><span><b>tamaño</b> 11px</span><span><b>peso</b> 800</span><span><b>espaciado</b> 0.06em</span><span><b>color</b> var(--dg-muted)</span></p><span class="ds-type-uso">Siempre arriba de su campo.</span></div></div>
+    </div>
+    <h4 class="ds-h4">Énfasis de color</h4>
+    <p class="ds-lede">Una clase por significado. Se aplican a una frase dentro de un titular o de una tarjeta.</p>
+    <div class="ds-emph">
+      <p class="dg-h3"><span class="dg-emphasis--blue">Un criterio que la pantalla no pueda comprar.</span></p><code class="ds-code-inline">.dg-emphasis--blue</code>
+      <p class="dg-h3"><span class="dg-emphasis--cyan">Esto se llama ADA.</span></p><code class="ds-code-inline">.dg-emphasis--cyan</code>
+      <p class="dg-h3"><span class="dg-emphasis--violet">"¿Una IA hablando con mi hijo?"</span></p><code class="ds-code-inline">.dg-emphasis--violet</code>
+      <p class="dg-h3"><span class="dg-emphasis--coral">Bloquear no te lo devuelve.</span></p><code class="ds-code-inline">.dg-emphasis--coral</code>
+      <p class="dg-h3"><span class="dg-emphasis--green">verte presente</span></p><code class="ds-code-inline">.dg-emphasis--green</code>
+    </div>
+    <div class="ds-rules">
+      <div class="ds-do"><b>Hacer</b><ul><li>Dejar que el navegador equilibre las líneas (<code class="ds-code-inline">text-wrap: pretty</code>) y fijar con espacio duro las dos últimas palabras de un titular.</li><li>Usar negrita para el golpe de la idea y cursiva para una voz citada.</li><li>Mantener el ancho de lectura: 14 caracteres en la apertura, 28 en titulares, 68 en párrafos.</li></ul></div>
+      <div class="ds-dont"><b>Evitar</b><ul><li>Más de un énfasis de color en el mismo titular.</li><li>Mayúsculas fuera de antetítulos, sobretítulos, notas y etiquetas.</li><li>Texto de lectura por debajo de 12 px.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="ds-sec" id="espacio">
+    <h3 class="dg-h3">Espacio y retícula</h3>
+    <div class="ds-prose"><p>La página es una columna central de hasta 1440 px. Cada tramo es una sección con su propio aire; dentro, el contenido se reparte en dos columnas desiguales: el texto manda y la imagen acompaña.</p></div>
+    <div class="ds-scale" aria-label="Escala de espacio">
+      <div><i style="width:4px"></i><b>4</b></div><div><i style="width:8px"></i><b>8</b></div><div><i style="width:12px"></i><b>12</b></div><div><i style="width:16px"></i><b>16</b></div><div><i style="width:24px"></i><b>24</b></div><div><i style="width:32px"></i><b>32</b></div><div><i style="width:48px"></i><b>48</b></div>
+    </div>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Medida</th><th>Valor</th><th>Para qué</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Escala</th><td>4 · 8 · 12 · 16 · 24 · 32 · 48 px</td><td>8–12 une icono con texto; 16 separa ideas cercanas; 24 grupos; 32 módulos; 48 cambio de bloque.</td></tr>
+        <tr><th scope="row">Contenedor</th><td><code class="ds-code-inline">min(1440px, 100%)</code>, margen lateral de 40 px (10 px en móvil)</td><td><code class="ds-code-inline">.dg-main</code></td></tr>
+        <tr><th scope="row">Entre secciones</th><td><code class="ds-code-inline">clamp(32px, 3vw, 48px)</code> en desktop; 28 px en móvil</td><td>Separación vertical de los tramos.</td></tr>
+        <tr><th scope="row">Aire de la sección</th><td><code class="ds-code-inline">clamp(30px, 3.6vw, 52px)</code>; 30 × 18 px en móvil</td><td><code class="ds-code-inline">.dg-section</code></td></tr>
+        <tr><th scope="row">Dos columnas</th><td><code class="ds-code-inline">1.5fr</code> + <code class="ds-code-inline">minmax(250px, 1fr)</code>, separación <code class="ds-code-inline">clamp(32px, 4vw, 56px)</code></td><td><code class="ds-code-inline">.dg-grid-2</code>. Con <code class="ds-code-inline">--media-first</code> la imagen va primero.</td></tr>
+        <tr><th scope="row">Rejilla de tarjetas</th><td>Columnas iguales y todas las tarjetas del grupo con la misma altura</td><td>La más larga marca la altura, en la fila y entre filas. Ninguna lleva altura fija; en una sola columna (móvil) cada una mide lo que su contenido.</td></tr>
+        <tr><th scope="row">Cortes</th><td>768 px · 1024 px · 1120 px</td><td>El cambio principal es a 1024 px: debajo, una sola columna y entra la barra de acción móvil.</td></tr>
+        <tr><th scope="row">Ancla</th><td>108 px de margen superior al llegar a una sección (42 px en la de precio)</td><td>Para que la barra de navegación no tape el título.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="ds-sec" id="forma">
+    <h3 class="dg-h3">Forma y elevación</h3>
+    <div class="ds-prose"><p>Esquinas poco redondeadas y una sola sombra por nivel. La tarjeta se distingue por su borde fino, no por su sombra.</p></div>
+    <div class="ds-shapes">
+      <div class="ds-shape" style="border-radius:var(--dg-radius-card)"><b>8 px</b><span>Tarjetas, secciones e imágenes</span><code class="ds-code-inline">--dg-radius-card</code></div>
+      <div class="ds-shape" style="border-radius:var(--dg-radius-control)"><b>10 px</b><span>Botones, campos y barra de navegación</span><code class="ds-code-inline">--dg-radius-control</code></div>
+      <div class="ds-shape" style="border-radius:15px"><b>15 px</b><span>Placa de icono y barra móvil</span></div>
+      <div class="ds-shape" style="border-radius:var(--dg-radius-stage)"><b>16 px</b><span>Escena de ADA y avatar de nota</span><code class="ds-code-inline">--dg-radius-stage</code></div>
+      <div class="ds-shape" style="border-radius:22px"><b>22 px</b><span>Diálogo</span></div>
+    </div>
+    <div class="ds-shapes">
+      <div class="ds-shape ds-shape--flat"><b>Borde</b><span>1 px, <code class="ds-code-inline">--dg-line</code>. La opción destacada usa 2 px en verde.</span></div>
+      <div class="ds-shape" style="box-shadow:var(--dg-shadow-card)"><b>Sombra de tarjeta</b><span>0 10px 28px rgba(21, 32, 51, 0.08)</span><code class="ds-code-inline">--dg-shadow-card</code></div>
+      <div class="ds-shape" style="box-shadow:var(--dg-shadow-float)"><b>Sombra flotante</b><span>0 18px 48px rgba(21, 32, 51, 0.12)</span><code class="ds-code-inline">--dg-shadow-float</code></div>
+    </div>
+    <p class="ds-lede">La sombra flotante es solo para lo que se superpone: navegación, barra móvil, diálogo y la tarjeta de precio destacada.</p>
+  </section>
+
+  <section class="ds-sec" id="iconos">
+    <h3 class="dg-h3">Iconos</h3>
+    <div class="ds-prose"><p>Iconos de línea, trazo redondeado, en una cuadrícula de 24. Nunca van sueltos: viven en una <strong>placa</strong> de color con el icono en blanco. El color de la placa sigue el significado, no la decoración.</p></div>
+    <div class="ds-icons">
+      <div><div class="dg-icon" style="--accent: var(--dg-blue)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12 5 5L20 6"></path></svg></div><span>Azul · estructura</span></div>
+      <div><div class="dg-icon" style="--accent: var(--dg-cyan)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg></div><span>Cian · ADA</span></div>
+      <div><div class="dg-icon" style="--accent: var(--dg-violet)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 8l8 5 8-5-8-5Z"></path><path d="m4 13 8 5 8-5"></path></svg></div><span>Violeta · reflexión</span></div>
+      <div><div class="dg-icon" style="--accent: var(--dg-green)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21.2l8.8-8.8a5.5 5.5 0 0 0 0-7.8Z"></path></svg></div><span>Verde · confirmación</span></div>
+      <div><div class="dg-icon" style="--accent: var(--dg-coral)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"></path></svg></div><span>Coral · cuidado</span></div>
+    </div>
+
+    <h4 class="ds-h4">Indicadores</h4>
+    <div class="ds-prose"><p>Hay tres piezas más chicas que no son iconos con significado: son <strong>marcas que acompañan a una línea de texto</strong>. Tienen la forma de la placa (cuadro redondeado, con radio cercano a un tercio del lado) y su tamaño depende de lo que hacen: la que solo señala mide 24 px; la que invita a tocar mide más.</p></div>
+    <div class="ds-indic">
+      <div class="ds-indic-item">
+        <div class="ds-indic-demo"><span class="dg-accordion-title"><span class="dg-index">01</span>El candado que ya abrió.</span></div>
+        <b>Índice · 24 px</b><span>Numera la fila. Es una etiqueta y no se toca: por eso es la más chica y va alineada con el texto.</span>
+      </div>
+      <div class="ds-indic-item">
+        <div class="ds-indic-demo"><span class="dg-rules-toc-link"><span class="dg-rules-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Respetar la privacidad de tu hijo</span></div>
+        <b>Palomita · 24 px en escritorio, 28 px en tablet y móvil</b><span>Marca cada regla de la lista, y la fila completa es un enlace. En escritorio la lista es compacta (texto de 14 px); en tablet y móvil el texto crece a 15 px y la fila se toca con el dedo, así que la marca también crece.</span>
+      </div>
+      <div class="ds-indic-item">
+        <div class="ds-indic-demo"><span class="dg-accordion-title">El candado que ya abrió.</span><svg viewBox="0 0 20 20" aria-hidden="true" class="dg-chevron"><path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"></path></svg></div>
+        <b>Flecha · 32 px</b><span>Es la única que anuncia una acción: la fila se despliega. Por eso es la más grande y la única con sombra.</span>
+      </div>
+    </div>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Pieza</th><th>Medidas</th><th>Por qué ese tamaño</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Placa de icono</th><td>46 × 46 px, radio 15 px, icono de 22 px</td><td>Es el icono con significado y encabeza una tarjeta. El color llega por <code class="ds-code-inline">style="--accent: var(--dg-…)"</code>; sin él es cian.</td></tr>
+        <tr><th scope="row">Avatar de nota</th><td>82 × 82 px, radio 16 px</td><td>Presenta a quien habla en la nota. Degradado de dos tonos vecinos: azul a cian, coral a naranja, naranja a dorado, cian a verde.</td></tr>
+        <tr><th scope="row">Índice</th><td>24 px de alto, radio 7 px, número de 10 px</td><td>Etiqueta de orden. Número en blanco sobre azul.</td></tr>
+        <tr><th scope="row">Palomita</th><td>24 × 24 px con radio 8 px en escritorio; 28 × 28 px con radio 9 px debajo de 1024 px</td><td>Marca de lista sobre verde. Crece donde la fila se toca con el dedo.</td></tr>
+        <tr><th scope="row">Flecha</th><td>32 × 32 px, radio 10 px</td><td>Indicador de acción. Azul con sombra corta: avisa que la fila se despliega.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="ds-lede">Un indicador nunca alcanza el tamaño de la placa ni cambia de color: azul para orden y despliegue, verde para confirmación.</p>
+  </section>
+
+  <section class="ds-sec" id="imagenes">
+    <h3 class="dg-h3">Imágenes</h3>
+    <div class="ds-prose">
+      <p>Las escenas son <strong>foto-ilustración</strong>: rostros y piel con calidad fotográfica, intervenidos con pincelada visible, sobre lienzo blanco con un halo de bloques de color (coral, naranja, verde azulado y dorado). Muestran a la familia y el celular; nunca candados, iconos de vigilancia ni dramatismo.</p>
+    </div>
+    <div class="ds-media-row">
+      <figure class="dg-media dg-media--portrait"><picture><source srcset="assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy.avif" type="image/avif"><img src="assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy.webp" alt="Padre absorto en su propio celular mientras sostiene el celular recién confiscado de su hijo" width="768" height="1024" loading="lazy"></picture></figure>
+      <figure class="dg-media dg-media--portrait"><picture><source srcset="assets/digizen/generated/scenes/dg-scene-a03-mother-son-dinner.avif" type="image/avif"><img src="assets/digizen/generated/scenes/dg-scene-a03-mother-son-dinner.webp" alt="Mamá e hijo sentados cerca en la cena, pero el celular abre una distancia entre ellos" width="768" height="1024" loading="lazy"></picture></figure>
+      <figure class="dg-media dg-media--portrait"><picture><source srcset="assets/digizen/generated/scenes/dg-scene-a07-presence-mother-son.avif" type="image/avif"><img src="assets/digizen/generated/scenes/dg-scene-a07-presence-mother-son.webp" alt="Mamá e hijo compartiendo un momento de presencia" width="768" height="1024" loading="lazy"></picture></figure>
+    </div>
+    <h4 class="ds-h4">ADA en las escenas</h4>
+    <div class="ds-prose">
+      <p><strong>ADA puede aparecer en una escena cuando la escena trata de su acompañamiento.</strong> Ya ocurre en Reglas de ADA: en la regla principal está junto a un adolescente que piensa frente a dos caminos. Si la escena es sobre la familia, los protagonistas son ellos y ADA no entra por decoración.</p>
+      <p>Cuando aparece es la misma ADA de siempre: personaje en 3D, con su diseño y sus colores, integrada a la pincelada de la escena. Va al lado del chico y a su altura: acompaña, no vigila ni elige por él.</p>
+      <p>Fuera de las escenas, ADA vive en el chat, en el saludo del formulario y en la entrada de la página de reglas.</p>
+    </div>
+    <figure class="dg-media ds-media-wide"><picture><source srcset="assets/digizen/generated/scenes/dg-scene-a09-rules-presence.avif" type="image/avif"><img src="assets/digizen/generated/scenes/dg-scene-a09-rules-presence.webp" alt="ADA y un adolescente de pie en una plataforma virtual, frente a dos caminos de tarjetas de redes sociales: él se lleva la mano a la barbilla para pensar y ADA, a su lado, abre las manos para acompañarlo sin elegir por él" width="2048" height="1366" loading="lazy"></picture><figcaption>Reglas de ADA, «Presencia, no vigilancia»: ADA acompaña dentro de la escena.</figcaption></figure>
+
+    <h4 class="ds-h4">Reglas de producción</h4>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Regla</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Una imagen por escena</th><td>Se genera una sola, en vertical. Los recortes para tablet y móvil (<code class="ds-code-inline">-mobile</code>) y otras proporciones (<code class="ds-code-inline">-16-9</code>, <code class="ds-code-inline">-1-1</code>) salen de esa misma imagen.</td></tr>
+        <tr><th scope="row">Tres archivos por imagen</th><td>El PNG original se queda en el proyecto y no se publica. De él salen el WebP y el AVIF. El respaldo previo a la optimización no se borra.</td></tr>
+        <tr><th scope="row">AVIF primero, WebP de respaldo</th><td>Dentro de <code class="ds-code-inline">&lt;picture&gt;</code>. Un AVIF solo se usa si es al menos tan fiel al original como el WebP y pesa menos.</td></tr>
+        <tr><th scope="row">Medidas declaradas</th><td>Toda imagen lleva <code class="ds-code-inline">width</code> y <code class="ds-code-inline">height</code>. Carga diferida en todas menos la de apertura, que lleva prioridad alta.</td></tr>
+        <tr><th scope="row">Texto alternativo</th><td>Describe la escena y lo que comunica. Si la imagen es decorativa (el retrato del panel de decisión), va vacío y oculta a lectores de pantalla.</td></tr>
+        <tr><th scope="row">Marco</th><td><code class="ds-code-inline">.dg-media</code>: borde fino, radio de tarjeta y sombra de tarjeta. Sin leyendas encima de la imagen.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="ds-lede">El canon completo y los prompts están en <code class="ds-code-inline">05-image-generation-canon-2026-09-15.md</code> y en los archivos <code class="ds-code-inline">06</code> a <code class="ds-code-inline">10</code> de la carpeta de la landing.</p>
+  </section>
+
+  <section class="ds-sec" id="movimiento">
+    <h3 class="dg-h3">Movimiento</h3>
+    <div class="ds-prose"><p>El movimiento responde a algo que hizo el lector: tocar, pasar el cursor o avanzar con el scroll. No hay animación de ambiente. Todo usa la misma curva, que arranca rápido y frena suave.</p></div>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Qué</th><th>Cómo</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Curva</th><td><code class="ds-code-inline">cubic-bezier(0.22, 1, 0.36, 1)</code> (<code class="ds-code-inline">--dg-ease</code>)</td></tr>
+        <tr><th scope="row">Duraciones</th><td>160–180 ms en cambios de color y de estado; 210–260 ms en botones, paneles y diálogo.</td></tr>
+        <tr><th scope="row">Botón</th><td>Al pasar el cursor sube 1 px y crece su sombra. Al presionar baja 1 px y se encoge a 96.5 % en 90 ms.</td></tr>
+        <tr><th scope="row">Chat de producto</th><td>Los mensajes entran una sola vez, cuando el chat llega al 78 % de la pantalla. ADA «escribe» antes de cada respuesta.</td></tr>
+        <tr><th scope="row">ADA que saluda</th><td>130 cuadros recorridos con el scroll mientras el formulario cruza la pantalla. Solo en desktop; en tablet y móvil queda el primer cuadro.</td></tr>
+        <tr><th scope="row">Reloj</th><td>Video que avanza con el scroll. Solo en desktop; en tablet y móvil se muestra la imagen fija y el video no se descarga.</td></tr>
+        <tr><th scope="row">Navegación</th><td>La barra se ensancha y revela el logo en los primeros pixeles de scroll; su línea inferior marca el avance de lectura.</td></tr>
+        <tr><th scope="row">Ir a una sección</th><td>Desplazamiento propio con duración acotada: un salto del menú al pie no tarda segundos.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ds-rules">
+      <div class="ds-do"><b>Hacer</b><ul><li>Con «reducir movimiento» activo, <strong>degradar, no cancelar</strong>: se quita el desplazamiento y el rebote y queda la misma secuencia resuelta con opacidad.</li><li>Con «reducir transparencia» activo, quitar el desenfoque de las barras y usar fondo sólido.</li><li>Animar solo transformación y opacidad.</li></ul></div>
+      <div class="ds-dont"><b>Evitar</b><ul><li>Animaciones que corren solas o en bucle.</li><li>Descargar en móvil lo que solo se anima en desktop.</li><li>Dejar un contenido invisible esperando una animación que puede no llegar.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="ds-sec" id="temas">
+    <h3 class="dg-h3">Temas</h3>
+    <div class="ds-prose">
+      <p>La landing tiene tema claro y oscuro. El oscuro no es un filtro: cada variable tiene su valor propio y el logo cambia de versión. Se activa con <code class="ds-code-inline">data-theme="dark"</code> en el elemento <code class="ds-code-inline">&lt;html&gt;</code>; el botón redondo de la barra lo alterna.</p>
+      <p>Esta guía usa el mismo mecanismo. Cámbialo con el botón de arriba a la derecha y revisa cualquier componente en los dos temas.</p>
+    </div>
+    <p><button class="dg-btn dg-btn--secondary" type="button" data-ds-theme>Cambiar de tema</button></p>
+  </section>
+</section>
+
+<!-- ============================================================ 3 · EXPERIENCIA -->
+<section class="ds-part" id="experiencia">
+  <header class="ds-part-head">
+    <p class="dg-kicker">Parte 3</p>
+    <h2 class="dg-h2"><span class="dg-h2-muted">Cómo se comporta.</span>Experiencia</h2>
+  </header>
+
+  <section class="ds-sec" id="ux-decision">
+    <h3 class="dg-h3">Una decisión por momento</h3>
+    <div class="ds-prose">
+      <p>La página cuenta una historia larga. No pide nada hasta que el lector entendió algo, y cuando pide, ofrece siempre las mismas dos salidas: <strong>inscribir</strong> (principal) o <strong>conversar con ADA</strong> (secundaria, sin riesgo).</p>
+    </div>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Pieza</th><th>Regla</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Par de acciones</th><td>Principal a la izquierda o arriba, secundaria después. Cada botón dice la acción y su refuerzo: «Inscribir a mi hijo · EMPIEZA HOY», «Tengo dudas · CONVERSAR CON ADA».</td></tr>
+        <tr><th scope="row">Panel de decisión</th><td>Aparece cuatro veces, después de cada tramo fuerte. Siempre con la misma estructura: retrato, pregunta, promesa y el par de acciones.</td></tr>
+        <tr><th scope="row">Barra de acción en móvil</th><td>Aparece cuando el lector ya pasó el primer panel de decisión. Antes de la oferta invita a conversar con ADA; al entrar a la oferta cambia a inscribir. Se puede cerrar.</td></tr>
+        <tr><th scope="row">Acción en la barra de navegación</th><td>«Inscribir» está siempre a la vista en desktop y lleva a las tarjetas de precio.</td></tr>
+        <tr><th scope="row">Un solo destino</th><td>Todo botón de inscripción lleva a las tarjetas de precio; todo botón de ADA abre el mismo formulario.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="ds-sec" id="ux-navegacion">
+    <h3 class="dg-h3">Navegación</h3>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Pieza</th><th>Regla</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Barra</th><td>Fija arriba con cinco temas: ADA, Oferta, Garantía, Reglas de ADA y FAQs. El tema de la sección visible se marca en azul.</td></tr>
+        <tr><th scope="row">Avance de lectura</th><td>Una línea de 2 px en la base de la barra crece con el scroll.</td></tr>
+        <tr><th scope="row">Desktop</th><td>El logo va grande, fuera de la barra; al bajar, la barra se ensancha y lo incorpora.</td></tr>
+        <tr><th scope="row">Tablet y móvil</th><td>Logo dentro de la barra y menú desplegable. Dentro del menú, la acción «Inscribir a mi hijo» va como botón.</td></tr>
+        <tr><th scope="row">Reglas de ADA</th><td>Es una página aparte dentro de la misma aplicación. Al entrar y al volver, una cortina breve cubre el cambio; «Volver a Digizen» regresa a la portada.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="ds-sec" id="ux-lectura">
+    <h3 class="dg-h3">Lectura por capas</h3>
+    <div class="ds-prose"><p>El texto es largo y emocional. Para no abrumar, la profundidad es opcional y el lector decide cuándo abrirla.</p></div>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Recurso</th><th>Cuándo</th><th>Regla</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Leer más</th><td>Un párrafo que sigue con testimonios o detalle.</td><td>Se corta en el punto de tensión, con puntos suspensivos y «Ver más». Al abrir, «Ver menos» queda al final.</td></tr>
+        <tr><th scope="row">Acordeón con índice</th><td>Una lista de pruebas o argumentos.</td><td>El primero abre. Cada fila lleva número y flecha azul.</td></tr>
+        <tr><th scope="row">Preguntas frecuentes</th><td>Dudas antes de decidir.</td><td>Cada pregunta es una caja propia que se abre en su sitio.</td></tr>
+        <tr><th scope="row">Índice de reglas</th><td>La página de reglas de ADA.</td><td>La lista de arriba lleva a cada tarjeta y la resalta un momento al llegar.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="ds-lede">Todo lo que se despliega debe verse desplegable: flecha, subrayado o símbolo, y cambio de cursor. Una tarjeta que no hace nada no debe parecer un botón.</p>
+  </section>
+
+  <section class="ds-sec" id="ux-formularios">
+    <h3 class="dg-h3">Formularios y diálogo</h3>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Regla</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Pedir lo mínimo</th><td>Nombre, correo y WhatsApp opcional. Lo opcional se dice en la etiqueta.</td></tr>
+        <tr><th scope="row">Etiqueta arriba</th><td>En mayúsculas pequeñas, siempre visible. El texto de ejemplo dentro del campo no sustituye a la etiqueta.</td></tr>
+        <tr><th scope="row">Campos cómodos</th><td>48 px de alto mínimo, con el tipo correcto (correo, teléfono) y autocompletado.</td></tr>
+        <tr><th scope="row">Una acción</th><td>Un solo botón, a todo el ancho, con la misma frase que abrió el formulario.</td></tr>
+        <tr><th scope="row">Decir qué pasa después</th><td>Una línea de apoyo bajo el botón explica a dónde llega el acceso.</td></tr>
+        <tr><th scope="row">Diálogo</th><td>Centrado en desktop; en móvil sube desde abajo. Se cierra con la ×, con Escape o tocando fuera.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="ds-sec" id="ux-accesibilidad">
+    <h3 class="dg-h3">Accesibilidad</h3>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Regla</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Contraste</th><td>4.5:1 como mínimo en todo texto; 3:1 solo en texto grande. Medido con Lighthouse el 5 de octubre de 2026.</td></tr>
+        <tr><th scope="row">Foco visible</th><td>Anillo de 3 px separado 3 px, en botones, enlaces, campos y filas desplegables.</td></tr>
+        <tr><th scope="row">Tamaño de toque</th><td>44 px como mínimo; 48 px en las acciones principales y los campos.</td></tr>
+        <tr><th scope="row">Nombre accesible</th><td>Si un control tiene nombre para lectores de pantalla, ese nombre incluye el texto que se ve.</td></tr>
+        <tr><th scope="row">Estructura</th><td>Un solo título de página; cada sección se anuncia con su titular. Los iconos decorativos se ocultan a lectores de pantalla.</td></tr>
+        <tr><th scope="row">Color acompañado</th><td>El color nunca es el único aviso: coral va con título y texto; la opción destacada va con borde y etiqueta.</td></tr>
+        <tr><th scope="row">Preferencias del sistema</th><td>Se respetan «reducir movimiento» y «reducir transparencia».</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="ds-sec" id="ux-rendimiento">
+    <h3 class="dg-h3">Rendimiento</h3>
+    <div class="ds-prose"><p>La página debe aparecer rápido en un teléfono con conexión regular. Estas reglas salen de lo medido y corregido.</p></div>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Regla</th><th>Por qué</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">La imagen de apertura se precarga</th><td>En el formato que el navegador va a usar, y solo ese.</td></tr>
+        <tr><th scope="row">Lo demás carga al acercarse</th><td>Imágenes con carga diferida; los cuadros de ADA empiezan a bajar cuando su sección está cerca.</td></tr>
+        <tr><th scope="row">Móvil no descarga lo de desktop</th><td>El video del reloj y los cuadros de ADA solo se piden en desktop.</td></tr>
+        <tr><th scope="row">La hoja de estilos llega antes de pintar</th><td>Como enlace normal. Diferida, la página podía verse un instante sin estilos y saltar.</td></tr>
+        <tr><th scope="row">Tipografía propia</th><td>Inter se sirve desde el proyecto; no se espera a otro servidor.</td></tr>
+        <tr><th scope="row">Medir en incógnito</th><td>Las extensiones del navegador falsean Lighthouse. La línea base está en <code class="ds-code-inline">Projects/auditorias-lighthouse/</code>.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="ds-sec" id="ux-contenido">
+    <h3 class="dg-h3">Contenido</h3>
+    <div class="ds-table-wrap"><table class="ds-table">
+      <thead><tr><th>Regla</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">El texto es literal</th><td>El copy viene de su fuente y no se resume, corrige ni reescribe al diseñar. Un cambio de texto se pide y se aprueba aparte.</td></tr>
+        <tr><th scope="row">Tú a tú</th><td>Segunda persona, frases cortas, sin tecnicismos. Primero se quita la culpa; después se explica.</td></tr>
+        <tr><th scope="row">Negrita y cursiva</th><td>Negrita para el golpe de la idea. Cursiva para lo que alguien dice o piensa.</td></tr>
+        <tr><th scope="row">Citas</th><td>La cita va en negrita y su autor debajo, en mayúsculas pequeñas («Una mamá», «Un niño»).</td></tr>
+        <tr><th scope="row">Rayas</th><td>Una raya nunca queda al final de una línea: se une a la palabra siguiente con espacio duro.</td></tr>
+        <tr><th scope="row">Sin emojis</th><td>Los símbolos son iconos de línea dentro de su placa.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</section>
+
+<!-- ============================================================ 4 · GUÍA DE COMPONENTES -->
+<section class="ds-part" id="guia">
+  <header class="ds-part-head">
+    <p class="dg-kicker">Parte 4</p>
+    <h2 class="dg-h2"><span class="dg-h2-muted">Para qué sirve cada pieza.</span>Guía de componentes</h2>
+    <p class="ds-lede">Todos parten de la misma gramática: superficie blanca, borde de 1 px, radio de 8 px y una sombra suave. El color, el icono o la regla expresan significado; no crean una familia distinta. Cada entrada enlaza a su ejemplo en la librería.</p>
+  </header>
+
+  <div class="ds-comps">
+    <article class="ds-comp"><h4>Botón <code class="ds-code-inline">.dg-btn</code></h4>
+      <dl><dt>Para qué</dt><dd>Avanzar o confirmar. El secundario (<code class="ds-code-inline">--secondary</code>) ofrece la ruta alterna.</dd>
+      <dt>Partes</dt><dd>Texto e icono de línea de 18 px. El icono va al final si indica avance y al inicio si nombra el canal.</dd>
+      <dt>Medidas</dt><dd>48 px de alto mínimo, radio 10 px, texto de 14 px y peso 700. En la barra, 42 px.</dd>
+      <dt>Estados</dt><dd>Reposo, cursor encima (sube 1 px), presionado (se encoge), foco con anillo.</dd>
+      <dt>Reglas</dt><dd>Un solo principal por grupo. Texto en tipo oración; el refuerzo, si lo hay, en mayúsculas tras un punto medio.</dd></dl>
+      <a class="ds-comp-link" href="#lib-botones">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Antetítulo <code class="ds-code-inline">.dg-kicker</code> y sobretítulo <code class="ds-code-inline">.dg-eyebrow</code></h4>
+      <dl><dt>Para qué</dt><dd>Decir en qué tramo está el lector con una frase cercana («No estás solo»).</dd>
+      <dt>Partes</dt><dd>El antetítulo lleva una marca vertical de 3 × 14 px. El sobretítulo no lleva marca.</dd>
+      <dt>Reglas</dt><dd>Nunca es un enlace ni una acción. La apertura de la página no lleva antetítulo.</dd></dl>
+      <a class="ds-comp-link" href="#lib-titular">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Titular en dos tonos <code class="ds-code-inline">.dg-h2</code></h4>
+      <dl><dt>Para qué</dt><dd>Abrir cada tramo con una frase que prepara y otra que afirma.</dd>
+      <dt>Partes</dt><dd>Un <code class="ds-code-inline">span.dg-h2-muted</code> en gris, en su propia línea, y el resto en tinta.</dd>
+      <dt>Variantes</dt><dd>Con énfasis de color en una frase. Con el gris en la segunda parte cuando el titular lleva raya.</dd>
+      <dt>Reglas</dt><dd>Máximo 28 caracteres de ancho. Un solo énfasis de color.</dd></dl>
+      <a class="ds-comp-link" href="#lib-titular">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Nota <code class="ds-code-inline">.dg-note</code></h4>
+      <dl><dt>Para qué</dt><dd>La voz que acompaña: una frase que el lector debería llevarse.</dd>
+      <dt>Partes</dt><dd>Avatar de 82 px con icono de línea, frase fuerte y remate en cursiva.</dd>
+      <dt>Variantes</dt><dd>Azul-cian (por defecto), coral (cuidado), dorado (hito) y verde (confirmación).</dd>
+      <dt>Reglas</dt><dd>Una por tramo como máximo. Es texto, no un botón.</dd></dl>
+      <a class="ds-comp-link" href="#lib-nota">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Tarjeta <code class="ds-code-inline">.dg-card</code></h4>
+      <dl><dt>Para qué</dt><dd>Agrupar ideas cortas y paralelas: señales, beneficios, garantías, lo que incluye.</dd>
+      <dt>Partes</dt><dd>Placa de icono, título y una o dos líneas de texto de 13 px.</dd>
+      <dt>Variantes</dt><dd>Icono arriba; icono al lado (<code class="ds-code-inline">--side</code>); cabecera con icono y título en línea (<code class="ds-code-inline">.dg-guard-card</code>).</dd>
+      <dt>Reglas</dt><dd>Las tarjetas de un mismo grupo miden lo mismo de alto, en la fila y entre filas: la más larga marca la altura y ninguna lleva altura fija. No es pulsable salvo que lleve un botón o un enlace dentro.</dd></dl>
+      <a class="ds-comp-link" href="#lib-tarjetas">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Marco de imagen <code class="ds-code-inline">.dg-media</code></h4>
+      <dl><dt>Para qué</dt><dd>Enmarcar una escena junto al texto de su tramo.</dd>
+      <dt>Variantes</dt><dd>Vertical 4:5 (<code class="ds-code-inline">--portrait</code>) y proporciones propias para el árbol de decisiones, la invitación y la presencia.</dd>
+      <dt>Reglas</dt><dd>Una imagen por tramo. En tablet y móvil entra el recorte horizontal. Sin texto encima.</dd></dl>
+      <a class="ds-comp-link" href="#lib-media">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Panel de decisión <code class="ds-code-inline">.dg-decision</code></h4>
+      <dl><dt>Para qué</dt><dd>Ofrecer el siguiente paso cuando el lector terminó un tramo.</dd>
+      <dt>Partes</dt><dd>Retrato que sobresale por arriba, sobretítulo, título, línea de apoyo y el par de acciones.</dd>
+      <dt>Reglas</dt><dd>Misma estructura las cuatro veces; solo cambia el texto. En móvil se apila y los botones ocupan todo el ancho.</dd></dl>
+      <a class="ds-comp-link" href="#lib-decision">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Acordeón <code class="ds-code-inline">.dg-accordion</code></h4>
+      <dl><dt>Para qué</dt><dd>Presentar una serie de pruebas sin obligar a leerlas todas.</dd>
+      <dt>Partes</dt><dd>Fila de 62 px con índice, título y flecha azul; el cuerpo aparece con un fundido corto.</dd>
+      <dt>Estados</dt><dd>Cerrado, abierto y foco. El primero abre.</dd></dl>
+      <a class="ds-comp-link" href="#lib-acordeon">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Leer más <code class="ds-code-inline">.dg-readmore-trigger</code></h4>
+      <dl><dt>Para qué</dt><dd>Dejar a la vista el arranque de un texto largo y guardar el resto.</dd>
+      <dt>Partes</dt><dd>Enlace en violeta, subrayado, con flecha pequeña; panel que crece en alto.</dd>
+      <dt>Reglas</dt><dd>Se corta donde el lector quiere saber más, nunca a media idea sin gancho.</dd></dl>
+      <a class="ds-comp-link" href="#lib-leer-mas">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Chat de producto <code class="ds-code-inline">.dg-product</code></h4>
+      <dl><dt>Para qué</dt><dd>Mostrar cómo conversa ADA de verdad, en vez de describirlo.</dd>
+      <dt>Partes</dt><dd>Ventana con cabecera (avatar, nombre y papel), hilo de burbujas y campo de texto de muestra.</dd>
+      <dt>Reglas</dt><dd>ADA a la izquierda en gris claro; el alumno a la derecha en azul tenue. Es una muestra: nada es pulsable.</dd></dl>
+      <a class="ds-comp-link" href="#lib-chat">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Formulario <code class="ds-code-inline">.dg-form</code></h4>
+      <dl><dt>Para qué</dt><dd>Recibir los datos del adulto para que converse con ADA antes de pagar.</dd>
+      <dt>Partes</dt><dd>Título, línea de apoyo, tres campos con etiqueta, un botón y una nota final.</dd>
+      <dt>Reglas</dt><dd>En desktop va en una fila junto a ADA saludando; en móvil se apila. El mismo contenido vive en el diálogo.</dd></dl>
+      <a class="ds-comp-link" href="#lib-formulario">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Tarjeta de precio <code class="ds-code-inline">.dg-pricing-card</code></h4>
+      <dl><dt>Para qué</dt><dd>Comparar las dos formas de pago.</dd>
+      <dt>Partes</dt><dd>Logo, sobretítulo, nombre, cifra, explicación, comparación (nota y detalle) y botón.</dd>
+      <dt>Variantes</dt><dd>Destacada (<code class="ds-code-inline">--featured</code>): más grande que la otra a propósito, con borde verde de 2 px, fondo propio y sombra flotante.</dd>
+      <dt>Reglas</dt><dd>Es la única excepción a la regla de altura: la destacada es más grande y las dos se centran entre sí. El ahorro se dice en negrita, sin etiquetas de descuento.</dd></dl>
+      <a class="ds-comp-link" href="#lib-precio">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Sello de garantía <code class="ds-code-inline">.dg-guarantee-seal</code></h4>
+      <dl><dt>Para qué</dt><dd>Hacer visible la garantía de 30 días junto al texto que la explica.</dd>
+      <dt>Reglas</dt><dd>Uno solo en la página, en el tramo de cierre. Usa la paleta del logo e iconos de línea.</dd></dl>
+      <a class="ds-comp-link" href="#lib-garantia">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Navegación <code class="ds-code-inline">.dg-nav</code></h4>
+      <dl><dt>Para qué</dt><dd>Saltar a un tema y tener la inscripción siempre a la mano.</dd>
+      <dt>Partes</dt><dd>Logo, enlaces de tema, botón de tema, botón de menú (móvil), acción y línea de avance.</dd>
+      <dt>Estados</dt><dd>Enlace activo en azul con fondo tenue; menú abierto en tablet y móvil.</dd></dl>
+      <a class="ds-comp-link" href="#lib-nav">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Barra de acción móvil <code class="ds-code-inline">.dg-mobile-cta</code></h4>
+      <dl><dt>Para qué</dt><dd>Mantener la acción al alcance del pulgar en pantallas chicas.</dd>
+      <dt>Reglas</dt><dd>Solo debajo de 1024 px. Entra después del primer panel de decisión, cambia de mensaje al llegar a la oferta y se puede cerrar.</dd></dl>
+      <a class="ds-comp-link" href="#lib-movil">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Diálogo <code class="ds-code-inline">.dg-dialog</code></h4>
+      <dl><dt>Para qué</dt><dd>Abrir el formulario de ADA sin sacar al lector de donde está.</dd>
+      <dt>Reglas</dt><dd>Fondo oscurecido con desenfoque leve. Al cerrar, el foco vuelve al botón que lo abrió.</dd></dl>
+      <a class="ds-comp-link" href="#lib-dialogo">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Tarjeta de regla <code class="ds-code-inline">.dg-rule-card</code></h4>
+      <dl><dt>Para qué</dt><dd>Enunciar una regla de ADA y explicarla en lenguaje llano.</dd>
+      <dt>Partes</dt><dd>Placa de icono, número, título, la regla en una frase y su explicación.</dd>
+      <dt>Variantes</dt><dd>Ancha con imagen para la regla principal. El color de la placa rota entre violeta, cian, verde y azul.</dd>
+      <dt>Estados</dt><dd>Al llegar desde el índice se resalta un momento.</dd>
+      <dt>Reglas</dt><dd>Todas las tarjetas de regla miden lo mismo de alto; solo la principal, que va sola en su fila, conserva el suyo.</dd></dl>
+      <a class="ds-comp-link" href="#lib-regla">Ver en la librería</a></article>
+
+    <article class="ds-comp"><h4>Sección <code class="ds-code-inline">.dg-section</code></h4>
+      <dl><dt>Para qué</dt><dd>Contener un tramo del relato con su propio aire.</dd>
+      <dt>Variantes</dt><dd><code class="ds-code-inline">--cyan</code>, <code class="ds-code-inline">--violet</code> y <code class="ds-code-inline">--grid</code> son marcas de tramo; hoy todas comparten el mismo fondo transparente.</dd>
+      <dt>Reglas</dt><dd>Cada sección se anuncia con su titular. Las que aparecen en la barra llevan un identificador para llegar con ancla.</dd></dl></article>
+  </div>
+</section>
+
+<!-- ============================================================ 5 · LIBRERÍA -->
+<section class="ds-part" id="libreria">
+  <header class="ds-part-head">
+    <p class="dg-kicker">Parte 5</p>
+    <h2 class="dg-h2"><span class="dg-h2-muted">Los componentes ya diseñados.</span>Librería</h2>
+    <p class="ds-lede">Cada ejemplo es el marcado real de la landing, pintado con su CSS real. Cambia de tema para verlos en oscuro. «Ver el marcado» muestra el HTML para copiarlo; los trazos de los iconos se resumen.</p>
+  </header>
+
+  <section class="ds-sec" id="grupo-accion"><h3 class="dg-h3">Acción</h3>
+    <article class="ds-ex" id="lib-botones"><header class="ds-ex-head"><h4 class="ds-ex-title">Botón principal y secundario</h4><p class="ds-ex-note">El principal avanza; el secundario ofrece la salida de bajo riesgo. Van juntos y en ese orden.</p></header><div class="ds-stage ds-stage--pad"><div class="dg-decision-actions"><button type="button" class="dg-btn"> Inscribir a mi hijo · EMPIEZA HOY<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button><button type="button" class="dg-btn dg-btn--secondary"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Tengo dudas · CONVERSAR CON ADA </button></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div class=&quot;dg-decision-actions&quot;&gt;
+  &lt;button type=&quot;button&quot; class=&quot;dg-btn&quot;&gt;
+    Inscribir a mi hijo · EMPIEZA HOY
+    &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+  &lt;/button&gt;
+  &lt;button type=&quot;button&quot; class=&quot;dg-btn dg-btn--secondary&quot;&gt;
+    &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    Tengo dudas · CONVERSAR CON ADA
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-decision"><header class="ds-ex-head"><h4 class="ds-ex-title">Panel de decisión</h4><p class="ds-ex-note">Aparece después de cada tramo fuerte del relato. Retrato, pregunta, promesa y las dos acciones.</p></header><div class="ds-stage "><section id="decision-early" aria-label="Decisión después del beat 2" class="dg-decision dg-decision--with-portrait"><figure aria-hidden="true" class="dg-decision-portrait"><img src="assets/digizen/generated/scenes/dg-scene-cta-father-son-team-1-1.webp" alt="" width="956" height="956"></figure><div class="dg-decision-copy"><p class="dg-eyebrow">¿Ya viste suficiente?</p><p class="dg-decision-title">Tu hijo puede empezar hoy mismo.</p><p class="dg-support">Sin grupos, sin temporadas. Garantía 30 días desde el primer chat.</p></div><div class="dg-decision-actions"><button type="button" class="dg-btn"> Inscribir a mi hijo · EMPIEZA HOY<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button><button type="button" class="dg-btn dg-btn--secondary"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Tengo dudas · CONVERSAR CON ADA </button></div></section></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;section id=&quot;decision-early&quot; aria-label=&quot;Decisión después del beat 2&quot; class=&quot;dg-decision dg-decision--with-portrait&quot;&gt;
+  &lt;figure aria-hidden=&quot;true&quot; class=&quot;dg-decision-portrait&quot;&gt;&lt;img src=&quot;assets/digizen/generated/scenes/dg-scene-cta-father-son-team-1-1.webp&quot; alt=&quot;&quot; width=&quot;956&quot; height=&quot;956&quot;&gt;&lt;/figure&gt;
+  &lt;div class=&quot;dg-decision-copy&quot;&gt;
+    &lt;p class=&quot;dg-eyebrow&quot;&gt;¿Ya viste suficiente?&lt;/p&gt;
+    &lt;p class=&quot;dg-decision-title&quot;&gt;Tu hijo puede empezar hoy mismo.&lt;/p&gt;
+    &lt;p class=&quot;dg-support&quot;&gt;Sin grupos, sin temporadas. Garantía 30 días desde el primer chat.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;dg-decision-actions&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;dg-btn&quot;&gt;
+      Inscribir a mi hijo · EMPIEZA HOY
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;dg-btn dg-btn--secondary&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+      Tengo dudas · CONVERSAR CON ADA
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre></details></article>
+  </section>
+
+  <section class="ds-sec" id="grupo-texto"><h3 class="dg-h3">Texto</h3>
+    <article class="ds-ex" id="lib-hero"><header class="ds-ex-head"><h4 class="ds-ex-title">Apertura: título, entrada y nota</h4><p class="ds-ex-note">El título de apertura no lleva antetítulo. La entrada usa el tamaño grande y un solo énfasis de color.</p></header><div class="ds-stage ds-stage--pad"><div><h1 id="hero-title" class="dg-display"> Le quitaste el celular… <wbr>con el tuyo en la mano </h1><p class="dg-lead dg-lead--h2"> Y los dos sabemos cómo terminó:<br><strong class="dg-emphasis--coral">en dos días encontró cómo saltárselo.</strong><br> Y tú seguiste sin saber qué más hacer. </p><div class="dg-note"><div aria-hidden="true" class="dg-note-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"></path></svg></div><div><strong>No eres mal papá.</strong>Baja la guardia un segundo y escúchame, porque esto no es otro regaño con disfraz de solución. </div></div></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div&gt;
+  &lt;h1 id=&quot;hero-title&quot; class=&quot;dg-display&quot;&gt;Le quitaste el celular… &lt;wbr&gt;con el tuyo en la mano&lt;/h1&gt;
+  &lt;p class=&quot;dg-lead dg-lead--h2&quot;&gt;Y los dos sabemos cómo terminó:&lt;br&gt;&lt;strong class=&quot;dg-emphasis--coral&quot;&gt;en dos días encontró cómo saltárselo.&lt;/strong&gt;&lt;br&gt; Y tú seguiste sin saber qué más hacer.&lt;/p&gt;
+  &lt;div class=&quot;dg-note&quot;&gt;
+    &lt;div aria-hidden=&quot;true&quot; class=&quot;dg-note-avatar&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;…&lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;div&gt;&lt;strong&gt;No eres mal papá.&lt;/strong&gt;Baja la guardia un segundo y escúchame, porque esto no es otro regaño con disfraz de solución.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-titular"><header class="ds-ex-head"><h4 class="ds-ex-title">Antetítulo y titular en dos tonos</h4><p class="ds-ex-note">Primero el fragmento gris, después el mensaje en tinta.</p></header><div class="ds-stage ds-stage--pad"><p class="dg-kicker">No estás solo</p>
+<h2 id="beat-1-title" class="dg-h2"><span class="dg-h2-muted">Nadie te enseñó esto.</span>A ti tampoco te lo enseñaron </h2></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;p class=&quot;dg-kicker&quot;&gt;No estás solo&lt;/p&gt;
+&lt;h2 id=&quot;beat-1-title&quot; class=&quot;dg-h2&quot;&gt;&lt;span class=&quot;dg-h2-muted&quot;&gt;Nadie te enseñó esto.&lt;/span&gt;A ti tampoco te lo enseñaron&lt;/h2&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-titular-enfasis"><header class="ds-ex-head"><h4 class="ds-ex-title">Titular con énfasis de color</h4><p class="ds-ex-note">Un solo énfasis por titular, con el color de su significado.</p></header><div class="ds-stage ds-stage--pad"><p class="dg-kicker">Lo que de verdad duele</p>
+<h2 id="beat-2-title" class="dg-h2"><span class="dg-h2-muted">No es cuánto tiempo pasa en el celular.</span>Es que cada día <span class="dg-emphasis--coral">te mira menos</span></h2></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;p class=&quot;dg-kicker&quot;&gt;Lo que de verdad duele&lt;/p&gt;
+&lt;h2 id=&quot;beat-2-title&quot; class=&quot;dg-h2&quot;&gt;&lt;span class=&quot;dg-h2-muted&quot;&gt;No es cuánto tiempo pasa en el celular.&lt;/span&gt;Es que cada día &lt;span class=&quot;dg-emphasis--coral&quot;&gt;te mira menos&lt;/span&gt;&lt;/h2&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-copy"><header class="ds-ex-head"><h4 class="ds-ex-title">Texto de lectura</h4><p class="ds-ex-note">Negritas en tinta para el golpe; cursiva para las voces citadas.</p></header><div class="ds-stage ds-stage--pad"><div class="dg-copy"><p><strong>Respira un segundo.</strong></p><p> Si llegaste aquí, probablemente fue después de otra noche rara, de esas en que le dices "ya, deja el cel" por quinta vez y <strong>algo dentro de ti se aprieta.</strong> No porque él te ignoró. Porque <strong>tú no supiste qué más hacer.</strong></p><p> Y quizá una vocecita te susurró lo de siempre: <em>"soy un mal papá." </em><strong>No lo eres.</strong></p><p> A ti te tocó un mundo de calles y bicicletas. A tu hijo le tocó uno que se inventa cada mañana, que nadie te enseñó a leer, y que cambió las reglas mientras tú trabajabas para darle de comer. <strong>Nadie te dio el manual.</strong> Tampoco a tu mamá. Tampoco al papá de junto. </p><p> Y sí, tú también andas pegado al tuyo. Eso no te hace hipócrita. <strong>Te hace humano, atrapado en la misma corriente que se lleva a tu hijo.</strong> Que se te haya ido de las manos no te hace mal padre. <strong>Lo raro sería que quitarle el aparato <em>hubiera</em> funcionado.</strong></p></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div class=&quot;dg-copy&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;Respira un segundo.&lt;/strong&gt;&lt;/p&gt;
+  &lt;p&gt;
+    Si llegaste aquí, probablemente fue después de otra noche rara, de esas en que le dices &quot;ya, deja el cel&quot; por quinta vez y
+    &lt;strong&gt;algo dentro de ti se aprieta.&lt;/strong&gt;
+    No porque él te ignoró. Porque
+    &lt;strong&gt;tú no supiste qué más hacer.&lt;/strong&gt;
+  &lt;/p&gt;
+  &lt;p&gt;Y quizá una vocecita te susurró lo de siempre: &lt;em&gt;&quot;soy un mal papá.&quot; &lt;/em&gt;&lt;strong&gt;No lo eres.&lt;/strong&gt;&lt;/p&gt;
+  &lt;p&gt;
+    A ti te tocó un mundo de calles y bicicletas. A tu hijo le tocó uno que se inventa cada mañana, que nadie te enseñó a leer, y que cambió las reglas mientras tú trabajabas para darle de comer.
+    &lt;strong&gt;Nadie te dio el manual.&lt;/strong&gt;
+    Tampoco a tu mamá. Tampoco al papá de junto.
+  &lt;/p&gt;
+  &lt;p&gt;
+    Y sí, tú también andas pegado al tuyo. Eso no te hace hipócrita.
+    &lt;strong&gt;Te hace humano, atrapado en la misma corriente que se lleva a tu hijo.&lt;/strong&gt;
+    Que se te haya ido de las manos no te hace mal padre.
+    &lt;strong&gt;Lo raro sería que quitarle el aparato &lt;em&gt;hubiera&lt;/em&gt; funcionado.&lt;/strong&gt;
+  &lt;/p&gt;
+&lt;/div&gt;</code></pre></details></article>
+  </section>
+
+  <section class="ds-sec" id="grupo-notas"><h3 class="dg-h3">Notas e imagen</h3>
+    <article class="ds-ex" id="lib-nota"><header class="ds-ex-head"><h4 class="ds-ex-title">Nota</h4><p class="ds-ex-note">La voz que acompaña. Avatar con icono de línea, frase fuerte y remate en cursiva.</p></header><div class="ds-stage ds-stage--pad"><div class="dg-note"><div aria-hidden="true" class="dg-note-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"></path></svg></div><div><strong>No eres mal papá.</strong>Baja la guardia un segundo y escúchame, porque esto no es otro regaño con disfraz de solución. </div></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div class=&quot;dg-note&quot;&gt;
+  &lt;div aria-hidden=&quot;true&quot; class=&quot;dg-note-avatar&quot;&gt;
+    &lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;…&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;div&gt;&lt;strong&gt;No eres mal papá.&lt;/strong&gt;Baja la guardia un segundo y escúchame, porque esto no es otro regaño con disfraz de solución.&lt;/div&gt;
+&lt;/div&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-nota-variantes"><header class="ds-ex-head"><h4 class="ds-ex-title">Nota: coral, dorado y verde</h4><p class="ds-ex-note">El color cambia con el sentido: cuidado, hito y confirmación.</p></header><div class="ds-stage ds-stage--pad ds-stage--stack"><blockquote class="dg-note dg-note--coral"><div aria-hidden="true" class="dg-note-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-crack" aria-hidden="true"><path d="M12.409 5.824c-.702.792-1.15 1.496-1.415 2.166l2.153 2.156a.5.5 0 0 1 0 .707l-2.293 2.293a.5.5 0 0 0 0 .707L12 15"></path><path d="M13.508 20.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5a5.5 5.5 0 0 1 9.591-3.677.6.6 0 0 0 .818.001A5.5 5.5 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5z"></path></svg></div><div><strong>No es solo una pantalla entre ustedes</strong><em>Es otra voz enseñándole a decidir</em></div></blockquote>
+<blockquote class="dg-note dg-note--gold dg-founder-quote"><div aria-hidden="true" class="dg-note-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-sparkles lucide-stars"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg></div><div><strong>Sé el primero en tenerlo.</strong><em>El beneficio fundador no se repite.</em></div></blockquote>
+<blockquote class="dg-note dg-note--green dg-payment-quote"><div aria-hidden="true" class="dg-note-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-shield"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg></div><div><strong>Una garantía que nadie más da.</strong><em>Pruébalo un mes. Los 30 días cuentan desde la primera conversación de tu hijo con ADA, no desde que pagas. Si no es para ustedes, cancelas en un clic y te devolvemos tu dinero.</em></div></blockquote></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;blockquote class=&quot;dg-note dg-note--coral&quot;&gt;
+  &lt;div aria-hidden=&quot;true&quot; class=&quot;dg-note-avatar&quot;&gt;
+    &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; class=&quot;lucide lucide-heart-crack&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;div&gt;&lt;strong&gt;No es solo una pantalla entre ustedes&lt;/strong&gt;&lt;em&gt;Es otra voz enseñándole a decidir&lt;/em&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;blockquote class=&quot;dg-note dg-note--gold dg-founder-quote&quot;&gt;
+  &lt;div aria-hidden=&quot;true&quot; class=&quot;dg-note-avatar&quot;&gt;
+    &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; class=&quot;lucide lucide-sparkles lucide-stars&quot;&gt;…&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;div&gt;&lt;strong&gt;Sé el primero en tenerlo.&lt;/strong&gt;&lt;em&gt;El beneficio fundador no se repite.&lt;/em&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;blockquote class=&quot;dg-note dg-note--green dg-payment-quote&quot;&gt;
+  &lt;div aria-hidden=&quot;true&quot; class=&quot;dg-note-avatar&quot;&gt;
+    &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; class=&quot;lucide lucide-shield&quot;&gt;…&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;strong&gt;Una garantía que nadie más da.&lt;/strong&gt;
+    &lt;em&gt;Pruébalo un mes. Los 30 días cuentan desde la primera conversación de tu hijo con ADA, no desde que pagas. Si no es para ustedes, cancelas en un clic y te devolvemos tu dinero.&lt;/em&gt;
+  &lt;/div&gt;
+&lt;/blockquote&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-media"><header class="ds-ex-head"><h4 class="ds-ex-title">Marco de imagen</h4><p class="ds-ex-note">Vertical en desktop; en tablet y móvil entra la versión horizontal por <code>&lt;picture&gt;</code>. AVIF primero, WebP de respaldo.</p></header><div class="ds-stage ds-stage--pad" style="--ds-ancho:360px"><figure class="dg-media dg-media--portrait"><picture><source media="(max-width: 1023px)" srcset="assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy-mobile.avif" type="image/avif"><source media="(max-width: 1023px)" srcset="assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy-mobile.webp"><source srcset="assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy.avif" type="image/avif"><img src="assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy.webp" alt="Padre absorto en su propio celular mientras sostiene el celular recién confiscado de su hijo, que lo mira con fastidio" width="768" height="1024" fetchpriority="high"></picture></figure></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;figure class=&quot;dg-media dg-media--portrait&quot;&gt;
+  &lt;picture&gt;
+    &lt;source media=&quot;(max-width: 1023px)&quot; srcset=&quot;assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy-mobile.avif&quot; type=&quot;image/avif&quot;&gt;
+    &lt;source media=&quot;(max-width: 1023px)&quot; srcset=&quot;assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy-mobile.webp&quot;&gt;
+    &lt;source srcset=&quot;assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy.avif&quot; type=&quot;image/avif&quot;&gt;
+    &lt;img src=&quot;assets/digizen/generated/scenes/dg-scene-a01-hero-phone-hypocrisy.webp&quot; alt=&quot;Padre absorto en su propio celular mientras sostiene el celular recién confiscado de su hijo, que lo mira con fastidio&quot; width=&quot;768&quot; height=&quot;1024&quot; fetchpriority=&quot;high&quot;&gt;
+  &lt;/picture&gt;
+&lt;/figure&gt;</code></pre></details></article>
+  </section>
+
+  <section class="ds-sec" id="grupo-capas"><h3 class="dg-h3">Lectura por capas</h3>
+    <article class="ds-ex" id="lib-acordeon"><header class="ds-ex-head"><h4 class="ds-ex-title">Acordeón con índice</h4><p class="ds-ex-note">El primero abre; cada uno lleva número y la flecha indica que se despliega.</p></header><div class="ds-stage ds-stage--pad"><div class="dg-accordion"><details open><summary><span class="dg-accordion-title"><span class="dg-index">01</span>El candado que ya abrió.</span><svg viewBox="0 0 20 20" aria-hidden="true" class="dg-chevron"><path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"></path></svg></summary><p class="dg-accordion-body"> Se lo quitaste, le pusiste contraseña, y <em>"en dos días encontró cómo saltárselo."</em> No fue mala suerte. Tu hijo tiene todo el día para resolver un acertijo que tú revisas dos minutos en la noche. </p></details><details><summary><span class="dg-accordion-title"><span class="dg-index">02</span>"Tengo Family Link y aun así se le va de las manos."</span><svg viewBox="0 0 20 20" aria-hidden="true" class="dg-chevron"><path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"></path></svg></summary><p class="dg-accordion-body"> Lo escuchamos una y otra vez. El candado aguanta unas semanas, y luego un tutorial de YouTube, un perfil nuevo, el celular de un amigo, y se acabó. La app sigue cobrándote. El control ya no existe. </p></details><details><summary><span class="dg-accordion-title"><span class="dg-index">03</span>Las apps de control viven del candado, y ninguna admite que se abre.</span><svg viewBox="0 0 20 20" aria-hidden="true" class="dg-chevron"><path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"></path></svg></summary><p class="dg-accordion-body"> Su negocio es venderte la ilusión de muralla, no resolverte el problema. Tú no fracasaste con la herramienta: la herramienta está diseñada para fracasar contigo adentro. </p></details><details><summary><span class="dg-accordion-title"><span class="dg-index">04</span>La ventana se está cerrando.</span><svg viewBox="0 0 20 20" aria-hidden="true" class="dg-chevron"><path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7"></path></svg></summary><p class="dg-accordion-body"> Tu hijo tiene entre 8 y 17: la ventana en la que todavía te escucha más que al feed. Cada mes peleando con el candado es un mes que no pasas enseñándole a pensar. El control no detiene el reloj; lo acelera, porque te tiene de policía en vez de papá. </p></details></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div class=&quot;dg-accordion&quot;&gt;
+  &lt;details open&gt;
+    &lt;summary&gt;
+      &lt;span class=&quot;dg-accordion-title&quot;&gt;&lt;span class=&quot;dg-index&quot;&gt;01&lt;/span&gt;El candado que ya abrió.&lt;/span&gt;
+      &lt;svg viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot; class=&quot;dg-chevron&quot;&gt;…&lt;/svg&gt;
+    &lt;/summary&gt;
+    &lt;p class=&quot;dg-accordion-body&quot;&gt;
+      Se lo quitaste, le pusiste contraseña, y
+      &lt;em&gt;&quot;en dos días encontró cómo saltárselo.&quot;&lt;/em&gt;
+      No fue mala suerte. Tu hijo tiene todo el día para resolver un acertijo que tú revisas dos minutos en la noche.
+    &lt;/p&gt;
+  &lt;/details&gt;
+  &lt;details&gt;
+    &lt;summary&gt;
+      &lt;span class=&quot;dg-accordion-title&quot;&gt;&lt;span class=&quot;dg-index&quot;&gt;02&lt;/span&gt;&quot;Tengo Family Link y aun así se le va de las manos.&quot;&lt;/span&gt;
+      &lt;svg viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot; class=&quot;dg-chevron&quot;&gt;…&lt;/svg&gt;
+    &lt;/summary&gt;
+    &lt;p class=&quot;dg-accordion-body&quot;&gt;
+      Lo escuchamos una y otra vez. El candado aguanta unas semanas, y luego un tutorial de YouTube, un perfil nuevo, el celular de un amigo, y se acabó. La app sigue cobrándote. El control ya no existe.
+    &lt;/p&gt;
+  &lt;/details&gt;
+  &lt;details&gt;
+    &lt;summary&gt;
+      &lt;span class=&quot;dg-accordion-title&quot;&gt;&lt;span class=&quot;dg-index&quot;&gt;03&lt;/span&gt;Las apps de control viven del candado, y ninguna admite que se abre.&lt;/span&gt;
+      &lt;svg viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot; class=&quot;dg-chevron&quot;&gt;…&lt;/svg&gt;
+    &lt;/summary&gt;
+    &lt;p class=&quot;dg-accordion-body&quot;&gt;Su negocio es venderte la ilusión de muralla, no resolverte el problema. Tú no fracasaste con la herramienta: la herramienta está diseñada para fracasar contigo adentro.&lt;/p&gt;
+  &lt;/details&gt;
+  &lt;details&gt;
+    &lt;summary&gt;
+      &lt;span class=&quot;dg-accordion-title&quot;&gt;&lt;span class=&quot;dg-index&quot;&gt;04&lt;/span&gt;La ventana se está cerrando.&lt;/span&gt;
+      &lt;svg viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot; class=&quot;dg-chevron&quot;&gt;…&lt;/svg&gt;
+    &lt;/summary&gt;
+    &lt;p class=&quot;dg-accordion-body&quot;&gt;
+      Tu hijo tiene entre 8 y 17: la ventana en la que todavía te escucha más que al feed. Cada mes peleando con el candado es un mes que no pasas enseñándole a pensar. El control no detiene el reloj; lo acelera, porque te tiene de policía en vez de papá.
+    &lt;/p&gt;
+  &lt;/details&gt;
+&lt;/div&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-leer-mas"><header class="ds-ex-head"><h4 class="ds-ex-title">Leer más</h4><p class="ds-ex-note">Corta un párrafo largo en el punto de tensión. «Ver más» va en violeta y subrayado.</p></header><div class="ds-stage ds-stage--pad"><div class="dg-copy"><p> Eso ya lo intentaste medir. Pusiste límites, negociaste "una hora y ya". Y el número <strong>nunca fue el problema de verdad, ¿cierto?</strong></p><p> Lo que de verdad te aprieta el pecho  …<button type="button" aria-expanded="false" class="dg-readmore-trigger"> Ver más<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg></button></p></div>
+<div class="dg-readmore-panel"><div class="dg-readmore-panel-inner"><div class="dg-copy"><p>Una mamá nos lo dijo así, y no se nos ha borrado:</p><p><strong>"Ni siquiera me mira a los ojos."</strong><cite class="dg-inline-attribution">Una mamá</cite></p><p> Y un niño, en otra parte, dijo esto. Léelo despacio: </p><p><strong>"Mi mamá se ríe más cuando ve el celular que cuando está conmigo."</strong><cite class="dg-inline-attribution">Un niño</cite></p><p><strong>No estás perdiendo tiempo de pantalla. Lo estás perdiendo a él.</strong> Y al mismo tiempo, sin que nadie lo note, se está volviendo alguien que deja que el feed le diga quién es, qué quiere, qué vale, en un mundo que tú ya no controlas. </p></div></div></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div class=&quot;dg-copy&quot;&gt;
+  &lt;p&gt;Eso ya lo intentaste medir. Pusiste límites, negociaste &quot;una hora y ya&quot;. Y el número &lt;strong&gt;nunca fue el problema de verdad, ¿cierto?&lt;/strong&gt;&lt;/p&gt;
+  &lt;p&gt;
+    Lo que de verdad te aprieta el pecho …
+    &lt;button type=&quot;button&quot; aria-expanded=&quot;false&quot; class=&quot;dg-readmore-trigger&quot;&gt;
+      Ver más
+      &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; class=&quot;lucide lucide-chevron-down&quot;&gt;…&lt;/svg&gt;
+    &lt;/button&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;dg-readmore-panel&quot;&gt;
+  &lt;div class=&quot;dg-readmore-panel-inner&quot;&gt;
+    &lt;div class=&quot;dg-copy&quot;&gt;
+      &lt;p&gt;Una mamá nos lo dijo así, y no se nos ha borrado:&lt;/p&gt;
+      &lt;p&gt;&lt;strong&gt;&quot;Ni siquiera me mira a los ojos.&quot;&lt;/strong&gt;&lt;cite class=&quot;dg-inline-attribution&quot;&gt;Una mamá&lt;/cite&gt;&lt;/p&gt;
+      &lt;p&gt;Y un niño, en otra parte, dijo esto. Léelo despacio:&lt;/p&gt;
+      &lt;p&gt;&lt;strong&gt;&quot;Mi mamá se ríe más cuando ve el celular que cuando está conmigo.&quot;&lt;/strong&gt;&lt;cite class=&quot;dg-inline-attribution&quot;&gt;Un niño&lt;/cite&gt;&lt;/p&gt;
+      &lt;p&gt;
+        &lt;strong&gt;No estás perdiendo tiempo de pantalla. Lo estás perdiendo a él.&lt;/strong&gt;
+        Y al mismo tiempo, sin que nadie lo note, se está volviendo alguien que deja que el feed le diga quién es, qué quiere, qué vale, en un mundo que tú ya no controlas.
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-faq"><header class="ds-ex-head"><h4 class="ds-ex-title">Preguntas frecuentes</h4><p class="ds-ex-note">Cada pregunta se despliega en su sitio.</p></header><div class="ds-stage ds-stage--pad"><div class="dg-pending"><details><summary>¿Hay que pagar inscripción y además mensualidades? <span>+</span></summary><p> No. El ciclo completo de 12 meses cuesta $5,990. Es un solo precio, sin cuota de inscripción aparte ni cargos escondidos. Puedes pagarlo de contado con precio fundador o en 10 mensualidades. </p></details><details><summary>¿DIGIZEN es una app de control parental? <span>+</span></summary><p> No. DIGIZEN no está diseñado para vigilar ni bloquear. Es un programa de ciudadanía digital que ayuda a hijos e hijas a construir criterio, identidad y responsabilidad digital. </p></details><details><summary>¿Qué es ADA en DIGIZEN? <span>+</span></summary><p> ADA es el copiloto conversacional de ciudadanía digital de DIGIZEN. Presenta dilemas, formula preguntas y acompaña al alumno para que construya sus propias decisiones digitales. </p></details><details><summary>¿Los papás ven todo lo que conversa su hijo con ADA? <span>+</span></summary><p> No por defecto. La familia puede ver avance, temas y evidencias de finalización según las funciones habilitadas, sin convertir la experiencia en vigilancia de conversaciones privadas. </p></details><details><summary>¿Qué hace mi hijo cada semana? <span>+</span></summary><p> Una semana ADA le trae un tema nuevo, pensado para su etapa y para lo que usa a su edad. La siguiente, lo pone a prueba con una situación real. Así durante todo el ciclo. Para él, misiones. </p></details><details><summary>¿Cómo funciona la garantía? <span>+</span></summary><p> Los 30 días cuentan desde la primera conversación de tu hijo con ADA, no desde que pagas. Si no es para ustedes, cancelas en un clic y te devolvemos tu dinero: todo, si pagaste de contado; la primera mensualidad, y ya no se cobra ninguna más, si elegiste mensualidades. </p></details><details><summary>¿Los diez pagos son una suscripción? <span>+</span></summary><p> No. Son 10 pagos mensuales para cubrir el ciclo completo. Terminan en el mes diez; ADA sigue con tu hijo hasta el doce. </p></details><details><summary>¿Qué temas trabaja DIGIZEN? <span>+</span></summary><p> DIGIZEN trabaja privacidad, seguridad, identidad, huella digital, reputación, desinformación, sesgos, bienestar, convivencia, autoría, derechos digitales, justicia algorítmica y responsabilidad digital. </p></details></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div class=&quot;dg-pending&quot;&gt;
+  &lt;details&gt;
+    &lt;summary&gt;¿Hay que pagar inscripción y además mensualidades? &lt;span&gt;+&lt;/span&gt;&lt;/summary&gt;
+    &lt;p&gt;No. El ciclo completo de 12 meses cuesta $5,990. Es un solo precio, sin cuota de inscripción aparte ni cargos escondidos. Puedes pagarlo de contado con precio fundador o en 10 mensualidades.&lt;/p&gt;
+  &lt;/details&gt;
+  &lt;details&gt;
+    &lt;summary&gt;¿DIGIZEN es una app de control parental? &lt;span&gt;+&lt;/span&gt;&lt;/summary&gt;
+    &lt;p&gt;No. DIGIZEN no está diseñado para vigilar ni bloquear. Es un programa de ciudadanía digital que ayuda a hijos e hijas a construir criterio, identidad y responsabilidad digital.&lt;/p&gt;
+  &lt;/details&gt;
+  &lt;details&gt;
+    &lt;summary&gt;¿Qué es ADA en DIGIZEN? &lt;span&gt;+&lt;/span&gt;&lt;/summary&gt;
+    &lt;p&gt;ADA es el copiloto conversacional de ciudadanía digital de DIGIZEN. Presenta dilemas, formula preguntas y acompaña al alumno para que construya sus propias decisiones digitales.&lt;/p&gt;
+  &lt;/details&gt;
+  &lt;details&gt;
+    &lt;summary&gt;¿Los papás ven todo lo que conversa su hijo con ADA? &lt;span&gt;+&lt;/span&gt;&lt;/summary&gt;
+    &lt;p&gt;No por defecto. La familia puede ver avance, temas y evidencias de finalización según las funciones habilitadas, sin convertir la experiencia en vigilancia de conversaciones privadas.&lt;/p&gt;
+  &lt;/details&gt;
+  &lt;details&gt;
+    &lt;summary&gt;¿Qué hace mi hijo cada semana? &lt;span&gt;+&lt;/span&gt;&lt;/summary&gt;
+    &lt;p&gt;Una semana ADA le trae un tema nuevo, pensado para su etapa y para lo que usa a su edad. La siguiente, lo pone a prueba con una situación real. Así durante todo el ciclo. Para él, misiones.&lt;/p&gt;
+  &lt;/details&gt;
+  &lt;details&gt;
+    &lt;summary&gt;¿Cómo funciona la garantía? &lt;span&gt;+&lt;/span&gt;&lt;/summary&gt;
+    &lt;p&gt;
+      Los 30 días cuentan desde la primera conversación de tu hijo con ADA, no desde que pagas. Si no es para ustedes, cancelas en un clic y te devolvemos tu dinero: todo, si pagaste de contado; la primera mensualidad, y ya no se cobra ninguna más, si elegiste mensualidades.
+    &lt;/p&gt;
+  &lt;/details&gt;
+  &lt;details&gt;
+    &lt;summary&gt;¿Los diez pagos son una suscripción? &lt;span&gt;+&lt;/span&gt;&lt;/summary&gt;
+    &lt;p&gt;No. Son 10 pagos mensuales para cubrir el ciclo completo. Terminan en el mes diez; ADA sigue con tu hijo hasta el doce.&lt;/p&gt;
+  &lt;/details&gt;
+  &lt;details&gt;
+    &lt;summary&gt;¿Qué temas trabaja DIGIZEN? &lt;span&gt;+&lt;/span&gt;&lt;/summary&gt;
+    &lt;p&gt;DIGIZEN trabaja privacidad, seguridad, identidad, huella digital, reputación, desinformación, sesgos, bienestar, convivencia, autoría, derechos digitales, justicia algorítmica y responsabilidad digital.&lt;/p&gt;
+  &lt;/details&gt;
+&lt;/div&gt;</code></pre></details></article>
+  </section>
+
+  <section class="ds-sec" id="grupo-tarjetas"><h3 class="dg-h3">Tarjetas</h3>
+    <article class="ds-ex" id="lib-tarjetas"><header class="ds-ex-head"><h4 class="ds-ex-title">Tarjetas con placa de icono</h4><p class="ds-ex-note">Cuatro ideas cortas. Cada placa toma el color de su significado con <code>--accent</code>.</p></header><div class="ds-stage ds-stage--pad"><div aria-label="Cuatro señales de criterio" class="dg-criteria-card-grid"><article class="dg-card" style="--accent: var(--dg-blue);"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12 5 5L20 6"></path></svg></div><h4>Verdad</h4><p>Distinguir qué es cierto.</p></article><article class="dg-card" style="--accent: var(--dg-violet);"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 8l8 5 8-5-8-5Z"></path><path d="m4 13 8 5 8-5"></path></svg></div><h4>Valor</h4><p>Decidir qué vale.</p></article><article class="dg-card" style="--accent: var(--dg-cyan);"><div class="dg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-goal"><path d="M12 13V2l8 4-8 4"></path><path d="M20.561 10.222a9 9 0 1 1-12.55-5.29"></path><path d="M8.002 9.997a5 5 0 1 0 8.9 2.02"></path></svg></div><h4>Utilidad</h4><p>Saber si sirve o usa.</p></article><article class="dg-card" style="--accent: var(--dg-green);"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21.2l8.8-8.8a5.5 5.5 0 0 0 0-7.8Z"></path></svg></div><h4>Vínculo</h4><p>Volver al mismo lado.</p></article></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div aria-label=&quot;Cuatro señales de criterio&quot; class=&quot;dg-criteria-card-grid&quot;&gt;
+  &lt;article class=&quot;dg-card&quot; style=&quot;--accent: var(--dg-blue);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;h4&gt;Verdad&lt;/h4&gt;
+    &lt;p&gt;Distinguir qué es cierto.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card&quot; style=&quot;--accent: var(--dg-violet);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;h4&gt;Valor&lt;/h4&gt;
+    &lt;p&gt;Decidir qué vale.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card&quot; style=&quot;--accent: var(--dg-cyan);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;
+      &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; class=&quot;lucide lucide-goal&quot;&gt;…&lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;h4&gt;Utilidad&lt;/h4&gt;
+    &lt;p&gt;Saber si sirve o usa.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card&quot; style=&quot;--accent: var(--dg-green);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;h4&gt;Vínculo&lt;/h4&gt;
+    &lt;p&gt;Volver al mismo lado.&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/div&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-tarjetas-lado"><header class="ds-ex-head"><h4 class="ds-ex-title">Tarjetas con icono al lado</h4><p class="ds-ex-note">Para beneficios con una frase de énfasis y texto de apoyo.</p></header><div class="ds-stage ds-stage--pad"><div class="dg-feature-grid dg-founder-cards"><article class="dg-card dg-card--side" style="--accent: var(--dg-cyan);"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg></div><div><h3><span class="dg-emphasis--cyan">Precio fundador congelado</span> cuando lo reinscribas al siguiente nivel</h3><p> El de hoy, mientras sigas. Después del 15 de noviembre, el precio sube para los que lleguen tarde. </p></div></article><article class="dg-card dg-card--side" style="--accent: var(--dg-violet);"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg></div><div><h3><span class="dg-emphasis--violet">Voz directa</span> en el producto:</h3><p>nos dices qué necesita tu hijo, y eso se construye primero.</p></div></article><article class="dg-card dg-card--side" style="--accent: var(--dg-green);"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 4v16l-7-2V6l7-2ZM13 4h5v16M3 20h18M10 12h.01"></path></svg></div><div><h3><span class="dg-emphasis--green">La puerta abierta</span> antes de pagar:</h3><p>conversa con ADA las veces que quieras. La decisión la tomas ya conociéndola.</p></div></article></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div class=&quot;dg-feature-grid dg-founder-cards&quot;&gt;
+  &lt;article class=&quot;dg-card dg-card--side&quot; style=&quot;--accent: var(--dg-cyan);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;h3&gt;&lt;span class=&quot;dg-emphasis--cyan&quot;&gt;Precio fundador congelado&lt;/span&gt; cuando lo reinscribas al siguiente nivel&lt;/h3&gt;
+      &lt;p&gt;El de hoy, mientras sigas. Después del 15 de noviembre, el precio sube para los que lleguen tarde.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card dg-card--side&quot; style=&quot;--accent: var(--dg-violet);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;h3&gt;&lt;span class=&quot;dg-emphasis--violet&quot;&gt;Voz directa&lt;/span&gt; en el producto:&lt;/h3&gt;
+      &lt;p&gt;nos dices qué necesita tu hijo, y eso se construye primero.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card dg-card--side&quot; style=&quot;--accent: var(--dg-green);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;h3&gt;&lt;span class=&quot;dg-emphasis--green&quot;&gt;La puerta abierta&lt;/span&gt; antes de pagar:&lt;/h3&gt;
+      &lt;p&gt;conversa con ADA las veces que quieras. La decisión la tomas ya conociéndola.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/article&gt;
+&lt;/div&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-tarjetas-guardia"><header class="ds-ex-head"><h4 class="ds-ex-title">Tarjetas de garantía de seguridad</h4><p class="ds-ex-note">Icono y título en la misma línea; el texto puede llevar un enlace en línea. <span class="ds-ex-wide">Composición de escritorio: si no cabe, se desplaza dentro del recuadro.</span></p></header><div class="ds-stage ds-stage--pad ds-stage--wide"><div aria-label="Cuatro principios de seguridad de ADA" class="dg-guard-grid"><article class="dg-card dg-guard-card" style="--accent: var(--dg-violet);"><div class="dg-guard-card-head"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div><h3>Privacidad, no secretos</h3></div><p><strong>Cero rol romántico. Cero secretos peligrosos.</strong> Sus reglas están escritas y las puedes leer: se llaman <a href="reglas-de-ada" class="dg-inline-link">Las Reglas de ADA</a>, y son públicas. </p></article><article class="dg-card dg-guard-card" style="--accent: var(--dg-cyan);"><div class="dg-guard-card-head"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="3"></circle><path d="M5 21a7 7 0 0 1 14 0M3 12h4M17 12h4"></path></svg></div><h3>En familia, no a escondidas</h3></div><p><strong>Tú estás en el circuito:</strong> recibes su avance (qué está construyendo, qué está aprendiendo a decidir) sin espiar sus conversaciones, porque un hijo espiado deja de hablar. </p></article><article class="dg-card dg-guard-card" style="--accent: var(--dg-green);"><div class="dg-guard-card-head"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></div><h3>Salud digital, no más pantalla</h3></div><p><strong>Con límites de sesión por diseño.</strong> ADA no quiere sus horas; quiere su criterio.</p></article><article class="dg-card dg-guard-card" style="--accent: var(--dg-blue);"><div class="dg-guard-card-head"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12 5 5L20 6"></path></svg></div><h3>IA diseñada para menores</h3></div><p><strong>Es, palabra por palabra, lo que la propia Policía Cibernética recomienda a los papás:</strong> usar versiones diseñadas para menores, con filtros y supervisión, en vez de la IA abierta que tu hijo ya usa hoy. </p></article></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div aria-label=&quot;Cuatro principios de seguridad de ADA&quot; class=&quot;dg-guard-grid&quot;&gt;
+  &lt;article class=&quot;dg-card dg-guard-card&quot; style=&quot;--accent: var(--dg-violet);&quot;&gt;
+    &lt;div class=&quot;dg-guard-card-head&quot;&gt;
+      &lt;div class=&quot;dg-icon&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;h3&gt;Privacidad, no secretos&lt;/h3&gt;
+    &lt;/div&gt;
+    &lt;p&gt;&lt;strong&gt;Cero rol romántico. Cero secretos peligrosos.&lt;/strong&gt; Sus reglas están escritas y las puedes leer: se llaman &lt;a href=&quot;reglas-de-ada&quot; class=&quot;dg-inline-link&quot;&gt;Las Reglas de ADA&lt;/a&gt;, y son públicas.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card dg-guard-card&quot; style=&quot;--accent: var(--dg-cyan);&quot;&gt;
+    &lt;div class=&quot;dg-guard-card-head&quot;&gt;
+      &lt;div class=&quot;dg-icon&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;h3&gt;En familia, no a escondidas&lt;/h3&gt;
+    &lt;/div&gt;
+    &lt;p&gt;&lt;strong&gt;Tú estás en el circuito:&lt;/strong&gt; recibes su avance (qué está construyendo, qué está aprendiendo a decidir) sin espiar sus conversaciones, porque un hijo espiado deja de hablar.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card dg-guard-card&quot; style=&quot;--accent: var(--dg-green);&quot;&gt;
+    &lt;div class=&quot;dg-guard-card-head&quot;&gt;
+      &lt;div class=&quot;dg-icon&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;h3&gt;Salud digital, no más pantalla&lt;/h3&gt;
+    &lt;/div&gt;
+    &lt;p&gt;&lt;strong&gt;Con límites de sesión por diseño.&lt;/strong&gt; ADA no quiere sus horas; quiere su criterio.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card dg-guard-card&quot; style=&quot;--accent: var(--dg-blue);&quot;&gt;
+    &lt;div class=&quot;dg-guard-card-head&quot;&gt;
+      &lt;div class=&quot;dg-icon&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;h3&gt;IA diseñada para menores&lt;/h3&gt;
+    &lt;/div&gt;
+    &lt;p&gt;
+      &lt;strong&gt;Es, palabra por palabra, lo que la propia Policía Cibernética recomienda a los papás:&lt;/strong&gt;
+      usar versiones diseñadas para menores, con filtros y supervisión, en vez de la IA abierta que tu hijo ya usa hoy.
+    &lt;/p&gt;
+  &lt;/article&gt;
+&lt;/div&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-inclusion"><header class="ds-ex-head"><h4 class="ds-ex-title">Tarjetas de lo que incluye</h4><p class="ds-ex-note">Cuatro columnas en escritorio; icono y título en la misma línea. <span class="ds-ex-wide">Composición de escritorio: si no cabe, se desplaza dentro del recuadro.</span></p></header><div class="ds-stage ds-stage--pad ds-stage--wide"><div class="dg-inclusion-grid"><article class="dg-card" style="--accent: var(--dg-violet);"><div class="dg-icon">✦</div><h3>Mentor personal</h3><p><strong>ADA, su mentor personal:</strong> uno a uno, en su idioma, todo el ciclo. Un mentor así es imposible con humanos a cualquier precio; hoy es posible gracias a la IA. </p></article><article class="dg-card" style="--accent: var(--dg-blue);"><div class="dg-icon">↗</div><h3>Cada semana pasa algo.</h3><p> Una semana ADA le trae un tema nuevo, pensado para su etapa y para lo que usa a su edad. La siguiente, lo pone a prueba con una situación real. Así durante todo el ciclo. Para él, misiones. </p></article><article class="dg-card" style="--accent: var(--dg-cyan);"><div class="dg-icon">◇</div><h3>Y entre semana, para lo que traiga.</h3><p> Le mandaron algo raro, un juego le pidió dinero, no sabe si algo es cierto: se lo cuenta y ADA le hace las preguntas para que él decida. </p></article><article class="dg-card" style="--accent: var(--dg-blue);"><div class="dg-icon">↗</div><h3>Progreso sin vigilancia</h3><p><strong>Tu boleta de progreso:</strong> ves su avance sin vigilarlo.</p></article><article class="dg-card" style="--accent: var(--dg-cyan);"><div class="dg-icon">◇</div><h3>Papás acompañados</h3><p><strong>SAFE gratis todo el ciclo:</strong> los microcursos de Gnius Club para papás (seguridad y vida digital en familia).</p></article><article class="dg-card" style="--accent: var(--dg-gold);"><div class="dg-icon">★</div><h3>Ventaja para ti</h3><p><strong>Código de descuento en Alquimistas de I.A.:</strong> el curso de competencias de IA para profesionistas, para TI. Tu hijo entrena criterio; tú entrenas tu ventaja. </p></article><article class="dg-card" style="--accent: var(--dg-green);"><div class="dg-icon">✓</div><h3>Precio fundador congelado</h3><p><strong>Precio fundador congelado cuando lo reinscribas al siguiente nivel:</strong> nunca te sube mientras sigas.</p></article></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div class=&quot;dg-inclusion-grid&quot;&gt;
+  &lt;article class=&quot;dg-card&quot; style=&quot;--accent: var(--dg-violet);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;✦&lt;/div&gt;
+    &lt;h3&gt;Mentor personal&lt;/h3&gt;
+    &lt;p&gt;&lt;strong&gt;ADA, su mentor personal:&lt;/strong&gt; uno a uno, en su idioma, todo el ciclo. Un mentor así es imposible con humanos a cualquier precio; hoy es posible gracias a la IA.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card&quot; style=&quot;--accent: var(--dg-blue);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;↗&lt;/div&gt;
+    &lt;h3&gt;Cada semana pasa algo.&lt;/h3&gt;
+    &lt;p&gt;Una semana ADA le trae un tema nuevo, pensado para su etapa y para lo que usa a su edad. La siguiente, lo pone a prueba con una situación real. Así durante todo el ciclo. Para él, misiones.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card&quot; style=&quot;--accent: var(--dg-cyan);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;◇&lt;/div&gt;
+    &lt;h3&gt;Y entre semana, para lo que traiga.&lt;/h3&gt;
+    &lt;p&gt;Le mandaron algo raro, un juego le pidió dinero, no sabe si algo es cierto: se lo cuenta y ADA le hace las preguntas para que él decida.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card&quot; style=&quot;--accent: var(--dg-blue);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;↗&lt;/div&gt;
+    &lt;h3&gt;Progreso sin vigilancia&lt;/h3&gt;
+    &lt;p&gt;&lt;strong&gt;Tu boleta de progreso:&lt;/strong&gt; ves su avance sin vigilarlo.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card&quot; style=&quot;--accent: var(--dg-cyan);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;◇&lt;/div&gt;
+    &lt;h3&gt;Papás acompañados&lt;/h3&gt;
+    &lt;p&gt;&lt;strong&gt;SAFE gratis todo el ciclo:&lt;/strong&gt; los microcursos de Gnius Club para papás (seguridad y vida digital en familia).&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card&quot; style=&quot;--accent: var(--dg-gold);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;★&lt;/div&gt;
+    &lt;h3&gt;Ventaja para ti&lt;/h3&gt;
+    &lt;p&gt;&lt;strong&gt;Código de descuento en Alquimistas de I.A.:&lt;/strong&gt; el curso de competencias de IA para profesionistas, para TI. Tu hijo entrena criterio; tú entrenas tu ventaja.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card&quot; style=&quot;--accent: var(--dg-green);&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;✓&lt;/div&gt;
+    &lt;h3&gt;Precio fundador congelado&lt;/h3&gt;
+    &lt;p&gt;&lt;strong&gt;Precio fundador congelado cuando lo reinscribas al siguiente nivel:&lt;/strong&gt; nunca te sube mientras sigas.&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/div&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-aviso-reglas"><header class="ds-ex-head"><h4 class="ds-ex-title">Tarjeta con acción secundaria</h4><p class="ds-ex-note">Lleva a la página de reglas con un botón secundario.</p></header><div class="ds-stage ds-stage--pad"><article class="dg-card dg-rules-callout" style="--accent: var(--dg-cyan);"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 2.8 8.5 7 10 4.2-1.5 7-5.5 7-10V6l-7-3Z"></path><path d="m9 12 2 2 4-5"></path></svg></div><div><h3>Las Reglas de ADA son públicas</h3><p> ADA no es una IA abierta hablando sin rumbo con un menor. Sigue reglas para conversar con propósito educativo, respetar privacidad y activar acompañamiento adulto cuando hace falta. </p></div><a href="reglas-de-ada" class="dg-btn dg-btn--secondary"> Conocer las Reglas de ADA <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></article></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;article class=&quot;dg-card dg-rules-callout&quot; style=&quot;--accent: var(--dg-cyan);&quot;&gt;
+  &lt;div class=&quot;dg-icon&quot;&gt;
+    &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;h3&gt;Las Reglas de ADA son públicas&lt;/h3&gt;
+    &lt;p&gt;ADA no es una IA abierta hablando sin rumbo con un menor. Sigue reglas para conversar con propósito educativo, respetar privacidad y activar acompañamiento adulto cuando hace falta.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;a href=&quot;reglas-de-ada&quot; class=&quot;dg-btn dg-btn--secondary&quot;&gt;
+    Conocer las Reglas de ADA
+    &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+  &lt;/a&gt;
+&lt;/article&gt;</code></pre></details></article>
+  </section>
+
+  <section class="ds-sec" id="grupo-producto"><h3 class="dg-h3">Producto y formulario</h3>
+    <article class="ds-ex" id="lib-chat"><header class="ds-ex-head"><h4 class="ds-ex-title">Chat de producto</h4><p class="ds-ex-note">Muestra una conversación real con ADA. En la página los mensajes entran uno a uno al llegar con el scroll.</p></header><div class="ds-stage ds-stage--pad" style="--ds-ancho:640px"><figure aria-label="Vista de ADA conversando con un niño" class="dg-product dg-ada-composite"><div aria-hidden="true" class="dg-ada-chat-layer"><div class="dg-product-window"><div class="dg-product-top"><div class="dg-ada-avatar"><img src="assets/digizen/ada-profile-low.webp" alt="" width="1200" height="1200"></div><div><p class="dg-chat-name">ADA</p><p class="dg-chat-status">Mentora digital</p></div></div><div data-chat-thread class="dg-chat-thread"><div data-chat-row class="dg-chat-row"><div class="dg-ada-avatar dg-ada-avatar--small"><img src="assets/digizen/ada-profile-low.webp" alt="" width="1200" height="1200"></div><div class="dg-chat-slot"><div data-chat-typing class="dg-chat-typing"><span></span><span></span><span></span></div><p data-chat-bubble class="dg-chat-bubble">Imagina que scrolleas tu galería y encuentras una foto tuya de hace dos años: estabas en pijama, sin arreglar, en un momento que ya no te representa. Ahora esa foto sigue en tu perfil público. Un desconocido podría verla, descargarla, usarla. ¿Qué haces: la dejas ahí porque “ya pasó”, la borras, o la pasas a privado?</p></div></div><div data-chat-row class="dg-chat-row dg-chat-row--child"><div class="dg-child-avatar"><img src="assets/digizen/digizen-preset-avatar-set-mx-v03-white-03.webp" alt="" width="1024" height="1024"></div><p class="dg-chat-bubble dg-chat-bubble--child">La paso a privado y la borro de la nube.</p></div><div data-chat-row class="dg-chat-row"><div class="dg-ada-avatar dg-ada-avatar--small"><img src="assets/digizen/ada-profile-low.webp" alt="" width="1200" height="1200"></div><div class="dg-chat-slot"><div data-chat-typing class="dg-chat-typing"><span></span><span></span><span></span></div><p data-chat-bubble class="dg-chat-bubble">Tiene sentido: controlas dónde está y quién la ve. Pero aquí viene el truco. La nube de la app no es tuya; ellos guardan copias aunque tú borres. ¿Has notado que una foto que borraste sigue apareciendo en recomendaciones o en búsquedas?</p></div></div><div data-chat-row class="dg-chat-row dg-chat-row--child"><div class="dg-child-avatar"><img src="assets/digizen/digizen-preset-avatar-set-mx-v03-white-03.webp" alt="" width="1024" height="1024"></div><p class="dg-chat-bubble dg-chat-bubble--child">¡Uy! ¿Y ahora qué puedo hacer?</p></div><div data-chat-row class="dg-chat-row"><div class="dg-ada-avatar dg-ada-avatar--small"><img src="assets/digizen/ada-profile-low.webp" alt="" width="1200" height="1200"></div><div class="dg-chat-slot"><div data-chat-typing class="dg-chat-typing"><span></span><span></span><span></span></div><p data-chat-bubble class="dg-chat-bubble">Spoiler: una vez que subes algo a una plataforma, pierdes el control total. Pero lo que SÍ controlas es qué subes de ahora en adelante. ¿Hay otras fotos viejas en tu perfil que ya no te representen y que prefieras que desaparezcan?</p></div></div><div data-chat-row class="dg-chat-row dg-chat-row--child"><div class="dg-child-avatar"><img src="assets/digizen/digizen-preset-avatar-set-mx-v03-white-03.webp" alt="" width="1024" height="1024"></div><p class="dg-chat-bubble dg-chat-bubble--child">Sí.</p></div><div data-chat-row class="dg-chat-row"><div class="dg-ada-avatar dg-ada-avatar--small"><img src="assets/digizen/ada-profile-low.webp" alt="" width="1200" height="1200"></div><div class="dg-chat-slot"><div data-chat-typing class="dg-chat-typing"><span></span><span></span><span></span></div><p data-chat-bubble class="dg-chat-bubble">Bien. Antes de borrar, hagamos esto lento. De todas esas fotos, elige UNA que te incomode más ahora. ¿Cuál es y por qué ya no te representa?</p></div></div><div data-chat-row class="dg-chat-row dg-chat-row--child"><div class="dg-child-avatar"><img src="assets/digizen/digizen-preset-avatar-set-mx-v03-white-03.webp" alt="" width="1024" height="1024"></div><p class="dg-chat-bubble dg-chat-bubble--child">Porque ya no es un retrato actual, he cambiado y he mejorado.</p></div><div data-chat-row class="dg-chat-row"><div class="dg-ada-avatar dg-ada-avatar--small"><img src="assets/digizen/ada-profile-low.webp" alt="" width="1200" height="1200"></div><div class="dg-chat-slot"><div data-chat-typing class="dg-chat-typing"><span></span><span></span><span></span></div><p data-chat-bubble class="dg-chat-bubble">Eso es criterio real: reconoces que evolucionaste y esa imagen quedó atrás. Cuando borres esa foto, estás diciendo “esto no soy yo ya”. ¿Crees que tus seguidores van a notar que desapareció, o simplemente seguirán viendo lo que publiques ahora? </p></div></div></div><div class="dg-chat-input">Escribe aquí...</div></div></div><img src="assets/digizen/ada-wave/f000.webp" alt="" width="492" height="782" loading="lazy" aria-hidden="true" class="dg-ada-still"><figcaption class="dg-support text-center">Vista de producto · chat ADA</figcaption></figure></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;figure aria-label=&quot;Vista de ADA conversando con un niño&quot; class=&quot;dg-product dg-ada-composite&quot;&gt;
+  &lt;div aria-hidden=&quot;true&quot; class=&quot;dg-ada-chat-layer&quot;&gt;
+    &lt;div class=&quot;dg-product-window&quot;&gt;
+      &lt;div class=&quot;dg-product-top&quot;&gt;
+        &lt;div class=&quot;dg-ada-avatar&quot;&gt;&lt;img src=&quot;assets/digizen/ada-profile-low.webp&quot; alt=&quot;&quot; width=&quot;1200&quot; height=&quot;1200&quot;&gt;&lt;/div&gt;
+        &lt;div&gt;
+          &lt;p class=&quot;dg-chat-name&quot;&gt;ADA&lt;/p&gt;
+          &lt;p class=&quot;dg-chat-status&quot;&gt;Mentora digital&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div data-chat-thread class=&quot;dg-chat-thread&quot;&gt;
+        &lt;div data-chat-row class=&quot;dg-chat-row&quot;&gt;
+          &lt;div class=&quot;dg-ada-avatar dg-ada-avatar--small&quot;&gt;&lt;img src=&quot;assets/digizen/ada-profile-low.webp&quot; alt=&quot;&quot; width=&quot;1200&quot; height=&quot;1200&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;dg-chat-slot&quot;&gt;
+            &lt;div data-chat-typing class=&quot;dg-chat-typing&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;
+            &lt;p data-chat-bubble class=&quot;dg-chat-bubble&quot;&gt;
+              Imagina que scrolleas tu galería y encuentras una foto tuya de hace dos años: estabas en pijama, sin arreglar, en un momento que ya no te representa. Ahora esa foto sigue en tu perfil público. Un desconocido podría verla, descargarla, usarla. ¿Qué haces: la dejas ahí porque “ya pasó”, la borras, o la pasas a privado?
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div data-chat-row class=&quot;dg-chat-row dg-chat-row--child&quot;&gt;
+          &lt;div class=&quot;dg-child-avatar&quot;&gt;&lt;img src=&quot;assets/digizen/digizen-preset-avatar-set-mx-v03-white-03.webp&quot; alt=&quot;&quot; width=&quot;1024&quot; height=&quot;1024&quot;&gt;&lt;/div&gt;
+          &lt;p class=&quot;dg-chat-bubble dg-chat-bubble--child&quot;&gt;La paso a privado y la borro de la nube.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div data-chat-row class=&quot;dg-chat-row&quot;&gt;
+          &lt;div class=&quot;dg-ada-avatar dg-ada-avatar--small&quot;&gt;&lt;img src=&quot;assets/digizen/ada-profile-low.webp&quot; alt=&quot;&quot; width=&quot;1200&quot; height=&quot;1200&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;dg-chat-slot&quot;&gt;
+            &lt;div data-chat-typing class=&quot;dg-chat-typing&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;
+            &lt;p data-chat-bubble class=&quot;dg-chat-bubble&quot;&gt;
+              Tiene sentido: controlas dónde está y quién la ve. Pero aquí viene el truco. La nube de la app no es tuya; ellos guardan copias aunque tú borres. ¿Has notado que una foto que borraste sigue apareciendo en recomendaciones o en búsquedas?
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div data-chat-row class=&quot;dg-chat-row dg-chat-row--child&quot;&gt;
+          &lt;div class=&quot;dg-child-avatar&quot;&gt;&lt;img src=&quot;assets/digizen/digizen-preset-avatar-set-mx-v03-white-03.webp&quot; alt=&quot;&quot; width=&quot;1024&quot; height=&quot;1024&quot;&gt;&lt;/div&gt;
+          &lt;p class=&quot;dg-chat-bubble dg-chat-bubble--child&quot;&gt;¡Uy! ¿Y ahora qué puedo hacer?&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div data-chat-row class=&quot;dg-chat-row&quot;&gt;
+          &lt;div class=&quot;dg-ada-avatar dg-ada-avatar--small&quot;&gt;&lt;img src=&quot;assets/digizen/ada-profile-low.webp&quot; alt=&quot;&quot; width=&quot;1200&quot; height=&quot;1200&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;dg-chat-slot&quot;&gt;
+            &lt;div data-chat-typing class=&quot;dg-chat-typing&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;
+            &lt;p data-chat-bubble class=&quot;dg-chat-bubble&quot;&gt;
+              Spoiler: una vez que subes algo a una plataforma, pierdes el control total. Pero lo que SÍ controlas es qué subes de ahora en adelante. ¿Hay otras fotos viejas en tu perfil que ya no te representen y que prefieras que desaparezcan?
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div data-chat-row class=&quot;dg-chat-row dg-chat-row--child&quot;&gt;
+          &lt;div class=&quot;dg-child-avatar&quot;&gt;&lt;img src=&quot;assets/digizen/digizen-preset-avatar-set-mx-v03-white-03.webp&quot; alt=&quot;&quot; width=&quot;1024&quot; height=&quot;1024&quot;&gt;&lt;/div&gt;
+          &lt;p class=&quot;dg-chat-bubble dg-chat-bubble--child&quot;&gt;Sí.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div data-chat-row class=&quot;dg-chat-row&quot;&gt;
+          &lt;div class=&quot;dg-ada-avatar dg-ada-avatar--small&quot;&gt;&lt;img src=&quot;assets/digizen/ada-profile-low.webp&quot; alt=&quot;&quot; width=&quot;1200&quot; height=&quot;1200&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;dg-chat-slot&quot;&gt;
+            &lt;div data-chat-typing class=&quot;dg-chat-typing&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;
+            &lt;p data-chat-bubble class=&quot;dg-chat-bubble&quot;&gt;Bien. Antes de borrar, hagamos esto lento. De todas esas fotos, elige UNA que te incomode más ahora. ¿Cuál es y por qué ya no te representa?&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div data-chat-row class=&quot;dg-chat-row dg-chat-row--child&quot;&gt;
+          &lt;div class=&quot;dg-child-avatar&quot;&gt;&lt;img src=&quot;assets/digizen/digizen-preset-avatar-set-mx-v03-white-03.webp&quot; alt=&quot;&quot; width=&quot;1024&quot; height=&quot;1024&quot;&gt;&lt;/div&gt;
+          &lt;p class=&quot;dg-chat-bubble dg-chat-bubble--child&quot;&gt;Porque ya no es un retrato actual, he cambiado y he mejorado.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div data-chat-row class=&quot;dg-chat-row&quot;&gt;
+          &lt;div class=&quot;dg-ada-avatar dg-ada-avatar--small&quot;&gt;&lt;img src=&quot;assets/digizen/ada-profile-low.webp&quot; alt=&quot;&quot; width=&quot;1200&quot; height=&quot;1200&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;dg-chat-slot&quot;&gt;
+            &lt;div data-chat-typing class=&quot;dg-chat-typing&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;
+            &lt;p data-chat-bubble class=&quot;dg-chat-bubble&quot;&gt;
+              Eso es criterio real: reconoces que evolucionaste y esa imagen quedó atrás. Cuando borres esa foto, estás diciendo “esto no soy yo ya”. ¿Crees que tus seguidores van a notar que desapareció, o simplemente seguirán viendo lo que publiques ahora?
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+… (7 líneas más: ver la página)</code></pre></details></article>
+    <article class="ds-ex" id="lib-formulario"><header class="ds-ex-head"><h4 class="ds-ex-title">Formulario «Conversa con ADA»</h4><p class="ds-ex-note">Etiqueta arriba de cada campo, campos de 48 px y un solo botón. En escritorio va en una fila junto a ADA. <span class="ds-ex-wide">Composición de escritorio: si no cabe, se desplaza dentro del recuadro.</span></p></header><div class="ds-stage ds-stage--form ds-stage--wide"><div class="dg-ada-cta"><img class="dg-ada-render is-ready" src="assets/digizen/ada-wave/f000.webp" alt="ADA saludando a la cámara" width="400" height="616"><form aria-label="Formulario Conversa con ADA" class="dg-form dg-ada-form-horizontal"><div class="dg-ada-form-intro"><h3 class="dg-h3 text-lg">Conversa con ADA</h3><p class="dg-support">Formulario de datos del adulto.</p></div><label class="dg-label">Nombre del papá o mamá<input name="name" autocomplete="name" placeholder="Tu nombre" class="dg-input"></label><label class="dg-label">Correo electrónico<input type="email" name="email" autocomplete="email" placeholder="tu@correo.com" class="dg-input"></label><label class="dg-label">WhatsApp opcional<input type="tel" name="whatsapp" autocomplete="tel" placeholder="+52 55 0000 0000" class="dg-input"></label><div class="dg-ada-form-action"><button type="button" class="dg-btn w-full"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA</button></div><p class="dg-support dg-ada-form-disclaimer"> El acceso llega a tu correo. WhatsApp queda como dato opcional para seguimiento. </p></form></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div class=&quot;dg-ada-cta&quot;&gt;
+  &lt;img class=&quot;dg-ada-render is-ready&quot; src=&quot;assets/digizen/ada-wave/f000.webp&quot; alt=&quot;ADA saludando a la cámara&quot; width=&quot;400&quot; height=&quot;616&quot;&gt;
+  &lt;form aria-label=&quot;Formulario Conversa con ADA&quot; class=&quot;dg-form dg-ada-form-horizontal&quot;&gt;
+    &lt;div class=&quot;dg-ada-form-intro&quot;&gt;
+      &lt;h3 class=&quot;dg-h3 text-lg&quot;&gt;Conversa con ADA&lt;/h3&gt;
+      &lt;p class=&quot;dg-support&quot;&gt;Formulario de datos del adulto.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;label class=&quot;dg-label&quot;&gt;Nombre del papá o mamá&lt;input name=&quot;name&quot; autocomplete=&quot;name&quot; placeholder=&quot;Tu nombre&quot; class=&quot;dg-input&quot;&gt;&lt;/label&gt;
+    &lt;label class=&quot;dg-label&quot;&gt;Correo electrónico&lt;input type=&quot;email&quot; name=&quot;email&quot; autocomplete=&quot;email&quot; placeholder=&quot;tu@correo.com&quot; class=&quot;dg-input&quot;&gt;&lt;/label&gt;
+    &lt;label class=&quot;dg-label&quot;&gt;WhatsApp opcional&lt;input type=&quot;tel&quot; name=&quot;whatsapp&quot; autocomplete=&quot;tel&quot; placeholder=&quot;+52 55 0000 0000&quot; class=&quot;dg-input&quot;&gt;&lt;/label&gt;
+    &lt;div class=&quot;dg-ada-form-action&quot;&gt;
+      &lt;button type=&quot;button&quot; class=&quot;dg-btn w-full&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+        Conversa con ADA
+      &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;dg-support dg-ada-form-disclaimer&quot;&gt;El acceso llega a tu correo. WhatsApp queda como dato opcional para seguimiento.&lt;/p&gt;
+  &lt;/form&gt;
+&lt;/div&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-dialogo"><header class="ds-ex-head"><h4 class="ds-ex-title">Diálogo</h4><p class="ds-ex-note">Se abre desde «Conversar con ADA». En móvil sube desde abajo.</p></header><div class="ds-stage ds-stage--dialog"><dialog class="dg-dialog" open><div class="dg-dialog-inner"><div class="dg-dialog-head"><div><p class="dg-kicker">Antes de pagar</p><h2 class="dg-h3">Conversa con ADA</h2><p class="dg-support">Formulario de datos del adulto.</p></div><button type="button" aria-label="Cerrar" class="dg-dialog-close"> × </button></div><form><label class="dg-label">Nombre del papá o mamá<input name="dialog-name" autocomplete="name" placeholder="Tu nombre" class="dg-input"></label><label class="dg-label">Correo electrónico<input type="email" name="dialog-email" autocomplete="email" placeholder="tu@correo.com" class="dg-input"></label><label class="dg-label">WhatsApp opcional<input type="tel" name="dialog-whatsapp" autocomplete="tel" placeholder="+52 55 0000 0000" class="dg-input"></label><button type="button" class="dg-btn w-full mt-5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA</button><p class="dg-support">El acceso llega a tu correo. WhatsApp queda como dato opcional para seguimiento.</p></form></div></dialog></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;dialog class=&quot;dg-dialog&quot; open&gt;
+  &lt;div class=&quot;dg-dialog-inner&quot;&gt;
+    &lt;div class=&quot;dg-dialog-head&quot;&gt;
+      &lt;div&gt;
+        &lt;p class=&quot;dg-kicker&quot;&gt;Antes de pagar&lt;/p&gt;
+        &lt;h2 class=&quot;dg-h3&quot;&gt;Conversa con ADA&lt;/h2&gt;
+        &lt;p class=&quot;dg-support&quot;&gt;Formulario de datos del adulto.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;button type=&quot;button&quot; aria-label=&quot;Cerrar&quot; class=&quot;dg-dialog-close&quot;&gt;×&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;form&gt;
+      &lt;label class=&quot;dg-label&quot;&gt;Nombre del papá o mamá&lt;input name=&quot;dialog-name&quot; autocomplete=&quot;name&quot; placeholder=&quot;Tu nombre&quot; class=&quot;dg-input&quot;&gt;&lt;/label&gt;
+      &lt;label class=&quot;dg-label&quot;&gt;Correo electrónico&lt;input type=&quot;email&quot; name=&quot;dialog-email&quot; autocomplete=&quot;email&quot; placeholder=&quot;tu@correo.com&quot; class=&quot;dg-input&quot;&gt;&lt;/label&gt;
+      &lt;label class=&quot;dg-label&quot;&gt;WhatsApp opcional&lt;input type=&quot;tel&quot; name=&quot;dialog-whatsapp&quot; autocomplete=&quot;tel&quot; placeholder=&quot;+52 55 0000 0000&quot; class=&quot;dg-input&quot;&gt;&lt;/label&gt;
+      &lt;button type=&quot;button&quot; class=&quot;dg-btn w-full mt-5&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+        Conversa con ADA
+      &lt;/button&gt;
+      &lt;p class=&quot;dg-support&quot;&gt;El acceso llega a tu correo. WhatsApp queda como dato opcional para seguimiento.&lt;/p&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;</code></pre></details></article>
+  </section>
+
+  <section class="ds-sec" id="grupo-precio"><h3 class="dg-h3">Precio y garantía</h3>
+    <article class="ds-ex" id="lib-precio"><header class="ds-ex-head"><h4 class="ds-ex-title">Tarjetas de precio</h4><p class="ds-ex-note">La opción destacada es más grande a propósito: es la única excepción a la regla de altura. Lleva borde verde y fondo propio.</p></header><div class="ds-stage ds-stage--pad"><div class="dg-pricing-grid"><article class="dg-pricing-card"><div aria-hidden="true" class="dg-pricing-brand"><img src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="" width="520" height="200" loading="lazy" class="dg-logo-light"><img src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520" height="200" loading="lazy" class="dg-logo-dark"></div><p class="dg-eyebrow">Todo hoy, de una vez</p><h3 class="dg-price-title">Precio fundador</h3><p class="dg-price">$4,990</p><p class="dg-price-copy"> Te ahorras $1,000 por pagarlo completo. </p><div class="dg-comparison"><p class="dg-caption">Vigencia</p><p class="dg-detail">Vale hasta el 15 de noviembre.</p></div><button type="button" class="dg-btn"> Pagar de contado<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button></article><article class="dg-pricing-card dg-pricing-card--featured"><div aria-hidden="true" class="dg-pricing-brand"><img src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="" width="520" height="200" loading="lazy" class="dg-logo-light"><img src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520" height="200" loading="lazy" class="dg-logo-dark"></div><p class="dg-eyebrow">En 10 pagos mensuales</p><h3 class="dg-price-title">Los mismos $5,990</h3><p class="dg-price">$599 <span class="text-sm font-medium tracking-normal">× 10</span></p><p class="dg-price-copy"> Terminas de pagar en el mes diez; ADA sigue con tu hijo hasta el doce. </p><p class="dg-price-highlight">No es una suscripción.</p><div class="dg-comparison"><p class="dg-caption">Acceso</p><p class="dg-detail">En los dos casos tu hijo empieza hoy y tiene el ciclo completo.</p></div><button type="button" class="dg-btn"> Elegir 10 mensualidades <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button></article></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div class=&quot;dg-pricing-grid&quot;&gt;
+  &lt;article class=&quot;dg-pricing-card&quot;&gt;
+    &lt;div aria-hidden=&quot;true&quot; class=&quot;dg-pricing-brand&quot;&gt;
+      &lt;img src=&quot;assets/digizen/logo-SVG/digizen-logo-light.svg&quot; alt=&quot;&quot; width=&quot;520&quot; height=&quot;200&quot; loading=&quot;lazy&quot; class=&quot;dg-logo-light&quot;&gt;
+      &lt;img src=&quot;assets/digizen/logo-SVG/digizen-logo-dark.svg&quot; alt=&quot;&quot; width=&quot;520&quot; height=&quot;200&quot; loading=&quot;lazy&quot; class=&quot;dg-logo-dark&quot;&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;dg-eyebrow&quot;&gt;Todo hoy, de una vez&lt;/p&gt;
+    &lt;h3 class=&quot;dg-price-title&quot;&gt;Precio fundador&lt;/h3&gt;
+    &lt;p class=&quot;dg-price&quot;&gt;$4,990&lt;/p&gt;
+    &lt;p class=&quot;dg-price-copy&quot;&gt;Te ahorras $1,000 por pagarlo completo.&lt;/p&gt;
+    &lt;div class=&quot;dg-comparison&quot;&gt;
+      &lt;p class=&quot;dg-caption&quot;&gt;Vigencia&lt;/p&gt;
+      &lt;p class=&quot;dg-detail&quot;&gt;Vale hasta el 15 de noviembre.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;button type=&quot;button&quot; class=&quot;dg-btn&quot;&gt;
+      Pagar de contado
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;/button&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-pricing-card dg-pricing-card--featured&quot;&gt;
+    &lt;div aria-hidden=&quot;true&quot; class=&quot;dg-pricing-brand&quot;&gt;
+      &lt;img src=&quot;assets/digizen/logo-SVG/digizen-logo-light.svg&quot; alt=&quot;&quot; width=&quot;520&quot; height=&quot;200&quot; loading=&quot;lazy&quot; class=&quot;dg-logo-light&quot;&gt;
+      &lt;img src=&quot;assets/digizen/logo-SVG/digizen-logo-dark.svg&quot; alt=&quot;&quot; width=&quot;520&quot; height=&quot;200&quot; loading=&quot;lazy&quot; class=&quot;dg-logo-dark&quot;&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;dg-eyebrow&quot;&gt;En 10 pagos mensuales&lt;/p&gt;
+    &lt;h3 class=&quot;dg-price-title&quot;&gt;Los mismos $5,990&lt;/h3&gt;
+    &lt;p class=&quot;dg-price&quot;&gt;$599 &lt;span class=&quot;text-sm font-medium tracking-normal&quot;&gt;× 10&lt;/span&gt;&lt;/p&gt;
+    &lt;p class=&quot;dg-price-copy&quot;&gt;Terminas de pagar en el mes diez; ADA sigue con tu hijo hasta el doce.&lt;/p&gt;
+    &lt;p class=&quot;dg-price-highlight&quot;&gt;No es una suscripción.&lt;/p&gt;
+    &lt;div class=&quot;dg-comparison&quot;&gt;
+      &lt;p class=&quot;dg-caption&quot;&gt;Acceso&lt;/p&gt;
+      &lt;p class=&quot;dg-detail&quot;&gt;En los dos casos tu hijo empieza hoy y tiene el ciclo completo.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;button type=&quot;button&quot; class=&quot;dg-btn&quot;&gt;
+      Elegir 10 mensualidades
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;/button&gt;
+  &lt;/article&gt;
+&lt;/div&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-garantia"><header class="ds-ex-head"><h4 class="ds-ex-title">Sello de garantía</h4></header><div class="ds-stage ds-stage--pad" style="--ds-ancho:420px"><div aria-hidden="true" class="dg-guarantee-seal"><div class="dg-guarantee-cert"><div class="dg-guarantee-cert-dashring"></div><div class="dg-guarantee-cert-content"><div class="dg-guarantee-cert-stars"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-star dg-guarantee-cert-star--mid"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg></div><p class="dg-guarantee-cert-title">Garantía</p><p class="dg-guarantee-cert-brand">Digizen · ADA</p><p class="dg-guarantee-cert-sub">Cobertura total</p><div class="dg-guarantee-cert-ribbon-wrap"><p class="dg-guarantee-cert-ribbon">30 días desde el primer chat</p></div><p class="dg-guarantee-cert-tag">Sin letras chicas</p><div class="dg-guarantee-cert-pill"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg> Cancelas en un clic </div></div></div></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div aria-hidden=&quot;true&quot; class=&quot;dg-guarantee-seal&quot;&gt;
+  &lt;div class=&quot;dg-guarantee-cert&quot;&gt;
+    &lt;div class=&quot;dg-guarantee-cert-dashring&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;dg-guarantee-cert-content&quot;&gt;
+      &lt;div class=&quot;dg-guarantee-cert-stars&quot;&gt;
+        &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; class=&quot;lucide lucide-star&quot;&gt;…&lt;/svg&gt;
+        &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; class=&quot;lucide lucide-star dg-guarantee-cert-star--mid&quot;&gt;…&lt;/svg&gt;
+        &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; class=&quot;lucide lucide-star&quot;&gt;…&lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;p class=&quot;dg-guarantee-cert-title&quot;&gt;Garantía&lt;/p&gt;
+      &lt;p class=&quot;dg-guarantee-cert-brand&quot;&gt;Digizen · ADA&lt;/p&gt;
+      &lt;p class=&quot;dg-guarantee-cert-sub&quot;&gt;Cobertura total&lt;/p&gt;
+      &lt;div class=&quot;dg-guarantee-cert-ribbon-wrap&quot;&gt;
+        &lt;p class=&quot;dg-guarantee-cert-ribbon&quot;&gt;30 días desde el primer chat&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;p class=&quot;dg-guarantee-cert-tag&quot;&gt;Sin letras chicas&lt;/p&gt;
+      &lt;div class=&quot;dg-guarantee-cert-pill&quot;&gt;
+        &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; class=&quot;lucide lucide-check&quot;&gt;…&lt;/svg&gt;
+        Cancelas en un clic
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></details></article>
+  </section>
+
+  <section class="ds-sec" id="grupo-marco"><h3 class="dg-h3">Navegación y marco</h3>
+    <article class="ds-ex" id="lib-nav"><header class="ds-ex-head"><h4 class="ds-ex-title">Barra de navegación</h4><p class="ds-ex-note">Fija arriba. Lleva los temas, el cambio de tema, la acción principal y la barra de progreso de lectura. <span class="ds-ex-wide">Composición de escritorio: si no cabe, se desplaza dentro del recuadro.</span></p></header><div class="ds-stage ds-stage--nav ds-stage--wide"><nav aria-label="Navegación principal de Digizen" class="dg-nav" style="--nav-reveal: 0.000; --nav-w: 539.6px;"><a href="./" aria-label="DIGIZEN, volver al inicio" class="dg-logo dg-nav-logo"><img src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="DIGIZEN" width="520" height="200" class="dg-logo-light"><img src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520" height="200" class="dg-logo-dark"></a><div id="dg-nav-links" aria-label="Temas principales de la landing" class="dg-nav-links"><a href="./#ada">ADA</a><a href="./#oferta">Oferta</a><a href="./#garantia">Garantía</a><a href="reglas-de-ada">Reglas de ADA</a><a href="./#faqs">FAQs</a><a href="./#precio" class="dg-nav-links-cta">Inscribir a mi hijo</a></div><button type="button" class="dg-theme" aria-pressed="false" aria-label="Activar tema oscuro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.4 8.4 0 0 1 8.8 3.8 8.4 8.4 0 1 0 20.2 15.2Z"></path></svg></button><button type="button" aria-controls="dg-nav-links" class="dg-menu-toggle" aria-expanded="false" aria-label="Abrir menú"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button><a href="./#precio" class="dg-btn">Inscribir<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a><div aria-hidden="true" class="dg-nav-progress"><span style="--progress: 0;"></span></div></nav></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;nav aria-label=&quot;Navegación principal de Digizen&quot; class=&quot;dg-nav&quot; style=&quot;--nav-reveal: 0.000; --nav-w: 539.6px;&quot;&gt;
+  &lt;a href=&quot;./&quot; aria-label=&quot;DIGIZEN, volver al inicio&quot; class=&quot;dg-logo dg-nav-logo&quot;&gt;
+    &lt;img src=&quot;assets/digizen/logo-SVG/digizen-logo-light.svg&quot; alt=&quot;DIGIZEN&quot; width=&quot;520&quot; height=&quot;200&quot; class=&quot;dg-logo-light&quot;&gt;
+    &lt;img src=&quot;assets/digizen/logo-SVG/digizen-logo-dark.svg&quot; alt=&quot;&quot; width=&quot;520&quot; height=&quot;200&quot; class=&quot;dg-logo-dark&quot;&gt;
+  &lt;/a&gt;
+  &lt;div id=&quot;dg-nav-links&quot; aria-label=&quot;Temas principales de la landing&quot; class=&quot;dg-nav-links&quot;&gt;
+    &lt;a href=&quot;./#ada&quot;&gt;ADA&lt;/a&gt;
+    &lt;a href=&quot;./#oferta&quot;&gt;Oferta&lt;/a&gt;
+    &lt;a href=&quot;./#garantia&quot;&gt;Garantía&lt;/a&gt;
+    &lt;a href=&quot;reglas-de-ada&quot;&gt;Reglas de ADA&lt;/a&gt;
+    &lt;a href=&quot;./#faqs&quot;&gt;FAQs&lt;/a&gt;
+    &lt;a href=&quot;./#precio&quot; class=&quot;dg-nav-links-cta&quot;&gt;Inscribir a mi hijo&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;button type=&quot;button&quot; class=&quot;dg-theme&quot; aria-pressed=&quot;false&quot; aria-label=&quot;Activar tema oscuro&quot;&gt;
+    &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+  &lt;/button&gt;
+  &lt;button type=&quot;button&quot; aria-controls=&quot;dg-nav-links&quot; class=&quot;dg-menu-toggle&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Abrir menú&quot;&gt;
+    &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+  &lt;/button&gt;
+  &lt;a href=&quot;./#precio&quot; class=&quot;dg-btn&quot;&gt;
+    Inscribir
+    &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+  &lt;/a&gt;
+  &lt;div aria-hidden=&quot;true&quot; class=&quot;dg-nav-progress&quot;&gt;&lt;span style=&quot;--progress: 0;&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;/nav&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-movil"><header class="ds-ex-head"><h4 class="ds-ex-title">Barra de acción en móvil</h4><p class="ds-ex-note">Solo en móvil, fija abajo. Antes de la oferta invita a conversar con ADA; en la oferta, a inscribir.</p></header><div class="ds-stage ds-stage--movil" style="--ds-ancho:420px"><div role="region" aria-label="Acción rápida" class="dg-mobile-cta"><button type="button" class="dg-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>Conversa con ADA</button><button type="button" aria-label="Cerrar acción rápida" class="dg-mobile-cta-close"> × </button></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div role=&quot;region&quot; aria-label=&quot;Acción rápida&quot; class=&quot;dg-mobile-cta&quot;&gt;
+  &lt;button type=&quot;button&quot; class=&quot;dg-btn&quot;&gt;
+    &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    Conversa con ADA
+  &lt;/button&gt;
+  &lt;button type=&quot;button&quot; aria-label=&quot;Cerrar acción rápida&quot; class=&quot;dg-mobile-cta-close&quot;&gt;×&lt;/button&gt;
+&lt;/div&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-pie"><header class="ds-ex-head"><h4 class="ds-ex-title">Pie de página</h4><p class="ds-ex-note">Logo, quién lo desarrolla, enlaces y contacto. <span class="ds-ex-wide">Composición de escritorio: si no cabe, se desplaza dentro del recuadro.</span></p></header><div class="ds-stage ds-stage--wide"><footer class="dg-footer"><div class="dg-footer-inner"><div class="dg-footer-brand"><a href="./" aria-label="DIGIZEN, volver al inicio" class="dg-logo"><img src="assets/digizen/logo-SVG/digizen-logo-light.svg" alt="DIGIZEN" width="520" height="200" loading="lazy" class="dg-logo-light"><img src="assets/digizen/logo-SVG/digizen-logo-dark.svg" alt="" width="520" height="200" loading="lazy" class="dg-logo-dark"></a><p>Presencia, no vigilancia. Criterio, no candado.</p></div><div class="dg-footer-dev"><p class="dg-caption">Digizen es desarrollado por</p><div class="dg-footer-gnius"><img src="assets/gnius/logo-gnius-club-color.svg" alt="Gnius Club" width="520" height="200" loading="lazy"></div></div><nav aria-label="Sitios de Gnius Club" class="dg-footer-links"><p class="dg-caption">Enlaces</p><a href="https://gnius.club" target="_blank" rel="noopener">Gnius Club</a><a href="https://alquimistas.gnius.club/" target="_blank" rel="noopener">Alquimistas de I.A.</a></nav><address class="dg-footer-contact"><a href="https://wa.me/522218481116?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Digizen%20y%20ADA." target="_blank" rel="noopener" aria-label="(+52) 221 848 1116, enviar WhatsApp a Gnius Club" class="dg-footer-whatsapp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.7a8.5 8.5 0 0 1-12.6 7.4L4 20l.9-4.3A8.5 8.5 0 1 1 21 11.7Z"></path><path d="M8.4 8.2c.2-.5.4-.5.7-.5h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2.1.4 0 .6l-.4.5c-.1.1-.2.3-.1.5.3.7.8 1.3 1.4 1.8.6.5 1.2.9 1.9 1.1.2.1.4 0 .5-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .5-.3 1.2-.7 1.5-.4.3-1.3.5-2.4.2-1.2-.3-2.5-1-3.8-2.1-1.2-1-2.2-2.4-2.7-3.6-.4-.9-.3-1.7.1-2.3Z"></path></svg> (+52) 221 848 1116 </a><a href="mailto:info@gnius.club">info@gnius.club</a><a href="https://gnius.club/aviso-de-privacidad.html" target="_blank" rel="noopener">Aviso de Privacidad</a></address></div><p class="dg-footer-legal">© 2026 Gnius Club. Todos los derechos reservados.</p></footer></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;footer class=&quot;dg-footer&quot;&gt;
+  &lt;div class=&quot;dg-footer-inner&quot;&gt;
+    &lt;div class=&quot;dg-footer-brand&quot;&gt;
+      &lt;a href=&quot;./&quot; aria-label=&quot;DIGIZEN, volver al inicio&quot; class=&quot;dg-logo&quot;&gt;
+        &lt;img src=&quot;assets/digizen/logo-SVG/digizen-logo-light.svg&quot; alt=&quot;DIGIZEN&quot; width=&quot;520&quot; height=&quot;200&quot; loading=&quot;lazy&quot; class=&quot;dg-logo-light&quot;&gt;
+        &lt;img src=&quot;assets/digizen/logo-SVG/digizen-logo-dark.svg&quot; alt=&quot;&quot; width=&quot;520&quot; height=&quot;200&quot; loading=&quot;lazy&quot; class=&quot;dg-logo-dark&quot;&gt;
+      &lt;/a&gt;
+      &lt;p&gt;Presencia, no vigilancia. Criterio, no candado.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;dg-footer-dev&quot;&gt;
+      &lt;p class=&quot;dg-caption&quot;&gt;Digizen es desarrollado por&lt;/p&gt;
+      &lt;div class=&quot;dg-footer-gnius&quot;&gt;&lt;img src=&quot;assets/gnius/logo-gnius-club-color.svg&quot; alt=&quot;Gnius Club&quot; width=&quot;520&quot; height=&quot;200&quot; loading=&quot;lazy&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;nav aria-label=&quot;Sitios de Gnius Club&quot; class=&quot;dg-footer-links&quot;&gt;
+      &lt;p class=&quot;dg-caption&quot;&gt;Enlaces&lt;/p&gt;
+      &lt;a href=&quot;https://gnius.club&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Gnius Club&lt;/a&gt;
+      &lt;a href=&quot;https://alquimistas.gnius.club/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Alquimistas de I.A.&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;address class=&quot;dg-footer-contact&quot;&gt;
+      &lt;a href=&quot;https://wa.me/522218481116?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Digizen%20y%20ADA.&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; aria-label=&quot;(+52) 221 848 1116, enviar WhatsApp a Gnius Club&quot; class=&quot;dg-footer-whatsapp&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+        (+52) 221 848 1116
+      &lt;/a&gt;
+      &lt;a href=&quot;mailto:info@gnius.club&quot;&gt;info@gnius.club&lt;/a&gt;
+      &lt;a href=&quot;https://gnius.club/aviso-de-privacidad.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Aviso de Privacidad&lt;/a&gt;
+    &lt;/address&gt;
+  &lt;/div&gt;
+  &lt;p class=&quot;dg-footer-legal&quot;&gt;© 2026 Gnius Club. Todos los derechos reservados.&lt;/p&gt;
+&lt;/footer&gt;</code></pre></details></article>
+  </section>
+
+  <section class="ds-sec" id="grupo-reglas"><h3 class="dg-h3">Reglas de ADA</h3>
+    <article class="ds-ex" id="lib-reglas-resumen"><header class="ds-ex-head"><h4 class="ds-ex-title">Entrada de la página de reglas</h4><p class="ds-ex-note">Título, promesa, ADA con la tableta y el índice de las 13 reglas. <span class="ds-ex-wide">Composición de escritorio: si no cabe, se desplaza dentro del recuadro.</span></p></header><div class="ds-stage ds-stage--wide"><section aria-labelledby="rules-title" class="dg-section dg-section--cyan dg-rules-summary dg-rules-summary--intro"><div class="dg-rules-summary-copy"><p class="dg-kicker">Marco de seguridad</p><h1 id="rules-title" class="dg-h2 dg-rules-title-inline"><span class="dg-h2-muted">Las reglas de </span><span class="dg-emphasis--cyan">ADA</span></h1><div class="dg-copy"><p> Antes de que tu hijo converse con ADA, queremos que sepas algo con claridad: <strong>no es una inteligencia artificial abierta hablando sin rumbo con un menor.</strong></p><p> Existe para que practique criterio digital en un espacio guiado, con límites, privacidad y acompañamiento adulto cuando hace falta. </p><p><strong>Presencia, no vigilancia. Criterio, no candado.</strong></p></div></div><figure class="dg-rules-summary-figure"><picture><source media="(min-width: 1024px)" srcset="assets/digizen/generated/scenes/ada-rule-desktop.avif" type="image/avif"><source media="(min-width: 1024px)" srcset="assets/digizen/generated/scenes/ada-rule-desktop.webp" type="image/webp"><source srcset="assets/digizen/generated/scenes/dg-scene-a10-ada-rules-closing.avif" type="image/avif"><source srcset="assets/digizen/generated/scenes/dg-scene-a10-ada-rules-closing.webp" type="image/webp"><img src="assets/digizen/generated/scenes/dg-scene-a10-ada-rules-closing.webp" alt="ADA sosteniendo una tableta con reglas públicas" width="1022" height="1790" loading="eager"></picture></figure><div class="dg-rules-summary-details"><ul class="dg-rules-checks dg-rules-checks--compact"><li><a class="dg-rules-toc-link" href="#regla-espacio-para-pensar"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Respetar la privacidad de tu hijo </a></li><li><a class="dg-rules-toc-link" href="#regla-sin-vinculos-secretos"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Evitar vínculos peligrosos </a></li><li><a class="dg-rules-toc-link" href="#regla-aviso-a-la-familia"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Reconocer señales que requieren ayuda adulta </a></li></ul><ul class="dg-rules-checks dg-rules-checks--full"><li><a class="dg-rules-toc-link" href="#regla-presencia-no-vigilancia"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Presencia, no vigilancia </a></li><li><a class="dg-rules-toc-link" href="#regla-proposito-educativo"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Propósito educativo </a></li><li><a class="dg-rules-toc-link" href="#regla-sin-vinculos-secretos"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Sin vínculos secretos </a></li><li><a class="dg-rules-toc-link" href="#regla-adultos-presentes"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Adultos presentes </a></li><li><a class="dg-rules-toc-link" href="#regla-sin-diagnosticos"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Sin diagnósticos </a></li><li><a class="dg-rules-toc-link" href="#regla-cuidado-ante-el-riesgo"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Cuidado ante el riesgo </a></li><li><a class="dg-rules-toc-link" href="#regla-sin-carrera-por-likes"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Sin carrera por likes </a></li><li><a class="dg-rules-toc-link" href="#regla-preguntas-primero"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Preguntas primero </a></li><li><a class="dg-rules-toc-link" href="#regla-lenguaje-por-edad"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Lenguaje por edad </a></li><li><a class="dg-rules-toc-link" href="#regla-espacio-para-pensar"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Espacio para pensar </a></li><li><a class="dg-rules-toc-link" href="#regla-privacidad-con-cuidado"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Privacidad con cuidado </a></li><li><a class="dg-rules-toc-link" href="#regla-aviso-a-la-familia"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Aviso a la familia </a></li><li><a class="dg-rules-toc-link" href="#regla-limites-claros"><span aria-hidden="true" class="dg-rules-check"><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"></path></svg></span> Límites claros </a></li></ul></div><div class="dg-actions dg-rules-summary-actions"><a href="./#precio" class="dg-btn"> Inscribir a mi hijo <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a><a href="./" class="dg-btn dg-btn--secondary"> Volver a Digizen </a></div></section></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;section aria-labelledby=&quot;rules-title&quot; class=&quot;dg-section dg-section--cyan dg-rules-summary dg-rules-summary--intro&quot;&gt;
+  &lt;div class=&quot;dg-rules-summary-copy&quot;&gt;
+    &lt;p class=&quot;dg-kicker&quot;&gt;Marco de seguridad&lt;/p&gt;
+    &lt;h1 id=&quot;rules-title&quot; class=&quot;dg-h2 dg-rules-title-inline&quot;&gt;&lt;span class=&quot;dg-h2-muted&quot;&gt;Las reglas de &lt;/span&gt;&lt;span class=&quot;dg-emphasis--cyan&quot;&gt;ADA&lt;/span&gt;&lt;/h1&gt;
+    &lt;div class=&quot;dg-copy&quot;&gt;
+      &lt;p&gt;Antes de que tu hijo converse con ADA, queremos que sepas algo con claridad: &lt;strong&gt;no es una inteligencia artificial abierta hablando sin rumbo con un menor.&lt;/strong&gt;&lt;/p&gt;
+      &lt;p&gt;Existe para que practique criterio digital en un espacio guiado, con límites, privacidad y acompañamiento adulto cuando hace falta.&lt;/p&gt;
+      &lt;p&gt;&lt;strong&gt;Presencia, no vigilancia. Criterio, no candado.&lt;/strong&gt;&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;figure class=&quot;dg-rules-summary-figure&quot;&gt;
+    &lt;picture&gt;
+      &lt;source media=&quot;(min-width: 1024px)&quot; srcset=&quot;assets/digizen/generated/scenes/ada-rule-desktop.avif&quot; type=&quot;image/avif&quot;&gt;
+      &lt;source media=&quot;(min-width: 1024px)&quot; srcset=&quot;assets/digizen/generated/scenes/ada-rule-desktop.webp&quot; type=&quot;image/webp&quot;&gt;
+      &lt;source srcset=&quot;assets/digizen/generated/scenes/dg-scene-a10-ada-rules-closing.avif&quot; type=&quot;image/avif&quot;&gt;
+      &lt;source srcset=&quot;assets/digizen/generated/scenes/dg-scene-a10-ada-rules-closing.webp&quot; type=&quot;image/webp&quot;&gt;
+      &lt;img src=&quot;assets/digizen/generated/scenes/dg-scene-a10-ada-rules-closing.webp&quot; alt=&quot;ADA sosteniendo una tableta con reglas públicas&quot; width=&quot;1022&quot; height=&quot;1790&quot; loading=&quot;eager&quot;&gt;
+    &lt;/picture&gt;
+  &lt;/figure&gt;
+  &lt;div class=&quot;dg-rules-summary-details&quot;&gt;
+    &lt;ul class=&quot;dg-rules-checks dg-rules-checks--compact&quot;&gt;
+      &lt;li&gt;
+        &lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-espacio-para-pensar&quot;&gt;
+          &lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;
+            &lt;svg viewBox=&quot;0 0 24 24&quot;&gt;…&lt;/svg&gt;
+          &lt;/span&gt;
+          Respetar la privacidad de tu hijo
+        &lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-sin-vinculos-secretos&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Evitar vínculos peligrosos&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-aviso-a-la-familia&quot;&gt;
+          &lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;
+            &lt;svg viewBox=&quot;0 0 24 24&quot;&gt;…&lt;/svg&gt;
+          &lt;/span&gt;
+          Reconocer señales que requieren ayuda adulta
+        &lt;/a&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;ul class=&quot;dg-rules-checks dg-rules-checks--full&quot;&gt;
+      &lt;li&gt;
+        &lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-presencia-no-vigilancia&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Presencia, no vigilancia&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-proposito-educativo&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Propósito educativo &lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-sin-vinculos-secretos&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Sin vínculos secretos &lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-adultos-presentes&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Adultos presentes &lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-sin-diagnosticos&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Sin diagnósticos &lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;
+        &lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-cuidado-ante-el-riesgo&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Cuidado ante el riesgo&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-sin-carrera-por-likes&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Sin carrera por likes &lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-preguntas-primero&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Preguntas primero &lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-lenguaje-por-edad&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Lenguaje por edad &lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-espacio-para-pensar&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Espacio para pensar &lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;
+        &lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-privacidad-con-cuidado&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Privacidad con cuidado&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-aviso-a-la-familia&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Aviso a la familia &lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;dg-rules-toc-link&quot; href=&quot;#regla-limites-claros&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;dg-rules-check&quot;&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt; Límites claros &lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;dg-actions dg-rules-summary-actions&quot;&gt;
+    &lt;a href=&quot;./#precio&quot; class=&quot;dg-btn&quot;&gt;
+      Inscribir a mi hijo
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;/a&gt;
+    &lt;a href=&quot;./&quot; class=&quot;dg-btn dg-btn--secondary&quot;&gt;Volver a Digizen&lt;/a&gt;
+  &lt;/div&gt;
+… (1 líneas más: ver la página)</code></pre></details></article>
+    <article class="ds-ex" id="lib-regla-principal"><header class="ds-ex-head"><h4 class="ds-ex-title">Tarjeta de la regla principal</h4><p class="ds-ex-note">La primera regla ocupa todo el ancho y lleva imagen. <span class="ds-ex-wide">Composición de escritorio: si no cabe, se desplaza dentro del recuadro.</span></p></header><div class="ds-stage ds-stage--pad ds-stage--wide"><article class="dg-card dg-rule-card dg-rule-card--wide" id="regla-presencia-no-vigilancia" style="--accent: var(--dg-blue);"><div class="dg-rule-head"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"></path><path d="m9 12 2 2 4-4"></path></svg></div><div class="dg-rule-heading"><span class="dg-rule-num">La regla más importante</span><h3>Presencia, no vigilancia</h3></div></div><p class="dg-rule-subtitle">ADA debe actuar con presencia, no vigilancia.</p><p class="dg-rule-body">ADA no existe para convertirte en policía del celular. Existe para ayudar a tu hijo a practicar criterio digital con acompañamiento: menos candado, secreto y sermón; más pausa, preguntas y criterio.</p><figure class="dg-rule-figure"><picture><source media="(max-width: 1023px)" srcset="assets/digizen/generated/scenes/dg-scene-a09-rules-presence-mobile.avif" type="image/avif"><source media="(max-width: 1023px)" srcset="assets/digizen/generated/scenes/dg-scene-a09-rules-presence-mobile.webp"><source srcset="assets/digizen/generated/scenes/dg-scene-a09-rules-presence.avif" type="image/avif"><img src="assets/digizen/generated/scenes/dg-scene-a09-rules-presence.webp" alt="ADA y un adolescente de pie en una plataforma virtual, frente a dos caminos de tarjetas de redes sociales: él se lleva la mano a la barbilla para pensar y ADA, a su lado, abre las manos para acompañarlo sin elegir por él" width="2048" height="1366" loading="lazy"></picture></figure></article></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;article class=&quot;dg-card dg-rule-card dg-rule-card--wide&quot; id=&quot;regla-presencia-no-vigilancia&quot; style=&quot;--accent: var(--dg-blue);&quot;&gt;
+  &lt;div class=&quot;dg-rule-head&quot;&gt;
+    &lt;div class=&quot;dg-icon&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;dg-rule-heading&quot;&gt;
+      &lt;span class=&quot;dg-rule-num&quot;&gt;La regla más importante&lt;/span&gt;
+      &lt;h3&gt;Presencia, no vigilancia&lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;p class=&quot;dg-rule-subtitle&quot;&gt;ADA debe actuar con presencia, no vigilancia.&lt;/p&gt;
+  &lt;p class=&quot;dg-rule-body&quot;&gt;
+    ADA no existe para convertirte en policía del celular. Existe para ayudar a tu hijo a practicar criterio digital con acompañamiento: menos candado, secreto y sermón; más pausa, preguntas y criterio.
+  &lt;/p&gt;
+  &lt;figure class=&quot;dg-rule-figure&quot;&gt;
+    &lt;picture&gt;
+      &lt;source media=&quot;(max-width: 1023px)&quot; srcset=&quot;assets/digizen/generated/scenes/dg-scene-a09-rules-presence-mobile.avif&quot; type=&quot;image/avif&quot;&gt;
+      &lt;source media=&quot;(max-width: 1023px)&quot; srcset=&quot;assets/digizen/generated/scenes/dg-scene-a09-rules-presence-mobile.webp&quot;&gt;
+      &lt;source srcset=&quot;assets/digizen/generated/scenes/dg-scene-a09-rules-presence.avif&quot; type=&quot;image/avif&quot;&gt;
+      &lt;img src=&quot;assets/digizen/generated/scenes/dg-scene-a09-rules-presence.webp&quot; alt=&quot;ADA y un adolescente de pie en una plataforma virtual, frente a dos caminos de tarjetas de redes sociales: él se lleva la mano a la barbilla para pensar y ADA, a su lado, abre las manos para acompañarlo sin elegir por él&quot; width=&quot;2048&quot; height=&quot;1366&quot; loading=&quot;lazy&quot;&gt;
+    &lt;/picture&gt;
+  &lt;/figure&gt;
+&lt;/article&gt;</code></pre></details></article>
+    <article class="ds-ex" id="lib-regla"><header class="ds-ex-head"><h4 class="ds-ex-title">Tarjeta de regla</h4><p class="ds-ex-note">Icono con el color que rota, número, título, la regla en una frase y su explicación. Todas miden lo mismo de alto, en la fila y entre filas. <span class="ds-ex-wide">Composición de escritorio: si no cabe, se desplaza dentro del recuadro.</span></p></header><div class="ds-stage ds-stage--pad ds-stage--wide"><div class="dg-rules-grid"><article class="dg-card dg-rule-card" id="regla-proposito-educativo" style="--accent: var(--dg-violet);"><div class="dg-rule-head"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"></path><path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path><path d="M12 12h.01"></path></svg></div><div class="dg-rule-heading"><span class="dg-rule-num">Regla 01</span><h3>Propósito educativo</h3></div></div><p class="dg-rule-subtitle">ADA solo conversa con propósito educativo.</p><p class="dg-rule-body">ADA no está hecha para entretener sin límite, simular una amistad secreta ni ocupar el lugar de una persona real. Sus conversaciones giran en torno a la ciudadanía digital y, si se alejan, ADA debe regresar al tema de forma clara y tranquila.</p></article><article class="dg-card dg-rule-card" id="regla-sin-vinculos-secretos" style="--accent: var(--dg-cyan);"><div class="dg-rule-head"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10h10a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z"></path><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div><div class="dg-rule-heading"><span class="dg-rule-num">Regla 02</span><h3>Sin vínculos secretos</h3></div></div><p class="dg-rule-subtitle">ADA no crea relaciones románticas ni vínculos secretos.</p><p class="dg-rule-body">ADA no debe coquetear, actuar como pareja ni construir una relación emocional dependiente con tu hijo. Tampoco debe pedirle que guarde secretos peligrosos o que oculte algo importante a su familia.</p></article><article class="dg-card dg-rule-card" id="regla-adultos-presentes" style="--accent: var(--dg-green);"><div class="dg-rule-head"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1"></path><path d="M10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path><path d="M20 20v-1a4 4 0 0 0-3-3.9"></path><path d="M16 5.1a3 3 0 0 1 0 5.8"></path></svg></div><div class="dg-rule-heading"><span class="dg-rule-num">Regla 03</span><h3>Los adultos no se reemplazan</h3></div></div><p class="dg-rule-subtitle">ADA no sustituye a mamá, papá, docentes ni profesionales.</p><p class="dg-rule-body">ADA puede acompañar una conversación educativa, pero no reemplaza a la familia, a la escuela ni a un profesional. Si aparece una situación que necesita intervención adulta, debe ayudar a abrir el camino hacia un adulto responsable.</p></article><article class="dg-card dg-rule-card" id="regla-sin-diagnosticos" style="--accent: var(--dg-blue);"><div class="dg-rule-head"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42Z"></path><path d="M7.5 7.5h.01"></path></svg></div><div class="dg-rule-heading"><span class="dg-rule-num">Regla 04</span><h3>Sin etiquetas</h3></div></div><p class="dg-rule-subtitle">ADA no diagnostica.</p><p class="dg-rule-body">ADA no etiqueta a tu hijo ni emite diagnósticos psicológicos. Puede ayudarle a nombrar lo que siente y a pensar con más calma, pero nombrar no es diagnosticar.</p></article><article class="dg-card dg-rule-card" id="regla-cuidado-ante-el-riesgo" style="--accent: var(--dg-violet);"><div class="dg-rule-head"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg></div><div class="dg-rule-heading"><span class="dg-rule-num">Regla 05</span><h3>Cuidado ante el riesgo</h3></div></div><p class="dg-rule-subtitle">ADA no da instrucciones para hacer daño.</p><p class="dg-rule-body">ADA no debe ayudar a un menor a lastimarse, lastimar a otros, acosar, humillar, manipular, amenazar, extorsionar o exponer a otra persona. Si la conversación entra en terreno delicado, la prioridad deja de ser la misión y se vuelve proteger.</p></article><article class="dg-card dg-rule-card" id="regla-sin-carrera-por-likes" style="--accent: var(--dg-cyan);"><div class="dg-rule-head"><div class="dg-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></div><div class="dg-rule-heading"><span class="dg-rule-num">Regla 06</span><h3>Sin carrera por likes</h3></div></div><p class="dg-rule-subtitle">ADA no premia likes, rachas ni popularidad.</p><p class="dg-rule-body">ADA no busca que tu hijo compita por puntos vacíos, rankings, likes, rachas o validación externa. La meta no es que «gane» dentro de la plataforma, sino que aprenda a decidir mejor fuera de ella.</p></article></div></div><details class="ds-codeblock"><summary>Ver el marcado</summary><pre><code>&lt;div class=&quot;dg-rules-grid&quot;&gt;
+  &lt;article class=&quot;dg-card dg-rule-card&quot; id=&quot;regla-proposito-educativo&quot; style=&quot;--accent: var(--dg-violet);&quot;&gt;
+    &lt;div class=&quot;dg-rule-head&quot;&gt;
+      &lt;div class=&quot;dg-icon&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;dg-rule-heading&quot;&gt;
+        &lt;span class=&quot;dg-rule-num&quot;&gt;Regla 01&lt;/span&gt;
+        &lt;h3&gt;Propósito educativo&lt;/h3&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;dg-rule-subtitle&quot;&gt;ADA solo conversa con propósito educativo.&lt;/p&gt;
+    &lt;p class=&quot;dg-rule-body&quot;&gt;
+      ADA no está hecha para entretener sin límite, simular una amistad secreta ni ocupar el lugar de una persona real. Sus conversaciones giran en torno a la ciudadanía digital y, si se alejan, ADA debe regresar al tema de forma clara y tranquila.
+    &lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card dg-rule-card&quot; id=&quot;regla-sin-vinculos-secretos&quot; style=&quot;--accent: var(--dg-cyan);&quot;&gt;
+    &lt;div class=&quot;dg-rule-head&quot;&gt;
+      &lt;div class=&quot;dg-icon&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;dg-rule-heading&quot;&gt;
+        &lt;span class=&quot;dg-rule-num&quot;&gt;Regla 02&lt;/span&gt;
+        &lt;h3&gt;Sin vínculos secretos&lt;/h3&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;dg-rule-subtitle&quot;&gt;ADA no crea relaciones románticas ni vínculos secretos.&lt;/p&gt;
+    &lt;p class=&quot;dg-rule-body&quot;&gt;
+      ADA no debe coquetear, actuar como pareja ni construir una relación emocional dependiente con tu hijo. Tampoco debe pedirle que guarde secretos peligrosos o que oculte algo importante a su familia.
+    &lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card dg-rule-card&quot; id=&quot;regla-adultos-presentes&quot; style=&quot;--accent: var(--dg-green);&quot;&gt;
+    &lt;div class=&quot;dg-rule-head&quot;&gt;
+      &lt;div class=&quot;dg-icon&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;dg-rule-heading&quot;&gt;
+        &lt;span class=&quot;dg-rule-num&quot;&gt;Regla 03&lt;/span&gt;
+        &lt;h3&gt;Los adultos no se reemplazan&lt;/h3&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;dg-rule-subtitle&quot;&gt;ADA no sustituye a mamá, papá, docentes ni profesionales.&lt;/p&gt;
+    &lt;p class=&quot;dg-rule-body&quot;&gt;
+      ADA puede acompañar una conversación educativa, pero no reemplaza a la familia, a la escuela ni a un profesional. Si aparece una situación que necesita intervención adulta, debe ayudar a abrir el camino hacia un adulto responsable.
+    &lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card dg-rule-card&quot; id=&quot;regla-sin-diagnosticos&quot; style=&quot;--accent: var(--dg-blue);&quot;&gt;
+    &lt;div class=&quot;dg-rule-head&quot;&gt;
+      &lt;div class=&quot;dg-icon&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;dg-rule-heading&quot;&gt;
+        &lt;span class=&quot;dg-rule-num&quot;&gt;Regla 04&lt;/span&gt;
+        &lt;h3&gt;Sin etiquetas&lt;/h3&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;dg-rule-subtitle&quot;&gt;ADA no diagnostica.&lt;/p&gt;
+    &lt;p class=&quot;dg-rule-body&quot;&gt;ADA no etiqueta a tu hijo ni emite diagnósticos psicológicos. Puede ayudarle a nombrar lo que siente y a pensar con más calma, pero nombrar no es diagnosticar.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;dg-card dg-rule-card&quot; id=&quot;regla-cuidado-ante-el-riesgo&quot; style=&quot;--accent: var(--dg-violet);&quot;&gt;
+    &lt;div class=&quot;dg-rule-head&quot;&gt;
+      &lt;div class=&quot;dg-icon&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;dg-rule-heading&quot;&gt;
+        &lt;span class=&quot;dg-rule-num&quot;&gt;Regla 05&lt;/span&gt;
+        &lt;h3&gt;Cuidado ante el riesgo&lt;/h3&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;dg-rule-subtitle&quot;&gt;ADA no da instrucciones para hacer daño.&lt;/p&gt;
+… (20 líneas más: ver la página)</code></pre></details></article>
+  </section>
+</section>
+
+<footer class="ds-foot">
+  <p>Sistema de diseño de la landing A de Digizen. Se genera desde el código de la landing con <code class="ds-code-inline">construir.py</code>; no se edita a mano el archivo <code class="ds-code-inline">index.html</code>.</p>
+</footer>
+
+</main>
+</div>
+
+<script src="js/guia.js"></script>
+</body>
+</html>
