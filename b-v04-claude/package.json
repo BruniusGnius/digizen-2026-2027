@@ -1,0 +1,19 @@
+{
+  "name": "digizen-landing-b-v04",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Digizen · landing B v04 — ensayo guiado por el scroll (HTML + Tailwind + GSAP)",
+  "scripts": {
+    "css": "tailwindcss -i src/main.css -o dist/styles.css --minify",
+    "css:watch": "tailwindcss -i src/main.css -o dist/styles.css --watch",
+    "vendor": "node scripts/vendor.mjs",
+    "html": "python3 -B scripts/build.py",
+    "build": "npm run vendor && npm run html && npm run css",
+    "serve": "python3 -m http.server 8080"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.3",
+    "gsap": "3.12.5",
+    "tailwindcss": "4.3.3"
+  }
+}

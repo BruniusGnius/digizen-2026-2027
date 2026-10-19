@@ -1,0 +1,702 @@
+/* =====================================================================
+   Componentes — Digizen landing B v04
+   Mismas composiciones y medidas que el wireframe aprobado (02-wireframe.html);
+   aquí solo se unifican constantes (tokens.css), entra el color y se desarrollan
+   las tarjetas y los botones (03-build-plan.md §4.3–4.4).
+   ===================================================================== */
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-weight: 500;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    font-optical-sizing: auto;
+  }
+  p, h1, h2, h3, h4, figure { margin: 0; }
+  img, canvas { display: block; }
+  :focus-visible { outline: 2px solid var(--color-azul-900); outline-offset: 3px; }
+}
+
+@layer components {
+
+  /* ---------- tipografía: familias, pesos y los 8 pasos (§2.2) ---------- */
+  .pf { font-family: var(--font-display); }
+  .in { font-family: var(--font-body); }
+  .w1 { font-weight: 100; } .w3 { font-weight: 300; } .w4 { font-weight: 400; } .w5 { font-weight: 500; }
+  .w6 { font-weight: 600; } .w7 { font-weight: 700; } .w8 { font-weight: 800; } .w9 { font-weight: 900; }
+  .it { font-style: italic; }
+  .t-micro { font-size: var(--t-micro); line-height: 1.3; letter-spacing: .04em; }
+  .t-small { font-size: var(--t-small); line-height: 1.5; }
+  .t-body  { font-size: var(--t-body);  line-height: 1.5; }
+  /* todo en Inter con tamaño óptico (B3, apple-design §9): los tamaños grandes usan el corte display, que ya
+     viene más compacto; por eso el espaciado negativo es algo menor que en la prueba sin eje óptico */
+  .t-sub   { font-size: var(--t-sub);   line-height: 1.3;  letter-spacing: -.008em; }
+  .t-head  { font-size: var(--t-head);  line-height: 1.12; letter-spacing: -.012em; }
+  .t-semi  { font-size: var(--t-semi);  line-height: 1.04; letter-spacing: -.022em; }
+  .t-mon   { font-size: var(--t-mon);   line-height: 1.02; letter-spacing: -.03em; }
+  .t-mxl   { font-size: var(--t-mxl);   line-height: .96;  letter-spacing: -.035em; }
+  .bw { text-wrap: balance; }
+  .essay p, .sup p { text-wrap: pretty; }
+  b, strong { font-weight: 700; }
+
+  /* acento: uno por pieza, en itálica, con el color de su función (psicología de color de V05):
+     azul = estructura/método · coral = voz humana/dilema · logro = banda ámbar (el ámbar no alcanza contraste como texto) */
+  .acc { font-style: italic; color: var(--color-azul-900); }
+  .nightc .acc { color: var(--color-azul-500); }
+  .acc.r-coral, .nightc .acc.r-coral { color: var(--color-coral); }
+  /* concepto fuerte resaltado solo con color, sin cambiar la tipografía (pedido del usuario, 2026-09-29) */
+  .hl { color: var(--color-azul-900); }
+  .nightc .hl { color: var(--color-azul-500); }
+  .hl.r-coral, .nightc .hl.r-coral { color: var(--color-coral); }
+  .hl.r-plain { color: var(--color-ink); } .nightc .hl.r-plain { color: var(--color-night-ink); }  /* palabra dentro de un acento que vuelve al color del texto */
+  /* siempre color en la tipografía, nunca bandas (pedido del usuario). El cian y el ámbar no se leen como texto:
+     ADA en texto va en violeta (IA, V05) y el logro en coral (V05: «atención, logro y calidez») */
+  .hl.r-ia, .nightc .hl.r-ia { color: var(--color-violeta); }
+  /* voz citada (creencias, objeción, pregunta del hijo): coral = conversación; solo en tamaños ≥ 24 px */
+  .voz { color: var(--color-coral); }
+  .voz.r-azul { color: var(--color-azul-900); }  /* voz positiva (la pregunta que abre la conversación) */
+  /* dato sobre IA: violeta = profundidad, con moderación */
+  .c-ia { color: var(--color-violeta); }
+  mark.val { background: var(--color-ambar-tinte); color: inherit; padding: 0 .15em; }
+  .lnk { font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; color: inherit; cursor: pointer; }
+  .lnk:hover { text-decoration-thickness: 2px; }
+  .lnk:active, .lnk.is-pressed { opacity: .7; }  /* A2: respuesta en pointerdown */
+
+  /* ---------- escenario y paradas (idéntico al wireframe) ---------- */
+  .pin { position: relative; }
+  .stage { position: relative; height: 100svh; overflow: hidden; background: var(--color-bg); }
+  .night { position: absolute; inset: 0; background: var(--color-night); opacity: 0; pointer-events: none; z-index: 0; }
+  .stop { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: var(--pad-y) var(--pad-x); z-index: 1; pointer-events: none; }
+  .stop.is-active { pointer-events: auto; }
+  .stop.nightc { color: var(--color-night-ink); }
+
+  /* ---------- composiciones (espécimen) ---------- */
+  .c { width: 100%; max-width: var(--w-grid); margin: 0 auto; }
+  .ctr { text-align: center; } .left { text-align: left; }
+  .stack { display: flex; flex-direction: column; gap: var(--stack); }
+  .ctr.stack { align-items: center; }
+
+  .l06 { margin-left: max(0px, calc((100% - var(--w-read)) / 2)); margin-right: 0;
+         width: calc(100% - max(0px, calc((100% - var(--w-read)) / 2))); max-width: none; }
+  .l06 .t-head { max-width: var(--m-head); }
+  .l06 .sup { max-width: var(--w-read); margin-top: 12px; }
+  .l06 .sup p + p { margin-top: 1em; }
+  .l06.wide { margin-left: max(0px, calc((100% - var(--w-wide)) / 2)); width: calc(100% - max(0px, calc((100% - var(--w-wide)) / 2))); }
+  .l06.wide .sup { max-width: var(--w-wide); }
+
+  /* golpe dentro de párrafo: el golpe centrado; el resto en la columna de lectura, 32/48 px debajo */
+  .b01-l { align-items: center; }
+  .b01-l .t-semi { max-width: var(--m-display); text-align: center; }
+  .b01-l > .t-body { width: min(100%, var(--w-read)); text-align: left; margin-top: var(--air); }
+  .b01-l > .cta { width: min(100%, var(--w-read)); margin-top: var(--air); }
+  .b03 .lead-l { max-width: var(--w-read); }
+  .b03 > [data-beat=close] { margin-top: var(--air); }
+  .reveal > [data-beat=close] { margin-top: 0; }
+  .solo-lead .lead-l { max-width: var(--w-read); }
+  .b09 { gap: 24px; } .b09 .t-small, .b09 .t-body { max-width: var(--w-read); }
+  .b06 { gap: 0; }
+
+  .l07 .essay { width: min(100%, var(--w-read)); margin: 0 auto; }
+  .l07.wide .essay { width: min(100%, var(--w-wide)); }
+  .l07 .essay p { line-height: 1.6; }
+  .l07 .essay p + p { margin-top: 1em; }
+  .l07 .essay h3 { margin: 1em 0 .5em; }
+
+  .l03 { max-width: var(--w-wide); }
+  .l03 .row { display: flex; align-items: baseline; gap: 20px; padding: 16px 0; position: relative; }
+  .l03 .row + .row { border-top: 1px solid var(--color-line); }
+  /* números en coral: las creencias son voz humana / dilema (V05); en heading, ≥ 24 px, cumple contraste */
+  .l03 .n { width: 1.4em; flex-shrink: 0; color: var(--color-coral); }
+  /* la fila 05 (la creencia verdadera) se marca al final de su parada con una banda coral-tinte y texto en tinta
+     (el coral no alcanza contraste como texto de cuerpo) */
+  .l03 .acc-copy { position: absolute; inset: 0 -12px; display: flex; align-items: baseline; gap: 20px; padding: 16px 12px;
+                   color: var(--color-ink); background: var(--color-coral-tinte); border-radius: 12px; pointer-events: none; }
+
+  .l05 { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); align-items: center; }
+  .l05 .w-q { grid-column: span 5; }
+  .l05 .def { grid-column: span 7; border-left: 1px solid var(--color-line); padding-left: 20px; }
+  .l05 .def p { max-width: var(--w-read); }
+  .l05 .def p + p { margin-top: .8em; }
+  .q-in { margin: .15em 0; }
+
+  .reveal { display: grid; align-items: center; justify-items: center; }
+  .reveal > * { grid-area: 1 / 1; }
+
+  .l04 .q { max-width: var(--w-read); }
+  .l04 .q.t-semi { max-width: var(--m-display); }
+  .l04 .q + .t-body { margin-top: var(--air); }
+
+  /* ---------- tarjetas (L08: 08.5 y 11.3) — misma familia que los botones ---------- */
+  .l08 .entries { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); margin-top: 48px; }
+  .l08 .entries:first-child { margin-top: 0; }
+  .s3 { grid-column: span 3; } .s4 { grid-column: span 4; } .s12 { grid-column: span 12; }
+  .entry { border-top: 1px solid var(--color-line); padding-top: 12px; }
+  .card {
+    --role: var(--color-azul-900);
+    position: relative;
+    display: flex; flex-direction: column; gap: var(--stack);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 26px 24px 24px;
+  }
+  .card.r-ada { --role: var(--color-cian); }
+  /* detalle de marca discreto: la barra de viñeta del sistema (§5), en el color del rol */
+  .card::before { content: ""; display: block; width: 24px; height: 3px; border-radius: 2px; background: var(--role); margin-bottom: 8px; }
+  /* títulos de tarjeta en sans (pedido del usuario, 2026-09-29): Inter 700, mismo paso subhead */
+  .card .card-t { color: var(--color-ink); font-family: var(--font-body); font-weight: 700; letter-spacing: -.01em; line-height: 1.25; }
+  .card > .btn { margin-top: auto; }
+  .card > p:has(+ .btn) { margin-bottom: 8px; }
+
+  /* mazo apilado (< 600 px, fuera del modo reducido): igual que en el wireframe */
+  .entries.deck { --peek: 54px; }
+
+  /* ---------- precio (misma familia que las tarjetas) ---------- */
+  .price { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+  .piece { display: flex; flex-direction: column; gap: var(--stack); background: var(--color-panel);
+           border: 1px solid var(--color-line); border-radius: var(--radius-card); padding: 24px; }
+  .piece::before { content: ""; display: block; width: 24px; height: 3px; border-radius: 2px; background: var(--color-ambar); margin-bottom: 4px; } /* logro / valor */
+  .l07 .essay .price { margin-top: 24px; }
+  .l07 .essay .piece p { line-height: 1.4; }
+  .l07 .essay .piece p + p { margin-top: 0; }
+  /* monto protagonista (pedido del usuario, 2026-09-29): etiqueta arriba y monto grande; mismo texto, en su orden */
+  .amt { display: flex; flex-direction: column; gap: 2px; }
+  .amt-n, .b09 .t-mxl, [data-count] { font-variant-numeric: tabular-nums; }  /* B4 */
+  .amt .amt-l { color: var(--color-ink); }
+  .amt .amt-n, .l07 .essay .piece .amt .amt-n { line-height: 1; letter-spacing: -.02em; color: var(--color-ink); }
+  .piece > .btn { margin-top: auto; }
+  .piece > p:has(+ .btn) { margin-bottom: 10px; }
+  /* desktop: tarjetas de precio verticales y con aire (pedido del usuario, 2026-09-29).
+     ~324 × 400 px; la altura se limita a 52svh para que la lámina 11.4 siga cabiendo en 1280 × 688 */
+  @media (min-width: 860px) {
+    .price .piece { min-height: min(25rem, 52svh); padding: 28px 26px 26px; gap: 14px; }
+    .price .piece .amt { gap: 6px; margin-bottom: 4px; }
+    .l07 .essay .price .piece p { line-height: 1.5; }
+  }
+  .guar { max-width: var(--w-wide); text-align: left; margin-bottom: 22px; }
+
+  /* ---------- par de CTA: toma el ancho de la columna de su lámina ---------- */
+  .colbox { width: min(100%, var(--w-wide)); margin: 0 auto; align-items: stretch; }
+  .colbox .guar { max-width: none; }
+  .cta { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+  .go-stack { gap: 22px; }
+  /* un botón bajo un golpe (09.1): al ancho de la columna de lectura, con el aire de 32/48 px */
+  .b01 > .cta-one { width: min(100%, var(--w-read)); margin-top: var(--air); }
+  .l07 .essay .go-in { margin-top: 48px; }
+  .l07 .essay .go-in p { line-height: 1.3; }
+  .go-in .tc { text-align: center; }
+
+  /* ---------- botones = filas de acción (§5) ---------- */
+  .btn {
+    --role: var(--color-azul-900);
+    position: relative;
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    width: 100%; min-height: 56px;
+    padding: 10px 10px 10px 22px;
+    border: 0; border-radius: var(--radius-btn);
+    background: var(--color-azul-900); color: #fff;
+    font: 600 var(--t-body)/1.3 var(--font-body);
+    text-align: left; text-decoration: none; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform var(--t-spring) var(--ease-spring), border-color var(--t-fast) var(--ease-out), background-color var(--t-fast) var(--ease-out);
+  }
+  /* ADA = cian (V05): relleno cian con texto en tinta (contraste 9.0) */
+  .btn.alt { --role: var(--color-cian); background: var(--color-cian); color: var(--color-ink); }
+  .btn.alt .arr { background: rgb(20 18 15 / .10); }
+  .btn .arr {
+    flex: none; width: 36px; height: 36px; border-radius: var(--radius-round);
+    display: flex; align-items: center; justify-content: center;
+    background: rgb(255 255 255 / .16); font-weight: 600;
+    transition: transform var(--t-spring) var(--ease-spring);
+  }
+  .btn .arr[data-icon]::before { content: attr(data-icon); }
+  /* secundario: superficie clara con borde de 2 px en el color de su rol (pedido del usuario, 2026-09-29) */
+  .btn.sec { --line: var(--color-azul-900); --tint: color-mix(in srgb, var(--color-azul-900) 10%, var(--color-panel));
+             background: var(--color-panel); color: var(--color-ink); border: 2px solid var(--line); padding-left: 20px; }
+  .btn.sec .arr { background: var(--tint); color: var(--role); }
+  .btn.r-ada { --role: var(--color-ink); --line: var(--color-cian); --tint: var(--color-cian-tinte); }  /* ADA = cian */
+  .btn.r-ins { --role: var(--color-azul-900); --line: var(--color-azul-900); }                          /* inscripción = azul */
+  @media (hover: hover) {
+    .btn:hover { transform: translateY(-2px); }
+    .btn.sec:hover { background: var(--tint); }
+    .btn:hover .arr[data-dir=ne] { transform: translate(2px, -2px); }
+    .btn:hover .arr[data-dir=e]  { transform: translateX(3px); }
+    .btn:hover .arr[data-dir=s]  { transform: translateY(3px); }
+  }
+  .btn:active, .btn.is-pressed { transform: scale(.98); transition-duration: 60ms; }
+  .btn:focus-visible { outline: 2px solid var(--color-azul-900); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) {
+    .btn, .btn .arr { transition-duration: 120ms; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:hover .arr[data-dir] { transform: none; }
+  }
+
+  /* ---------- diálogo ADA / HIJO (§5) ---------- */
+  .dlg { max-width: var(--w-wide); display: flex; flex-direction: column; gap: 12px; }
+  .dlg-k { margin-top: -6px; margin-bottom: 6px; }
+  .msg { max-width: 85%; padding: 12px 16px; border-radius: var(--radius-bubble); }
+  .msg p { max-width: 34ch; }
+  /* ADA = cian; el hijo = coral (conversación) */
+  .msg.ada { align-self: flex-start; background: var(--color-cian-tinte); border-bottom-left-radius: 6px; }
+  .msg.hijo { align-self: flex-end; background: var(--color-coral-tinte); border-bottom-right-radius: 6px; text-align: left; }
+  .who { display: block; margin-bottom: 4px; }
+  .msg-row { display: flex; align-items: flex-end; gap: 9px; max-width: 92%; }
+  .msg-row.ada { align-self: flex-start; }
+  .msg-row.hijo { align-self: flex-end; flex-direction: row-reverse; }
+  .msg-row .msg { max-width: none; align-self: auto; }
+  .avatar { width: 52px; height: 52px; border-radius: 14px; overflow: hidden; flex: none; background: var(--color-line); }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---------- escenas (sello y secuencia) ---------- */
+  .stop.k-seal, .stop.k-seq { padding: 0; }
+  .c-seal { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .c-seq canvas { position: absolute; inset: 0; }
+  .c-seq .seq-poster { position: absolute; inset: 0; }
+  .c-seq.ready .seq-poster { visibility: hidden; }
+  .c-seal img, .c-seq canvas { width: 100%; height: 100%; object-fit: cover; }
+  picture { display: contents; }
+  .c-seal[data-fit=contain] img { object-fit: contain; }
+
+  /* ---------- Hero ---------- */
+  .stop.k-hero { padding: 0; }
+  .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 45%; }
+  .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgb(16 15 13 / .72) 0%, rgb(16 15 13 / .34) 55%, rgb(16 15 13 / .08) 100%); }
+  .hero-logo { position: absolute; z-index: 3; top: var(--pad-y); left: var(--pad-x); width: var(--brand-hero-w); height: auto; }
+  .hero-text { position: relative; z-index: 2; color: var(--color-night-ink); padding: 0 var(--pad-x); max-width: 24ch; }
+
+  /* ---------- presentación de ADA (7 / 5) ---------- */
+  .ada-intro { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); align-items: center; }
+  .ada-text { grid-column: 1 / span 7; display: flex; flex-direction: column; gap: 12px; max-width: var(--w-read); justify-self: end; }
+  .ada-fig { grid-column: 8 / span 5; position: relative; justify-self: center; margin: 0; height: min(70svh, 616px); aspect-ratio: 400 / 616; }
+  .ada-fig canvas, .ada-fig .ada-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .ada-fig.ready .ada-still { visibility: hidden; }
+
+  /* ---------- evolución de → a (07.6) ---------- */
+  .evo { display: flex; flex-direction: column; align-items: center; }
+  .evo-pre { width: min(100%, var(--w-read)); margin-bottom: 32px; }
+  .evo-cols { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 28px; width: 100%; max-width: 1040px; }
+  .evo-col { display: flex; }
+  .evo-col.a { justify-content: flex-end; text-align: right; }
+  .evo-col.b { justify-content: flex-start; text-align: left; }
+  .evo-col p { max-width: 15ch; }
+  .evo-conn { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .evo-arrow { display: block; width: 80px; height: 2px; background: currentColor; position: relative; }
+  .evo-arrow::after { content: ""; position: absolute; right: 0; top: 50%; width: 12px; height: 12px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: translate(0, -50%) rotate(45deg); }
+
+  /* ---------- indicador de continuar ---------- */
+  .cue { position: absolute; left: 50%; bottom: calc(var(--pad-y) + 6px); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 5px; z-index: 4; pointer-events: none; }
+  /* más llamativas (pedido del usuario, 2026-09-29): en el color de los botones sobre claro y en blanco sobre oscuro */
+  .cue { color: var(--color-azul-900); gap: 6px; }
+  .nightc .cue, .stop.k-hero .cue { color: var(--color-night-ink); }
+  .cue span { width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 12px solid currentColor; opacity: .35; animation: cueBlink 1.8s ease-in-out infinite; }
+  .cue span:nth-child(2) { animation-delay: .25s; } .cue span:nth-child(3) { animation-delay: .5s; }
+  .cue-path { gap: 10px; }
+
+  /* ---------- horizontal (cap. 02) ---------- */
+  .t-h .track { display: flex; height: 100%; width: calc(var(--n, 4) * 100vw); }
+  .t-h .stop.panel { position: relative; flex: 0 0 100vw; height: 100%; inset: auto; pointer-events: auto; }
+
+  /* ---------- flujo: FAQ y footer ---------- */
+  .t-flow { padding: 96px var(--pad-x); background: var(--color-bg); }
+  .faq { max-width: var(--w-wide); margin: 0 auto; }
+  .faq h2 { margin-bottom: 24px; }
+  .faq details { border-top: 1px solid var(--color-line); }
+  .faq details:last-child { border-bottom: 1px solid var(--color-line); }
+  .faq summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 12px 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq details p { padding: 0 48px 20px 0; max-width: var(--w-wide); }
+  .ind { width: 32px; height: 32px; border: 1.5px solid var(--color-azul-900); border-radius: var(--radius-round); flex-shrink: 0; position: relative; transition: transform var(--t-spring) var(--ease-spring); }
+  .ind::before { content: ""; position: absolute; left: 50%; top: 44%; width: 8px; height: 8px; border-right: 1.5px solid var(--color-azul-900); border-bottom: 1.5px solid var(--color-azul-900); transform: translate(-50%, -50%) rotate(45deg); transition: transform var(--t-spring) var(--ease-spring), top var(--t-spring) var(--ease-spring); }
+  .faq details.is-open .ind::before { top: 58%; transform: translate(-50%, -50%) rotate(-135deg); }
+  .faq summary:active .ind, .faq summary.is-pressed .ind { transform: scale(.92); }
+  .foot { max-width: var(--w-grid); margin: 0 auto; display: flex; flex-direction: column; gap: 6px; }
+  .foot-logo { height: 48px; width: auto; align-self: flex-start; margin-bottom: 10px; }
+  .foot-links { margin-top: 14px; }
+
+  /* ---------- logo flotante (pedido del usuario, 2026-09-29) ----------
+     Fijo arriba a la izquierda y siempre del mismo tamaño. No es una barra: no le quita alto al encuadre.
+     Mientras el Hero está en pantalla manda el logo grande del Hero; el flotante aparece con un fundido
+     cuando el Hero termina de salir (así nunca hay dos logos a la vez). */
+  .brand { position: fixed; z-index: 55; top: var(--brand-top); left: var(--brand-left); width: var(--brand-w);
+           display: block; -webkit-tap-highlight-color: transparent;
+           opacity: 0; pointer-events: none; transition: opacity 240ms var(--ease-out); }
+  .brand.is-on { opacity: 1; pointer-events: auto; }
+  .brand img { display: block; width: 100%; height: auto; transition: opacity 200ms var(--ease-out); }
+  .brand .brand-light { position: absolute; inset: 0; opacity: 0; }
+  .brand.on-light .brand-light { opacity: 1; }
+  .brand.on-light .brand-dark { opacity: 0; }
+  /* sobre escenas claras, sombra suave solo en el logo para que la versión dark se lea (la imagen no se toca) */
+  .brand img { transition: opacity 200ms var(--ease-out), filter 200ms var(--ease-out); }
+  .brand.on-image img { filter: drop-shadow(0 1px 10px rgb(16 15 13 / .55)); }
+  .brand:focus-visible { outline-offset: 6px; border-radius: 6px; }
+  /* velo arriba del Hero para que el logo se lea sobre la escena desde el primer cuadro */
+  .stop.k-hero::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 30%; z-index: 1; pointer-events: none;
+                         background: linear-gradient(to bottom, rgb(16 15 13 / .45), rgb(16 15 13 / 0)); }
+
+  /* ---------- menú de hamburguesa (pedido del usuario, 2026-09-29: en todos los dispositivos) ---------- */
+  .menu-btn { position: fixed; z-index: 60; top: calc(var(--brand-top) - 6px); right: calc(var(--brand-left) - 10px);
+              width: 48px; height: 48px; border: 0; border-radius: var(--radius-round); background: transparent;
+              color: var(--color-night-ink); cursor: pointer; display: grid; place-items: center;
+              -webkit-tap-highlight-color: transparent; transition: color 200ms var(--ease-out), filter 200ms var(--ease-out), transform 60ms; }
+  .menu-btn.on-light { color: var(--color-ink); }
+  .menu-btn.on-image { filter: drop-shadow(0 1px 8px rgb(16 15 13 / .55)); }
+  .menu-btn:active, .menu-btn.is-pressed { transform: scale(.92); }
+  .menu-btn span { position: absolute; width: 22px; height: 2px; border-radius: 2px; background: currentColor;
+                   transition: transform var(--t-spring) var(--ease-spring), opacity 160ms var(--ease-out); }
+  .menu-btn span:nth-child(1) { transform: translateY(-7px); }
+  .menu-btn span:nth-child(3) { transform: translateY(7px); }
+  .menu-open .menu-btn { color: var(--color-ink); filter: none; }
+  .menu-open .menu-btn span:nth-child(1) { transform: rotate(45deg); }
+  .menu-open .menu-btn span:nth-child(2) { opacity: 0; }
+  .menu-open .menu-btn span:nth-child(3) { transform: rotate(-45deg); }
+  .menu { position: fixed; inset: 0; z-index: 58; }
+  .menu[hidden] { display: none; }
+  .menu-backdrop { position: absolute; inset: 0; background: rgb(17 26 52 / .5); opacity: 0; transition: opacity 240ms var(--ease-out); }
+  .menu-panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(100%, 26rem); background: var(--color-panel);
+                display: flex; flex-direction: column; gap: 28px; padding: calc(var(--brand-top) + 72px) 28px 28px;
+                overflow-y: auto; overscroll-behavior: contain; transform: translateX(100%);
+                transition: transform var(--t-spring) var(--ease-spring); touch-action: pan-y; } /* B2: el gesto horizontal lo maneja el menú */
+  .menu.is-open .menu-backdrop { opacity: 1; }
+  .menu.is-open .menu-panel { transform: none; }
+  .menu-logo { position: absolute; top: var(--brand-top); left: 28px; width: 110px; height: auto; }
+  .menu-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .menu-item { width: 100%; display: flex; align-items: center; gap: 14px; min-height: 52px; padding: 10px 0;
+               border: 0; border-bottom: 1px solid var(--color-line); background: none; color: var(--color-ink);
+               font: 700 var(--t-sub)/1.2 var(--font-body); letter-spacing: -.01em; text-align: left; cursor: pointer;
+               -webkit-tap-highlight-color: transparent; }
+  .menu-item::before { content: ""; flex: none; width: 9px; height: 9px; border-radius: var(--radius-round); border: 1.5px solid var(--color-line-strong); }
+  .menu-item[aria-current="step"]::before, .menu-item[aria-current="page"]::before { background: var(--color-azul-900); border-color: var(--color-azul-900); }
+  a.menu-item { text-decoration: none; }
+  .menu-item.faq { font-weight: 600; font-size: var(--t-body); }
+  .menu-item.faq::before { border-radius: 2px; }
+  .menu-item:hover, .menu-item:focus-visible { color: var(--color-azul-900); }
+  .menu-item:active, .menu-item.is-pressed { opacity: .7; }
+  .menu-panel .cta { margin-top: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    .menu-panel { transition: transform 1ms, opacity 160ms; opacity: 0; transform: none; }
+    .menu.is-open .menu-panel { opacity: 1; }
+  }
+
+  /* ---------- menú de recorrido (plan §4.5) ---------- */
+  .rail { position: fixed; right: 18px; top: 50%; transform: translateY(-50%); z-index: 50; display: none;
+          flex-direction: column; align-items: flex-end; gap: 0; opacity: 0; pointer-events: none;
+          transition: opacity 240ms var(--ease-out); color: var(--color-ink); }
+  .rail.is-on { opacity: 1; pointer-events: auto; }
+  .rail.on-night { color: var(--color-night-ink); }
+  .rail-line { position: absolute; right: 7px; top: 8px; bottom: 8px; width: 1px; background: color-mix(in srgb, currentColor 22%, transparent); }
+  .rail-fill { position: absolute; right: 7px; top: 8px; bottom: 8px; width: 1px; background: var(--color-azul-900); transform: scaleY(0); transform-origin: top; will-change: transform; }
+  .rail.on-night .rail-fill { background: var(--color-azul-500); }
+  .rail-item { position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; font: 500 var(--t-small)/1.2 var(--font-body); -webkit-tap-highlight-color: transparent; }
+  .rail-label { opacity: 0; transform: translateX(6px); white-space: nowrap; padding: 4px 10px; border-radius: 8px;
+                background: var(--color-panel); color: var(--color-ink); border: 1px solid var(--color-line);
+                transition: opacity var(--t-fast) var(--ease-out), transform var(--t-spring) var(--ease-spring); pointer-events: none; }
+  .rail-item:hover .rail-label, .rail-item:focus-visible .rail-label, .rail.show-labels .rail-label { opacity: 1; transform: none; }
+  .rail-dot { width: 15px; height: 15px; display: grid; place-items: center; flex: none; }
+  .rail-dot::before { content: ""; width: 7px; height: 7px; border-radius: var(--radius-round); border: 1.5px solid currentColor; background: var(--color-bg); transition: transform var(--t-fast) var(--ease-out), background-color var(--t-fast) var(--ease-out); }
+  .rail.on-night .rail-dot::before { background: var(--color-night); }
+  .rail-item.is-past .rail-dot::before { background: currentColor; }
+  .rail-item[aria-current="step"] .rail-dot::before { transform: scale(1.45); border-color: var(--color-azul-900); background: var(--color-azul-900); }
+  .rail.on-night .rail-item[aria-current="step"] .rail-dot::before { border-color: var(--color-azul-500); background: var(--color-azul-500); }
+  .rail-item:active .rail-dot::before { transform: scale(1.1); }
+  .progress { position: fixed; left: 0; top: 0; height: 3px; width: 100%; z-index: 50; background: var(--color-azul-900); transform: scaleX(0); transform-origin: left; pointer-events: none; }
+  @media (min-width: 860px) { .rail { display: flex; } .progress { display: none; } }
+
+  /* ---------- diálogo «Conversar con ADA primero» (datos como en la propuesta A) ---------- */
+  /* centrado en el viewport: el reset de Tailwind quita el margin:auto que el navegador usa para centrar <dialog> */
+  .ada-dialog { position: fixed; inset: 0; margin: auto; width: min(100% - 32px, 30rem); height: fit-content; max-height: calc(100dvh - 32px); overflow: auto;
+                padding: 0; border: 1px solid var(--color-line); border-radius: 20px; background: var(--color-panel); color: var(--color-ink); }
+  .ada-dialog::backdrop { background: rgb(17 26 52 / .6); animation: dzFade 240ms var(--ease-out); }  /* A3 */
+  .ada-dialog .close { transition: transform var(--t-spring) var(--ease-spring); }
+  .ada-dialog .close:active, .ada-dialog .close.is-pressed { transform: scale(.92); }
+  .ada-dialog form { display: flex; flex-direction: column; gap: 16px; padding: 28px 24px 24px; }
+  .ada-dialog .dlg-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+  .ada-dialog .close { width: 40px; height: 40px; border: 1px solid var(--color-line); border-radius: var(--radius-round); background: var(--color-panel); color: var(--color-ink); font-size: 22px; line-height: 1; cursor: pointer; flex: none; }
+  .ada-dialog label, .ada-dialog legend { display: flex; flex-direction: column; gap: 6px; font: 600 var(--t-small)/1.3 var(--font-body); }
+  .ada-dialog fieldset { border: 0; padding: 0; margin: 0; }
+  .ada-dialog input { min-height: 48px; padding: 0 14px; border: 1px solid var(--color-line-strong); border-radius: 12px; background: var(--color-panel); color: var(--color-ink); font: 500 var(--t-body)/1.3 var(--font-body); }
+  .ada-dialog .consent { display: block; font-weight: 500; line-height: 1.5; }
+  .ada-dialog .consent input[type='checkbox'] { min-height: 0; width: 18px; height: 18px; padding: 0; margin-right: 8px; vertical-align: middle; }
+  .ada-dialog .consent a { color: inherit; font-weight: 700; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px; }
+  .ada-dialog .consent a:hover, .ada-dialog .consent a:focus-visible { color: var(--color-azul-900); }
+  .ada-dialog input:focus-visible { outline: 2px solid var(--color-azul-900); outline-offset: 2px; }
+  .channel { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+  .channel button { min-height: 44px; border: 1px solid var(--color-line-strong); border-radius: 12px; background: var(--color-panel); color: var(--color-ink); font: 600 var(--t-small)/1 var(--font-body); cursor: pointer; }
+  .channel button { transition: transform var(--t-spring) var(--ease-spring), background-color var(--t-fast) var(--ease-out); }
+  .channel button:active, .channel button.is-pressed { transform: scale(.97); }  /* A2 */
+  .channel button[aria-pressed="true"] { background: var(--color-cian); border-color: var(--color-cian); color: var(--color-ink); }
+  .ada-dialog .note { color: var(--color-ink); }
+  .legal-link { padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }
+  .legal-form { display: flex; flex-direction: column; gap: 16px; padding: 28px 24px 24px; }
+  .cookie-banner { position: fixed; z-index: 100; right: 16px; bottom: 16px; width: min(100% - 32px, 560px); padding: 20px; border: 1px solid var(--color-line); border-radius: 18px; background: var(--color-panel); color: var(--color-ink); box-shadow: 0 16px 48px rgb(17 26 52 / .2); }
+  .cookie-banner h2 { margin: 0; font: 700 var(--t-sub)/1.1 var(--font-display); }
+  .cookie-banner p { margin: 8px 0 0; line-height: 1.45; }
+  .cookie-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .cookie-actions .btn { flex: 1 1 150px; min-height: 42px; }
+  .cookie-choice { display: grid !important; grid-template-columns: 44px 1fr; gap: 4px 10px; align-items: start; cursor: pointer; }
+  .cookie-choice input { appearance: none; width: 42px !important; height: 24px !important; min-height: 24px !important; margin: 0 !important; border-radius: 999px !important; background: var(--color-line) !important; cursor: pointer; }
+  .cookie-choice input::after { display: block; width: 18px; height: 18px; margin: 2px; border-radius: 50%; background: var(--color-panel); content: ''; box-shadow: 0 1px 3px rgb(0 0 0 / .2); transition: transform var(--t-fast) var(--ease-out); }
+  .cookie-choice input:checked { background: var(--color-azul-900) !important; }
+  .cookie-choice input:checked::after { transform: translateX(18px); }
+  .cookie-choice input:disabled { cursor: not-allowed; opacity: .72; }
+  /* Documentos legales: reutilizan el FAQ de B; solo se ajusta su posición dentro del flujo. */
+  .legal-faq > h1 { margin: 12px 0 18px; }
+  .legal-faq .legal-intro { max-width: var(--w-wide); margin: 0; line-height: 1.6; }
+  .legal-faq-list { margin-top: var(--air); }
+  .legal-faq .legal-faq-list summary { min-height: 68px; padding: 18px 0; }
+  .legal-faq .legal-faq-list details p { padding-bottom: 28px; }
+  .cookie-choice span { grid-column: 2; font-weight: 400; font-size: var(--t-small); line-height: 1.45; }
+}
+
+/* ---------- B7: will-change solo mientras un pin está activo (apple-design §11) ---------- */
+.pin.is-pinned .stop { will-change: opacity; }
+.pin.is-pinned .stop > .c, .pin.is-pinned .c-seal img, .pin.is-pinned .card, .pin.is-pinned .track { will-change: transform; }
+
+/* ---------- mazo apilado: móvil < 600 px, fuera del modo reducido y en la prueba 3 (una tarjeta por gesto) ---------- */
+@media (max-width: 599px) {
+  :is(body:not(.flowmode), body.paged) .l08 .entries.deck { grid-template-columns: 1fr; gap: 0; }
+  :is(body:not(.flowmode), body.paged) .entries.deck > .card { grid-area: 1 / 1; box-shadow: 0 -6px 16px rgb(20 18 15 / .07); }
+  :is(body:not(.flowmode), body.paged) .entries.deck > .card:nth-child(1) { align-self: start; }
+  :is(body:not(.flowmode), body.paged) .entries.deck > .card:nth-child(2) { margin-top: var(--peek); }
+  :is(body:not(.flowmode), body.paged) .entries.deck > .card:nth-child(3) { margin-top: calc(var(--peek) * 2); }
+  :is(body:not(.flowmode), body.paged) .entries.deck > .card:nth-child(4) { margin-top: calc(var(--peek) * 3); }
+  .paged .stop.k-deck { height: 100svh; min-height: 0; overflow: hidden; }   /* prueba 3: el mazo ocupa una pantalla, fijado */
+}
+
+/* ---------- móvil y tablet (< 860 px) ---------- */
+@media (max-width: 859px) {
+  .only-d { display: none !important; }
+  .l05 .w-q, .l05 .def { grid-column: span 12; }
+  .l05 .def { border-left: 0; border-top: 1px solid var(--color-line); padding-left: 0; padding-top: 16px; }
+  .s3, .s4 { grid-column: span 12; }
+  .l08 .entries { gap: 14px; margin-top: 32px; }
+  .card { padding: 20px 16px 16px; }
+  .card::before { margin-bottom: 4px; }
+  .price { grid-template-columns: 1fr; }
+  .piece { padding: 16px; }
+  .l07 .essay .go-in { margin-top: 32px; }
+  .dlg { gap: 8px; } .msg { max-width: 92%; padding: 8px 12px; } .who { margin-bottom: 2px; } .dlg-k { margin-bottom: 2px; }
+  .msg-row { max-width: 100%; gap: 8px; } .avatar { width: 34px; height: 34px; border-radius: 10px; }
+  .c-seal img { height: auto; max-height: 100%; }
+  .c-seal img[data-v] { height: 100%; max-height: none; object-fit: cover; } /* vertical 2:3: llena la pantalla */
+  /* Hero en móvil/tablet: la frase va abajo, sobre las flechas, para no taparle la cara al chico (pedido del usuario) */
+  .stop.k-hero { align-items: flex-end; }
+  .stop.k-hero .hero-text { padding-bottom: calc(var(--pad-y) + 64px); }
+  .ada-text, .ada-fig { grid-column: 1 / -1; }
+  .ada-text { justify-self: stretch; max-width: none; }
+  .ada-fig { height: 28svh; }
+  .ada-fig canvas { display: none; }
+  .evo-pre { margin-bottom: 20px; }
+  .evo-cols { grid-template-columns: 1fr; gap: 10px; }
+  .evo-col.a, .evo-col.b { justify-content: center; text-align: center; }
+  .evo-arrow { width: 2px; height: 34px; }
+  .evo-arrow::after { right: auto; left: 50%; top: auto; bottom: 0; transform: translate(-50%, 0) rotate(135deg); }
+}
+@media (min-width: 600px) and (max-width: 859px) {
+  .ada-text { max-width: var(--w-read); justify-self: center; }
+  /* Hero en tablet: la frase usa todo el ancho entre márgenes (pedido del usuario); en teléfono sigue en 24ch */
+  .hero-text { max-width: none; width: 100%; }
+}
+
+/* ---------- desktop (≥ 860 px) ---------- */
+@media (min-width: 860px) {
+  .only-m { display: none !important; }
+  .hero-logo { left: max(var(--pad-x), calc((100% - var(--w-grid)) / 2 + var(--pad-x))); }
+  .stop.k-hero { align-items: flex-end; }
+  .stop .hero-text { text-align: left; width: 100%; max-width: var(--w-grid); margin: 0 auto; padding: 0 var(--pad-x) 10vh; }
+  .stop .hero-text h1 { max-width: calc(var(--w-grid) * 7 / 12); }
+  .stop .scrim { background: linear-gradient(to top, rgb(16 15 13 / .72) 0%, rgb(16 15 13 / .45) 30%, rgb(16 15 13 / 0) 60%); }
+}
+
+/* etiqueta de las páginas de prueba (no existe en la versión real) */
+.test-tag { position: fixed; left: 12px; bottom: 12px; z-index: 70; padding: 6px 10px; border-radius: 8px; background: rgb(17 26 52 / .85); color: #fff; font: 600 12px/1.2 var(--font-body); pointer-events: none; }
+
+@keyframes dzFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cueBlink { 0%, 100% { opacity: .35; transform: translateY(0); } 40% { opacity: 1; transform: translateY(4px); } }
+
+/* ---------- modo reducido (movimiento reducido o sin GSAP): el del wireframe ---------- */
+.flowmode .stage { height: auto; overflow: visible; }
+.flowmode .stop { position: relative; inset: auto; min-height: 100svh; opacity: 0; transition: opacity .2s ease; pointer-events: auto; }
+.flowmode .stop.inview { opacity: 1; }
+.flowmode .stop.nightc { background: var(--color-night); }
+.flowmode .night { display: none; }
+.flowmode .reveal { display: flex; flex-direction: column; gap: 10px; }
+.flowmode .t-h .track { display: block; width: auto; }
+.flowmode .t-h .stop.panel { flex: none; height: auto; min-height: 100svh; }
+.flowmode .c-seal { position: relative; inset: auto; width: 100%; min-height: 100svh; }  /* ancho completo: la secuencia (póster y canvas absolutos) no tiene ancho propio */
+.flowmode .c-seq canvas, .flowmode .ada-fig canvas { display: none; }
+@media (min-width: 860px) { .flow-video .c-seq canvas, .flow-video .ada-fig canvas { display: block; } }  /* prueba 3: los videos con scrub sí corren */
+.flowmode .cue span { animation: none; opacity: .6; }
+.flowmode .stop.k-hero { transition-duration: .3s; }
+/* prueba 3 · una estación por gesto: cada estación llega compuesta, sin fundido; sin rebote ni "jalar para recargar" */
+.paged .stop { transition: none; }
+/* sin animación, la fila 05 de la lista no lleva la banda del acento (pedido del usuario; en la versión animada aparece al salir de la parada) */
+.flowmode .l03 .acc-copy { display: none; }
+/* cada escena ocupa exactamente una pantalla, con la composición de la versión animada; la imagen (y su zoom) no se sale de su estación */
+.paged .stop.k-seal, .paged .stop.k-seq { height: 100svh; min-height: 0; overflow: hidden; }
+.paged .c-seal { position: absolute; inset: 0; min-height: 0; }
+html.dz-paged, html.dz-paged body { overscroll-behavior-y: none; }
+
+/* ---------- página «Las reglas de ADA» (03-build-plan-reglas.md) ----------
+   Página aparte, recorrida por estaciones con el motor de la landing (una estación por gesto). Aquí va SOLO la maqueta
+   de sus bloques; el color, la tipografía, la tarjeta, los botones, el menú, el formulario, la flecha de scroll y el pie
+   son los de la landing (mismos tokens, mismas clases). */
+/* qué variante se ve en cada ancho: w = 3 tarjetas por gesto · t = 2 · s = apiladas, 1 · n = todo menos teléfono */
+@media (max-width: 1099px) { .rg-w { display: none !important; } }
+@media (max-width: 599px), (min-width: 1100px) { .rg-t { display: none !important; } }
+@media (min-width: 600px) { .rg-s { display: none !important; } }
+@media (max-width: 599px) { .rg-n { display: none !important; } }
+.rg-page .stop { padding-top: 68px; padding-bottom: 28px; }   /* arriba: el logo y el menú */
+.rg-page .stop:has(> .cue) { padding-bottom: 52px; }           /* la entrada: abajo va la flecha de scroll */
+@media (min-width: 600px) {
+  .rg-page .stop { padding-top: 84px; padding-bottom: 40px; }
+  .rg-page .stop:has(> .cue) { padding-bottom: 76px; }
+}
+.rg-page .stop.k-deck { align-items: center; align-items: safe center; }   /* centrado; si no cabe, empieza arriba para no cortarse */
+/* entrada */
+.rg-intro-grid { display: grid; gap: 24px; }
+.rg-head { grid-area: head; } .rg-lead { grid-area: lead; } .rg-fig { grid-area: fig; } .rg-list { grid-area: list; } .rg-acts { grid-area: acts; }
+/* la barra corta del sistema (la de las tarjetas), en el color de ADA, abre la página */
+.rg-head::before { content: ""; display: block; width: 24px; height: 3px; border-radius: 2px; background: var(--color-cian); margin-bottom: 14px; }
+.rg-head h1 { margin-top: 8px; }
+.rg-lead { max-width: var(--w-wide); }
+.rg-lead p { line-height: 1.6; text-wrap: pretty; }
+.rg-lead p + p { margin-top: 1em; }
+.rg-fig img { width: 100%; height: auto; }
+.rg-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.rg-checks li { position: relative; padding-left: 36px; line-height: 1.35; }
+/* palomita: cuadro cian (ADA = cian, solo como relleno) con el trazo en tinta */
+.rg-checks li::before { content: ""; position: absolute; left: 0; top: 50%; width: 24px; height: 24px; margin-top: -12px; border-radius: 8px; background: var(--color-cian); }
+.rg-checks li::after { content: ""; position: absolute; left: 9px; top: 50%; width: 6px; height: 11px; margin-top: -8px; border-right: 2.4px solid var(--color-ink); border-bottom: 2.4px solid var(--color-ink); transform: rotate(45deg); }
+.rg-checks a { display: flex; align-items: center; justify-content: space-between; gap: 14px; color: inherit; text-decoration: none; }
+.rg-checks a::after { content: "↓"; color: var(--color-azul-900); font-weight: 600; transition: transform var(--t-fast) var(--ease-out); }   /* lleva a su tarjeta */
+.rg-checks a:hover, .rg-checks a:focus-visible { color: var(--color-azul-900); }
+.rg-checks a:hover::after { transform: translateY(2px); }
+.rg-full { display: none; }
+/* teléfono: la entrada en dos estaciones (prueba): título y texto · ADA, la lista y los botones */
+.rg-intro-a { display: flex; flex-direction: column; gap: var(--air); }
+.rg-intro-b { display: flex; flex-direction: column; gap: 24px; }
+.rg-intro-b .rg-fig { align-self: center; }
+.rg-intro-b .rg-fig img { height: 36svh; width: auto; }
+/* las reglas: la tarjeta de la landing (L08) */
+.rg-l1 { display: block; }
+.rg-grid { display: grid; gap: var(--gap); align-items: stretch; }
+.rg-g2 { grid-template-columns: 1fr 1fr; }
+.rg-g3 { grid-template-columns: repeat(3, 1fr); }
+.rg-rule:focus { outline: none; }
+/* jerarquía con el sistema tipográfico de la landing (pedido del usuario): rótulo pequeño en violeta (ADA en texto),
+   título pesado, la regla en negritas y en azul (criterio), cuerpo en lectura */
+.rg-rule-txt { display: flex; flex-direction: column; gap: 6px; }
+.rg-rule-t { margin-top: 2px; text-wrap: balance; }
+.rg-rule-s { margin-top: 10px; line-height: 1.35; }
+.rg-rule-s + p { margin-top: 4px; }
+/* título de sección: un golpe centrado, solo en su estación, como los títulos de capítulo de la landing (corrección del usuario) */
+.rg-sec-head h2 { text-wrap: balance; }   /* dos líneas: «ADA no improvisa:» / «responde dentro de estas reglas» */
+/* «La regla más importante»: lámina de impacto (pedido del usuario). Bisagra oscura, título monumental con el acento
+   del cierre de marca de la landing e imagen a sangre: arriba en teléfono y tablet vertical, media pantalla en desktop */
+.rg-page .stop.rg-imp { padding: 0; align-items: stretch; }
+.rg-imp-grid { width: 100%; min-height: 100svh; display: grid; grid-template-rows: 38svh 1fr; grid-template-areas: "fig" "txt"; }
+.rg-imp-txt { grid-area: txt; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 22px var(--pad-x) 28px; }
+.rg-imp-txt::before { content: ""; display: block; width: 24px; height: 3px; border-radius: 2px; background: var(--color-cian); margin-bottom: 8px; }
+.rg-imp-t { margin-top: 4px; }
+.rg-imp-t > .hl:first-child { display: block; }   /* «Presencia,» / «no vigilancia» en dos líneas en todos los tamaños */
+.rg-imp-s { margin-top: 12px; line-height: 1.3; }
+.rg-imp-b { margin-top: 6px; max-width: var(--w-wide); line-height: 1.55; }
+.rg-imp-fig { grid-area: fig; position: relative; overflow: hidden; }
+.rg-imp-fig img, .rg-imp-fig picture { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; }
+.rg-deck { --peek: 92px; }   /* mazo del teléfono: la tarjeta anterior asoma con su rótulo y su título */
+/* cierre: una sola estación con el pie incluido. Arriba, el retrato y el texto; después, los botones en un bloque propio
+   (las dos acciones principales juntas, con el mismo peso; «Regresar a Digizen», secundario, aparte); abajo, el pie. */
+.rg-page .stop.rg-end { flex-direction: column; justify-content: flex-start; padding-bottom: 20px; }
+.rg-end > .rg-close { flex: 1 1 auto; display: flex; align-items: center; }
+.rg-close-grid { width: 100%; display: grid; gap: 16px; grid-template-areas: "copy" "por" "acts"; }   /* teléfono: el retrato va después del texto (pedido del usuario) */
+.rg-por { grid-area: por; justify-self: center; width: min(46%, 190px); }
+.rg-por img { width: 100%; height: auto; }
+.rg-close-copy { grid-area: copy; }
+.rg-close-copy > .t-semi { margin-top: 8px; }
+.rg-close-copy > .t-body { margin-top: 14px; max-width: var(--w-wide); }
+.rg-close-acts { grid-area: acts; display: grid; gap: 10px; margin-top: 8px; }   /* teléfono: apilados */
+.rg-close-acts .btn { min-height: 60px; }   /* los tres a la misma altura (el secundario lleva borde) */
+/* el pie de la landing, dentro de la estación del cierre */
+.rg-foot { flex: none; width: 100%; max-width: var(--w-grid); margin: 20px auto 0; padding-top: 16px; border-top: 1px solid var(--color-line); }
+.rg-foot .foot { gap: 2px; }
+.rg-foot .foot-logo { height: 36px; margin-bottom: 6px; }
+.rg-foot .foot-links { margin-top: 6px; }
+/* tablet (600–859): texto y lista a la izquierda, ADA a la derecha; los dos botones en una sola fila a todo el ancho,
+   fuera de la columna del texto: uno queda debajo de ADA (pedido del usuario) */
+@media (min-width: 600px) and (max-width: 859px) {
+  .rg-intro-grid { grid-template-columns: 1.15fr .85fr; grid-template-areas: "head fig" "lead fig" "list fig" "acts acts"; column-gap: var(--gap); }
+  .rg-fig { align-self: center; justify-self: center; width: min(100%, 300px); }
+  .rg-acts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .rg-imp-grid { grid-template-rows: 50svh 1fr; }
+  .rg-imp-txt { padding: 32px 48px 40px; }
+}
+/* tablet y desktop: un bloque de botones propio (duplicado del de teléfono, que se ve perfecto y no cambia), con los textos
+   recortados y los tres en una sola fila; la flecha solo en «Regresar a Digizen»; sin flecha, el texto va centrado
+   (pedido del usuario). Tablet: la fila va debajo del retrato y ocupa casi todo el ancho. Desktop: entre el retrato y el
+   borde derecho del contenedor. Si no cupieran en una fila (tablets angostas), el tercero baja completo, sin cortarse */
+.rg-btn-c { justify-content: center; text-align: center; padding-left: 22px; padding-right: 22px; }
+@media (min-width: 600px) {
+  .rg-close-grid { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "por copy" "acts acts"; column-gap: var(--gap); row-gap: var(--air); align-items: center; }
+  .rg-por { width: 200px; justify-self: start; }
+  .rg-acts-row { display: flex; flex-flow: row wrap; gap: 12px; width: 100%; margin-top: 0; }
+  .rg-acts-row .btn { flex: 1 1 30%; width: auto; white-space: nowrap; }   /* misma base para los tres: miden lo mismo aunque el secundario lleve borde */
+  /* el secundario, también centrado; con menos aire interno cabe con su flecha en el mismo ancho que los otros dos (tablet de 768) */
+  .rg-acts-row .btn.sec { justify-content: center; gap: 8px; padding-left: 16px; padding-right: 8px; }
+  .rg-foot .foot { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 20px; }
+  .rg-foot .foot-logo { margin: 0 8px 0 0; align-self: center; }
+  .rg-foot .foot-links { margin: 0 0 0 auto; }
+}
+@media (min-width: 860px) {
+  /* la entrada es una pantalla: ADA grande a la izquierda; título en una línea; texto y botones en su columna; lista al lado */
+  .rg-intro-grid { grid-template-columns: minmax(220px, 280px) minmax(0, 1fr); grid-template-areas: "fig head" "fig lead" "fig acts" "list list";
+                   column-gap: 40px; row-gap: 26px; align-items: start; }
+  .rg-fig { align-self: center; }
+  .rg-fig img { max-height: 64svh; object-fit: contain; }
+  .rg-short { display: none; }
+  .rg-full { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 32px; }
+  .rg-checks li::before { width: 22px; height: 22px; margin-top: -11px; border-radius: 7px; }
+  .rg-checks li::after { left: 8px; }
+  .rg-checks li { padding-left: 34px; }
+  .rg-acts { flex-direction: row; flex-wrap: wrap; gap: 12px; }
+  .rg-acts .btn { width: auto; flex: 0 1 auto; white-space: nowrap; }
+  .rg-por { width: clamp(200px, 26svh, 280px); }
+}
+/* desktop y tablet horizontal: la imagen a la izquierda, a sangre; el texto a la derecha, alineado con el borde derecho del
+   resto de la página (pedido del usuario) */
+@media (min-width: 860px) {
+  .rg-imp-grid { grid-template-columns: 5fr 7fr; grid-template-rows: none; grid-template-areas: "fig txt"; }
+  .rg-imp-txt { padding: 84px max(var(--pad-x), calc((100vw - var(--w-grid)) / 2 + var(--pad-x))) 48px 64px; }
+  .rg-imp-fig img { object-position: 17% 50%; }   /* ADA y el adolescente están en el tercio izquierdo de la escena: los dos quedan en cuadro */
+}
+@media (min-width: 860px) and (max-width: 1099px) { .rg-imp-t { font-size: var(--t-semi); } }   /* en media pantalla angosta, el monumental no cabe */
+/* desktop: los botones en la columna del texto, entre el retrato y el borde derecho; el retrato mide lo que el bloque de
+   texto y botones */
+@media (min-width: 1100px) {
+  .rg-close-grid { grid-template-areas: "por copy" "por acts"; align-items: start; }
+  .rg-por { align-self: center; width: clamp(220px, 32svh, 300px); }
+}
+@media (min-width: 1100px) {
+  /* la lista ocupa el alto del texto más los botones, como en la A; los botones quedan bajo el texto */
+  .rg-intro-grid { grid-template-columns: minmax(280px, 340px) minmax(0, 1fr) max-content; grid-template-rows: auto auto 1fr;
+                   grid-template-areas: "fig head head" "fig lead list" "fig acts list"; column-gap: 48px; row-gap: 26px; }
+  .rg-head h1 { white-space: nowrap; }
+  .rg-full { grid-template-columns: 1fr; gap: 9px; }
+}
+@media (min-width: 1100px) and (max-height: 779px) { .rg-full { gap: 6px; } }   /* laptop de pantalla baja */
+/* la flecha de scroll se ancla al borde de la primera pantalla, no al final de la estación: si la entrada llegara a medir
+   más que la pantalla, la flecha no se sale (corrección del usuario: en iPad se cortaba) */
+.rg-page .stop .cue { bottom: auto; top: calc(100svh - 78px); }
+/* tablet horizontal de pantalla baja (iPad con las barras del navegador): la entrada se compacta para caber */
+@media (min-width: 860px) and (max-width: 1099px) and (max-height: 780px) {
+  .rg-page .stop { padding-top: 76px; }
+  .rg-intro-grid { row-gap: 16px; }
+  .rg-head::before { margin-bottom: 10px; }
+  .rg-lead p { line-height: 1.5; }
+  .rg-lead p + p { margin-top: .7em; }
+  .rg-full { gap: 6px 32px; }
+  .rg-fig img { max-height: 50svh; }
+}
