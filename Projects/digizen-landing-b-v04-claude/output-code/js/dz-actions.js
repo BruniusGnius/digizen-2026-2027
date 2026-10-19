@@ -1,7 +1,6 @@
 /* Digizen · acciones de los botones (03-build-plan.md §4.6).
-   - «Conversar con ADA primero» abre el diálogo con los datos de la propuesta A
-     (nombre, canal Correo / WhatsApp, correo o número). Como en A, todavía no se envía
-     a ningún servicio: se emite `digizen:ada-request` para conectarlo después (pendiente).
+   - «Conversar con ADA primero» abre el diálogo; el envío a la API lo gestiona
+     digizen-ab.js sin emitir datos personales en eventos del navegador.
    - «Inscribir a mi hijo ↗» emite `digizen:checkout`, como en A (destino del pago pendiente).
      En el menú y al final (12.4), ese botón lleva a las tarjetas de precio para elegir la forma de pago (decisión del usuario, 2026-09-30).
    - Botones con destino pendiente (data-pending) no hacen nada todavía. */
@@ -9,6 +8,9 @@
   'use strict';
   var DZ = window.DZ;
   var dlg = document.getElementById('ada-dialog');
+  var checkoutDlg = document.getElementById('checkout-dialog');
+  var checkoutPlan = null;
+  var COOKIE_KEY = 'digizen_cookie_preferences_v1';
 
   // ---------- respuesta inmediata en pointerdown (apple-design §1, A2) ----------
   var PRESSABLE = '.btn, .lnk, .channel button, .faq summary, .menu-item, .rail-item, .menu-btn, .close';
@@ -26,13 +28,16 @@
     if (b.closest('#menu') && DZ.closeMenu) DZ.closeMenu(true);
     if (act === 'ada' && dlg) { openAda(b); return; }
     if (act === 'pricing') { DZ.goTo(DZ.isD ? '11.4' : '11.5m'); return; }   /* menú y 12.4: a las tarjetas de precio (desktop 11.4, móvil 11.5m) */
-    if (act === 'checkout') { /* como en A: el plan viaja en el evento (contado / diferido); sin plan = CTA general */
-      window.dispatchEvent(new CustomEvent('digizen:checkout', { detail: { plan: b.getAttribute('data-plan') || null } })); return; }
+    if (act === 'checkout') {
+      checkoutPlan = b.getAttribute('data-plan') || null;
+      if (checkoutDlg) { checkoutDlg.showModal(); }
+      return;
+    }
     if (b.hasAttribute('data-pending')) { e.preventDefault(); if (window.console) console.info('[digizen] destino pendiente:', b.getAttribute('data-pending')); }
   });
 
   if (!dlg) return;
-  var form = dlg.querySelector('form'), contact = dlg.querySelector('[name=contact]');
+  var contact = dlg.querySelector('[name=contact]');
   var labelTxt = dlg.querySelector('[data-contact-label]');
   var chans = dlg.querySelectorAll('[data-channel]'), opener = null;
   var CH = {
@@ -83,14 +88,54 @@
   dlg.addEventListener('close', function () { if (opener && opener.focus) opener.focus({ preventScroll: true }); });
   dlg.querySelector('[data-close]').addEventListener('click', closeAda);
   dlg.addEventListener('click', function (e) { if (e.target === dlg) closeAda(); }); /* clic en el fondo */
-  form.addEventListener('submit', function (e) {
-    e.preventDefault(); /* como en A: sin envío todavía (destino pendiente) */
-    if (!form.reportValidity()) return;
-    window.dispatchEvent(new CustomEvent('digizen:ada-request', { detail: {
-      name: form.elements.name.value.trim(),
-      channel: dlg.getAttribute('data-channel-active') || 'correo',
-      contact: contact.value.trim()
-    } }));
-  });
+  // El envío del formulario lo gestiona digizen-ab.js; no emitir PII en eventos del navegador.
   setChannel('correo');
+
+  if (checkoutDlg) {
+    var checkoutForm = checkoutDlg.querySelector('[data-checkout-consent]');
+    var closeCheckout = function () { checkoutDlg.close(); };
+    checkoutDlg.querySelector('[data-checkout-close]').addEventListener('click', closeCheckout);
+    checkoutDlg.addEventListener('click', function (e) { if (e.target === checkoutDlg) closeCheckout(); });
+    checkoutForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!checkoutForm.checkValidity()) { checkoutForm.reportValidity(); return; }
+      window.dispatchEvent(new CustomEvent('digizen:checkout', { detail: { plan: checkoutPlan } }));
+      closeCheckout();
+    });
+  }
+
+  function saveCookies(v) {
+    try { localStorage.setItem(COOKIE_KEY, JSON.stringify(v)); } catch (_) {}
+    window.dispatchEvent(new CustomEvent('digizen:cookie-preferences', { detail: { action: 'accepted', categories: v } }));
+    var banner = document.getElementById('cookie-banner'); if (banner) banner.remove();
+    var settings = document.getElementById('cookie-settings'); if (settings && settings.open) settings.close();
+  }
+  function openCookieSettings() {
+    var settings = document.getElementById('cookie-settings'); if (!settings) return;
+    var saved = {}; try { saved = JSON.parse(localStorage.getItem(COOKIE_KEY) || '{}'); } catch (_) {}
+    settings.querySelector('[name=performance]').checked = !!saved.performance;
+    settings.querySelector('[name=marketing]').checked = !!saved.marketing;
+    settings.showModal();
+  }
+  function installCookieControls() {
+    document.querySelectorAll('[data-cookie-settings]').forEach(function (b) { b.addEventListener('click', openCookieSettings); });
+    var settings = document.getElementById('cookie-settings');
+    if (settings) {
+      settings.querySelector('[data-cookie-close]').addEventListener('click', function () { settings.close(); });
+      settings.querySelector('[data-cookie-reset]').addEventListener('click', function () { var prior = {}; try { prior = JSON.parse(localStorage.getItem(COOKIE_KEY) || '{}'); localStorage.removeItem(COOKIE_KEY); } catch (_) {} if (typeof prior.performance === 'boolean' && typeof prior.marketing === 'boolean') window.dispatchEvent(new CustomEvent('digizen:cookie-preferences', { detail: { action: 'revoked', categories: prior } })); window.location.reload(); });
+      settings.querySelector('form').addEventListener('submit', function (e) { e.preventDefault(); saveCookies({ performance: settings.querySelector('[name=performance]').checked, marketing: settings.querySelector('[name=marketing]').checked }); });
+    }
+    try { if (localStorage.getItem(COOKIE_KEY)) return; } catch (_) {}
+    var banner = document.createElement('section'); banner.id = 'cookie-banner'; banner.className = 'cookie-banner'; banner.setAttribute('role', 'region');
+    banner.innerHTML = "<h2 id='cookie-title'>Tus preferencias de cookies</h2><p>Usamos cookies necesarias para que el sitio funcione. Puedes decidir si permites medición y marketing. Consulta la <a class='lnk' href='https://digizen.gnius.club/politica-de-cookies-digizen.html' target='_blank' rel='noopener'>política de cookies</a>.</p><div class='cookie-actions'><button type='button' class='btn alt' data-cookie-reject>Rechazar opcionales</button><button type='button' class='btn alt' data-cookie-config>Configurar</button><button type='button' class='btn' data-cookie-accept>Aceptar todas</button></div>";
+    document.body.appendChild(banner);
+    banner.querySelector('[data-cookie-reject]').addEventListener('click', function () { saveCookies({ performance: false, marketing: false }); });
+    banner.querySelector('[data-cookie-accept]').addEventListener('click', function () { saveCookies({ performance: true, marketing: true }); });
+    banner.querySelector('[data-cookie-config]').addEventListener('click', openCookieSettings);
+  }
+  var cookieDialog = document.createElement('dialog');
+  cookieDialog.id = 'cookie-settings'; cookieDialog.className = 'ada-dialog legal-dialog'; cookieDialog.setAttribute('aria-labelledby', 'cookie-settings-title');
+  cookieDialog.innerHTML = "<form class='legal-form'><div class='dlg-head'><h2 id='cookie-settings-title' class='pf w7 t-head bw'>Configura tus preferencias</h2><button type='button' class='close' data-cookie-close aria-label='Cerrar'>×</button></div><p class='in w5 t-small note'>Elige qué tipos de cookies opcionales permites.</p><label class='consent cookie-choice'><input type='checkbox' checked disabled><strong>Necesarias</strong><span>Siempre activas para seguridad y guardar tu elección.</span></label><label class='consent cookie-choice'><input name='performance' type='checkbox'><strong>Rendimiento y medición</strong><span>Analítica y pruebas de mejora del sitio.</span></label><label class='consent cookie-choice'><input name='marketing' type='checkbox'><strong>Marketing</strong><span>Publicidad y audiencias personalizadas.</span></label><button type='submit' class='btn alt'>Guardar preferencias</button><button type='button' class='legal-link' data-cookie-reset>Restablecer elección</button></form>";
+  document.body.appendChild(cookieDialog);
+  installCookieControls();
 })();

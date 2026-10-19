@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'Projects/digizen-landing/angular-build/**'
+      - 'Projects/digizen-landing-b-v04-claude/output-code/**'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
@@ -37,6 +38,11 @@ jobs:
       # base-href tiene que coincidir con la subcarpeta del sitio en Pages.
       - run: npx ng build --configuration production --base-href /digizen-2026-2027/
 
+      - name: Preparar versión B
+        run: |
+          cd "$GITHUB_WORKSPACE/Projects/digizen-landing-b-v04-claude/output-code"
+          python3 scripts/build.py
+
       - name: Preparar salida para Pages
         run: |
           cd dist/angular-build/browser
@@ -53,13 +59,14 @@ jobs:
           git init -q
           git config user.name 'BruniusGnius'
           git config user.email 'bruno@gnius.club'
-          # Preservar las versiones B publicadas en subcarpetas (b-*, codex-*):
-          # este deploy solo reemplaza la raiz (version A) y no las toca.
+          # Conservar vistas históricas; B v04 se reemplaza desde su fuente actual.
           git fetch -q --depth=1 "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages:refs/heads/prev
-          for d in $(git ls-tree --name-only prev | grep -E '^(b-|codex-)'); do
+          for d in $(git ls-tree --name-only prev | grep -E '^(b-|codex-)' | grep -v '^b-v04-claude$'); do
             git checkout prev -- "$d"
             echo "Preservada subcarpeta: $d"
           done
+          rm -rf b-v04-claude
+          cp -R "$GITHUB_WORKSPACE/Projects/digizen-landing-b-v04-claude/output-code" b-v04-claude
           git add -A
           git commit -q -m 'Deploy production build to GitHub Pages'
           # Historia de un solo commit: el sitio pesa >140MB y acumular

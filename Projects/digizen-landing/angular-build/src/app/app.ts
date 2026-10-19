@@ -23,7 +23,8 @@ import {
 } from '@lucide/angular';
 import { ThemeService } from './core/theme.service';
 
-type Page = 'landing' | 'rules';
+type Page = 'landing' | 'rules' | 'terms' | 'cookies';
+type CookiePreferences = { performance: boolean; marketing: boolean };
 type AdaRule = {
   title: string;
   subtitle: string;
@@ -54,6 +55,7 @@ type RuleTocItem = {
 })
 export class App implements AfterViewInit, OnDestroy {
   @ViewChild('adaDialog') private adaDialog?: ElementRef<HTMLDialogElement>;
+  @ViewChild('checkoutDialog') private checkoutDialog?: ElementRef<HTMLDialogElement>;
   @ViewChild('clockScrollVideo') private clockScrollVideo?: ElementRef<HTMLVideoElement>;
   protected readonly theme = inject(ThemeService);
   protected readonly expandedReadMore = signal<ReadonlySet<string>>(new Set());
@@ -72,6 +74,11 @@ export class App implements AfterViewInit, OnDestroy {
   protected readonly mobileCtaVisible = signal(false);
   protected readonly mobileCtaClosed = signal(false);
   protected readonly mobileCtaMode = signal<'ada' | 'checkout'>('ada');
+  protected readonly cookiePreferences = signal<CookiePreferences | null>(null);
+  protected readonly cookieSettingsOpen = signal(false);
+  protected readonly cookiePerformance = signal(false);
+  protected readonly cookieMarketing = signal(false);
+  protected readonly checkoutPlan = signal<'mensualidades' | 'contado' | null>(null);
   protected readonly adaFrames = Array.from(
     { length: 130 },
     (_, i) => `assets/digizen/ada-wave/f${String(i).padStart(3, '0')}.webp`,
@@ -208,6 +215,7 @@ export class App implements AfterViewInit, OnDestroy {
   private landingMotionRun = 0;
 
   ngAfterViewInit(): void {
+    this.loadCookiePreferences();
     this.setupAnchorScroll();
     this.setupLandingMotion();
     this.setupSectionObserver();
@@ -262,7 +270,7 @@ export class App implements AfterViewInit, OnDestroy {
   protected goHome(event?: Event, anchor = 'hero-title'): void {
     event?.preventDefault();
     this.closeMenu();
-    if (this.currentPage() === 'rules') {
+    if (this.currentPage() !== 'landing') {
       void this.transitionTo('landing', this.appUrl(anchor === 'hero-title' ? '' : `#${anchor}`), () => {
         const target = document.querySelector<HTMLElement>(`#${anchor}`);
         if (target) this.scrollToElement(target, this.anchorOffsetFor(target));
@@ -293,7 +301,11 @@ export class App implements AfterViewInit, OnDestroy {
   }
 
   private pageFromLocation(): Page {
-    return window.location.pathname.replace(/\/$/, '').endsWith('/reglas-de-ada') ? 'rules' : 'landing';
+    const path = window.location.pathname.replace(/\/$/, '');
+    if (path.endsWith('/reglas-de-ada')) return 'rules';
+    if (path.endsWith('/terminos-y-condiciones-digizen.html')) return 'terms';
+    if (path.endsWith('/politica-de-cookies-digizen.html')) return 'cookies';
+    return 'landing';
   }
 
   private refreshAfterPageChange(): void {
@@ -425,6 +437,38 @@ export class App implements AfterViewInit, OnDestroy {
     this.adaDialog?.nativeElement.close();
   }
 
+  protected acceptAllCookies(): void {
+    this.saveCookiePreferences({ performance: true, marketing: true });
+  }
+
+  protected rejectOptionalCookies(): void {
+    this.saveCookiePreferences({ performance: false, marketing: false });
+  }
+
+  protected openCookieSettings(): void {
+    const saved = this.cookiePreferences();
+    this.cookiePerformance.set(saved?.performance ?? false);
+    this.cookieMarketing.set(saved?.marketing ?? false);
+    this.cookieSettingsOpen.set(true);
+  }
+
+  protected saveCookieSettings(): void {
+    this.saveCookiePreferences({ performance: this.cookiePerformance(), marketing: this.cookieMarketing() });
+  }
+
+  protected resetCookiePreferences(): void {
+    const previous = this.cookiePreferences();
+    if (previous) window.dispatchEvent(new CustomEvent('digizen:cookie-preferences', { detail: { action: 'revoked', categories: previous } }));
+    try { window.localStorage.removeItem('digizen_cookie_preferences_v1'); } catch { /* El aviso se muestra para esta visita. */ }
+    this.cookieSettingsOpen.set(false);
+    this.cookiePreferences.set(null);
+  }
+
+  protected setCookiePreference(category: 'performance' | 'marketing', value: boolean): void {
+    if (category === 'performance') this.cookiePerformance.set(value);
+    else this.cookieMarketing.set(value);
+  }
+
   protected closeMobileCta(): void {
     this.mobileCtaClosed.set(true);
     this.mobileCtaVisible.set(false);
@@ -436,7 +480,39 @@ export class App implements AfterViewInit, OnDestroy {
       if (precio) this.scrollToElement(precio, this.anchorOffsetFor(precio));
       return;
     }
+    this.checkoutPlan.set(plan);
+    const dialog = this.checkoutDialog?.nativeElement;
+    if (dialog && !dialog.open) dialog.showModal();
+  }
+
+  protected closeCheckout(): void {
+    this.checkoutDialog?.nativeElement.close();
+  }
+
+  protected beginCheckout(event: SubmitEvent): void {
+    event.preventDefault();
+    const form = event.currentTarget as HTMLFormElement;
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    const plan = this.checkoutPlan();
+    if (!plan) return;
     window.dispatchEvent(new CustomEvent('digizen:checkout', { detail: { plan } }));
+    this.closeCheckout();
+  }
+
+  private loadCookiePreferences(): void {
+    try {
+      const raw = window.localStorage.getItem('digizen_cookie_preferences_v1');
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as CookiePreferences;
+      if (typeof parsed.performance === 'boolean' && typeof parsed.marketing === 'boolean') this.cookiePreferences.set(parsed);
+    } catch { /* Sin acceso a storage: se muestra el panel para obtener una decisión de esta visita. */ }
+  }
+
+  private saveCookiePreferences(preferences: CookiePreferences): void {
+    this.cookiePreferences.set(preferences);
+    this.cookieSettingsOpen.set(false);
+    try { window.localStorage.setItem('digizen_cookie_preferences_v1', JSON.stringify(preferences)); } catch { /* La preferencia queda activa durante esta visita. */ }
+    window.dispatchEvent(new CustomEvent('digizen:cookie-preferences', { detail: { action: 'accepted', categories: preferences } }));
   }
 
   // The desktop menu is scroll-linked, so it follows the scroll position directly.

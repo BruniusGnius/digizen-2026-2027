@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>DIGIZEN</title>
+  <script>
+    (function () {
+      'use strict';
+      var key = 'digizen_landing_ab_2026_10_variant';
+      var visitorKey = 'digizen_landing_ab_2026_10_visitor_id';
+      var days = 90;
+      var params = new URLSearchParams(location.search);
+      var forced = params.get('variant');
+      var readCookie = function (name) {
+        var part = document.cookie.split('; ').find(function (row) { return row.indexOf(name + '=') === 0; });
+        return part ? decodeURIComponent(part.slice(name.length + 1)) : null;
+      };
+      var readLocal = function (name) {
+        try {
+          var expiry = Number(localStorage.getItem(name + '_expires_at'));
+          return expiry > Date.now() ? localStorage.getItem(name) : null;
+        } catch (_) { return null; }
+      };
+      var save = function (name, value) {
+        try {
+          localStorage.setItem(name, value);
+          localStorage.setItem(name + '_expires_at', String(Date.now() + days * 86400000));
+        } catch (_) {}
+        document.cookie = name + '=' + encodeURIComponent(value) + '; Max-Age=' + (days * 86400) + '; Path=/; SameSite=Lax; Secure';
+      };
+      var variant = (forced === 'A' || forced === 'B') ? forced : (readLocal(key) || readCookie(key));
+      if (variant !== 'A' && variant !== 'B') variant = Math.random() < 0.5 ? 'A' : 'B';
+      save(key, variant);
+      var visitor = readLocal(visitorKey) || readCookie(visitorKey);
+      if (!visitor || !/^[a-zA-Z0-9_-]{8,100}$/.test(visitor)) {
+        visitor = 'anon_' + (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2));
+      }
+      save(visitorKey, visitor);
+      var url = new URL(variant === 'A' ? '/a/' : '/b/', location.origin);
+      params.delete('variant');
+      params.delete('ab_variant');
+      params.forEach(function (value, name) { url.searchParams.append(name, value); });
+      url.searchParams.set('ab_variant', variant);
+      url.hash = location.hash;
+      location.replace(url.href);
+    })();
+  </script>
+</head>
+<body><p>Abriendo DIGIZEN…</p></body>
+</html>

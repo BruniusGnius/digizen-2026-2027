@@ -167,7 +167,7 @@
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-latin-normal.woff2" crossorigin>
 <link rel='preload' as='image' media='(max-width: 859px)' imagesrcset='assets/scenes/01-dinner-v-800.webp 800w, assets/scenes/01-dinner-v-1163.webp 1163w' imagesizes='100vw' fetchpriority='high'>
 <link rel='preload' as='image' type='image/avif' media='(min-width: 860px)' imagesrcset='assets/scenes/01-dinner-1280.avif 1280w, assets/scenes/01-dinner-1920.avif 1920w, assets/scenes/01-dinner-2560.avif 2560w' imagesizes='100vw' fetchpriority='high'>
-<link rel="stylesheet" href="dist/styles.css?v=20261005161102">
+<link rel="stylesheet" href="dist/styles.css?v=20261019141621">
 </head>
 <body>
 <a class='brand' href='#P-H0' aria-label='Digizen'><img class='brand-dark' src='assets/logo/digizen-logo-dark.svg' alt='' width='275' height='116'><img class='brand-light' src='assets/logo/digizen-logo-light.svg' alt='' width='275' height='116'></a>
@@ -943,32 +943,44 @@
 </div>
 </footer>
 <dialog class='ada-dialog' id='ada-dialog' aria-labelledby='ada-dialog-title'>
-<form>
+<form method='post' action='/api/leads.php' data-digizen-lead data-clarity-mask='True'>
   <div class='dlg-head'><h2 id='ada-dialog-title' class='pf w7 t-head bw'>Conversar con ADA primero</h2><button type='button' class='close' data-close aria-label='Cerrar'>×</button></div>
   <label>Nombre del papá o mamá<input name='name' autocomplete='name' placeholder='Tu nombre' required></label>
   <fieldset><legend>Canal de entrega</legend>
     <div class='channel'><button type='button' data-channel='correo' aria-pressed='true'>Correo</button><button type='button' data-channel='whatsapp' aria-pressed='false'>WhatsApp</button></div>
   </fieldset>
   <label><span data-contact-label>Correo electrónico</span><input name='contact' type='email' autocomplete='email' placeholder='tu@correo.com' required></label>
+  <label class='consent'><input type='checkbox' name='privacy_accepted' required> Leí el <a href='https://gnius.club/aviso-de-privacidad.html' target='_blank' rel='noopener'>aviso de privacidad</a>.</label>
+  <label class='consent'><input type='checkbox' name='terms_accepted' required> Acepto los <a href='https://digizen.gnius.club/terminos-y-condiciones-digizen.html' target='_blank' rel='noopener'>términos y condiciones</a>.</label>
+  <label class='consent'><input type='checkbox' name='marketing_consent'> Acepto recibir comunicaciones de DIGIZEN por correo.</label>
   <button type='submit' class='btn alt'>Conversa con ADA<span class='arr' data-dir='e' data-icon='→' aria-hidden='true'></span></button>
-  <p class='in w5 t-small note'>Se manda la liga de acceso; no abre WhatsApp directo.</p>
+  <p class='in w5 t-small note'>El acceso se muestra al terminar la solicitud, cuando esté disponible.</p>
 </form>
 </dialog>
-<script defer src='assets/vendor/gsap.min.js?v=20261005161102'></script>
-<script defer src='assets/vendor/ScrollTrigger.min.js?v=20261005161102'></script>
-<script defer src='assets/vendor/ScrollToPlugin.min.js?v=20261005161102'></script>
-<script defer src='js/dz-core.js?v=20261005161102'></script>
-<script defer src='js/dz-spring.js?v=20261005161102'></script>
-<script defer src='js/dz-seq.js?v=20261005161102'></script>
-<script defer src='js/dz-pins.js?v=20261005161102'></script>
-<script defer src='js/dz-carousel.js?v=20261005161102'></script>
-<script defer src='js/dz-hero.js?v=20261005161102'></script>
-<script defer src='js/dz-rail.js?v=20261005161102'></script>
-<script defer src='js/dz-brand.js?v=20261005161102'></script>
-<script defer src='js/dz-menu.js?v=20261005161102'></script>
-<script defer src='js/dz-faq.js?v=20261005161102'></script>
-<script defer src='js/dz-actions.js?v=20261005161102'></script>
-<script defer src='js/dz-pager.js?v=20261005161102'></script>
-<script defer src='js/dz-main.js?v=20261005161102'></script>
+<dialog class='ada-dialog legal-dialog' id='checkout-dialog' aria-labelledby='checkout-dialog-title'>
+<form class='legal-form' data-checkout-consent>
+  <div class='dlg-head'><h2 id='checkout-dialog-title' class='pf w7 t-head bw'>Confirma tu inscripción</h2><button type='button' class='close' data-checkout-close aria-label='Cerrar'>×</button></div>
+  <p class='in w5 t-small note'>Revisa y acepta los documentos antes de ir al pago seguro de Stripe.</p>
+  <label class='consent'><input type='checkbox' required> Acepto los <a href='https://digizen.gnius.club/terminos-y-condiciones-digizen.html' target='_blank' rel='noopener'>términos y condiciones</a>.</label>
+  <label class='consent'><input type='checkbox' required> He leído el <a href='https://gnius.club/aviso-de-privacidad.html' target='_blank' rel='noopener'>aviso de privacidad</a>.</label>
+  <button type='submit' class='btn alt'>Continuar al pago seguro<span class='arr' data-dir='e' data-icon='→' aria-hidden='true'></span></button>
+</form>
+</dialog>
+<script defer src='assets/vendor/gsap.min.js?v=20261019141621'></script>
+<script defer src='assets/vendor/ScrollTrigger.min.js?v=20261019141621'></script>
+<script defer src='assets/vendor/ScrollToPlugin.min.js?v=20261019141621'></script>
+<script defer src='js/dz-core.js?v=20261019141621'></script>
+<script defer src='js/dz-spring.js?v=20261019141621'></script>
+<script defer src='js/dz-seq.js?v=20261019141621'></script>
+<script defer src='js/dz-pins.js?v=20261019141621'></script>
+<script defer src='js/dz-carousel.js?v=20261019141621'></script>
+<script defer src='js/dz-hero.js?v=20261019141621'></script>
+<script defer src='js/dz-rail.js?v=20261019141621'></script>
+<script defer src='js/dz-brand.js?v=20261019141621'></script>
+<script defer src='js/dz-menu.js?v=20261019141621'></script>
+<script defer src='js/dz-faq.js?v=20261019141621'></script>
+<script defer src='js/dz-actions.js?v=20261019141621'></script>
+<script defer src='js/dz-pager.js?v=20261019141621'></script>
+<script defer src='js/dz-main.js?v=20261019141621'></script>
 </body>
 </html>

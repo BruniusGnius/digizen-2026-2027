@@ -1847,6 +1847,36 @@ details[open] .dg-chevron {
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
+.dg-consent,
+.dg-ada-form-horizontal > .dg-label.dg-consent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  grid-column: 1 / -1;
+  font-size: 12px;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.dg-consent input[type="checkbox"] { flex: none; width: 18px; height: 18px; }
+.dg-consent a { color: inherit; font-weight: 700; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px; }
+.dg-consent a:hover, .dg-consent a:focus-visible { color: var(--dg-blue); }
+.dg-footer-link-button { padding: 0; border: 0; color: inherit; background: transparent; font: inherit; text-align: left; text-decoration: underline; cursor: pointer; }
+.dg-legal-form { display: grid; gap: 16px; }
+.dg-cookie-banner { position: fixed; z-index: 100; right: 16px; bottom: 16px; width: min(560px, calc(100% - 32px)); padding: 20px; border: 1px solid var(--dg-line); border-radius: 18px; background: var(--dg-raised); color: var(--dg-ink); box-shadow: var(--dg-shadow-float); }
+.dg-cookie-settings { position: fixed; z-index: 110; inset: 0; display: grid; place-items: center; padding: 12px; background: rgba(7, 16, 24, .42); backdrop-filter: blur(4px); }
+.dg-cookie-settings .dg-dialog-inner { width: min(520px, 100%); max-height: calc(100dvh - 24px); overflow: auto; border: 1px solid var(--dg-line); border-radius: 22px; background: var(--dg-raised); box-shadow: var(--dg-shadow-float); }
+.dg-cookie-banner p { margin: 8px 0 0; font-size: 14px; line-height: 1.5; }
+.dg-cookie-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.dg-cookie-actions .dg-btn { flex: 1 1 150px; min-height: 42px; font-size: 13px; }
+.dg-cookie-choice { display: grid; grid-template-columns: 44px 1fr; gap: 4px 10px; align-items: start; font-weight: 700; cursor: pointer; }
+.dg-cookie-choice input { appearance: none; width: 42px; height: 24px; margin: 0; border: 1px solid var(--dg-line); border-radius: 999px; background: var(--dg-subtle); cursor: pointer; transition: background-color 160ms var(--dg-ease), border-color 160ms var(--dg-ease); }
+.dg-cookie-choice input::after { display: block; width: 18px; height: 18px; margin: 2px; border-radius: 50%; background: var(--dg-raised); content: ''; box-shadow: 0 1px 3px rgb(0 0 0 / .2); transition: transform 160ms var(--dg-ease); }
+.dg-cookie-choice input:checked { border-color: var(--dg-blue); background: var(--dg-blue); }
+.dg-cookie-choice input:checked::after { transform: translateX(18px); }
+.dg-cookie-choice input:disabled { cursor: not-allowed; opacity: .72; }
+.dg-cookie-reset { justify-self: center; padding: 0; border: 0; color: var(--dg-muted); background: transparent; font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
+.dg-cookie-choice span { grid-column: 2; color: var(--dg-muted); font-size: 13px; font-weight: 400; line-height: 1.45; }
+@media (max-width: 600px) { .dg-cookie-banner { right: 10px; bottom: 10px; width: calc(100% - 20px); } }
 .dg-input {
   width: 100%;
   min-height: 48px;

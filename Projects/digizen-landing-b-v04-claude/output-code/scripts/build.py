@@ -64,10 +64,10 @@ HAND_MIN_SSIM, HAND_AVIF_QS = 0.985, (60, 64, 68, 72, 76, 80, 84)
 SEQ_VIDEO = {'03-fastidio': 'Rudy_laddaga_Dynamic_cinematic_video_synthesis_from_static_initial_image_youn.mp4',
              '05-crossing': 'Rudy_laddaga_Style_Hybrid_photo-illustration_Faces_razor-sharp_photorealis.mp4'}   # video fuente de cada secuencia
 PAGE_BG = (244, 243, 238)                       # fondo de la página: sobre él se compara la ADA con transparencia
-FOOT_LINKS = {'Gnius Club ↗': 'https://gnius.club/', 'Aviso de privacidad': 'https://gnius.club/aviso-de-privacidad.html'}
+FOOT_LINKS = {'Gnius Club ↗': 'https://gnius.club/', 'Aviso de privacidad': 'https://gnius.club/aviso-de-privacidad.html', 'Términos y condiciones': 'https://digizen.gnius.club/terminos-y-condiciones-digizen.html', 'Política de cookies': 'https://digizen.gnius.club/politica-de-cookies-digizen.html'}
 DIALOG_TEXTS = ['Conversar con ADA primero (título del diálogo, copy existente)', 'Nombre del papá o mamá', 'Tu nombre',
                 'Canal de entrega', 'Correo', 'WhatsApp', 'Correo electrónico', 'Número de WhatsApp', 'tu@correo.com',
-                '+52 55 0000 0000', 'Conversa con ADA', 'Se manda la liga de acceso; no abre WhatsApp directo.']
+                '+52 55 0000 0000', 'Conversa con ADA', 'El acceso se muestra al terminar la solicitud, cuando esté disponible.']
 VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr'}
 
 # ------------------------------------------------------------------ 1. assets
@@ -274,6 +274,7 @@ def prod(h, sid=None):
     h = re.sub(r"<a( class='btn[^']*'[^>]*)>(.*?)</a>", button, h, flags=re.S)
     for txt, url in FOOT_LINKS.items():
         h = h.replace(f"<a class='lnk'>{txt}</a>", f"<a class='lnk' href='{url}' target='_blank' rel='noopener'>{txt}</a>")
+    h = h.replace("Política de cookies</a> · ©", "Política de cookies</a> · <button type='button' class='lnk legal-link' data-cookie-settings>Preferencias de cookies</button> · ©")
     h = re.sub(r"<p class='in w8 t-head amt'>(.*?)\s*(\$[\d,]+\.)</p>",
                lambda m: f"<p class='amt'><span class='in w6 t-body amt-l'>{m.group(1)}</span> <span class='in w8 t-semi amt-n'>{m.group(2)}</span></p>", h)
     if sid == '03.4m' and '03-fastidio' in VERTS:  # móvil/tablet: la vertical del fastidio reemplaza al cuadro provisional
@@ -357,15 +358,27 @@ def rail_html(pins):
             f"{items}\n</nav>")
 
 DIALOG = """<dialog class='ada-dialog' id='ada-dialog' aria-labelledby='ada-dialog-title'>
-<form>
+<form method='post' action='/api/leads.php' data-digizen-lead data-clarity-mask='True'>
   <div class='dlg-head'><h2 id='ada-dialog-title' class='pf w7 t-head bw'>Conversar con ADA primero</h2><button type='button' class='close' data-close aria-label='Cerrar'>×</button></div>
   <label>Nombre del papá o mamá<input name='name' autocomplete='name' placeholder='Tu nombre' required></label>
   <fieldset><legend>Canal de entrega</legend>
     <div class='channel'><button type='button' data-channel='correo' aria-pressed='true'>Correo</button><button type='button' data-channel='whatsapp' aria-pressed='false'>WhatsApp</button></div>
   </fieldset>
   <label><span data-contact-label>Correo electrónico</span><input name='contact' type='email' autocomplete='email' placeholder='tu@correo.com' required></label>
+  <label class='consent'><input type='checkbox' name='privacy_accepted' required> Leí el <a href='https://gnius.club/aviso-de-privacidad.html' target='_blank' rel='noopener'>aviso de privacidad</a>.</label>
+  <label class='consent'><input type='checkbox' name='terms_accepted' required> Acepto los <a href='https://digizen.gnius.club/terminos-y-condiciones-digizen.html' target='_blank' rel='noopener'>términos y condiciones</a>.</label>
+  <label class='consent'><input type='checkbox' name='marketing_consent'> Acepto recibir comunicaciones de DIGIZEN por correo.</label>
   <button type='submit' class='btn alt'>Conversa con ADA<span class='arr' data-dir='e' data-icon='→' aria-hidden='true'></span></button>
-  <p class='in w5 t-small note'>Se manda la liga de acceso; no abre WhatsApp directo.</p>
+  <p class='in w5 t-small note'>El acceso se muestra al terminar la solicitud, cuando esté disponible.</p>
+</form>
+</dialog>
+<dialog class='ada-dialog legal-dialog' id='checkout-dialog' aria-labelledby='checkout-dialog-title'>
+<form class='legal-form' data-checkout-consent>
+  <div class='dlg-head'><h2 id='checkout-dialog-title' class='pf w7 t-head bw'>Confirma tu inscripción</h2><button type='button' class='close' data-checkout-close aria-label='Cerrar'>×</button></div>
+  <p class='in w5 t-small note'>Revisa y acepta los documentos antes de ir al pago seguro de Stripe.</p>
+  <label class='consent'><input type='checkbox' required> Acepto los <a href='https://digizen.gnius.club/terminos-y-condiciones-digizen.html' target='_blank' rel='noopener'>términos y condiciones</a>.</label>
+  <label class='consent'><input type='checkbox' required> He leído el <a href='https://gnius.club/aviso-de-privacidad.html' target='_blank' rel='noopener'>aviso de privacidad</a>.</label>
+  <button type='submit' class='btn alt'>Continuar al pago seguro<span class='arr' data-dir='e' data-icon='→' aria-hidden='true'></span></button>
 </form>
 </dialog>"""
 

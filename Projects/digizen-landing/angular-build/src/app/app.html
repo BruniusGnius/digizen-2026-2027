@@ -631,25 +631,29 @@
       <div class="dg-ada-cta">
         <canvas class="dg-ada-render" data-ada-wave width="400" height="616" role="img"
           aria-label="ADA saludando a la cámara"></canvas>
-        <form class="dg-form dg-ada-form-horizontal" (submit)="$event.preventDefault()"
+        <form class="dg-form dg-ada-form-horizontal" method="post" action="/api/leads.php" data-digizen-lead data-clarity-mask="True"
           aria-label="Formulario Conversa con ADA">
           <div class="dg-ada-form-intro">
             <h3 class="dg-h3 text-lg">Conversa con ADA</h3>
             <p class="dg-support">Formulario de datos del adulto.</p>
           </div>
-          <label class="dg-label">Nombre del papá o mamá<input class="dg-input" name="name" autocomplete="name"
+          <label class="dg-label">Nombre del papá o mamá<input class="dg-input" name="name" autocomplete="name" required
               placeholder="Tu nombre" /></label>
           <label class="dg-label">Correo electrónico<input class="dg-input" type="email" name="email"
               autocomplete="email" placeholder="tu@correo.com" /></label>
-          <label class="dg-label">WhatsApp opcional<input class="dg-input" type="tel" name="whatsapp"
+          <label class="dg-label">WhatsApp opcional<input class="dg-input" type="tel" name="phone"
               autocomplete="tel" placeholder="+52 55 0000 0000" /></label>
+          <label class="dg-label">Canal preferido si dejas ambos<select class="dg-input" name="preferred_channel"><option value="correo">Correo</option><option value="whatsapp">WhatsApp</option></select></label>
+          <label class="dg-label dg-consent"><input type="checkbox" name="privacy_accepted" required /> Leí el <a href="https://gnius.club/aviso-de-privacidad.html" target="_blank" rel="noopener">aviso de privacidad</a>.</label>
+          <label class="dg-label dg-consent"><input type="checkbox" name="terms_accepted" required /> Acepto los <a href="https://digizen.gnius.club/terminos-y-condiciones-digizen.html" target="_blank" rel="noopener">términos y condiciones</a>.</label>
+          <label class="dg-label dg-consent"><input type="checkbox" name="marketing_consent" /> Acepto recibir comunicaciones de DIGIZEN por correo.</label>
           <div class="dg-ada-form-action">
-            <button class="dg-btn w-full" type="button"><svg viewBox="0 0 24 24" aria-hidden="true">
+            <button class="dg-btn w-full" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path>
               </svg>Conversa con ADA</button>
           </div>
           <p class="dg-support dg-ada-form-disclaimer">
-            El acceso llega a tu correo. WhatsApp queda como dato opcional para seguimiento.
+            Al enviar la solicitud, mostraremos el acceso a ADA en la siguiente pantalla cuando esté disponible.
           </p>
         </form>
       </div>
@@ -797,7 +801,7 @@
           </h2>
           <div class="dg-copy">
             <p>
-              Déjanos tus datos y te mandamos tu acceso a tu correo en un minuto. Interrógala.
+              Déjanos tus datos y consulta el acceso a ADA al terminar tu solicitud. Interrógala.
               Trata de sacarla de sus reglas. Pregúntale lo que un niño le preguntaría. Pregúntale
               el precio, si quieres. Te va a contestar sin rodeos. Nadie más
               en este mercado te deja <strong>auditar a la IA de tu hijo antes de pagar</strong>. Nosotros la
@@ -1252,7 +1256,7 @@
       </div>
     </section>
   </main>
-  } @else {
+  } @else if (currentPage() === 'rules') {
   <main class="dg-main dg-rules-page">
     <section class="dg-section dg-section--cyan dg-rules-summary dg-rules-summary--intro" aria-labelledby="rules-title">
       <div class="dg-rules-summary-copy">
@@ -1383,6 +1387,38 @@
     </section>
 
   </main>
+  } @else {
+  <main class="dg-main dg-rules-page">
+    <section class="dg-section dg-section--cyan dg-rules-summary" aria-labelledby="legal-document-title">
+      <div class="dg-rules-summary-copy">
+        <p class="dg-kicker">DIGIZEN · Documento legal</p>
+        <h1 id="legal-document-title" class="dg-h2">@if (currentPage() === 'terms') { Términos y condiciones } @else { Política de cookies }</h1>
+        <div class="dg-copy">
+          <p><strong>Vista previa de estructura.</strong> Este documento conserva el diseño de DIGIZEN y está preparado para recibir el texto legal aprobado.</p>
+          <p>La versión publicada incluirá fecha de vigencia, responsable, medios de contacto y mecanismo para comunicar cambios.</p>
+        </div>
+      </div>
+    </section>
+    <section class="dg-section dg-rules-section" aria-label="Contenido legal pendiente">
+      @if (currentPage() === 'terms') {
+      <p class="dg-kicker">Estructura propuesta</p>
+      <div class="dg-rules-grid">
+        <article class="dg-card"><h2>1. Identidad del proveedor</h2><p>Contenido legal pendiente de aprobación.</p></article>
+        <article class="dg-card"><h2>2. Servicio, precio y forma de pago</h2><p>Contenido legal pendiente de aprobación.</p></article>
+        <article class="dg-card"><h2>3. Acceso, cancelación y garantía</h2><p>Contenido legal pendiente de aprobación.</p></article>
+        <article class="dg-card"><h2>4. Atención y reclamaciones</h2><p>Contenido legal pendiente de aprobación.</p></article>
+      </div>
+      } @else {
+      <p class="dg-kicker">Estructura propuesta</p>
+      <div class="dg-rules-grid">
+        <article class="dg-card"><h2>1. Cookies necesarias</h2><p>Contenido legal pendiente de aprobación.</p></article>
+        <article class="dg-card"><h2>2. Medición y rendimiento</h2><p>Contenido legal pendiente de aprobación.</p></article>
+        <article class="dg-card"><h2>3. Marketing</h2><p>Contenido legal pendiente de aprobación.</p></article>
+        <article class="dg-card"><h2>4. Cómo cambiar preferencias</h2><p>Puedes volver al footer de la landing y abrir «Preferencias de cookies».</p></article>
+      </div>
+      }
+    </section>
+  </main>
   }
 
   <footer class="dg-footer">
@@ -1422,6 +1458,9 @@
         </a>
         <a href="mailto:info@gnius.club">info&#64;gnius.club</a>
         <a href="https://gnius.club/aviso-de-privacidad.html" target="_blank" rel="noopener">Aviso de Privacidad</a>
+        <a href="https://digizen.gnius.club/terminos-y-condiciones-digizen.html" target="_blank" rel="noopener">Términos y condiciones</a>
+        <a href="https://digizen.gnius.club/politica-de-cookies-digizen.html" target="_blank" rel="noopener">Política de cookies</a>
+        <button class="dg-footer-link-button" type="button" (click)="openCookieSettings()">Preferencias de cookies</button>
       </address>
     </div>
     <p class="dg-footer-legal">© 2026 Gnius Club. Todos los derechos reservados.</p>
@@ -1456,18 +1495,43 @@
           ×
         </button>
       </div>
-      <form (submit)="$event.preventDefault()">
-        <label class="dg-label">Nombre del papá o mamá<input class="dg-input" name="dialog-name" autocomplete="name"
+      <form method="post" action="/api/leads.php" data-digizen-lead data-clarity-mask="True">
+        <label class="dg-label">Nombre del papá o mamá<input class="dg-input" name="name" autocomplete="name" required
             placeholder="Tu nombre" /></label>
-        <label class="dg-label">Correo electrónico<input class="dg-input" type="email" name="dialog-email"
+        <label class="dg-label">Correo electrónico<input class="dg-input" type="email" name="email"
             autocomplete="email" placeholder="tu@correo.com" /></label>
-        <label class="dg-label">WhatsApp opcional<input class="dg-input" type="tel" name="dialog-whatsapp"
-            autocomplete="tel" placeholder="+52 55 0000 0000" /></label><button
-          class="dg-btn w-full mt-5" type="button"><svg viewBox="0 0 24 24" aria-hidden="true">
+        <label class="dg-label">WhatsApp opcional<input class="dg-input" type="tel" name="phone"
+            autocomplete="tel" placeholder="+52 55 0000 0000" /></label>
+        <label class="dg-label">Canal preferido si dejas ambos<select class="dg-input" name="preferred_channel"><option value="correo">Correo</option><option value="whatsapp">WhatsApp</option></select></label>
+        <label class="dg-label dg-consent"><input type="checkbox" name="privacy_accepted" required /> Leí el <a href="https://gnius.club/aviso-de-privacidad.html" target="_blank" rel="noopener">aviso de privacidad</a>.</label>
+        <label class="dg-label dg-consent"><input type="checkbox" name="terms_accepted" required /> Acepto los <a href="https://digizen.gnius.club/terminos-y-condiciones-digizen.html" target="_blank" rel="noopener">términos y condiciones</a>.</label>
+        <label class="dg-label dg-consent"><input type="checkbox" name="marketing_consent" /> Acepto recibir comunicaciones de DIGIZEN por correo.</label>
+        <button
+          class="dg-btn w-full mt-5" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path>
           </svg>Conversa con ADA</button>
-        <p class="dg-support">El acceso llega a tu correo. WhatsApp queda como dato opcional para seguimiento.</p>
+        <p class="dg-support">Al enviar la solicitud, mostraremos el acceso a ADA en la siguiente pantalla cuando esté disponible.</p>
       </form>
     </div>
   </dialog>
+
+  <dialog #checkoutDialog class="dg-dialog dg-legal-dialog" aria-labelledby="checkout-legal-title">
+    <form class="dg-dialog-inner dg-legal-form" (submit)="beginCheckout($event)">
+      <div class="dg-dialog-head"><div><p class="dg-kicker">Antes de continuar</p><h2 id="checkout-legal-title" class="dg-h3">Confirma tu inscripción</h2></div><button class="dg-dialog-close" type="button" (click)="closeCheckout()" aria-label="Cerrar">×</button></div>
+      <p class="dg-support">Revisa y acepta los documentos antes de ir al pago seguro de Stripe.</p>
+      <label class="dg-label dg-consent"><input type="checkbox" name="checkout_terms_accepted" required /> Acepto los <a href="https://digizen.gnius.club/terminos-y-condiciones-digizen.html" target="_blank" rel="noopener">términos y condiciones</a>.</label>
+      <label class="dg-label dg-consent"><input type="checkbox" name="checkout_privacy_accepted" required /> He leído el <a href="https://gnius.club/aviso-de-privacidad.html" target="_blank" rel="noopener">aviso de privacidad</a>.</label>
+      <button class="dg-btn w-full" type="submit">Continuar al pago seguro</button>
+    </form>
+  </dialog>
+
+  @if (cookiePreferences() === null) {
+  <section class="dg-cookie-banner" aria-labelledby="cookie-banner-title" role="region">
+    <div><h2 id="cookie-banner-title" class="dg-h3">Tus preferencias de cookies</h2><p>Usamos cookies necesarias para que el sitio funcione. Puedes decidir si permites medición y marketing. Consulta la <a href="https://digizen.gnius.club/politica-de-cookies-digizen.html" target="_blank" rel="noopener">política de cookies</a>.</p></div>
+    <div class="dg-cookie-actions"><button class="dg-btn dg-btn--secondary" type="button" (click)="rejectOptionalCookies()">Rechazar opcionales</button><button class="dg-btn dg-btn--secondary" type="button" (click)="openCookieSettings()">Configurar</button><button class="dg-btn" type="button" (click)="acceptAllCookies()">Aceptar todas</button></div>
+  </section>
+  }
+  @if (cookieSettingsOpen()) {
+  <section class="dg-cookie-settings" role="dialog" aria-modal="true" aria-labelledby="cookie-settings-title"><form class="dg-dialog-inner dg-legal-form" (submit)="$event.preventDefault(); saveCookieSettings()"><div class="dg-dialog-head"><div><p class="dg-kicker">Cookies</p><h2 id="cookie-settings-title" class="dg-h3">Configura tus preferencias</h2></div><button class="dg-dialog-close" type="button" (click)="cookieSettingsOpen.set(false)" aria-label="Cerrar">×</button></div><p class="dg-support">Elige qué tipos de cookies opcionales permites.</p><label class="dg-cookie-choice"><input type="checkbox" checked disabled /> <strong>Necesarias</strong><span>Siempre activas para seguridad y guardar tu elección.</span></label><label class="dg-cookie-choice"><input type="checkbox" [checked]="cookiePerformance()" (change)="setCookiePreference('performance', $any($event.target).checked)" /> <strong>Rendimiento y medición</strong><span>Analítica y pruebas de mejora del sitio.</span></label><label class="dg-cookie-choice"><input type="checkbox" [checked]="cookieMarketing()" (change)="setCookiePreference('marketing', $any($event.target).checked)" /> <strong>Marketing</strong><span>Publicidad y audiencias personalizadas.</span></label><button class="dg-btn w-full" type="submit">Guardar preferencias</button><button class="dg-cookie-reset" type="button" (click)="resetCookiePreferences()">Restablecer elección</button></form></section>
+  }
 </div>

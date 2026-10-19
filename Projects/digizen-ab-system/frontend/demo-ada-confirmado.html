@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Solicitud de ADA recibida · DIGIZEN</title>
+  <style>body{font:18px/1.5 system-ui;background:#f4f3f0;color:#17243b;margin:0;display:grid;min-height:100vh;place-items:center}main{max-width:640px;margin:2rem;padding:2rem;background:white;border-radius:20px;box-shadow:0 8px 30px #17243b19}a.button{display:inline-block;padding:.8rem 1.2rem;background:#2046b3;color:white;border-radius:10px;text-decoration:none}small{color:#4b5563}</style>
+</head>
+<body>
+  <main>
+    <h1>Recibimos tu solicitud para conversar con ADA</h1>
+    <p id="status">Estamos preparando tu acceso.</p>
+    <p id="code"></p>
+    <p id="access"></p>
+    <p><small>Esta solicitud de prueba no equivale a una compra ni a una inscripción.</small></p>
+    <p><a href="/">Volver a DIGIZEN</a></p>
+  </main>
+  <script>
+    (function () {
+      var data;
+      try { data = JSON.parse(sessionStorage.getItem('digizen_demo_confirmation') || 'null'); } catch (_) {}
+      if (!data || !['A', 'B'].includes(data.variant)) {
+        document.getElementById('status').textContent = 'No encontramos una solicitud reciente en este navegador.';
+        return;
+      }
+      document.getElementById('status').textContent = 'Tu solicitud quedó registrada.';
+      document.getElementById('code').textContent = 'Código de solicitud: ' + data.public_code;
+      if (data.demo_simulated) {
+        document.getElementById('access').textContent = 'Este es un recorrido de prueba. El acceso real a ADA se conectará antes del lanzamiento.';
+      } else try {
+        var url = new URL(data.demo_url);
+        if (url.protocol === 'https:' && !url.hostname.endsWith('.example')) {
+          var link = document.createElement('a');
+          link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer';
+          link.className = 'button'; link.textContent = 'Abrir ADA';
+          document.getElementById('access').appendChild(link);
+        } else {
+          document.getElementById('access').textContent = 'El acceso de ADA aún no está disponible.';
+        }
+      } catch (_) { document.getElementById('access').textContent = 'El acceso de ADA aún no está disponible.'; }
+      var key = 'digizen_landing_ab_2026_10';
+      var visitor = localStorage.getItem(key + '_visitor_id');
+      if (visitor) fetch('/api/events.php', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event_name: 'ada_demo_confirmation_viewed', experiment_key: key,
+          variant: data.variant, landing_id: data.landing_id, visitor_id: visitor, path: location.pathname }),
+        keepalive: true }).catch(function () {});
+    })();
+  </script>
+</body>
+</html>

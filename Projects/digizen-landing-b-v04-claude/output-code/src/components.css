@@ -418,6 +418,10 @@
   .ada-dialog label, .ada-dialog legend { display: flex; flex-direction: column; gap: 6px; font: 600 var(--t-small)/1.3 var(--font-body); }
   .ada-dialog fieldset { border: 0; padding: 0; margin: 0; }
   .ada-dialog input { min-height: 48px; padding: 0 14px; border: 1px solid var(--color-line-strong); border-radius: 12px; background: var(--color-panel); color: var(--color-ink); font: 500 var(--t-body)/1.3 var(--font-body); }
+  .ada-dialog .consent { display: block; font-weight: 500; line-height: 1.5; }
+  .ada-dialog .consent input[type='checkbox'] { min-height: 0; width: 18px; height: 18px; padding: 0; margin-right: 8px; vertical-align: middle; }
+  .ada-dialog .consent a { color: inherit; font-weight: 700; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px; }
+  .ada-dialog .consent a:hover, .ada-dialog .consent a:focus-visible { color: var(--color-azul-900); }
   .ada-dialog input:focus-visible { outline: 2px solid var(--color-azul-900); outline-offset: 2px; }
   .channel { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
   .channel button { min-height: 44px; border: 1px solid var(--color-line-strong); border-radius: 12px; background: var(--color-panel); color: var(--color-ink); font: 600 var(--t-small)/1 var(--font-body); cursor: pointer; }
@@ -425,6 +429,26 @@
   .channel button:active, .channel button.is-pressed { transform: scale(.97); }  /* A2 */
   .channel button[aria-pressed="true"] { background: var(--color-cian); border-color: var(--color-cian); color: var(--color-ink); }
   .ada-dialog .note { color: var(--color-ink); }
+  .legal-link { padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }
+  .legal-form { display: flex; flex-direction: column; gap: 16px; padding: 28px 24px 24px; }
+  .cookie-banner { position: fixed; z-index: 100; right: 16px; bottom: 16px; width: min(100% - 32px, 560px); padding: 20px; border: 1px solid var(--color-line); border-radius: 18px; background: var(--color-panel); color: var(--color-ink); box-shadow: 0 16px 48px rgb(17 26 52 / .2); }
+  .cookie-banner h2 { margin: 0; font: 700 var(--t-sub)/1.1 var(--font-display); }
+  .cookie-banner p { margin: 8px 0 0; line-height: 1.45; }
+  .cookie-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .cookie-actions .btn { flex: 1 1 150px; min-height: 42px; }
+  .cookie-choice { display: grid !important; grid-template-columns: 44px 1fr; gap: 4px 10px; align-items: start; cursor: pointer; }
+  .cookie-choice input { appearance: none; width: 42px !important; height: 24px !important; min-height: 24px !important; margin: 0 !important; border-radius: 999px !important; background: var(--color-line) !important; cursor: pointer; }
+  .cookie-choice input::after { display: block; width: 18px; height: 18px; margin: 2px; border-radius: 50%; background: var(--color-panel); content: ''; box-shadow: 0 1px 3px rgb(0 0 0 / .2); transition: transform var(--t-fast) var(--ease-out); }
+  .cookie-choice input:checked { background: var(--color-azul-900) !important; }
+  .cookie-choice input:checked::after { transform: translateX(18px); }
+  .cookie-choice input:disabled { cursor: not-allowed; opacity: .72; }
+  /* Documentos legales: reutilizan el FAQ de B; solo se ajusta su posición dentro del flujo. */
+  .legal-faq > h1 { margin: 12px 0 18px; }
+  .legal-faq .legal-intro { max-width: var(--w-wide); margin: 0; line-height: 1.6; }
+  .legal-faq-list { margin-top: var(--air); }
+  .legal-faq .legal-faq-list summary { min-height: 68px; padding: 18px 0; }
+  .legal-faq .legal-faq-list details p { padding-bottom: 28px; }
+  .cookie-choice span { grid-column: 2; font-weight: 400; font-size: var(--t-small); line-height: 1.45; }
 }
 
 /* ---------- B7: will-change solo mientras un pin está activo (apple-design §11) ---------- */

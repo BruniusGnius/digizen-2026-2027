@@ -1,0 +1,5 @@
+/staging/
+/preview-package/
+/api/config/secrets.php
+__pycache__/
+/.ssh/
