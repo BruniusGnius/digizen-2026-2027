@@ -38,11 +38,6 @@ jobs:
       # base-href tiene que coincidir con la subcarpeta del sitio en Pages.
       - run: npx ng build --configuration production --base-href /digizen-2026-2027/
 
-      - name: Preparar versión B
-        run: |
-          cd "$GITHUB_WORKSPACE/Projects/digizen-landing-b-v04-claude/output-code"
-          python3 scripts/build.py
-
       - name: Preparar salida para Pages
         run: |
           cd dist/angular-build/browser
